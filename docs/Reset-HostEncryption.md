@@ -1,0 +1,79 @@
+---
+external help file: fogapi-help.xml
+Module Name: fogapi
+online version: https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
+schema: 2.0.0
+---
+
+# Reset-HostEncryption
+
+## SYNOPSIS
+Reset the host encryption data on a given host
+
+## SYNTAX
+
+```
+Reset-HostEncryption [[-fogHost] <Object>] [-restartSvc] [<CommonParameters>]
+```
+
+## DESCRIPTION
+Default to getting the current host, but can also pass the object returned from Get-FogHost
+and its parameters for any other host.
+Removes/resets the pub_key, sec_tok, and sec_time properties of a host so it can be re-encrypted by
+the fogservice to form a new connection.
+The restartSvc switch will restart the fog service
+forcing a more immediate re-encryption and connection.
+This currently only works when used on the local computer
+you are resetting.
+
+## EXAMPLES
+
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
+```
+
+{{ Add example description here }}
+
+## PARAMETERS
+
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: (Get-FogHost)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -restartSvc
+{{ Fill restartSvc Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
+## RELATED LINKS

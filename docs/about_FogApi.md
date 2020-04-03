@@ -1,3 +1,12 @@
+﻿# FogApi
+
+## about_FogApi
+
+# SHORT DESCRIPTION
+A module for managing FOG operations via powershell
+
+# LONG DESCRIPTION
+
 To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
 To Install this module follow these steps
 * Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi `Install-Module -name fogApi` 
