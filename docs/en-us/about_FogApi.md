@@ -3,7 +3,7 @@
 ## about_FogApi
 
 # SHORT DESCRIPTION
-A module for managing FOG operations via powershell
+A module for managing FOG API operations via powershell
 
 # LONG DESCRIPTION
 
@@ -12,7 +12,7 @@ To Install this module follow these steps
 * Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi `Install-Module -name fogApi` 
 
 * Manual Method:
-* download the zip of this repo https://github.com/FOGProject/fog-community-scripts/archive/master.zip and extract it
+* download the zip of the repo and extract it
     * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
 * Copy the FogApi folder this Readme file is in to...
     * For Windows Powershell v3-v5.1
