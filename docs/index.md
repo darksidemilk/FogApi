@@ -1,8 +1,6 @@
 # FogAPI
 
-## about help files
+## [about the fogapi module](about_FogAPI.md)
 
-### [about fogapi module](about_FogAPI.md)
-
-## [commands](commands/index.md)
+## [commands index](commands/index.md)
 
