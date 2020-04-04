@@ -1,6 +1,0 @@
-site_name: FogApi
-nav:
-    - Home: index.md
-    - About: en-us\index.md
-    - Commands: en-us\commands\index.cmd
-theme: readthedocs
