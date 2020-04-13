@@ -2,57 +2,57 @@
 
 ## [about the fogapi module](about_FogAPI.md)
 
-## [commands index](commands/index.md)
+# [commands index](commands/index.md)
 
-### [Add-FogHostMac](Add-FogHostMac.md)
+## [Add-FogHostMac](Add-FogHostMac.md)
 
-### [Approve-FogPendingMac](Approve-FogPendingMac.md)
+## [Approve-FogPendingMac](Approve-FogPendingMac.md)
 
-### [Deny-FogPendingMac](Deny-FogPendingMac.md)
+## [Deny-FogPendingMac](Deny-FogPendingMac.md)
 
-### [Get-FogActiveTasks](Get-FogActiveTasks.md)
+## [Get-FogActiveTasks](Get-FogActiveTasks.md)
 
-### [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
+## [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
 
-### [Get-FogGroup](Get-FogGroup.md)
+## [Get-FogGroup](Get-FogGroup.md)
 
-### [Get-FogHost](Get-FogHost.md)
+## [Get-FogHost](Get-FogHost.md)
 
-### [Get-FogHosts](Get-FogHosts.md)
+## [Get-FogHosts](Get-FogHosts.md)
 
-### [Get-FogInventory](Get-FogInventory.md)
+## [Get-FogInventory](Get-FogInventory.md)
 
-### [Get-FogLog](Get-FogLog.md)
+## [Get-FogLog](Get-FogLog.md)
 
-### [Get-FogObject](Get-FogObject.md)
+## [Get-FogObject](Get-FogObject.md)
 
-### [Get-FogServerSettings](Get-FogServerSettings.md)
+## [Get-FogServerSettings](Get-FogServerSettings.md)
 
-### [Get-FogSnapins](Get-FogSnapins.md)
+## [Get-FogSnapins](Get-FogSnapins.md)
 
-### [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
+## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
 
-### [Install-FogService](Install-FogService.md)
+## [Install-FogService](Install-FogService.md)
 
-### [Invoke-FogApi](Invoke-FogApi.md)
+## [Invoke-FogApi](Invoke-FogApi.md)
 
-### [New-FogObject](New-FogObject.md)
+## [New-FogObject](New-FogObject.md)
 
-### [Remove-FogObject](Remove-FogObject.md)
+## [Remove-FogObject](Remove-FogObject.md)
 
-### [Remove-UsbMac](Remove-UsbMac.md)
+## [Remove-UsbMac](Remove-UsbMac.md)
 
-### [Reset-HostEncryption](Reset-HostEncryption.md)
+## [Reset-HostEncryption](Reset-HostEncryption.md)
 
-### [Set-FogInventory](Set-FogInventory.md)
+## [Set-FogInventory](Set-FogInventory.md)
 
-### [Set-FogServerSettings](Set-FogServerSettings.md)
+## [Set-FogServerSettings](Set-FogServerSettings.md)
 
-### [Set-FogSnapins](Set-FogSnapins.md)
+## [Set-FogSnapins](Set-FogSnapins.md)
 
-### [Start-FogSnapins](Start-FogSnapins.md)
+## [Start-FogSnapins](Start-FogSnapins.md)
 
-### [Update-FogObject](Update-FogObject.md)
+## [Update-FogObject](Update-FogObject.md)
 
 
 
