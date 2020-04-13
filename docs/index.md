@@ -2,57 +2,57 @@
 
 ## [about the fogapi module](about_FogAPI.md)
 
-# [commands index](commands/index.md)
+## [commands index](commands/index.md)
 
-## [Add-FogHostMac](Add-FogHostMac.md)
+## [Add-FogHostMac](commands/Add-FogHostMac.md)
 
-## [Approve-FogPendingMac](Approve-FogPendingMac.md)
+## [Approve-FogPendingMac](commands/Approve-FogPendingMac.md)
 
-## [Deny-FogPendingMac](Deny-FogPendingMac.md)
+## [Deny-FogPendingMac](commands/Deny-FogPendingMac.md)
 
-## [Get-FogActiveTasks](Get-FogActiveTasks.md)
+## [Get-FogActiveTasks](commands/Get-FogActiveTasks.md)
 
-## [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
+## [Get-FogAssociatedSnapins](commands/Get-FogAssociatedSnapins.md)
 
-## [Get-FogGroup](Get-FogGroup.md)
+## [Get-FogGroup](commands/Get-FogGroup.md)
 
-## [Get-FogHost](Get-FogHost.md)
+## [Get-FogHost](commands/Get-FogHost.md)
 
-## [Get-FogHosts](Get-FogHosts.md)
+## [Get-FogHosts](commands/Get-FogHosts.md)
 
-## [Get-FogInventory](Get-FogInventory.md)
+## [Get-FogInventory](commands/Get-FogInventory.md)
 
-## [Get-FogLog](Get-FogLog.md)
+## [Get-FogLog](commands/Get-FogLog.md)
 
-## [Get-FogObject](Get-FogObject.md)
+## [Get-FogObject](commands/Get-FogObject.md)
 
-## [Get-FogServerSettings](Get-FogServerSettings.md)
+## [Get-FogServerSettings](commands/Get-FogServerSettings.md)
 
-## [Get-FogSnapins](Get-FogSnapins.md)
+## [Get-FogSnapins](commands/Get-FogSnapins.md)
 
-## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
+## [Get-PendingMacsForHost](commands/Get-PendingMacsForHost.md)
 
-## [Install-FogService](Install-FogService.md)
+## [Install-FogService](commands/Install-FogService.md)
 
-## [Invoke-FogApi](Invoke-FogApi.md)
+## [Invoke-FogApi](commands/Invoke-FogApi.md)
 
-## [New-FogObject](New-FogObject.md)
+## [New-FogObject](commands/New-FogObject.md)
 
-## [Remove-FogObject](Remove-FogObject.md)
+## [Remove-FogObject](commands/Remove-FogObject.md)
 
-## [Remove-UsbMac](Remove-UsbMac.md)
+## [Remove-UsbMac](commands/Remove-UsbMac.md)
 
-## [Reset-HostEncryption](Reset-HostEncryption.md)
+## [Reset-HostEncryption](commands/Reset-HostEncryption.md)
 
-## [Set-FogInventory](Set-FogInventory.md)
+## [Set-FogInventory](commands/Set-FogInventory.md)
 
-## [Set-FogServerSettings](Set-FogServerSettings.md)
+## [Set-FogServerSettings](commands/Set-FogServerSettings.md)
 
-## [Set-FogSnapins](Set-FogSnapins.md)
+## [Set-FogSnapins](commands/Set-FogSnapins.md)
 
-## [Start-FogSnapins](Start-FogSnapins.md)
+## [Start-FogSnapins](commands/Start-FogSnapins.md)
 
-## [Update-FogObject](Update-FogObject.md)
+## [Update-FogObject](commands/Update-FogObject.md)
 
 
 
