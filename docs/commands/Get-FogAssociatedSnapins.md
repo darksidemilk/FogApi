@@ -1,7 +1,7 @@
 ---
-external help file: fogapi-help.xml
-Module Name: fogapi
-online version:
+external help file: FogApi-help.xml
+Module Name: FogApi
+online version: https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac
 schema: 2.0.0
 ---
 

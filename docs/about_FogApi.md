@@ -45,7 +45,7 @@ To Install this module follow these steps...
 
 ## Install From PSGallery
 
-* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi via a powershell console with the command `Install-Module -name fogApi` 
+* Easiest method: [Install from PSGallery](https://www.powershellgallery.com/packages/FogApi) via a powershell console with the command `Install-Module -name fogApi` 
 
 ## Manual Installation
 
@@ -80,7 +80,7 @@ You can also open the settings.json file and edit it manually before running you
 The default settings are explanations of where to find the proper settings since json can't have comments
 
 Once the settings are set you can have a jolly good time utilzing the fog documentation 
-found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
+found [here](https://news.fogproject.org/simplified-api-documentation/) that was used to model the parameters
 
 i.e.
 
@@ -91,8 +91,10 @@ So if you typed in `Get-FogObject -Type object -Object  h` and then started hitt
 Unless you filter a get with a json body it will return all the results into a powershell object. That object is easy to work with to create other commands. Note: Full Pipeline support will come at a later time 
  i.e.
 
- `$hosts = Get-FogObject -Type Object -CoreObject Host `# calls get on http://fog-server/fog/host to list all hosts
- Now you can search all your hosts for the one or ones you're looking for with powershell
+ `$hosts = Get-FogObject -Type Object -CoreObject Host `
+ 
+  Does a GET call on [http://fog-server/fog/host](http://fog-server/fog/host) to list all hosts
+ Now you can search all your hosts for the one or ones you're looking for with powershell.
  maybe you want to find all the hosts with 'IT' in the name  (note '?' is an alias for Where-Object)
 `$ITHosts = $hosts.hosts | ? name -match 'IT';`
 

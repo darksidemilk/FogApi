@@ -1,13 +1,13 @@
 
 <#PSScriptInfo
 
-.VERSION 1.0.0.0
+.VERSION 2.0.0.0
 
 .GUID 473e8205-f9ee-4185-9daa-096fb36cf0b6
 
 .AUTHOR JJ Fullmer
 
-.COMPANYNAME Arrowhead Dental Lab
+.COMPANYNAME FogProject
 
 .COPYRIGHT 2019
 
@@ -26,6 +26,9 @@
 .EXTERNALSCRIPTDEPENDENCIES
 
 .RELEASENOTES
+
+		2.0.0.0
+			Updated with documentation integrations
 
 		1.0.0.0
 			Updated script to proper format
@@ -61,7 +64,12 @@ mkdir "$modulePath\Classes" -EA 0;
 
 #update documentation
 
-$ses = New-PsSession;
+try {
+	$ses = New-PsSession -EA Stop;
+} catch {
+	$credential = Get-Credential -Message "input local credentials for new local session"
+	$ses = New-PsSession -Credential $credential;
+}
 $docsPth = "$PSScriptRoot\docs" 
 
 Invoke-Command -Session $ses -ScriptBlock {
@@ -76,16 +84,37 @@ Invoke-Command -Session $ses -ScriptBlock {
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force -EA 0;}
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force;}
 	# Remove old markdown files
-	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Where-Object Name -NotMatch 'about_*' | Remove-Item -Force;
-	New-MarkdownHelp -module $moduleName -Force -OutputFolder $docsPth;
+	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Where-Object Name -NotMatch 'index*' | Remove-Item -Force;
+	New-MarkdownHelp -module $moduleName -Force -OutputFolder "$docsPth\commands" -WithModulePage -ModulePagePath "$docsPth\commands";
+	#remove old index
+	Remove-Item "$docsPth\commands\index.md";
+	#rename module page to index.md
+	Rename-Item "$docsPth\commands\$moduleName.md" -NewName "index.md" -force;
+	
+	#remove empty descriptions
+
+	#Update readthedocs nav index
+	
+	# Add Online Versions to each commands markdown file
+	Get-ChildItem "$docsPth\commands" | ? name -NotMatch 'index' | Foreach-Object {
+		#add online version
+		$name = $_.Name; 
+		$link = "https://fogapi.readthedocs.io/en/latest/commands/$name";
+		#insert in onlineVersion at top
+		
+		#insert in first .link entry
+
+	}
+
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
 		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 	} catch {
 		Write-Warning "There was an error creating the external help from the markdown. $($error) Removing current external help and trying again"
 		Remove-Item -Force -Recurse "$docsPth\en-us";
-		New-Dir "$docsPth\en-us"
+		mkdir "$docsPth\en-us"
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -EA 0 -Force;
+		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 	}
 }
 
@@ -95,19 +124,18 @@ $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
 mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
-$buildPth = "$PSSCriptRoot\ModuleBuild";
+$buildPth = "$Home\ModuleBuild";
 $moduleFile = "$buildPth\$moduleName.psm1";
 
 # Create the build output folder
 if (Test-Path $buildPth) {
 	Remove-Item $buildPth -force -recurse;
 }
-New-Dir 'C:\ModuleBuild' | Out-Null;
-New-Dir $buildPth | Out-Null;
+mkdir $buildPth | Out-Null;
 
 New-Item $moduleFile -Force | Out-Null;
 Copy-Item "$modulePath\$moduleName.psd1" "$buildPth\$moduleName.psd1";
-Copy-Item "$modulePath\docs\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
+Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
 if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
 	Copy-Item "$modulePath\lib" "$buildPth\lib" -Recurse;

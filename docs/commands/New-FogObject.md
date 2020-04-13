@@ -1,6 +1,6 @@
 ---
-external help file: fogapi-help.xml
-Module Name: fogapi
+external help file: FogApi-help.xml
+Module Name: FogApi
 online version: https://news.fogproject.org/simplified-api-documentation/
 schema: 2.0.0
 ---

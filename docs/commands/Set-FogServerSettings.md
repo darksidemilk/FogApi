@@ -1,6 +1,6 @@
 ---
-external help file: fogapi-help.xml
-Module Name: fogapi
+external help file: FogApi-help.xml
+Module Name: FogApi
 online version: https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
 schema: 2.0.0
 ---

@@ -1,6 +1,6 @@
 ---
-external help file: fogapi-help.xml
-Module Name: fogapi
+external help file: FogApi-help.xml
+Module Name: FogApi
 online version: https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
 schema: 2.0.0
 ---
@@ -21,10 +21,6 @@ Default to getting the current host, but can also pass the object returned from 
 and its parameters for any other host.
 Removes/resets the pub_key, sec_tok, and sec_time properties of a host so it can be re-encrypted by
 the fogservice to form a new connection.
-The restartSvc switch will restart the fog service
-forcing a more immediate re-encryption and connection.
-This currently only works when used on the local computer
-you are resetting.
 
 ## EXAMPLES
 
@@ -38,7 +34,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -fogHost
-{{ Fill fogHost Description }}
+Defaults to getting current host or can pass a host object
 
 ```yaml
 Type: Object
@@ -53,7 +49,10 @@ Accept wildcard characters: False
 ```
 
 ### -restartSvc
-{{ Fill restartSvc Description }}
+The restartSvc switch will restart the fog service
+forcing a more immediate re-encryption and connection.
+This currently only works when used on the local computer
+you are resetting.
 
 ```yaml
 Type: SwitchParameter

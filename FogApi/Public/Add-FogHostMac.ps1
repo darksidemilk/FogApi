@@ -5,6 +5,12 @@ function Add-FogHostMac {
     
     .DESCRIPTION
     Adds a given macaddress to a host of a given ID
+
+    .LINK
+    https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac
+
+    .LINK
+    https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost
     
 #>
     
