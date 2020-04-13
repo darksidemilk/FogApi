@@ -3,18 +3,57 @@
 ## about_FogApi
 
 # SHORT DESCRIPTION
+
 A module for managing FOG API operations via powershell
 
 # LONG DESCRIPTION
 
-To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
-To Install this module follow these steps
-* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi `Install-Module -name fogApi` 
+This is a powershell module to make using the Fog Project API even easier.
+FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation. It can be used to create more automation or to simply have a command line method of controlling fog operations.
+
+# Versioning
+
+The versioning of this module follows this pattern
+
+`{Year|Quarter Number}.{Major Version}.{Minor Version}.{Build/Revision #}`
+
+## Year/Quarter
+
+This versioning shows you first the Year and Quarter the module was published, giving you an idea of when it was last updated.
+
+## Major
+
+The Major version follows the typical major versioning where any major changes will increment this version number, especially possible breaking changes or structural changes, etc.
+
+## Minor
+
+Any time I publish a new version that isn't a major change I intend to mainly use this unless it's a quick fix or something
+
+## Build/Revision
+
+This will be used internally on git commits and occasionally in published versions. Most published versions won't have a number here unless there's just a quick revision needed. Typically this is incremented by 100 for every build and by 1 for every committed revision into the repo.
+
+# Installation
+
+All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use 
+
+## Requirements
+
+To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6 and v7
+
+To Install this module follow these steps...
+
+## Install From PSGallery
+
+* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi via a powershell console with the command `Install-Module -name fogApi` 
+
+## Manual Installation
 
 * Manual Method:
-* download the zip of the repo and extract it
+* download the zip of this repo and extract it
     * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
-* Copy the FogApi folder this Readme file is in to...
+* Run the build.ps1 script
+* Copy the built module folder (C:\moduleBuild\fogAPI) into...
     * For Windows Powershell v3-v5.1
         * C:\Program Files\WindowsPowershell\Modules
     * For Windows Powershell v6+
@@ -32,6 +71,9 @@ To Install this module follow these steps
 * Run `Import-Module FogApi`
 
 The module is now installed. 
+
+# Using The Module
+
 The first time you try to run a command the settings.json file will automatically open
 in notepad on windows, nano on linux, or TextEdit on Mac
 You can also open the settings.json file and edit it manually before running your first command.

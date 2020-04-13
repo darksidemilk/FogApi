@@ -62,13 +62,13 @@ mkdir "$modulePath\Classes" -EA 0;
 #update documentation
 
 $ses = New-PsSession;
-$docsPth = "$modulePath\docs" 
+$docsPth = "$PSScriptRoot\docs" 
 
 Invoke-Command -Session $ses -ScriptBlock {
 	$moduleName = $Using:moduleName 
 	$modulePath = $Using:modulePath
 	$docsPth = $Using:docsPth 
-	New-Dir $docsPth;
+	mkdir $docsPth -EA 0;
 	Remove-Module $moduleName -force -EA 0;
 	Import-Module "$modulePath\$moduleName.psm1" -force;
 	#import any classes so they are recognized and do it twice to resolve classes with dependencies
@@ -76,10 +76,11 @@ Invoke-Command -Session $ses -ScriptBlock {
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force -EA 0;}
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force;}
 	# Remove old markdown files
-	$docsPth | Get-ChildItem -Filter '*.md' | Where-Object Name -NotMatch 'about_*' | Remove-Item -Force;
+	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Where-Object Name -NotMatch 'about_*' | Remove-Item -Force;
 	New-MarkdownHelp -module $moduleName -Force -OutputFolder $docsPth;
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
+		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 	} catch {
 		Write-Warning "There was an error creating the external help from the markdown. $($error) Removing current external help and trying again"
 		Remove-Item -Force -Recurse "$docsPth\en-us";
