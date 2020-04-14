@@ -145,8 +145,8 @@ nav:
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
-mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
-$buildPth = "$Home\ModuleBuild";
+# mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
+$buildPth = "$Home\ModuleBuild\$moduleName";
 $moduleFile = "$buildPth\$moduleName.psm1";
 
 # Create the build output folder
@@ -167,7 +167,7 @@ if ((Get-ChildItem "$modulePath\bin").count -gt 0) {
 	Copy-Item "$modulePath\bin" "$buildPth\bin" -Recurse;
 	Add-Content -Path $moduleFile -Value "`$bin = `"`$PSModuleRoot\bin`"";
 }
-Copy-Item "$modulePath\tools" "$buildPth\tools" -Recurse;
+# Copy-Item "$modulePath\tools" "$buildPth\tools" -Recurse;
 Add-Content -Path $moduleFile -Value "`$tools = `"`$PSModuleRoot\tools`"";
 
 

@@ -3,7 +3,8 @@ nav:
 	- Home: index.md
 	- About: about_FogApi.md
 	- Commands: 
-		- 'Index': 'commands/index.md'		- 'Add-FogHostMac': 'commands/Add-FogHostMac.md'
+		- 'Index': 'commands/index.md'
+		- 'Add-FogHostMac': 'commands/Add-FogHostMac.md'
 		- 'Approve-FogPendingMac': 'commands/Approve-FogPendingMac.md'
 		- 'Deny-FogPendingMac': 'commands/Deny-FogPendingMac.md'
 		- 'Get-FogActiveTasks': 'commands/Get-FogActiveTasks.md'
