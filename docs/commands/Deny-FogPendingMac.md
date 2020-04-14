@@ -1,7 +1,7 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac
+online version: https://fogapi.readthedocs.io/en/latest/commands/Deny-FogPendingMac
 schema: 2.0.0
 ---
 

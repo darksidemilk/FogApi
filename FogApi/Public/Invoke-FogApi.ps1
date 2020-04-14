@@ -58,12 +58,9 @@ function Invoke-FogApi {
             #if your fogserver was named rawr and you wanted to put rename host 123 to meow
             Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";
 
-        .Link
-            https://news.fogproject.org/simplified-api-documentation/
-
         .NOTES
             The online version of this help takes you to the fog project api help page
-
+            See Also https://news.fogproject.org/simplified-api-documentation/
 #>
 
     [CmdletBinding()]

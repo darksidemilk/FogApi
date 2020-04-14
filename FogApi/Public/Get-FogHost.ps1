@@ -28,13 +28,6 @@ function Get-FogHost {
     Get-FogHost
     If you specify no param it will return your current host from fog
 
-    .LINK
-    Get-FogHosts
-
-    .LINK
-    Get-FogObject
-
-
 #>
     
     [CmdletBinding()]

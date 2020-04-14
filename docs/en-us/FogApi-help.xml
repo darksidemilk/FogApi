@@ -108,12 +108,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:linkText>
+        <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
-      </maml:navigationLink>
-      <maml:navigationLink>
-        <maml:linkText>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -179,7 +175,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Approve-FogPendingMac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -245,7 +241,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Deny-FogPendingMac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -286,7 +282,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogActiveTasks</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -352,7 +348,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogAssociatedSnapins</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -418,7 +414,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostMac</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroup</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -547,27 +543,25 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-FogHost -hostName MewoMachine</dev:code>
+        <dev:code>Get-FogHost -hostName MewoMachine
+This would return the fog details of a host named MeowMachine in your fog instance</dev:code>
         <dev:remarks>
-          <maml:para>This would return the fog details of a host named MeowMachine in your fog instance</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-FogHost</dev:code>
+        <dev:code>Get-FogHost
+If you specify no param it will return your current host from fog</dev:code>
         <dev:remarks>
-          <maml:para>If you specify no param it will return your current host from fog</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Get-FogHosts</maml:linkText>
-        <maml:uri></maml:uri>
-      </maml:navigationLink>
-      <maml:navigationLink>
-        <maml:linkText>Get-FogObject</maml:linkText>
-        <maml:uri></maml:uri>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -605,7 +599,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHosts</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -666,7 +665,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogInventory</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -726,7 +730,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogLog</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -835,7 +844,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogObject</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -871,7 +885,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogServerSettings</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -907,7 +926,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogSnapins</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -968,7 +992,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-PendingMacsForHost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -1029,7 +1058,12 @@
         </dev:remarks>
       </command:example>
     </command:examples>
-    <command:relatedLinks />
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Install-FogService</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
@@ -1126,29 +1160,31 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The online version of this help takes you to the fog project api help page</maml:para>
+        <maml:para>The online version of this help takes you to the fog project api help page See Also https://news.fogproject.org/simplified-api-documentation/</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>#if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server</dev:code>
+        <dev:code>#if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
+Invoke-FogApi;</dev:code>
         <dev:remarks>
-          <maml:para>Invoke-FogApi;</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>#if your fogserver was named rawr and you wanted to put rename host 123 to meow</dev:code>
+        <dev:code>#if your fogserver was named rawr and you wanted to put rename host 123 to meow
+Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";</dev:code>
         <dev:remarks>
-          <maml:para>Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://news.fogproject.org/simplified-api-documentation/</maml:linkText>
-        <maml:uri>https://news.fogproject.org/simplified-api-documentation/</maml:uri>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Invoke-FogApi</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1262,7 +1298,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://news.fogproject.org/simplified-api-documentation/</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/New-FogObject</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1376,7 +1412,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://news.fogproject.org/simplified-api-documentation/</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Remove-FogObject</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1475,7 +1511,7 @@
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>online version of help goes to fog forum post where the idea was conceived There are try catch blocks so the original working code before the get, update, and remove functions existed can remain as a fallback</maml:para>
+        <maml:para>online version of help goes to fog forum post where the idea was conceived There are try catch blocks so the original working code before the get, update, and remove functions existed can remain as a fallback See also https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1489,8 +1525,8 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Remove-UsbMac</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1579,7 +1615,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Reset-HostEncryption</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1669,7 +1705,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogInventory</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1806,7 +1842,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogServerSettings</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1920,7 +1956,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogSnapins</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2010,7 +2046,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Start-FogSnapins</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2150,7 +2186,7 @@
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Update-FogObject</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

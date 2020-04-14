@@ -1,7 +1,7 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version:
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost
 schema: 2.0.0
 ---
 
@@ -27,16 +27,14 @@ computer in fog
 ### EXAMPLE 1
 ```
 Get-FogHost -hostName MewoMachine
-```
-
 This would return the fog details of a host named MeowMachine in your fog instance
+```
 
 ### EXAMPLE 2
 ```
 Get-FogHost
-```
-
 If you specify no param it will return your current host from fog
+```
 
 ## PARAMETERS
 
@@ -110,8 +108,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[Get-FogHosts]()
-
-[Get-FogObject]()
-

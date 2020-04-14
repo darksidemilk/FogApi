@@ -1,7 +1,7 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
+online version: https://fogapi.readthedocs.io/en/latest/commands/Remove-UsbMac
 schema: 2.0.0
 ---
 
@@ -83,8 +83,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 online version of help goes to fog forum post where the idea was conceived
 There are try catch blocks so the original working code before the get, update, and remove functions existed can remain as a fallback
+See also https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
 
 ## RELATED LINKS
-
-[https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14](https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14)
-

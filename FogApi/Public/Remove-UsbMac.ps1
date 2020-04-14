@@ -15,12 +15,10 @@ function Remove-UsbMac {
     .EXAMPLE
         Remove-UsbMacs -fogServer "foggy" -usbMacs @("01:23:45:67:89:10", "00:00:00:00:00:00")
 
-    .Link
-        https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
-
     .NOTES
         online version of help goes to fog forum post where the idea was conceived
         There are try catch blocks so the original working code before the get, update, and remove functions existed can remain as a fallback
+        See also https://forums.fogproject.org/topic/10837/usb-ethernet-adapter-mac-s-for-imaging-multiple-hosts-universal-imaging-nics-wired-nic-for-all-wireless-devices/14
 #>
     [CmdletBinding()]
     param (

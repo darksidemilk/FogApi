@@ -18,7 +18,7 @@ Gets the current settings for use in api calls
             if (!(Test-Path "$ENV:APPDATA\FogApi")) {
                 mkdir "$ENV:APPDATA\FogApi";
             }
-            Copy-Item "$tools\settings.json" $settingsFile -Force
+            Copy-Item "$lib\settings.json" $settingsFile -Force
         }       
     }
 

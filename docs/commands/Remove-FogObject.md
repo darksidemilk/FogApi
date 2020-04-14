@@ -1,7 +1,7 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://news.fogproject.org/simplified-api-documentation/
+online version: https://fogapi.readthedocs.io/en/latest/commands/Remove-FogObject
 schema: 2.0.0
 ---
 

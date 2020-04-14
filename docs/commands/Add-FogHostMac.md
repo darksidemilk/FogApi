@@ -85,6 +85,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
-[Get-FogHost](https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost)
-

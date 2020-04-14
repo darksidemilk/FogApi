@@ -1,7 +1,7 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version:
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHosts
 schema: 2.0.0
 ---
 

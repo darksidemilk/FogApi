@@ -37,7 +37,7 @@ switch to make setting these an interactive process
             if (!(Test-Path "$ENV:APPDATA\FogApi")) {
                 mkdir "$ENV:APPDATA\FogApi";
             }
-            Copy-Item "$tools\settings.json" $settingsFile -Force
+            Copy-Item "$lib\settings.json" $settingsFile -Force
         }
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";

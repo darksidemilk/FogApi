@@ -54,8 +54,8 @@ $moduleName = 'FogApi'
 $modulePath = "$PSScriptRoot\$moduleName";
 
 mkdir $modulePath -EA 0;
-mkdir "$modulePath\tools" -EA 0;
-mkdir "$modulePath\docs" -EA 0;
+# mkdir "$modulePath\tools" -EA 0;
+# mkdir "$modulePath\docs" -EA 0;
 mkdir "$modulePath\lib" -EA 0;
 mkdir "$modulePath\bin" -EA 0;
 mkdir "$modulePath\Public" -EA 0;
@@ -64,18 +64,18 @@ mkdir "$modulePath\Classes" -EA 0;
 
 #update documentation
 
-try {
-	$ses = New-PsSession -EA Stop;
-} catch {
-	$credential = Get-Credential -Message "input local credentials for new local session"
-	$ses = New-PsSession -Credential $credential;
-}
+# try {
+# 	$ses = New-PsSession -EA Stop;
+# } catch {
+# 	$credential = Get-Credential -Message "input local credentials for new local session"
+# 	$ses = New-PsSession -Credential $credential;
+# }
 $docsPth = "$PSScriptRoot\docs" 
 
-Invoke-Command -Session $ses -ScriptBlock {
-	$moduleName = $Using:moduleName 
-	$modulePath = $Using:modulePath
-	$docsPth = $Using:docsPth 
+# Invoke-Command -Session $ses -ScriptBlock {
+	# $moduleName = $Using:moduleName 
+	# $modulePath = $Using:modulePath
+	# $docsPth = $Using:docsPth 
 	mkdir $docsPth -EA 0;
 	Remove-Module $moduleName -force -EA 0;
 	Import-Module "$modulePath\$moduleName.psm1" -force;
@@ -84,27 +84,49 @@ Invoke-Command -Session $ses -ScriptBlock {
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force -EA 0;}
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force;}
 	# Remove old markdown files
-	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Where-Object Name -NotMatch 'index*' | Remove-Item -Force;
-	New-MarkdownHelp -module $moduleName -Force -OutputFolder "$docsPth\commands" -WithModulePage -ModulePagePath "$docsPth\commands";
-	#remove old index
-	Remove-Item "$docsPth\commands\index.md";
-	#rename module page to index.md
-	Rename-Item "$docsPth\commands\$moduleName.md" -NewName "index.md" -force;
+	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Remove-Item -Force;
+	New-MarkdownHelp -module $moduleName -Force -OutputFolder "$docsPth\commands";
 	
-	#remove empty descriptions
-
-	#Update readthedocs nav index
+	
 	
 	# Add Online Versions to each commands markdown file
-	Get-ChildItem "$docsPth\commands" | ? name -NotMatch 'index' | Foreach-Object {
+	$indexFile = "$docsPth\commands\index.md"
+	$mkdocsYml = "$PSScriptRoot\mkdocs.yml";
+	$mkdocs = @"
+site_name: FogApi
+nav:
+	- Home: index.md
+	- About: about_FogApi.md
+	- Commands: 
+		- 'Index': 'commands/index.md'
+"@
+	$mkdocs += "`n";
+	$index = "# FogAPI`n`n"
+	Get-ChildItem "$docsPth\commands" | Where-Object name -NotMatch 'index' | Foreach-Object {
 		#add online version
-		$name = $_.Name; 
-		$link = "https://fogapi.readthedocs.io/en/latest/commands/$name";
+		$name = $_.Name;
+		$baseName = $_.BaseName
+		$file = $_.FullName;
+		$link = "https://fogapi.readthedocs.io/en/latest/commands/$basename";
 		#insert in onlineVersion at top
+		$content = Get-Content $file;
+		$onlineStr = ($content | Select-String "online version: *" -Raw).tostring();
+		$newOnlineStr = "$onlineStr $link";
+		$content = $content.replace($onlineStr,$newOnlineStr);
+		Set-Content -Path $file -Value $content;
 		
-		#insert in first .link entry
+		#Update commands index
+		$index += "## [$basename]($name)`n`n"
+		#Update readthedocs nav index
+		$mkdocs += "`t`t- '$basename': 'commands/$name'`n";
+		#maybe later add something that converts any functions in .link to related links
 
 	}
+
+	$mkdocs += "`ntheme: readthedocs"
+
+	Set-Content $mkdocsYml -value $mkdocs;
+	Set-Content $indexFile -Value $index;
 
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
@@ -116,9 +138,9 @@ Invoke-Command -Session $ses -ScriptBlock {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -EA 0 -Force;
 		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 	}
-}
+# }
 
-$ses | Remove-PsSession;
+# $ses | Remove-PsSession;
 
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
@@ -155,7 +177,7 @@ Add-Content -Path $moduleFile -Value "`$tools = `"`$PSModuleRoot\tools`"";
 #Add Classes
 if ($null -ne $Classes) {
 
-	$Classes | % {
+	$Classes | ForEach-Object {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);
 	}
 
@@ -183,13 +205,3 @@ if ($null -ne $PrivateFunctions) {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);            
 	}
 }
-
-
-
-
-
-
-
-
-
-
