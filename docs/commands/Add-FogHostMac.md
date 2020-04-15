@@ -17,21 +17,28 @@ Add-FogHostMac [[-hostID] <Object>] [[-macAddress] <Object>] [-primary] [<Common
 ```
 
 ## DESCRIPTION
-Adds a given macaddress to a host of a given ID
+Adds a given macaddress to a host of a given ID, optionatlly it can be set as primary
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Add-FogHostMac -hostid 123 -macaddress "12:34:56:78:90" -primary
 ```
 
-{{ Add example description here }}
+Add the macaddress "12:34:56:78:90" of the host with the id 123 and set it as the primary mac
+
+### EXAMPLE 2
+```
+Add-FogHostMac -hostID "computerName" -macaddress "12:34:56:78:90"
+```
+
+Uses the hostname to find the hostid in fog then adds "12:34:56:78:90" as a secondary mac on the host
 
 ## PARAMETERS
 
 ### -hostID
-{{ Fill hostID Description }}
+Can either be the id number of the host object or the name of the host in a string
 
 ```yaml
 Type: Object
@@ -46,7 +53,8 @@ Accept wildcard characters: False
 ```
 
 ### -macAddress
-{{ Fill macAddress Description }}
+The mac address you want to add.
+Should be in the format of "12:34:56:78:90"
 
 ```yaml
 Type: Object
@@ -61,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -primary
-{{ Fill primary Description }}
+switch parameter to set the macaddress as the primary for the host
 
 ```yaml
 Type: SwitchParameter

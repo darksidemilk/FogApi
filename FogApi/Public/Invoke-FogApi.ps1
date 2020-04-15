@@ -53,12 +53,12 @@ function Invoke-FogApi {
         .EXAMPLE
             Invoke-FogApi;
 
-            #if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
+            if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
 
         .Example
             Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";
         
-            #if your fogserver was named rawr and you wanted to put rename host 123 to meow
+            if your fogserver was named rawr and you wanted to put rename host 123 to meow
 
         .NOTES
             The online version of this help takes you to the fog project api help page

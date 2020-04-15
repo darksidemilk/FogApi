@@ -10,7 +10,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Adds a given macaddress to a host of a given ID</maml:para>
+      <maml:para>Adds a given macaddress to a host of a given ID, optionatlly it can be set as primary</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -18,7 +18,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostID</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill hostID Description }}</maml:para>
+            <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -30,7 +30,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>macAddress</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill macAddress Description }}</maml:para>
+            <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -42,7 +42,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>primary</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill primary Description }}</maml:para>
+            <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
           </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -56,7 +56,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostID</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill hostID Description }}</maml:para>
+          <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -68,7 +68,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>macAddress</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill macAddress Description }}</maml:para>
+          <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -80,7 +80,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>primary</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill primary Description }}</maml:para>
+          <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
         </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -99,10 +99,17 @@
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Add-FogHostMac -hostid 123 -macaddress "12:34:56:78:90" -primary</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Add the macaddress "12:34:56:78:90" of the host with the id 123 and set it as the primary mac</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Add-FogHostMac -hostID "computerName" -macaddress "12:34:56:78:90"</dev:code>
+        <dev:remarks>
+          <maml:para>Uses the hostname to find the hostid in fog then adds "12:34:56:78:90" as a secondary mac on the host</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1166,18 +1173,16 @@ If you specify no param it will return your current host from fog</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>#if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
-Invoke-FogApi;</dev:code>
+        <dev:code>Invoke-FogApi;</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>#if your fogserver was named rawr and you wanted to put rename host 123 to meow
-Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";</dev:code>
+        <dev:code>Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>if your fogserver was named rawr and you wanted to put rename host 123 to meow</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

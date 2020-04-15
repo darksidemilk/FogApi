@@ -30,15 +30,17 @@ fogServer = "your fog server hostname or ip address to be used for created the u
 
 ### EXAMPLE 1
 ```
-#if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
 Invoke-FogApi;
 ```
 
+if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
+
 ### EXAMPLE 2
 ```
-#if your fogserver was named rawr and you wanted to put rename host 123 to meow
 Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";
 ```
+
+if your fogserver was named rawr and you wanted to put rename host 123 to meow
 
 ## PARAMETERS
 
