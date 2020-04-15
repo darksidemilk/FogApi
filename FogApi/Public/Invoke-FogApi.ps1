@@ -51,12 +51,14 @@ function Invoke-FogApi {
             The jsondata string for including data in the body of a request
 
         .EXAMPLE
-            #if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
             Invoke-FogApi;
 
+            #if you had the api tokens set as default values and wanted to get all hosts and info you could run this, assuming your fogserver is accessible on http://fog-server
+
         .Example
-            #if your fogserver was named rawr and you wanted to put rename host 123 to meow
             Invoke-FogApi -fogServer "rawr" -uriPath "host/123" -Method "Put" -jsonData "{ `"name`": meow }";
+        
+            #if your fogserver was named rawr and you wanted to put rename host 123 to meow
 
         .NOTES
             The online version of this help takes you to the fog project api help page

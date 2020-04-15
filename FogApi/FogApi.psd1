@@ -12,7 +12,7 @@
 RootModule = "$PSScriptRoot\fogapi.psm1"
 
 # Version number of this module.
-ModuleVersion = '1904.0.0.1'
+ModuleVersion = '2002.2.0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'FOG Project'
 Copyright = '(c) 2018 JJ Fullmer. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = '    "''To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
+Description = "To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
     To Install this module follow these steps
     * Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi Install-Module -name fogApi
 
@@ -94,7 +94,7 @@ Description = '    "''To install this module you need at least powershell v3, wa
     This is just one small example of the limitless things you can do with the api and powershell objects.
 
     see also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
-    '''
+    "
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '3.0'
