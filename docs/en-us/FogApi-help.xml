@@ -138,7 +138,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill macObject Description }}</maml:para>
+            <maml:para>Should be a return object from `Get-PendingMacsForHost`</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -153,7 +153,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill macObject Description }}</maml:para>
+          <maml:para>Should be a return object from `Get-PendingMacsForHost`</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -172,10 +172,11 @@
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
+Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This gets the first mac to approve in the list of pending macs and approves it</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

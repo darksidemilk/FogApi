@@ -8,6 +8,15 @@ function Approve-FogPendingMac {
     each of these objects has the properties from the macaddressassociation rest objects which are
     id, hostID, mac, description, pending, primary, clientIgnore, and imageIgnore
     This function simply changes Pending from 0 to 1 and then updates it via the api
+
+    .Parameter macobject
+    Should be a return object from `Get-PendingMacsForHost`
+
+    .EXAMPLE
+    $macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
+    Approve-FogPendingMac -macObject $macToApprove
+
+    This gets the first mac to approve in the list of pending macs and approves it 
 #>
     
     [CmdletBinding()]

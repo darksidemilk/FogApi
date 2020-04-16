@@ -24,17 +24,18 @@ This function simply changes Pending from 0 to 1 and then updates it via the api
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
+Approve-FogPendingMac -macObject $macToApprove
 ```
 
-{{ Add example description here }}
+This gets the first mac to approve in the list of pending macs and approves it
 
 ## PARAMETERS
 
 ### -macObject
-{{ Fill macObject Description }}
+Should be a return object from \`Get-PendingMacsForHost\`
 
 ```yaml
 Type: Object
