@@ -27,14 +27,16 @@ computer in fog
 ### EXAMPLE 1
 ```
 Get-FogHost -hostName MewoMachine
-This would return the fog details of a host named MeowMachine in your fog instance
 ```
+
+This would return the fog details of a host named MeowMachine in your fog instance
 
 ### EXAMPLE 2
 ```
 Get-FogHost
-If you specify no param it will return your current host from fog
 ```
+
+If you specify no param it will return your current host from fog
 
 ## PARAMETERS
 

@@ -569,18 +569,16 @@ $assignedSnapins | Where-Object name -match "office"</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-FogHost -hostName MewoMachine
-This would return the fog details of a host named MeowMachine in your fog instance</dev:code>
+        <dev:code>Get-FogHost -hostName MewoMachine</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>This would return the fog details of a host named MeowMachine in your fog instance</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-FogHost
-If you specify no param it will return your current host from fog</dev:code>
+        <dev:code>Get-FogHost</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>If you specify no param it will return your current host from fog</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -601,7 +599,7 @@ If you specify no param it will return your current host from fog</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>helper function for get-fogobject that gets all host objects</maml:para>
+      <maml:para>helper function for get-fogobject that gets all host objects The return object can be filtered with `Where-Object` to find hosts within based on host properties</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -621,7 +619,7 @@ If you specify no param it will return your current host from fog</dev:code>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Get-FogHosts</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>returns an array object with all hosts in the fogserver.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -650,7 +648,7 @@ If you specify no param it will return your current host from fog</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObj</maml:name>
           <maml:Description>
-            <maml:para>the host to get the model of the inventory object from</maml:para>
+            <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -665,7 +663,7 @@ If you specify no param it will return your current host from fog</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObj</maml:name>
         <maml:Description>
-          <maml:para>the host to get the model of the inventory object from</maml:para>
+          <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -684,10 +682,11 @@ If you specify no param it will return your current host from fog</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$json = Get-FogInventory
+Set-FogInventory -jsonData $json</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Gets the inventory of the currenthost using wmi and formats in the proper json then sets the inventory for that host in fog.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

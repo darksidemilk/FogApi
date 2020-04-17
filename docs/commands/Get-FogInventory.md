@@ -22,17 +22,21 @@ Uses various wmi classes to get every possible inventory item to set in fog
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$json = Get-FogInventory
+Set-FogInventory -jsonData $json
 ```
 
-{{ Add example description here }}
+Gets the inventory of the currenthost using wmi and formats in the proper json
+then sets the inventory for that host in fog.
 
 ## PARAMETERS
 
 ### -hostObj
 the host to get the model of the inventory object from
+This is used for the inventory structure of the object
+It defaults to the current host
 
 ```yaml
 Type: Object

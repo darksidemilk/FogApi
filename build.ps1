@@ -201,7 +201,7 @@ Add-Content -Path $moduleFile -Value $heading
         }
 #Add Private Functions
 if ($null -ne $PrivateFunctions) {
-	$PrivateFunctions | % {
+	$PrivateFunctions | ForEach-Object {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);            
 	}
 }

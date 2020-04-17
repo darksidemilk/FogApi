@@ -9,6 +9,15 @@ function Get-FogInventory {
 
     .PARAMETER hostObj
     the host to get the model of the inventory object from
+    This is used for the inventory structure of the object
+    It defaults to the current host
+
+    .EXAMPLE
+    $json = Get-FogInventory
+    Set-FogInventory -jsonData $json
+
+    Gets the inventory of the currenthost using wmi and formats in the proper json
+    then sets the inventory for that host in fog.
 
 #>
 

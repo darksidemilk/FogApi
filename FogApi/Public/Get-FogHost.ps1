@@ -22,10 +22,12 @@ function Get-FogHost {
     
     .EXAMPLE
     Get-FogHost -hostName MewoMachine
+    
     This would return the fog details of a host named MeowMachine in your fog instance
 
     .EXAMPLE
     Get-FogHost
+
     If you specify no param it will return your current host from fog
 
 #>

@@ -18,6 +18,7 @@ Get-FogHosts [<CommonParameters>]
 
 ## DESCRIPTION
 helper function for get-fogobject that gets all host objects
+The return object can be filtered with \`Where-Object\` to find hosts within based on host properties
 
 ## EXAMPLES
 
@@ -25,6 +26,8 @@ helper function for get-fogobject that gets all host objects
 ```
 Get-FogHosts
 ```
+
+returns an array object with all hosts in the fogserver.
 
 ## PARAMETERS
 
