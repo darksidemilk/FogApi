@@ -46,9 +46,14 @@
  This is a light version of the build script I use, but it should be enough for basic testing
  of new features. The original contains propietary code that can't be shared.
 
+ .PARAMETER releaseNote
+ A string explaining what was done in the build to be added to the release notes
+
 #> 
 [CmdletBinding()]
-Param()
+Param(
+	$releaseNote = "general updates and bug fixes"
+)
 
 $moduleName = 'FogApi'
 $modulePath = "$PSScriptRoot\$moduleName";
@@ -85,6 +90,7 @@ $docsPth = "$PSScriptRoot\docs"
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force;}
 	# Remove old markdown files
 	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Remove-Item -Force;
+	Remove-Item -Path "$docsPth\ReleaseNotes.md"
 	New-MarkdownHelp -module $moduleName -Force -OutputFolder "$docsPth\commands";
 	
 	
@@ -95,10 +101,11 @@ $docsPth = "$PSScriptRoot\docs"
 	$mkdocs = @"
 site_name: FogApi
 nav:
-	- Home: index.md
-	- About: about_FogApi.md
-	- Commands: 
-		- 'Index': 'commands/index.md'
+  - Home: index.md
+  - About: about_FogApi.md
+  - Release Notes: ReleaseNotes.md
+  - Commands: 
+    - 'Index': 'commands/index.md'
 "@
 	$mkdocs += "`n";
 	$index = "# FogAPI`n`n"
@@ -118,7 +125,7 @@ nav:
 		#Update commands index
 		$index += "## [$basename]($name)`n`n"
 		#Update readthedocs nav index
-		$mkdocs += "`t`t- '$basename': 'commands/$name'`n";
+		$mkdocs += "    - '$basename': 'commands/$name'`n";
 		#maybe later add something that converts any functions in .link to related links
 
 	}
@@ -156,7 +163,6 @@ if (Test-Path $buildPth) {
 mkdir $buildPth | Out-Null;
 
 New-Item $moduleFile -Force | Out-Null;
-Copy-Item "$modulePath\$moduleName.psd1" "$buildPth\$moduleName.psd1";
 Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
 if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
@@ -205,3 +211,26 @@ if ($null -ne $PrivateFunctions) {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);            
 	}
 }
+
+#Update The Manifest
+
+$manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
+$cur = test-ModuleManifest -Path $manifest;
+
+[System.Version]$oldVer = (Test-ModuleManifest $manifest).Version
+$verArgs = New-Object System.Collections.Generic.list[system.object];
+$verArgs.Add($oldVer.Major)
+$verArgs.Add($oldVer.Minor)
+$verArgs.Add($oldVer.Build)
+$verArgs.Add(($oldVer.Revision + 1))
+if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
+$newVer = New-Object version -ArgumentList $verArgs;
+$releaseNotes = "`n# $newVer`n`n`t$releaseNote`n$($cur.ReleaseNotes)"
+
+Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+
+
+Copy-Item $manifest "$buildPth\$moduleName.psd1";
+
+#create release notes markdown
+Set-Content -Path "$docsPth\ReleaseNotes.md" -value ((Test-ModuleManifest $manifest).ReleaseNotes)

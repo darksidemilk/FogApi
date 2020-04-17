@@ -2,6 +2,7 @@ site_name: FogApi
 nav:
   - Home: index.md
   - About: about_FogApi.md
+  - Release Notes: ReleaseNotes.md
   - Commands: 
     - 'Index': 'commands/index.md'
     - 'Add-FogHostMac': 'commands/Add-FogHostMac.md'

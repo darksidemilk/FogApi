@@ -1,0 +1,200 @@
+
+#2002.2.0.7
+
+	Test build
+
+#2002.2.0.6
+
+	Test build
+
+
+#2002.2.0.5
+
+    Test build
+
+#2002.2.0.4
+    
+    Test build
+
+# 1904.0.0.1
+        
+    CF-249 #comment fixed add-fogmac property within the function and incrementing the version to match release time
+
+# 1903.0.0.23
+
+    Added functions for reseting host encryption as well as adding, approving, and removing macs from hosts
+
+# 1903.0.0.22
+
+    Move from dev to production
+
+# 1903.0.0.21
+
+    update documentation
+
+# 1903.0.0.20
+
+    dont addition on random variable create a list
+
+# 1903.0.0.19
+
+    update get settings with same new paths silly
+
+# 1903.0.0.18
+
+    force the copy
+
+# 1903.0.0.17
+
+    change where settings file is stored to an appdata folder of the current user
+
+# 1903.0.0.16
+
+    CF-214 #comment updated remove-usbmac to utilize internal functions better and made it more universal, may want to later update it to remove all matching associations of the list, but would also need a function for getting the mac list of the host it is connected to when it is the primary which sounds cumbersome at the moment
+
+# 1903.0.0.15
+
+    Updated documentation for each function and moved the dynamic param functions to be private functions as they dont need to be visible in the user interface
+
+# 1903.0.0.14
+
+    CF-223 #comment use internal commands more
+
+# 1903.0.0.13
+
+    CF-223 #comment use internal commands more
+
+# 1903.0.0.12
+
+    dont try to add snapins that are already there
+
+# 1903.0.0.11
+
+    CF-223 #comment updated set-fogsnapins to use internal new-fogobject function and had it only attempt to set snapins that actually exist
+
+# 1903.0.0.10
+
+    CF-223 #comment updated set-fogsnapins to use internal new-fogobject function and had it only attempt to set snapins that actually exist
+
+# 1903.0.0.9
+
+    CF-223 #comment made setting list of fogsnapins more universal and not reference object it doesnt need to
+
+# 1903.0.0.8
+
+    CF-223 #comment made setting list of fogsnapins more universal and not reference object it doesnt need to
+
+# 1903.0.0.7
+
+    CF-223 #comment fix uuid get in getfoghost
+
+# 1903.0.0.6
+
+    CF-223 #comment fix uuid get and set for when uuid isnt correct in first spot
+
+# 1903.0.0.5
+
+    CF-129 #comment updated fogapi syntax issues fixes
+
+# 1903.0.0.4
+
+    CF-206 #comment quick syntax updates on fogapi dev module
+
+# 1903.0.0.3
+
+    CF-205 #comment updated fogapi dev module with functions for snapins
+
+# 1903.0.0.2
+
+    CF-204 #comment updated various functions to utilize new structure
+
+# 1903.0.0.1
+
+    CF-204 #comment updated fogapi module to new module structure
+
+# 1902.0.0.3
+
+    CF-218 #comment default invoke-api to use GET method
+
+# 1902.0.0.2
+
+    CF-218 #comment need to have published the dev fogapi module without dev prefix
+
+# 1902.0.0.1
+
+    CF-124 #comment added get-foglog function for easier opening of a dynamic fog log when debugging provisioning and imaging issues
+
+# 1.8.1.6
+
+    testing fix for update error looks like the wrong dynamic parameter was being referenced where the uri was being built
+
+# 1.8.1.5
+
+    CF-120 #comment adding fogapi dev module to repo
+
+# 1.8.1.4
+
+    fix possible exit
+
+# 1.8.1.3
+
+    use spacebar and use ea 0 on get-service check for install-fogservice
+
+# 1.8.1.2
+
+    finish end block on install-fogservice
+
+# 1.8.1.1
+
+    updated install-fogservice to try using the smart installer if the msi doesn	 work
+
+# 1.8.0.5
+
+    fixes to settings setter and remove double slashes
+
+# 1.8.0.4
+
+    fixes to settings setter and remove double slashes
+
+# 1.8.0.3
+
+    fixes to settings setter
+
+# 1.8.0.2
+
+    fixes to settings setter
+
+# 1.8.0.1
+
+    updated settings setter and getter to store settings json in fog service folder
+
+# 1.7.1.1
+
+    try catch block to attempt iwr when irm fails
+
+# 1.7.0.5
+
+    update update function to allow specifying uri path manually
+
+# 1.7.0.4
+
+    update update function to allow specifying uri path manually
+
+# 1.7
+    
+    Fixed parantheses typo in get-fogobject and signing issue
+
+# 1.5
+    
+    Added dynamic parameters and added get-fogserversettings and set-fogserversettings to allow for setting the api keys and server name in the shell
+    One known issue with the dynamic parameters is that they currently are not working as expected with positions they have to be named. i.e. you have to say get-fogobject -type object -coreObject host not Get-FogObject object host like I wanted
+    The auto complete works for positional parameters but the function doesn''t seem to think there''s a vaule for the parameter.
+
+# 1.3
+
+    added better description and links, fixed new-fogobject to not require id for all POST api calls as there is no id yet for new items.
+
+# 1.2
+    
+    Initial Release, allow for easy manipulation of FOG server data with powershell objects
+
