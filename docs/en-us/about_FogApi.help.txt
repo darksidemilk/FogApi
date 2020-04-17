@@ -36,7 +36,7 @@ Build/Revision
 
 INSTALLATION
     All completed/tested/stable releases of this module will be published to
-    powershell gallery. I don't currently have any plans to use
+    powershell gallery. I don't currently have any plans to use github releases
 
 Requirements
     To install this module you need at least powershell v3, was created with 5.1

@@ -35,7 +35,7 @@ This will be used internally on git commits and occasionally in published versio
 
 # Installation
 
-All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use 
+All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use github releases 
 
 ## Requirements
 

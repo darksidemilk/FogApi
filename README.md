@@ -3,6 +3,8 @@
 This is a powershell module to make using the Fog Project API even easier.
 FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation. It can be used to create more automation or to simply have a command line method of controlling fog operations.
 
+Docs can be found at https://fogapi.readthedocs.io/en/latest/
+
 ## Notes about its new home and future structuring
 
 This module used to be housed at https://github.com/FOGProject/fog-community-scripts/tree/master/PowershellModules/FogApi but has been now moved to its own repo to follow best practicies for powershell modules. Overtime I hope to add pester tests and use other powershell build tools like invoke-build or psake. For now there's a simpler build.ps1 script for combinging the functions into a single module and generating/building/compiling the documentation (using the platyps module). You only need to use the build.ps1 if you want to manually install it instead of using the simpler `Install-Module fogapi` to install it from the powershell gallery.
@@ -31,7 +33,7 @@ This will be used internally on git commits and occasionally in published versio
 
 # Installation
 
-All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use 
+All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use github releases 
 
 ## Requirements
 
