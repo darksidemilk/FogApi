@@ -17,7 +17,8 @@ Get-PendingMacsForHost [[-hostID] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the pending macs for a host that can then be approved with approve-pendingmac
+Gets the pending macs for a host that can then be approved with approve-fogpendingmac
+or denied with deny-fogpendingmac
 
 ## EXAMPLES
 

@@ -32,10 +32,18 @@ Approve-FogPendingMac -macObject $macToApprove
 
 This gets the first mac to approve in the list of pending macs and approves it
 
+### EXAMPLE 2
+```
+$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
+Approve-FogPendingMac -macObject $pendingMac
+```
+
+Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123
+
 ## PARAMETERS
 
 ### -macObject
-Should be a return object from \`Get-PendingMacsForHost\`
+Should be an item from the array return object from \`Get-PendingMacsForHost\`
 
 ```yaml
 Type: Object

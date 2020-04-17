@@ -21,12 +21,12 @@ Gets the current active tasks and expands them into an object
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-FogActiveTasks
 ```
 
-{{ Add example description here }}
+This will list any active tasks and their properties
 
 ## PARAMETERS
 

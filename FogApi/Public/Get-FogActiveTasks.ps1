@@ -6,6 +6,11 @@ function Get-FogActiveTasks {
     .DESCRIPTION
     Gets the current active tasks and expands them into an object
     
+    .EXAMPLE
+    Get-FogActiveTasks
+
+    This will list any active tasks and their properties
+
     #>
     
     [CmdletBinding()]

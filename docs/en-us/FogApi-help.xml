@@ -138,7 +138,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
           <maml:Description>
-            <maml:para>Should be a return object from `Get-PendingMacsForHost`</maml:para>
+            <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -153,7 +153,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
         <maml:Description>
-          <maml:para>Should be a return object from `Get-PendingMacsForHost`</maml:para>
+          <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -177,6 +177,14 @@
 Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <dev:remarks>
           <maml:para>This gets the first mac to approve in the list of pending macs and approves it</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
+Approve-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:remarks>
+          <maml:para>Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -205,7 +213,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill macObject Description }}</maml:para>
+            <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -220,7 +228,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill macObject Description }}</maml:para>
+          <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -239,10 +247,19 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$macToDeny = (Get-PendingMacsForHost -hostID 123)[0]
+Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This gets the first mac to approve in the list of pending macs and approves it</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
+Deny-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:remarks>
+          <maml:para>Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -280,10 +297,10 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogActiveTasks</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This will list any active tasks and their properties</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -304,7 +321,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Gives a full list of all snapins associated with a given host</maml:para>
+      <maml:para>Gives a full list of all snapins associated with a given host Gets the current host's associated snapins if no hostid is given Finds the associated snapins by first getting all snapinassociations with all hosts and filters to ones with the hostid It then uses the snapinid of that filtering to get and add each snapin object to a list object</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -312,7 +329,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill hostId Description }}</maml:para>
+            <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -327,7 +344,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill hostId Description }}</maml:para>
+          <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -346,10 +363,11 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$assignedSnapins = Get-FogAssociatedSnapins
+$assignedSnapins | Where-Object name -match "office"</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Gets all the assigned snapins of the current host and then filters to any with the name office in them thus showing you what version of office you have assigned as a snapin to your host</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -378,7 +396,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
           <maml:Description>
-            <maml:para>{{ Fill hostId Description }}</maml:para>
+            <maml:para>The hostid to get the group memberships of</maml:para>
           </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -393,7 +411,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
         <maml:Description>
-          <maml:para>{{ Fill hostId Description }}</maml:para>
+          <maml:para>The hostid to get the group memberships of</maml:para>
         </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -407,15 +425,15 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Includes a propietary if block for the organization this was originally written for. Will be taken out once it is moved, but it is in an if statement as to not affect others  Was originally meant to find just one group filtering out some global/parent groups. Altered to find all groups a host is in</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Gets the fog group membership(s) of the fog host with the name computerName</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -951,7 +969,7 @@ If you specify no param it will return your current host from fog</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Gets the pending macs for a host that can then be approved with approve-pendingmac</maml:para>
+      <maml:para>Gets the pending macs for a host that can then be approved with approve-fogpendingmac or denied with deny-fogpendingmac</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>

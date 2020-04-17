@@ -22,17 +22,17 @@ requires the id of the host you want the groups that aren't the everyone group f
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)
 ```
 
-{{ Add example description here }}
+Gets the fog group membership(s) of the fog host with the name computerName
 
 ## PARAMETERS
 
 ### -hostId
-{{ Fill hostId Description }}
+The hostid to get the group memberships of
 
 ```yaml
 Type: Int32
@@ -54,5 +54,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+Includes a propietary if block for the organization this was originally written for.
+Will be taken out once it is moved, but it is in an if statement as to not affect others 
+Was originally meant to find just one group filtering out some global/parent groups.
+Altered to find all groups a host is in
 
 ## RELATED LINKS

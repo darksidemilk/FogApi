@@ -21,17 +21,26 @@ Deny the approval of a pending mac address to delete its entry from the mac addr
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$macToDeny = (Get-PendingMacsForHost -hostID 123)[0]
+Deny-FogPendingMac -macObject $macToDeny
 ```
 
-{{ Add example description here }}
+This gets the first mac to approve in the list of pending macs and approves it
+
+### EXAMPLE 2
+```
+$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
+Deny-FogPendingMac -macObject $pendingMac
+```
+
+Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123
 
 ## PARAMETERS
 
 ### -macObject
-{{ Fill macObject Description }}
+Should be an item from the array return object from \`Get-PendingMacsForHost\`
 
 ```yaml
 Type: Object

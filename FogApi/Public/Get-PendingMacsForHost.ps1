@@ -4,7 +4,8 @@ function Get-PendingMacsForHost {
     Gets the pending macs for a given hosts
     
     .DESCRIPTION
-    Gets the pending macs for a host that can then be approved with approve-pendingmac
+    Gets the pending macs for a host that can then be approved with approve-fogpendingmac
+    or denied with deny-fogpendingmac
     
     .PARAMETER hostID
     the hostid or hostname of the fog host

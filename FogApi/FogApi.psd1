@@ -12,7 +12,7 @@
 RootModule = "$PSScriptRoot\fogapi.psm1"
 
 # Version number of this module.
-ModuleVersion = '2002.2.0.2'
+ModuleVersion = '2002.2.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,12 +30,17 @@ CompanyName = 'FOG Project'
 Copyright = '(c) 2018 JJ Fullmer. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = "To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
+Description = "This module is used to easily run Fog API commands on your fogserver from a powershell console or script.
+    This essentially gives you a crossplatform commandline interface for fog tasks and makes many things easier to automate.
+
+    The documentation is hosted on readthedocs at https://fogapi.readthedocs.io/en/latest/
+
+    To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6
     To Install this module follow these steps
     * Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi Install-Module -name fogApi
 
     * Manual Method:
-    * download the zip of this repo https://github.com/FOGProject/fog-community-scripts/archive/master.zip and extract it
+    * download the zip of this repo and extract it
         * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
     * Copy the FogApi folder this Readme file is in to...
         * For Windows Powershell v3-v5.1
@@ -55,6 +60,7 @@ Description = "To install this module you need at least powershell v3, was creat
     * Run Import-Module FogApi
 
     The module is now installed.
+    You can use `Set-fogserverSettings` to set your fogserver hostname and api keys.
     The first time you try to run a command the settings.json file will automatically open
     in notepad on windows, nano on linux, or TextEdit on Mac
     You can also open the settings.json file and edit it manually before running your first command.
@@ -175,7 +181,7 @@ PrivateData = @{
         LicenseUri = 'https://github.com/FOGProject/fog-community-scripts/blob/master/LICENSE'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/FOGProject/fog-community-scripts/tree/master/PowershellModules/FogApi'
+        ProjectUri = 'https://github.com/darksidemilk/FogApi'
 
         # A URL to an icon representing this module.
         IconUri = 'https://fogproject.org/images/favicon.ico'
