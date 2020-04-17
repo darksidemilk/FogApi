@@ -1,6 +1,6 @@
 site_name: FogApi
 nav:
-	- Home: index.md
+  - Home: index.md
 	- About: about_FogApi.md
 	- Commands: 
 		- 'Index': 'commands/index.md'
