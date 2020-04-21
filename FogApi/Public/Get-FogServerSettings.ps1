@@ -5,6 +5,13 @@ Gets the server settings set for this module
 
 .DESCRIPTION
 Gets the current settings for use in api calls
+If no settings exists creates and returns the default settings
+
+.EXAMPLE
+Get-FogServerSettings
+
+Converts the json settings file to a powershell object
+and returns the api key and server name values
 
 #>
 

@@ -5,9 +5,12 @@ function Get-FogObject {
 
     .DESCRIPTION
     Gets a object, objecactivetasktype, or performs a search via the api
+    Once a type has been selected the next parameter is dynamically added
+    along with a tab completable list of options. i.e type of object will add the coreobject parameter 
 
     .PARAMETER type
-    the type of object to get
+    the type of object to get can be "objectactivetasktype","object", or "search"
+    Search is broken in the api in versions before 1.6 as I understand
 
     .PARAMETER jsonData
     the json data in json string format if required
@@ -15,6 +18,11 @@ function Get-FogObject {
     .PARAMETER IDofObject
     the id of the object to get
 
+    .EXAMPLE
+    Get-FogObject -type object -coreObject host
+
+    This will get all hosts from the fog server.
+    This will get all the hosts.
 #>
 
     [CmdletBinding()]
@@ -34,7 +42,7 @@ function Get-FogObject {
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
 
     begin {
-        $paramDict | % { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
+        $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call for $($paramDict.keys) $($paramDict.values.value)";
         switch ($type) {
             objectactivetasktype {

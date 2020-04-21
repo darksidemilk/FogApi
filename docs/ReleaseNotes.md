@@ -1,18 +1,21 @@
 
-#2002.2.0.7
+# 2002.2.0.8
+
+	general updates and bug fixes
+
+# 2002.2.0.7
 
 	Test build
 
-#2002.2.0.6
+# 2002.2.0.6
 
 	Test build
 
-
-#2002.2.0.5
+# 2002.2.0.5
 
     Test build
 
-#2002.2.0.4
+# 2002.2.0.4
     
     Test build
 

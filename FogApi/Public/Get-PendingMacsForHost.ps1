@@ -14,7 +14,12 @@ function Get-PendingMacsForHost {
     Get-PendingMacsForhost -hostID 123
 
     gets the macs if any for foghost 123
+
+    .EXAMPLE
+    Get-PendingMacsForhost -hostID 'ComputerName'
     
+    Returns the pending macs for the host with the name ComputerName
+
     #>
     
     [CmdletBinding()]
@@ -26,7 +31,7 @@ function Get-PendingMacsForHost {
     process {
         if ($hostID.gettype().name -ne "Int32"){
             try {
-                $hostID = Get-FogHost -hostname $hostID
+                $hostID = (Get-FogHost -hostname $hostID).id
             } catch {
                 Write-Error "Please provide a valid hostid or hostname"
                 exit;

@@ -5,6 +5,12 @@ function Get-FogSnapins {
     
     .DESCRIPTION
     Gives a full list of all snapins on the fog server
+    uses get-fogobject to get the snapins then selects and expands the snapins property
+
+    .EXAMPLE
+    Get-FogSnapins
+
+    Returns an array of objects with details of each snapin.
 #>
     
     [CmdletBinding()]
@@ -12,7 +18,8 @@ function Get-FogSnapins {
     
     
     process {
-        return (Invoke-FogApi -Method GET -uriPath snapin).snapins;
+        return (Get-FogObject -type object -coreObject snapin | Select-Object -Expand snapins)
+        # return (Invoke-FogApi -Method GET -uriPath snapin).snapins;
     }
     
     

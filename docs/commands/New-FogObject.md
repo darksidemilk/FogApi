@@ -31,7 +31,7 @@ PS C:\> {{ Add example code here }}
 ## PARAMETERS
 
 ### -type
-the type of api object
+the type of api object, either objecttasktype or object
 
 ```yaml
 Type: String

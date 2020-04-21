@@ -17,16 +17,24 @@ Get-FogLog [-static] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Ust get-content -wait to show a dynamic fog log or use -static to just see the current contents
+For Windows
+Uses get-content -wait to show a dynamic fog log or use -static to just see the current contents
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-FogLog
 ```
 
-{{ Add example description here }}
+Will open a live display of the fog log as it is written to
+
+### EXAMPLE 2
+```
+Get-FogLog -static
+```
+
+Will return the contents of the fog log as a string
 
 ## PARAMETERS
 

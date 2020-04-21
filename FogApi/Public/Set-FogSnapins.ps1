@@ -13,8 +13,6 @@ Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
 This would associate snapins that match the titles of office365, chrome, and slack to the provided host id
 they could then be deployed with start-fogsnapins
 
-.NOTES
-General notes
 #>
 
     [CmdletBinding()]

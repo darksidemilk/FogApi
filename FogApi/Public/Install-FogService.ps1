@@ -9,6 +9,13 @@ Attempts to download and install silently and then not so silently the fog servi
 .PARAMETER fogServer
 the server to download from and connect to
 
+.EXAMPLE
+Install-FogService
+
+Will get the fogServer from the fogapi settings and use that servername to download the 
+installers and then attempts first a silent install on the msi. And attempts a interactive
+install of the smart installer if that fails 
+
 #>
 
     [CmdletBinding()]

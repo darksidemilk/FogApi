@@ -4,10 +4,21 @@ function Get-FogLog {
 Get a auto updating fog log
 
 .DESCRIPTION
-Ust get-content -wait to show a dynamic fog log or use -static to just see the current contents
+For Windows
+Uses get-content -wait to show a dynamic fog log or use -static to just see the current contents
 
 .PARAMETER static
 show the static contents of the fog log
+
+.EXAMPLE
+Get-FogLog
+
+Will open a live display of the fog log as it is written to
+
+.EXAMPLE
+Get-FogLog -static
+
+Will return the contents of the fog log as a string
 
 #>
 

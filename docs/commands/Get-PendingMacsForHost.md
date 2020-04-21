@@ -29,6 +29,13 @@ Get-PendingMacsForhost -hostID 123
 
 gets the macs if any for foghost 123
 
+### EXAMPLE 2
+```
+Get-PendingMacsForhost -hostID 'ComputerName'
+```
+
+Returns the pending macs for the host with the name ComputerName
+
 ## PARAMETERS
 
 ### -hostID

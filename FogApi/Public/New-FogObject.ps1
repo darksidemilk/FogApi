@@ -7,7 +7,7 @@ Create a new fog object with the api
 creates a new object such as a host or task
 
 .PARAMETER type
-the type of api object
+the type of api object, either objecttasktype or object
 
 .PARAMETER jsonData
 json data in json string for api call

@@ -18,15 +18,17 @@ Get-FogServerSettings [<CommonParameters>]
 
 ## DESCRIPTION
 Gets the current settings for use in api calls
+If no settings exists creates and returns the default settings
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-FogServerSettings
 ```
 
-{{ Add example description here }}
+Converts the json settings file to a powershell object
+and returns the api key and server name values
 
 ## PARAMETERS
 

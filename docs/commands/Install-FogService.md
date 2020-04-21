@@ -21,12 +21,15 @@ Attempts to download and install silently and then not so silently the fog servi
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Install-FogService
 ```
 
-{{ Add example description here }}
+Will get the fogServer from the fogapi settings and use that servername to download the 
+installers and then attempts first a silent install on the msi.
+And attempts a interactive
+install of the smart installer if that fails
 
 ## PARAMETERS
 

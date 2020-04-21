@@ -18,20 +18,25 @@ Get-FogObject [[-type] <String>] [[-jsonData] <Object>] [[-IDofObject] <String>]
 
 ## DESCRIPTION
 Gets a object, objecactivetasktype, or performs a search via the api
+Once a type has been selected the next parameter is dynamically added
+along with a tab completable list of options.
+i.e type of object will add the coreobject parameter
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-FogObject -type object -coreObject host
 ```
 
-{{ Add example description here }}
+This will get all hosts from the fog server.
+This will get all the hosts.
 
 ## PARAMETERS
 
 ### -type
-the type of object to get
+the type of object to get can be "objectactivetasktype","object", or "search"
+Search is broken in the api in versions before 1.6 as I understand
 
 ```yaml
 Type: String
