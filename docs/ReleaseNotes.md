@@ -1,4 +1,12 @@
 
+# 2002.2.1.2
+
+	Description in manifest was too long
+
+# 2002.2.1.1
+
+	Updated documentation on most functions, all have at least some basic info. Also linked all documentation to https://fogapi.readthedocs.io/en/latest/ for online versions
+
 # 2002.2.0.8
 
 	general updates and bug fixes

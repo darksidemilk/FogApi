@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2002.2.0.8'
+ModuleVersion = '2002.2.1.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -40,24 +40,7 @@ Description = 'This module is used to easily run Fog API commands on your fogser
     * Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi Install-Module -name fogApi
 
     * Manual Method:
-    * download the zip of this repo and extract it
-        * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
-    * Copy the FogApi folder this Readme file is in to...
-        * For Windows Powershell v3-v5.1
-            * C:\Program Files\WindowsPowershell\Modules
-        * For Windows Powershell v6+
-            * C:\Program Files\PowerShell\6-preview\Modules
-                * 6-Preview may need to be replaced with whatever current version you have installed
-        * For Linux Powershell v6+
-            * /opt/microsoft/powershell/6.1.0-preview.2/Modules
-                * 6.1.0-preview.2 may need to be replaced with whatever current version you have installed
-        * For Mac Powershell v6+ (untested)
-            * /usr/local/microsoft/powershell/6.x/Modules
-                * 6.x should be replaced with whatever most current version you are using
-                * I haven''''t tested this on a mac, the module folder may be somewhere else
-                this is based on where it is in other powershell 6 installs
-    * Open a powershell command prompt (I always run as admin, unsure if it''''s required)
-    * Run Import-Module FogApi
+    * download the zip of this repo and extract it and use Import-Module on the extracted path
 
     The module is now installed.
     You can use Set-fogserverSettings to set your fogserver hostname and api keys.
@@ -96,7 +79,6 @@ Description = 'This module is used to easily run Fog API commands on your fogser
         #or any error messages will output to screen for each object
     }
     
-
     This is just one small example of the limitless things you can do with the api and powershell objects.
 
     see also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
@@ -188,6 +170,14 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2002.2.1.2
+
+	Description in manifest was too long
+
+# 2002.2.1.1
+
+	Updated documentation on most functions, all have at least some basic info. Also linked all documentation to https://fogapi.readthedocs.io/en/latest/ for online versions
+
 # 2002.2.0.8
 
 	general updates and bug fixes
