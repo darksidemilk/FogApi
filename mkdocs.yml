@@ -31,4 +31,4 @@ nav:
     - 'Start-FogSnapins': 'commands/Start-FogSnapins.md'
     - 'Update-FogObject': 'commands/Update-FogObject.md'
 
-theme: material
+theme: readthedocs
