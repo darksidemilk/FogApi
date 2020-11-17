@@ -1,20 +1,19 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroup
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostGroup
 schema: 2.0.0
 ---
 
-# Get-FogGroup
+# Get-FogHostGroup
 
 ## SYNOPSIS
-needs to return the group name of the group that isn't the everyone group
-will use groupassociation call to get group id then group id to get group name from group uriPath
+returns the group objects that a host belongs to
 
 ## SYNTAX
 
 ```
-Get-FogGroup [[-hostId] <Int32>] [<CommonParameters>]
+Get-FogHostGroup [[-hostId] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,9 +53,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-Includes a propietary if block for the organization this was originally written for.
-Will be taken out once it is moved, but it is in an if statement as to not affect others 
-Was originally meant to find just one group filtering out some global/parent groups.
-Altered to find all groups a host is in
 
 ## RELATED LINKS

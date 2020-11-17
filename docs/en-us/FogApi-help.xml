@@ -210,7 +210,7 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Deny-FogPendingMac</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
           <maml:Description>
             <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
@@ -225,7 +225,7 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
         <maml:Description>
           <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
@@ -380,67 +380,150 @@ $assignedSnapins | Where-Object name -match "office"</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-FogGroup</command:name>
+      <command:name>Get-FogGroupAssociations</command:name>
       <command:verb>Get</command:verb>
-      <command:noun>FogGroup</command:noun>
+      <command:noun>FogGroupAssociations</command:noun>
       <maml:description>
-        <maml:para>needs to return the group name of the group that isn't the everyone group will use groupassociation call to get group id then group id to get group name from group uriPath</maml:para>
+        <maml:para>Gets the group association objects that can be used to find group memberships</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>requires the id of the host you want the groups that aren't the everyone group for</maml:para>
+      <maml:para>Returns the objects in the groupassociations table</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
-        <maml:name>Get-FogGroup</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>hostId</maml:name>
-          <maml:Description>
-            <maml:para>The hostid to get the group memberships of</maml:para>
-          </maml:Description>
-          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-          <dev:type>
-            <maml:name>Int32</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
-        </command:parameter>
+        <maml:name>Get-FogGroupAssociations</maml:name>
       </command:syntaxItem>
     </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>hostId</maml:name>
-        <maml:Description>
-          <maml:para>The hostid to get the group memberships of</maml:para>
-        </maml:Description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
+    <command:parameters />
     <command:inputTypes />
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Includes a propietary if block for the organization this was originally written for. Will be taken out once it is moved, but it is in an if statement as to not affect others  Was originally meant to find just one group filtering out some global/parent groups. Altered to find all groups a host is in</maml:para>
+        <maml:para></maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)</dev:code>
+        <dev:code>$groupAssocs = Get-FogGroupAssociations;
+$groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <dev:remarks>
-          <maml:para>Gets the fog group membership(s) of the fog host with the name computerName</maml:para>
+          <maml:para>Would give you the group associations of the current computer</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroup</maml:uri>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroupAssociations</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogGroupByName</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogGroupByName</command:noun>
+      <maml:description>
+        <maml:para>Gets a fog group object by name</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Searches the group objects for one that has a matching name of the given name</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogGroupByName</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>groupName</maml:name>
+          <maml:Description>
+            <maml:para>The name of the group to search for</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>groupName</maml:name>
+        <maml:Description>
+          <maml:para>The name of the group to search for</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Chose not to name this just get-foggroup as get-foggroup used to be a different function that got the group of a host Made that an alias of Get-FogHostGroup to avoid breaking anyones code</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$ITGroup = Get-FogGroupByName -groupName "IT"</dev:code>
+        <dev:remarks>
+          <maml:para>Will return the group object with a name that matches "IT";</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroupByName</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogGroups</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogGroups</command:noun>
+      <maml:description>
+        <maml:para>Returns all fog groups</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets all the fog groups and returns them in an object</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogGroups</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>A group object does not contain membership information, you need to filter groupassociations to find membership but this will give you the id to search for</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$groups = Get-FogGroups</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroups</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -496,6 +579,18 @@ $assignedSnapins | Where-Object name -match "office"</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>hostID</maml:name>
+          <maml:Description>
+            <maml:para>{{ Fill hostID Description }}</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>hosts</maml:name>
           <maml:Description>
             <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
@@ -547,6 +642,18 @@ $assignedSnapins | Where-Object name -match "office"</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>hostID</maml:name>
+        <maml:Description>
+          <maml:para>{{ Fill hostID Description }}</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>hosts</maml:name>
         <maml:Description>
           <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
@@ -586,6 +693,72 @@ $assignedSnapins | Where-Object name -match "office"</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogHostGroup</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogHostGroup</command:noun>
+      <maml:description>
+        <maml:para>returns the group objects that a host belongs to</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>requires the id of the host you want the groups that aren't the everyone group for</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogHostGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>hostId</maml:name>
+          <maml:Description>
+            <maml:para>The hostid to get the group memberships of</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>hostId</maml:name>
+        <maml:Description>
+          <maml:para>The hostid to get the group memberships of</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the fog group membership(s) of the fog host with the name computerName</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostGroup</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -766,6 +939,47 @@ Set-FogInventory -jsonData $json</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogLog</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogMacAddresses</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogMacAddresses</command:noun>
+      <maml:description>
+        <maml:para>Gets all mac addresses in fog</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns all the objects in the macaddressassociations table which includes details on the mac address, the hostID connected to, if it's a primary, and if it's a pending mac</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogMacAddresses</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Has an alias of Get-FogMacs but made the main name be MacAddresses to avoid confusion with apple mac computers</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$macs = Get-FogMacs</dev:code>
+        <dev:remarks>
+          <maml:para>Gets all the mac addresses in fog and puts them in the $macs object</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogMacAddresses</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -967,6 +1181,72 @@ Set-FogInventory -jsonData $json</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-MacsForHost</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>MacsForHost</command:noun>
+      <maml:description>
+        <maml:para>Returns the macs assigned to a given host</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets all macs and finds the ones with a matching hostid of the given object Use Get-FogHost to get the host object</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-MacsForHost</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>hostObject</maml:name>
+          <maml:Description>
+            <maml:para>The host object you get with Get-Foghost</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>hostObject</maml:name>
+        <maml:Description>
+          <maml:para>The host object you get with Get-Foghost</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-MacsForHost (Get-FogHost)</dev:code>
+        <dev:remarks>
+          <maml:para>Will return the macs assigned to the computer running the command</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-MacsForHost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-PendingMacsForHost</command:name>
       <command:verb>Get</command:verb>
       <command:noun>PendingMacsForHost</command:noun>
@@ -975,7 +1255,7 @@ Set-FogInventory -jsonData $json</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Gets the pending macs for a host that can then be approved with approve-fogpendingmac or denied with deny-fogpendingmac</maml:para>
+      <maml:para>Gets the macs for a host and filters them to just pending ones. The returned object can then be approved with approve-fogpendingmac or denied with deny-fogpendingmac</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>

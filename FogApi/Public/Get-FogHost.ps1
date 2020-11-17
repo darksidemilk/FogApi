@@ -37,15 +37,20 @@ function Get-FogHost {
         [string]$uuid,
         [string]$hostName,
         [string]$macAddr,
+        [string]$hostID,
         $hosts = (Get-FogHosts)
     )
 
     begin {
         [bool]$found = $false;
         Write-Verbose 'Checking for passed variables'
-        if (!$uuid -and !$hostName -and !$macAddr) {
+        if (!$uuid -and !$hostName -and !$macAddr -and !$hostID) {
             Write-Verbose 'no params given, getting current computer variables';
-            $compSys = (Get-WmiObject Win32_ComputerSystemProduct);
+            try {
+                $compSys = (Get-WmiObject Win32_ComputerSystemProduct);
+            } catch {
+                $compSys = Get-CimInstance -ClassName win32_computersystemproduct
+            }
             if ($compSys.UUID -notmatch "12345678-9012-3456-7890-abcdefabcdef" ) {
                 $uuid = $compSys.UUID;
             } else {
@@ -61,21 +66,28 @@ function Get-FogHost {
     process {
         Write-Verbose 'finding host in hosts';
         [bool]$found = $false;
-        $hostObj = $hosts | Where-Object {
-            ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) -OR `
-            ($hostName -ne "" -AND $_.name -eq $hostName) -OR `
-            ($macAddr -ne "" -AND $_.macs -contains $macAddr);
-            if  ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) {
-                 Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found";
-                 $found = $true;
-            }
-            if ($macAddr -ne "" -AND $_.macs -contains $macAddr) {
-                Write-Verbose "$($_.macs) matches the macaddress $macAddr`! host found";
+        if ($hostID) {
+            $hostObj = $hosts | Where-Object id -eq $hostID;
+            if ($null -ne $hostObj) {
                 $found = $true;
             }
-            if  ($hostName -ne "" -AND $_.name -eq $hostName) {
-                Write-Verbose "$($_.name) matches the hostname $hostName`! host found";
-                $found = $true;
+        } else {
+            $hostObj = $hosts | Where-Object {
+                ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) -OR `
+                ($hostName -ne "" -AND $_.name -eq $hostName) -OR `
+                ($macAddr -ne "" -AND $_.macs -contains $macAddr);
+                if  ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) {
+                    Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found";
+                    $found = $true;
+                }
+                if ($macAddr -ne "" -AND $_.macs -contains $macAddr) {
+                    Write-Verbose "$($_.macs) matches the macaddress $macAddr`! host found";
+                    $found = $true;
+                }
+                if  ($hostName -ne "" -AND $_.name -eq $hostName) {
+                    Write-Verbose "$($_.name) matches the hostname $hostName`! host found";
+                    $found = $true;
+                }
             }
         }
     }

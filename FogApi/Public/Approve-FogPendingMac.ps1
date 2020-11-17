@@ -32,8 +32,10 @@ function Approve-FogPendingMac {
     )
 
     process {
-        $macObject.pending = 1;
-        return Update-FogObject -type object -coreObject macaddressassociation -IDofObject $macObject.id -jsonData ($macObject | ConvertTo-Json)
+        $macObject.pending = '0';
+        $data = ($macObject | ConvertTo-Json);
+        $result = Update-FogObject -type object -coreObject macaddressassociation -IDofObject $macObject.id -jsonData $data 
+        return $result;
     }
     
 }

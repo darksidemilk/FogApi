@@ -26,6 +26,7 @@ function Deny-FogPendingMac {
     [CmdletBinding()]
     [Alias('Remove-FogMac')]
     param ( 
+        [Parameter(Mandatory=$true)]        
         $macObject
     )
 

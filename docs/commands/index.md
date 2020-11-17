@@ -10,9 +10,15 @@
 
 ## [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
 
-## [Get-FogGroup](Get-FogGroup.md)
+## [Get-FogGroupAssociations](Get-FogGroupAssociations.md)
+
+## [Get-FogGroupByName](Get-FogGroupByName.md)
+
+## [Get-FogGroups](Get-FogGroups.md)
 
 ## [Get-FogHost](Get-FogHost.md)
+
+## [Get-FogHostGroup](Get-FogHostGroup.md)
 
 ## [Get-FogHosts](Get-FogHosts.md)
 
@@ -20,11 +26,15 @@
 
 ## [Get-FogLog](Get-FogLog.md)
 
+## [Get-FogMacAddresses](Get-FogMacAddresses.md)
+
 ## [Get-FogObject](Get-FogObject.md)
 
 ## [Get-FogServerSettings](Get-FogServerSettings.md)
 
 ## [Get-FogSnapins](Get-FogSnapins.md)
+
+## [Get-MacsForHost](Get-MacsForHost.md)
 
 ## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
 

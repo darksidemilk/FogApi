@@ -1,46 +1,37 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-PendingMacsForHost
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogGroupByName
 schema: 2.0.0
 ---
 
-# Get-PendingMacsForHost
+# Get-FogGroupByName
 
 ## SYNOPSIS
-Gets the pending macs for a given hosts
+Gets a fog group object by name
 
 ## SYNTAX
 
 ```
-Get-PendingMacsForHost [[-hostID] <Object>] [<CommonParameters>]
+Get-FogGroupByName [[-groupName] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the macs for a host and filters them to just pending ones.
-The returned object can then be approved with approve-fogpendingmac
-or denied with deny-fogpendingmac
+Searches the group objects for one that has a matching name of the given name
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-PendingMacsForhost -hostID 123
+$ITGroup = Get-FogGroupByName -groupName "IT"
 ```
 
-gets the macs if any for foghost 123
-
-### EXAMPLE 2
-```
-Get-PendingMacsForhost -hostID 'ComputerName'
-```
-
-Returns the pending macs for the host with the name ComputerName
+Will return the group object with a name that matches "IT";
 
 ## PARAMETERS
 
-### -hostID
-the hostid or hostname of the fog host
+### -groupName
+The name of the group to search for
 
 ```yaml
 Type: Object
@@ -62,5 +53,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+Chose not to name this just get-foggroup as get-foggroup used to be a different function that got the group of a host
+Made that an alias of Get-FogHostGroup to avoid breaking anyones code
 
 ## RELATED LINKS

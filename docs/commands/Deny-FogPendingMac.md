@@ -13,7 +13,7 @@ Deny a pending fog mac aka delete a fog mac address association entry
 ## SYNTAX
 
 ```
-Deny-FogPendingMac [[-macObject] <Object>] [<CommonParameters>]
+Deny-FogPendingMac [-macObject] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,7 +47,7 @@ Type: Object
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False

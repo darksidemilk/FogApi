@@ -4,7 +4,8 @@ function Get-PendingMacsForHost {
     Gets the pending macs for a given hosts
     
     .DESCRIPTION
-    Gets the pending macs for a host that can then be approved with approve-fogpendingmac
+    Gets the macs for a host and filters them to just pending ones.
+    The returned object can then be approved with approve-fogpendingmac
     or denied with deny-fogpendingmac
     
     .PARAMETER hostID
@@ -37,7 +38,10 @@ function Get-PendingMacsForHost {
                 exit;
             }
         }
-        return Get-FogObject -type object -coreObject macaddressassociation | select-object -ExpandProperty macaddressassociations | Where-Object hostID -match $hostID | Where-Object pending -ne 0;
+
+        $hostMacs = Get-MacsForHost -host ((Get-FogHost -hostID $hostID))
+        $pendingMacs = $hostMacs | Where-Object pending -eq '1';
+        return $pendingMacs;
     }
     
 }

@@ -1,46 +1,38 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-PendingMacsForHost
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-MacsForHost
 schema: 2.0.0
 ---
 
-# Get-PendingMacsForHost
+# Get-MacsForHost
 
 ## SYNOPSIS
-Gets the pending macs for a given hosts
+Returns the macs assigned to a given host
 
 ## SYNTAX
 
 ```
-Get-PendingMacsForHost [[-hostID] <Object>] [<CommonParameters>]
+Get-MacsForHost [[-hostObject] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the macs for a host and filters them to just pending ones.
-The returned object can then be approved with approve-fogpendingmac
-or denied with deny-fogpendingmac
+Gets all macs and finds the ones with a matching hostid of the given object
+Use Get-FogHost to get the host object
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-PendingMacsForhost -hostID 123
+Get-MacsForHost (Get-FogHost)
 ```
 
-gets the macs if any for foghost 123
-
-### EXAMPLE 2
-```
-Get-PendingMacsForhost -hostID 'ComputerName'
-```
-
-Returns the pending macs for the host with the name ComputerName
+Will return the macs assigned to the computer running the command
 
 ## PARAMETERS
 
-### -hostID
-the hostid or hostname of the fog host
+### -hostObject
+The host object you get with Get-Foghost
 
 ```yaml
 Type: Object
@@ -49,7 +41,7 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: None
+Default value: (Get-FogHost)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

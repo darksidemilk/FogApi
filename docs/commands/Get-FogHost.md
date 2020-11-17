@@ -13,8 +13,8 @@ Gets the object of a specific fog host
 ## SYNTAX
 
 ```
-Get-FogHost [[-uuid] <String>] [[-hostName] <String>] [[-macAddr] <String>] [[-hosts] <Object>]
- [<CommonParameters>]
+Get-FogHost [[-uuid] <String>] [[-hostName] <String>] [[-macAddr] <String>] [[-hostID] <String>]
+ [[-hosts] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -85,6 +85,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -hostID
+{{ Fill hostID Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -hosts
 defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing
 
@@ -94,7 +109,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: (Get-FogHosts)
 Accept pipeline input: False
 Accept wildcard characters: False
