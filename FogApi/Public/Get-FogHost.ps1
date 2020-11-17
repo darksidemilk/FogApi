@@ -94,6 +94,10 @@ function Get-FogHost {
 
     end {
         if ($found){
+            if ($hostObj.count -gt 1) {
+                "Multiple hosts found! Review hosts in return object and select just one if needed" | Out-Host;
+            }
+
             return $hostObj;
         }
         return $found; #return false if host not found

@@ -1,4 +1,4 @@
-function Get-MacsForHost {
+function Get-FogHostMacs {
     <#
     .SYNOPSIS
     Returns the macs assigned to a given host
@@ -17,6 +17,7 @@ function Get-MacsForHost {
     
     #>
     [CmdletBinding()]
+    [Alias('Get-MacsForHost')]
     param (
         $hostObject = (Get-FogHost)
     )
