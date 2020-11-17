@@ -1,4 +1,8 @@
 
+# 2004.2.2.4
+
+	Changed get-macsforhost to Get-FoghostMacs. Added output if get-foghost returns multiple hosts
+
 # 2004.2.2.3
 
 	fix release note formatting error

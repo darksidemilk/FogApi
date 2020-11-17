@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2004.2.2.3'
+ModuleVersion = '2004.2.2.4'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -124,9 +124,9 @@ PowerShellVersion = '3.0'
 FunctionsToExport = 'Add-FogHostMac', 'Approve-FogPendingMac', 'Deny-FogPendingMac', 
                'Get-FogActiveTasks', 'Get-FogAssociatedSnapins', 
                'Get-FogGroupAssociations', 'Get-FogGroupByName', 'Get-FogGroups', 
-               'Get-FogHost', 'Get-FogHostGroup', 'Get-FogHosts', 'Get-FogInventory', 
-               'Get-FogLog', 'Get-FogMacAddresses', 'Get-FogObject', 
-               'Get-FogServerSettings', 'Get-FogSnapins', 'Get-MacsForHost', 
+               'Get-FogHost', 'Get-FogHostGroup', 'Get-FogHostMacs', 'Get-FogHosts', 
+               'Get-FogInventory', 'Get-FogLog', 'Get-FogMacAddresses', 
+               'Get-FogObject', 'Get-FogServerSettings', 'Get-FogSnapins', 
                'Get-PendingMacsForHost', 'Install-FogService', 'Invoke-FogApi', 
                'New-FogObject', 'Remove-FogObject', 'Remove-UsbMac', 
                'Reset-HostEncryption', 'Set-FogInventory', 'Set-FogServerSettings', 
@@ -172,6 +172,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2004.2.2.4
+
+	Changed get-macsforhost to Get-FoghostMacs. Added output if get-foghost returns multiple hosts
+
 # 2004.2.2.3
 
 	fix release note formatting error

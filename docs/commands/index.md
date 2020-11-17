@@ -20,6 +20,8 @@
 
 ## [Get-FogHostGroup](Get-FogHostGroup.md)
 
+## [Get-FogHostMacs](Get-FogHostMacs.md)
+
 ## [Get-FogHosts](Get-FogHosts.md)
 
 ## [Get-FogInventory](Get-FogInventory.md)
@@ -33,8 +35,6 @@
 ## [Get-FogServerSettings](Get-FogServerSettings.md)
 
 ## [Get-FogSnapins](Get-FogSnapins.md)
-
-## [Get-MacsForHost](Get-MacsForHost.md)
 
 ## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
 

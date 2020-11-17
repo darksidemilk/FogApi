@@ -1,11 +1,11 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-MacsForHost
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostMacs
 schema: 2.0.0
 ---
 
-# Get-MacsForHost
+# Get-FogHostMacs
 
 ## SYNOPSIS
 Returns the macs assigned to a given host
@@ -13,7 +13,7 @@ Returns the macs assigned to a given host
 ## SYNTAX
 
 ```
-Get-MacsForHost [[-hostObject] <Object>] [<CommonParameters>]
+Get-FogHostMacs [[-hostObject] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
