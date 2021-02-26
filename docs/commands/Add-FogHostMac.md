@@ -13,7 +13,8 @@ Adds a given macaddress to a host of a given ID
 ## SYNTAX
 
 ```
-Add-FogHostMac [[-hostID] <Object>] [[-macAddress] <Object>] [-primary] [<CommonParameters>]
+Add-FogHostMac [[-hostID] <Object>] [[-macAddress] <Object>] [-primary] [-ignoreMacOnClient]
+ [-ignoreMacForImaging] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +71,36 @@ Accept wildcard characters: False
 
 ### -primary
 switch parameter to set the macaddress as the primary for the host
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ignoreMacOnClient
+set this switch param if you need this mac to be ignored by the fog client
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ignoreMacForImaging
+Set this switch param if you need this mac to be ignored by the pxe client
 
 ```yaml
 Type: SwitchParameter

@@ -65,9 +65,9 @@ function Remove-UsbMac {
                 Write-Verbose "$_ is a $usbMac connected to $hostname, checking if it is the primary...";
                 $macItem = ($macs | Where-Object mac -eq $_ );
 
-                if ( $macItem.primary -eq 1 ) {
+                if ( $macItem.primary -eq '1' ) {
                     Write-Verbose "It is primary, let's fix that and set $($macList[0]) to primary";
-                    $macItem.primary = 0;
+                    $macItem.primary = '0';
                     try {
                         Update-FogObject -type object -coreObject macaddressassociation -IDofObject $macItem.id -jsonData ($macItem | ConvertToJson)
                     } catch {   
@@ -87,8 +87,8 @@ function Remove-UsbMac {
                         $physicalMacs = $physicalMacs | Where-Object {$_ -NotIn $usbMacs};
                         Add-FogHostMac -hostID $hostID -macAddress $physicalMacs[0] -primary;
                     } else {
-                        $newPrimary.primary = 1;
-                        $newPrimary.pending = 0;
+                        $newPrimary.primary = '1';
+                        $newPrimary.pending = '0';
                         Update-FogObject -type object -coreObject macaddressassociation -IDofObject $newPrimary.id -jsonData ($newPrimary | ConvertTo-Json)
                     }
                 }

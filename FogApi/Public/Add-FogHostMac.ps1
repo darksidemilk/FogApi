@@ -14,6 +14,12 @@ function Add-FogHostMac {
 
     .PARAMETER primary
     switch parameter to set the macaddress as the primary for the host
+
+    .PARAMETER ignoreMacOnClient
+    set this switch param if you need this mac to be ignored by the fog client
+
+    .PARAMETER ignoreMacForImaging
+    Set this switch param if you need this mac to be ignored by the pxe client
     
     .EXAMPLE
     Add-FogHostMac -hostid 123 -macaddress "12:34:56:78:90" -primary
@@ -31,7 +37,9 @@ function Add-FogHostMac {
     param ( 
         $hostID,
         $macAddress,
-        [switch]$primary
+        [switch]$primary,
+        [switch]$ignoreMacOnClient,
+        [switch]$ignoreMacForImaging
     )
 
     process {
@@ -43,17 +51,29 @@ function Add-FogHostMac {
                 exit;
             }
         }
+        if ($primary) {
+            $primaryVal = '1'
+        } else {
+            $primaryVal = '0'
+        }
+        if ($ignoreMacForImaging) {
+            $imageIgnoreVal = '1'
+        } else {
+            $imageIgnoreVal = '0'
+        }
+        if ($ignoreMacOnClient) {
+            $clientIgnoreVal = '1'
+        } else {
+            $clientIgnoreVal = '0'
+        }
         $newMac = @{
             hostID       = "$hostID"
-            mac          = $macAddress
+            mac          = "$macAddress"
             description  = " "
-            pending      = 0
-            primary      = 0
-            clientIgnore = 0
-            imageIgnore  = 0
-        }
-        if ($primary) {
-            $newMac.Primary = 1;
+            pending      = '0'
+            primary      = $primaryVal
+            clientIgnore = $clientIgnoreVal
+            imageIgnore  = $imageIgnoreVal
         }
         return New-FogObject -type object -coreObject macaddressassociation -jsonData ($newMac | ConvertTo-Json)
     }

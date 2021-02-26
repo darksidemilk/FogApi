@@ -21,23 +21,26 @@ function Start-FogSnapins {
     [CmdletBinding()]
     param (
         $hostid = ((Get-FogHost).id),
-        $taskTypeid = 12
+        $taskTypeid = '12'
     )
 
     begin {
         Write-Verbose "Stopping any queued snapin tasks";
         try {
-            $tasks = Get-FogObject -type objectactivetasktype -coreActiveTaskObject task;
+            $tasks = Get-FogActiveTasks;
         } catch {
-            $tasks = Invoke-FogApi -Method GET -uriPath "task/active";
+            $tasks = (Invoke-FogApi -Method GET -uriPath "task/active").tasks;
         }
+        $tasks = $tasks | Where-Object { $_.type.id -match $taskTypeid} #filter task list to all snapins task.
         $taskID = (($tasks | Where-Object hostID -match $hostid).id);
-        Write-Verbose "Found $($taskID.count) tasks deleting them now";
-        $taskID | ForEach-Object{
-            try {
-                Remove-FogObject -type objecttasktype -coreTaskObject task -IDofObject $_;
-            } catch {
-                Invoke-FogApi -Method DELETE -uriPath "task/$_/cancel";
+        if ($null -ne $taskID) { #if active snapin tasks are found for the host cancel them, otherwise do nothing to tasks
+            Write-Verbose "Found $($taskID.count) tasks deleting them now";
+            $taskID | ForEach-Object{
+                try {
+                    Remove-FogObject -type objecttasktype -coreTaskObject task -IDofObject $_;
+                } catch {
+                    Invoke-FogApi -Method DELETE -uriPath "task/$_/cancel";
+                }
             }
         }
         # $snapAssocs = Invoke-FogApi -uriPath snapinassociation -Method Get;
