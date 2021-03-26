@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2103.2.10'
+ModuleVersion = '2103.2.11'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -140,7 +140,8 @@ CmdletsToExport = @()
 # VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = 'Remove-FogMac', 'Add-FogSnapins', 'Set-FogObject', 'Add-FogHost', 'Get-FogGroup', 'Get-MacsForHost', 'Get-FogMacs', 'Add-FogObject'
+AliasesToExport = 'Remove-FogMac', 'Add-FogSnapins', 'Set-FogObject', 'Add-FogHost', 
+               'Get-FogGroup', 'Get-MacsForHost', 'Get-FogMacs', 'Add-FogObject'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -173,6 +174,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2103.2.11
+
+    Updated aliases to export in manifest to include all created aliases
+
 # 2103.2.10
 
 	Fixed Get-FogGroups and added a simple new-foghost function

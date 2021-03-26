@@ -1,9 +1,9 @@
 
+# 2103.2.11
+
+	Updated aliases to export in manifest to include all created aliases
+
 # 2103.2.10
-
-	Fixed Get-FogGroups and added a simple new-foghost function
-
-# 2103.2.9.1
 
 	Fixed Get-FogGroups and added a simple new-foghost function
 
