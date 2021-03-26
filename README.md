@@ -13,23 +13,19 @@ This module used to be housed at https://github.com/FOGProject/fog-community-scr
 
 The versioning of this module follows this pattern
 
-`{Year|Quarter Number}.{Major Version}.{Minor Version}.{Build/Revision #}`
+`{Year|Month}.{Major Version}.{Minor Version}.{Build/Revision #}`
 
-## Year/Quarter
+## Year/Month
 
-This versioning shows you first the Year and Quarter the module was published, giving you an idea of when it was last updated.
+This versioning shows you first the Year and month this version of the module was published, giving you an idea of when it was last updated.
 
 ## Major
 
 The Major version follows the typical major versioning where any major changes will increment this version number, especially possible breaking changes or structural changes, etc.
 
-## Minor
+## Minor/Revision
 
-Any time I publish a new version that isn't a major change I intend to mainly use this unless it's a quick fix or something
-
-## Build/Revision
-
-This will be used internally on git commits and occasionally in published versions. Most published versions won't have a number here unless there's just a quick revision needed. Typically this is incremented by 100 for every build and by 1 for every committed revision into the repo.
+Any time I publish a new version that isn't a major change I'll increment the revision. This may also be incremented for each build test and increment by more than one for each published version
 
 # Installation
 

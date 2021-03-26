@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2004.2.2.7'
+ModuleVersion = '2103.2.9'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()

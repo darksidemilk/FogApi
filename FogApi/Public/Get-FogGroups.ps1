@@ -11,22 +11,15 @@ function Get-FogGroups {
     
     .NOTES
     A group object does not contain membership information, you need to filter groupassociations to find membership
-    but this will give you the id to search for
+    but this will give you the id of the group to search for within that object, you'll also need the host id to find all associations of a host
     #>
     [CmdletBinding()]
-    param (
-        
-    )
+    param ()
     
-    begin {
-        
-    }
     
     process {
-        Parameter description
+        $groups = (Get-FogObject -type object -coreobject group).groups;
+        return $groups;
     }
     
-    end {
-        
-    }
 }

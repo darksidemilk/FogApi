@@ -14,9 +14,7 @@ function Get-FogGroupAssociations {
 
     #>
     [CmdletBinding()]
-    param (
-        
-    )
+    param ()
     
     process {
         $groupAssocs = (Get-FogObject -type object -coreObject groupassociation).groupassociations;
