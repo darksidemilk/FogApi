@@ -30,6 +30,8 @@
 
 ## [Get-FogMacAddresses](Get-FogMacAddresses.md)
 
+## [Get-FogModules](Get-FogModules.md)
+
 ## [Get-FogObject](Get-FogObject.md)
 
 ## [Get-FogServerSettings](Get-FogServerSettings.md)
@@ -41,6 +43,8 @@
 ## [Install-FogService](Install-FogService.md)
 
 ## [Invoke-FogApi](Invoke-FogApi.md)
+
+## [New-FogHost](New-FogHost.md)
 
 ## [New-FogObject](New-FogObject.md)
 

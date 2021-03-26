@@ -1,4 +1,12 @@
 
+# 2103.2.10
+
+	Fixed Get-FogGroups and added a simple new-foghost function
+
+# 2103.2.9.1
+
+	Fixed Get-FogGroups and added a simple new-foghost function
+
 # 2004.2.2.7
 
 	Fix add-foghostmac and various other functions that were using 1 and 0 instead of the proper string form of '1' and '0' so that the database handles the input properly. Fixed Start-FogSnapins so it doesn't stop all pending tasks for all hosts, it will only cancel any existing snapin tasks for the specified host before starting the new tasks

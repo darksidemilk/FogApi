@@ -17,9 +17,9 @@
         <maml:name>Add-FogHostMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -29,9 +29,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>macAddress</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -41,9 +41,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>primary</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -52,9 +52,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ignoreMacOnClient</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>set this switch param if you need this mac to be ignored by the fog client</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -63,9 +63,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ignoreMacForImaging</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Set this switch param if you need this mac to be ignored by the pxe client</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -77,9 +77,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -89,9 +89,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>macAddress</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -101,9 +101,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>primary</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -113,9 +113,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ignoreMacOnClient</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>set this switch param if you need this mac to be ignored by the fog client</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -125,9 +125,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ignoreMacForImaging</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Set this switch param if you need this mac to be ignored by the pxe client</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -183,9 +183,9 @@
         <maml:name>Approve-FogPendingMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -198,9 +198,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -258,9 +258,9 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
         <maml:name>Deny-FogPendingMac</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -273,9 +273,9 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -374,9 +374,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
         <maml:name>Get-FogAssociatedSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -389,9 +389,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -483,9 +483,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogGroupByName</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>groupName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The name of the group to search for</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -498,9 +498,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>groupName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The name of the group to search for</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -554,7 +554,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>A group object does not contain membership information, you need to filter groupassociations to find membership but this will give you the id to search for</maml:para>
+        <maml:para>A group object does not contain membership information, you need to filter groupassociations to find membership but this will give you the id of the group to search for within that object, you'll also need the host id to find all associations of a host</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -590,9 +590,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHost</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>uuid</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the uuid of the host</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -602,9 +602,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>hostName</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the hostname of the host</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -614,9 +614,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>macAddr</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>a mac address linked to the host</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -626,9 +626,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{ Fill hostID Description }}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -638,9 +638,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>hosts</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -653,9 +653,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>uuid</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the uuid of the host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -665,9 +665,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>hostName</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the hostname of the host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -677,9 +677,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>macAddr</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>a mac address linked to the host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -689,9 +689,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{ Fill hostID Description }}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -701,9 +701,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>hosts</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -759,9 +759,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHostGroup</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The hostid to get the group memberships of</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -774,9 +774,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The hostid to get the group memberships of</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -825,9 +825,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHostMacs</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The host object you get with Get-Foghost</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -840,9 +840,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The host object you get with Get-Foghost</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -932,9 +932,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogInventory</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObj</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -947,9 +947,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObj</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -999,9 +999,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Get-FogLog</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>static</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>show the static contents of the fog log</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1013,9 +1013,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>static</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>show the static contents of the fog log</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1097,6 +1097,55 @@ Set-FogInventory -jsonData $json</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-FogModules</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogModules</command:noun>
+      <maml:description>
+        <maml:para>Returns the modules in fog with their names, ids, descriptions, and if they're set to be enabled by default</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns the api module object. Can be utilized to find what modules are enabled by default when creating a new host</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogModules</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$mods = Get-FogModules
+$mods</dev:code>
+        <dev:remarks>
+          <maml:para>Will put the list of modules in a variable and then display the list</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogModules | Where-Object isDefault -eq '1'</dev:code>
+        <dev:remarks>
+          <maml:para>Will display the modules that are set to be enabled by default in your fog server settings</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogModules</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-FogObject</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FogObject</command:noun>
@@ -1112,9 +1161,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Get-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the type of object to get can be "objectactivetasktype","object", or "search" Search is broken in the api in versions before 1.6 as I understand</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1124,9 +1173,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the json data in json string format if required</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1136,9 +1185,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the id of the object to get</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1151,9 +1200,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the type of object to get can be "objectactivetasktype","object", or "search" Search is broken in the api in versions before 1.6 as I understand</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1163,9 +1212,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the json data in json string format if required</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1175,9 +1224,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the id of the object to get</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1308,9 +1357,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Get-PendingMacsForHost</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the hostid or hostname of the fog host</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1323,9 +1372,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the hostid or hostname of the fog host</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1381,9 +1430,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Install-FogService</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogServer</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the server to download from and connect to</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1396,9 +1445,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogServer</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the server to download from and connect to</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1447,9 +1496,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Invoke-FogApi</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>uriPath</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Put in the path of the apicall that would follow http://fog-server/fog/ i.e. 'host/1234' would access the host with an id of 1234 This is filled by the wrapper commands using parameter validation to help ensure using the proper object names for the url</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1459,9 +1508,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Method</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Defaults to 'Get' can also be Post, put, or delete, this param is handled better by the wrapper functions get is Get-fogObject post is New-fogObject delete is Remove-fogObject put is Update-fogObject</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1471,9 +1520,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The jsondata string for including data in the body of a request</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1486,9 +1535,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>uriPath</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Put in the path of the apicall that would follow http://fog-server/fog/ i.e. 'host/1234' would access the host with an id of 1234 This is filled by the wrapper commands using parameter validation to help ensure using the proper object names for the url</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1498,9 +1547,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Method</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Defaults to 'Get' can also be Post, put, or delete, this param is handled better by the wrapper functions get is Get-fogObject post is New-fogObject delete is Remove-fogObject put is Update-fogObject</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1510,9 +1559,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The jsondata string for including data in the body of a request</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1553,6 +1602,147 @@ Set-FogInventory -jsonData $json</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>New-FogHost</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>FogHost</command:noun>
+      <maml:description>
+        <maml:para>Creates a new host in fog</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Has 2 parameter sets, a default set that lets you create a simple host with a name, mac addr or list of macs,  and either specified fog service/client modules or the ones you have configured as default on your fog server.  And a custom mode that lets you pass a custom host object that you'll need to validate yourself, but you can then add snapins, groups, etc in the host creation object. This is an advanced method and no validation is currently provided When using the default set of params some validation is performed, the name is checked for whitespace, if there is whitespace it is replaced with a '-' unless it's at the end of the string It will also check if any hosts already exist with the given name or the given mac addresses, if one does exist the existing host is returned. If a new host is created, that host object is returned</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-FogHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>name</maml:name>
+          <maml:description>
+            <maml:para>The hostname of the new fog host, should not have spaces or special characters other than '-' or '_' Should follow general hostname rules. Only whitespace is currently checked. If you input an invalid hostname it may create the host but you won't be able to view the host in fog</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>macs</maml:name>
+          <maml:description>
+            <maml:para>A single or list of mac addresses for the host. The first mac in the list will be the primary. Mac's should be in the format "00:01:23:45:67:89" additional macs can be added as a comma separated list to create a string array</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>modules</maml:name>
+          <maml:description>
+            <maml:para>The ids of the modules to enable on the host.  Defaults to getting the modules you have set to be enabled on the fog server You can view your existing modules and create a custom list by utilizing Get-FogModules</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>New-FogHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>customHost</maml:name>
+          <maml:description>
+            <maml:para>Optionally specify a full host object to create a host object with additional params such as snapinIds and groupids, this parameter has less testing done on it but is provided for flexibility until more default parameters are added. A customHost object should at least have the properties name and macs and can have additional ones as well. It can be created like this  $customHost = @{     name = "name";     macs = "00:01:23:45:67:89";     modules = ((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id); } Refer to the fog api documentaiton and the forums for information on additional properties to add</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>name</maml:name>
+        <maml:description>
+          <maml:para>The hostname of the new fog host, should not have spaces or special characters other than '-' or '_' Should follow general hostname rules. Only whitespace is currently checked. If you input an invalid hostname it may create the host but you won't be able to view the host in fog</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>macs</maml:name>
+        <maml:description>
+          <maml:para>A single or list of mac addresses for the host. The first mac in the list will be the primary. Mac's should be in the format "00:01:23:45:67:89" additional macs can be added as a comma separated list to create a string array</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>modules</maml:name>
+        <maml:description>
+          <maml:para>The ids of the modules to enable on the host.  Defaults to getting the modules you have set to be enabled on the fog server You can view your existing modules and create a custom list by utilizing Get-FogModules</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id)</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>customHost</maml:name>
+        <maml:description>
+          <maml:para>Optionally specify a full host object to create a host object with additional params such as snapinIds and groupids, this parameter has less testing done on it but is provided for flexibility until more default parameters are added. A customHost object should at least have the properties name and macs and can have additional ones as well. It can be created like this  $customHost = @{     name = "name";     macs = "00:01:23:45:67:89";     modules = ((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id); } Refer to the fog api documentaiton and the forums for information on additional properties to add</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>New-FogHost -name "test-host" -macs "01:23:45:67:89:00"</dev:code>
+        <dev:remarks>
+          <maml:para>Will create a new host in fog with the name "test-host"</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/New-FogHost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>New-FogObject</command:name>
       <command:verb>New</command:verb>
       <command:noun>FogObject</command:noun>
@@ -1568,9 +1758,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>New-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the type of api object, either objecttasktype or object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1580,9 +1770,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>json data in json string for api call</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1592,9 +1782,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the id of the object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1607,9 +1797,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the type of api object, either objecttasktype or object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1619,9 +1809,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>json data in json string for api call</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1631,9 +1821,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the id of the object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1682,9 +1872,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Remove-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the type of api object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1694,9 +1884,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>json data in json string</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1706,9 +1896,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the id of the object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1721,9 +1911,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the type of api object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1733,9 +1923,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>json data in json string</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1745,9 +1935,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the id of the object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1796,9 +1986,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Remove-UsbMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>usbMacs</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>a string of mac addresses like this @("01:23:45:67:89:10", "00:00:00:00:00:00")</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -1808,9 +1998,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>hostname</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the hostname to remove the usb macs from, defaults to current hostname</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1820,9 +2010,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>macId</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{ Fill macId Description }}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1835,9 +2025,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>usbMacs</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>a string of mac addresses like this @("01:23:45:67:89:10", "00:00:00:00:00:00")</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -1847,9 +2037,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>hostname</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the hostname to remove the usb macs from, defaults to current hostname</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1859,9 +2049,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>macId</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{ Fill macId Description }}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1910,9 +2100,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Reset-HostEncryption</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogHost</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>Defaults to getting current host or can pass a host object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1922,9 +2112,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>restartSvc</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The restartSvc switch will restart the fog service forcing a more immediate re-encryption and connection. This currently only works when used on the local computer you are resetting.</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1936,9 +2126,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogHost</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>Defaults to getting current host or can pass a host object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1948,9 +2138,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>restartSvc</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The restartSvc switch will restart the fog service forcing a more immediate re-encryption and connection. This currently only works when used on the local computer you are resetting.</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1999,9 +2189,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Set-FogInventory</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObj</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the host object to set on</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2011,9 +2201,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the jsondata with the inventory</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2026,9 +2216,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObj</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the host object to set on</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2038,9 +2228,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the jsondata with the inventory</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2089,9 +2279,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Set-FogServerSettings</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogApiToken</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>fog API token found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2101,9 +2291,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>fogUserToken</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2113,9 +2303,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>fogServer</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2125,9 +2315,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>interactive</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>switch to make setting these an interactive process</maml:para>
-          </maml:Description>
+          </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -2139,9 +2329,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogApiToken</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>fog API token found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2151,9 +2341,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>fogUserToken</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2163,9 +2353,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>fogServer</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2175,9 +2365,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>interactive</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>switch to make setting these an interactive process</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -2226,9 +2416,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Set-FogSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostid</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{ Fill hostid Description }}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2238,9 +2428,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>pkgList</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{ Fill pkgList Description }}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2250,9 +2440,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>dept</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>{{ Fill dept Description }}</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2265,9 +2455,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostid</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{ Fill hostid Description }}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2277,9 +2467,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>pkgList</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{ Fill pkgList Description }}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2289,9 +2479,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>dept</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>{{ Fill dept Description }}</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2340,9 +2530,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Start-FogSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostid</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the hostid to start the task on</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2352,9 +2542,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>taskTypeid</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the id of the task to start, defaults to 12</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2367,9 +2557,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostid</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the hostid to start the task on</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2379,9 +2569,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>taskTypeid</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the id of the task to start, defaults to 12</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2430,9 +2620,9 @@ Set-FogInventory -jsonData $json</dev:code>
         <maml:name>Update-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the type of fog object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2442,9 +2632,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>the json data string</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2454,9 +2644,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The ID of the object</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2466,9 +2656,9 @@ Set-FogInventory -jsonData $json</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>uri</maml:name>
-          <maml:Description>
+          <maml:description>
             <maml:para>The explicit uri to use</maml:para>
-          </maml:Description>
+          </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2481,9 +2671,9 @@ Set-FogInventory -jsonData $json</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the type of fog object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2493,9 +2683,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>the json data string</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2505,9 +2695,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The ID of the object</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2517,9 +2707,9 @@ Set-FogInventory -jsonData $json</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>uri</maml:name>
-        <maml:Description>
+        <maml:description>
           <maml:para>The explicit uri to use</maml:para>
-        </maml:Description>
+        </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>

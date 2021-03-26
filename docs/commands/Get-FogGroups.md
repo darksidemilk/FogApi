@@ -37,6 +37,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## NOTES
 A group object does not contain membership information, you need to filter groupassociations to find membership
-but this will give you the id to search for
+but this will give you the id of the group to search for within that object, you'll also need the host id to find all associations of a host
 
 ## RELATED LINKS

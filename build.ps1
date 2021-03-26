@@ -221,8 +221,8 @@ $cur = test-ModuleManifest -Path $manifest;
 $verArgs = New-Object System.Collections.Generic.list[system.object];
 $verArgs.Add($oldVer.Major)
 $verArgs.Add($oldVer.Minor)
-$verArgs.Add($oldVer.Build)
-$verArgs.Add(($oldVer.Revision + 1))
+$verArgs.Add($oldVer.Build + 1)
+# $verArgs.Add(($oldVer.Revision + 1))
 if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
 $newVer = New-Object version -ArgumentList $verArgs;
 $releaseNotes = "`n# $newVer`n`n`t$releaseNote`n$($cur.ReleaseNotes)"
