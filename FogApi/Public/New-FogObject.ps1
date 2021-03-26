@@ -18,6 +18,7 @@ the id of the object
 #>
 
     [CmdletBinding()]
+    [Alias('Add-FogObject')]
     param (
         # The type of object being requested
         [Parameter(Position=0)]
