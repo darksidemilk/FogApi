@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2103.2.11'
+ModuleVersion = '2103.2.12'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -174,6 +174,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2103.2.12
+
+	updated set-fogsnapin help
+
 # 2103.2.11
 
     Updated aliases to export in manifest to include all created aliases

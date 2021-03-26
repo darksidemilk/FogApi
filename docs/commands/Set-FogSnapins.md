@@ -13,7 +13,7 @@ Sets a list of snapins to a host, appends to existing ones
 ## SYNTAX
 
 ```
-Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [[-dept] <Object>] [<CommonParameters>]
+Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ they could then be deployed with start-fogsnapins
 ## PARAMETERS
 
 ### -hostid
-{{ Fill hostid Description }}
+The id of a host to set snapins on, defaults to finding if of current computer if none is given
 
 ```yaml
 Type: Object
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -pkgList
-{{ Fill pkgList Description }}
+String array list of snapins to add to the host
 
 ```yaml
 Type: Object
@@ -57,21 +57,6 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -dept
-{{ Fill dept Description }}
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

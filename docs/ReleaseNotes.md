@@ -1,7 +1,11 @@
 
+# 2103.2.12
+
+	updated set-fogsnapin help
+
 # 2103.2.11
 
-	Updated aliases to export in manifest to include all created aliases
+    Updated aliases to export in manifest to include all created aliases
 
 # 2103.2.10
 

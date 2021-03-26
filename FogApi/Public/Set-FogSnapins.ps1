@@ -7,6 +7,12 @@ Sets a list of snapins to a host, appends to existing ones
 Goes through a provided list variable and adds each matching snapin to the provided
 hostid
 
+.PARAMETER hostID
+The id of a host to set snapins on, defaults to finding if of current computer if none is given
+
+.PARAMETER pkgList
+String array list of snapins to add to the host
+
 .EXAMPLE
 Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
 
@@ -19,8 +25,7 @@ they could then be deployed with start-fogsnapins
     [Alias('Add-FogSnapins')]
     param (
         $hostid = ((Get-FogHost).id),
-        $pkgList,
-        $dept
+        $pkgList
     )
 
     process {

@@ -2417,7 +2417,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostid</maml:name>
           <maml:description>
-            <maml:para>{{ Fill hostid Description }}</maml:para>
+            <maml:para>The id of a host to set snapins on, defaults to finding if of current computer if none is given</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -2429,19 +2429,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>pkgList</maml:name>
           <maml:description>
-            <maml:para>{{ Fill pkgList Description }}</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-          <maml:name>dept</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill dept Description }}</maml:para>
+            <maml:para>String array list of snapins to add to the host</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -2456,7 +2444,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostid</maml:name>
         <maml:description>
-          <maml:para>{{ Fill hostid Description }}</maml:para>
+          <maml:para>The id of a host to set snapins on, defaults to finding if of current computer if none is given</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -2468,19 +2456,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>pkgList</maml:name>
         <maml:description>
-          <maml:para>{{ Fill pkgList Description }}</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>dept</maml:name>
-        <maml:description>
-          <maml:para>{{ Fill dept Description }}</maml:para>
+          <maml:para>String array list of snapins to add to the host</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
