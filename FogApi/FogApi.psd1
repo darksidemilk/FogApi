@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2208.3.0'
+ModuleVersion = '2208.3.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -128,11 +128,11 @@ FunctionsToExport = 'Add-FogHostMac', 'Approve-FogPendingMac', 'Deny-FogPendingM
                'Get-FogImages', 'Get-FogInventory', 'Get-FogLog', 
                'Get-FogMacAddresses', 'Get-FogModules', 'Get-FogObject', 
                'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 'Get-FogSnapins', 
-               'Get-PendingMacsForHost', 'Install-FogService', 'Invoke-FogApi', 
-               'New-FogHost', 'New-FogObject', 'Receive-FogImage', 'Remove-FogObject', 
-               'Remove-UsbMac', 'Reset-HostEncryption', 'Set-FogInventory', 
-               'Set-FogServerSettings', 'Set-FogSnapins', 'Start-FogSnapin', 
-               'Start-FogSnapins', 'Update-FogObject'
+               'Get-LastImageTime', 'Get-PendingMacsForHost', 'Install-FogService', 
+               'Invoke-FogApi', 'New-FogHost', 'New-FogObject', 'Receive-FogImage', 
+               'Remove-FogObject', 'Remove-UsbMac', 'Reset-HostEncryption', 
+               'Set-FogInventory', 'Set-FogServerSettings', 'Set-FogSnapins', 
+               'Start-FogSnapin', 'Start-FogSnapins', 'Update-FogObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -175,6 +175,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2208.3.1
+
+	- Added serialnumber option for Get-FogHost - Added faster processing for Get-FogHost -hostid so it gets it directly rather than getting all hosts and then searching- Added Get-LastImageTime function to get a hosts last image history log entry, can search for the host by serialnumber (prompts for barcode input by default)
+
 # 2208.3.0
 
 	adding deploy and capture functions, using ciminstance instead of wmi for get-foginventory for powershell core compatibility, adding start-fogsnapin single snapin functionality. Also added get-fogimages helper function to get all fog images that currently exist in the fog server. Closes #2 Closes #4

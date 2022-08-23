@@ -44,6 +44,8 @@
 
 ## [Get-FogSnapins](Get-FogSnapins.md)
 
+## [Get-LastImageTime](Get-LastImageTime.md)
+
 ## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
 
 ## [Install-FogService](Install-FogService.md)

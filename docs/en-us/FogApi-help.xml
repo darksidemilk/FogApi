@@ -687,12 +687,12 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Searches a new or existing object of hosts for a specific host (or hosts) with search options of uuid, hostname, or mac address if no search terms are specified then it gets the search terms from your host that is making the request and tries to find your computer in fog</maml:para>
+      <maml:para>Searches a new or existing object of hosts for a specific host (or hosts) with search options of uuid, hostname, or mac address if no search terms are specified then it gets the search terms from your host that is making the request and tries to find your computer in fog. IF you specify the id of the host, then only that host is queried for in the api, otherwise it gets all hosts and searches that object with the given parameters.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Get-FogHost</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>uuid</maml:name>
           <maml:description>
             <maml:para>the uuid of the host</maml:para>
@@ -704,7 +704,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostName</maml:name>
           <maml:description>
             <maml:para>the hostname of the host</maml:para>
@@ -716,7 +716,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>macAddr</maml:name>
           <maml:description>
             <maml:para>a mac address linked to the host</maml:para>
@@ -728,7 +728,10 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-FogHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostID</maml:name>
           <maml:description>
             <maml:para>{{ Fill hostID Description }}</maml:para>
@@ -740,22 +743,25 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>hosts</maml:name>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-FogHost</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>serialNumber</maml:name>
           <maml:description>
-            <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
+            <maml:para>{{ Fill serialNumber Description }}</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
-            <maml:name>Object</maml:name>
+            <maml:name>String</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>(Get-FogHosts)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>uuid</maml:name>
         <maml:description>
           <maml:para>the uuid of the host</maml:para>
@@ -767,7 +773,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostName</maml:name>
         <maml:description>
           <maml:para>the hostname of the host</maml:para>
@@ -779,7 +785,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>macAddr</maml:name>
         <maml:description>
           <maml:para>a mac address linked to the host</maml:para>
@@ -791,7 +797,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostID</maml:name>
         <maml:description>
           <maml:para>{{ Fill hostID Description }}</maml:para>
@@ -803,17 +809,17 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>hosts</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>serialNumber</maml:name>
         <maml:description>
-          <maml:para>defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing</maml:para>
+          <maml:para>{{ Fill serialNumber Description }}</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Object</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>(Get-FogHosts)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -826,7 +832,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-FogHost -hostName MewoMachine</dev:code>
+        <dev:code>Get-FogHost -hostName MeowMachine</dev:code>
         <dev:remarks>
           <maml:para>This would return the fog details of a host named MeowMachine in your fog instance</maml:para>
         </dev:remarks>
@@ -836,6 +842,20 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <dev:code>Get-FogHost</dev:code>
         <dev:remarks>
           <maml:para>If you specify no param it will return your current host from fog</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-FogHost -hostID 1234</dev:code>
+        <dev:remarks>
+          <maml:para>Will get the host of id 1234 directly, this is the fastest way to call the function</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Get-FogHost -serialNumber</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1577,6 +1597,170 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogSnapins</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-LastImageTime</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>LastImageTime</command:noun>
+      <maml:description>
+        <maml:para>Prompts for a serial number, finds the host by that serial number, and returns a string showing the last image time of that host</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Searches the imaging log for the hostid and returns the last entries start time and image used in a descriptive string</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-LastImageTime</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>serialNumber</maml:name>
+          <maml:description>
+            <maml:para>The serialnumber to search for, if not specified, it will prompt for input with readhost if none is given</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-LastImageTime</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostId</maml:name>
+          <maml:description>
+            <maml:para>Specify the hostid to get the image history for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-LastImageTime</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>fogHost</maml:name>
+          <maml:description>
+            <maml:para>specify the fog host object to get the last history for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>currentHost</maml:name>
+          <maml:description>
+            <maml:para>switch param to get the current host's foghost object and return the last image time</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>serialNumber</maml:name>
+        <maml:description>
+          <maml:para>The serialnumber to search for, if not specified, it will prompt for input with readhost if none is given</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostId</maml:name>
+        <maml:description>
+          <maml:para>Specify the hostid to get the image history for</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>fogHost</maml:name>
+        <maml:description>
+          <maml:para>specify the fog host object to get the last history for</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>currentHost</maml:name>
+        <maml:description>
+          <maml:para>switch param to get the current host's foghost object and return the last image time</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Implemented as part of a feature request found in the forums here https://forums.fogproject.org/post/146276</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-LastImageTime</dev:code>
+        <dev:remarks>
+          <maml:para>Will prompt you to scan/type in a serialnumber (i.e. via barcode). Lets say you scan/input 12345678, if that serialnumber belong to a host named "test" it would display a string like this "Serial number 12345678 belongs to host test, it was last imaged at 2022-08-18 12:19:38 with the image Win-10-21H2" And return the full object of the host's imaging log</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-LastImageTime -currentHost</dev:code>
+        <dev:remarks>
+          <maml:para>Will get the current computer in fog and return the last image log object. Will also output a descriptive string, i.e. if the hostname is test-pc hostname is test-pc, it was last imaged at 2022-08-18 12:19:38 with the image Win-10-21H2</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-LastImageTime -hostID 1234</dev:code>
+        <dev:remarks>
+          <maml:para>Will get the foghost with the id 1234 and return the last entry in its image log</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>$log = Get-LastImageTime -fogHost $hostObj;</dev:code>
+        <dev:remarks>
+          <maml:para>Will put the last image history log for the given host in the $log variable. That $log's properties can then be used in other operations</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-LastImageTime</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

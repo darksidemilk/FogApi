@@ -12,21 +12,33 @@ Gets the object of a specific fog host
 
 ## SYNTAX
 
+### searchTerm (Default)
 ```
-Get-FogHost [[-uuid] <String>] [[-hostName] <String>] [[-macAddr] <String>] [[-hostID] <String>]
- [[-hosts] <Object>] [<CommonParameters>]
+Get-FogHost [-uuid <String>] [-hostName <String>] [-macAddr <String>] [<CommonParameters>]
+```
+
+### byID
+```
+Get-FogHost -hostID <String> [<CommonParameters>]
+```
+
+### serialNumber
+```
+Get-FogHost -serialNumber <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Searches a new or existing object of hosts for a specific host (or hosts) with search options of uuid, hostname, or mac address
 if no search terms are specified then it gets the search terms from your host that is making the request and tries to find your
-computer in fog
+computer in fog.
+IF you specify the id of the host, then only that host is queried for in the api, otherwise it gets all hosts and searches
+that object with the given parameters.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-FogHost -hostName MewoMachine
+Get-FogHost -hostName MeowMachine
 ```
 
 This would return the fog details of a host named MeowMachine in your fog instance
@@ -38,6 +50,18 @@ Get-FogHost
 
 If you specify no param it will return your current host from fog
 
+### EXAMPLE 3
+```
+Get-FogHost -hostID 1234
+```
+
+Will get the host of id 1234 directly, this is the fastest way to call the function
+
+### EXAMPLE 4
+```
+Get-FogHost -serialNumber
+```
+
 ## PARAMETERS
 
 ### -uuid
@@ -45,11 +69,11 @@ the uuid of the host
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: searchTerm
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -60,11 +84,11 @@ the hostname of the host
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: searchTerm
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,11 +99,11 @@ a mac address linked to the host
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: searchTerm
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -90,27 +114,27 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: byID
 Aliases:
 
-Required: False
-Position: 4
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -hosts
-defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing
+### -serialNumber
+{{ Fill serialNumber Description }}
 
 ```yaml
-Type: Object
-Parameter Sets: (All)
+Type: String
+Parameter Sets: serialNumber
 Aliases:
 
-Required: False
-Position: 5
-Default value: (Get-FogHosts)
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

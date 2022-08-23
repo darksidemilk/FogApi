@@ -27,6 +27,7 @@ nav:
     - 'Get-FogSecsSinceEpoch': 'commands/Get-FogSecsSinceEpoch.md'
     - 'Get-FogServerSettings': 'commands/Get-FogServerSettings.md'
     - 'Get-FogSnapins': 'commands/Get-FogSnapins.md'
+    - 'Get-LastImageTime': 'commands/Get-LastImageTime.md'
     - 'Get-PendingMacsForHost': 'commands/Get-PendingMacsForHost.md'
     - 'Install-FogService': 'commands/Install-FogService.md'
     - 'Invoke-FogApi': 'commands/Invoke-FogApi.md'
