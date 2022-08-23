@@ -56,7 +56,21 @@ function Get-FogHost {
             } else {
                 $uuid = ($compSys.Qualifiers | Where-Object Name -match 'UUID' | Select-Object -ExpandProperty Value);
             }
-            $macAddr = ((Get-NetAdapter | Select-Object MacAddress)[0].MacAddress).Replace('-',':');
+            # $macAddr = ((Get-NetAdapter | Select-Object MacAddress)[0].MacAddress).Replace('-',':');
+            $make = Get-CimInstance -classname win32_computersystem | Select-Object -ExpandProperty manufacturer
+            if (($Make) -notmatch "vmware" ) { 
+                $macAddr = (
+                    Get-NetAdapter | Where-Object { 
+                        $_.Status -eq 'up' -And $_.Name -notmatch 'VMware'
+                    } | Select-Object -first 1 | Select-Object -expand MacAddress
+                ).Replace("-",":");
+            } else {
+                $macAddr = (
+                    Get-NetAdapter | Where-Object { 
+                        $_.Status -eq 'up'
+                    } | Select-Object -first 1 | Select-Object -expand MacAddress
+                ).Replace("-",":");
+            }
             $hostName = $(hostname);
         }
         Write-Verbose 'getting all hosts to search...';
@@ -95,7 +109,16 @@ function Get-FogHost {
     end {
         if ($found){
             if ($hostObj.count -gt 1) {
-                "Multiple hosts found! Review hosts in return object and select just one if needed" | Out-Host;
+                if ($hostName) { 
+                    $hostObjByName = $hostObj | Where-Object name -eq $hostName;
+                    if ($null -ne $hostObjByName) {
+                        $hostObj = $hostObjByName
+                    } else {
+                        "Multiple hosts found and none of them match given hostname! Review hosts in return object and select just one if needed" | Out-Host;
+                    }
+                } else {
+                    "Multiple hosts found! Review hosts in return object and select just one if needed" | Out-Host;
+                }
             }
 
             return $hostObj;

@@ -6,6 +6,8 @@
 
 ## [Deny-FogPendingMac](Deny-FogPendingMac.md)
 
+## [Deploy-FogImage](Deploy-FogImage.md)
+
 ## [Get-FogActiveTasks](Get-FogActiveTasks.md)
 
 ## [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
@@ -24,6 +26,8 @@
 
 ## [Get-FogHosts](Get-FogHosts.md)
 
+## [Get-FogImages](Get-FogImages.md)
+
 ## [Get-FogInventory](Get-FogInventory.md)
 
 ## [Get-FogLog](Get-FogLog.md)
@@ -33,6 +37,8 @@
 ## [Get-FogModules](Get-FogModules.md)
 
 ## [Get-FogObject](Get-FogObject.md)
+
+## [Get-FogSecsSinceEpoch](Get-FogSecsSinceEpoch.md)
 
 ## [Get-FogServerSettings](Get-FogServerSettings.md)
 
@@ -48,6 +54,8 @@
 
 ## [New-FogObject](New-FogObject.md)
 
+## [Receive-FogImage](Receive-FogImage.md)
+
 ## [Remove-FogObject](Remove-FogObject.md)
 
 ## [Remove-UsbMac](Remove-UsbMac.md)
@@ -59,6 +67,8 @@
 ## [Set-FogServerSettings](Set-FogServerSettings.md)
 
 ## [Set-FogSnapins](Set-FogSnapins.md)
+
+## [Start-FogSnapin](Start-FogSnapin.md)
 
 ## [Start-FogSnapins](Start-FogSnapins.md)
 

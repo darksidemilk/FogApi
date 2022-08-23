@@ -1,4 +1,8 @@
 
+# 2103.2.13
+
+	adding deploy and capture functions, using ciminstance instead of wmi for get-foginventory for powershell core compatibility, adding start-fogsnapin single snapin functionality. Also added get-fogimages helper function to get all fog images that currently exist in the fog server. Closes #2 Closes #4
+
 # 2103.2.12
 
 	updated set-fogsnapin help

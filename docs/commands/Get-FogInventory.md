@@ -14,7 +14,7 @@ a json object that can be used to set fog inventory
 ## SYNTAX
 
 ```
-Get-FogInventory [[-hostObj] <Object>] [<CommonParameters>]
+Get-FogInventory [[-hostObj] <Object>] [-fromFog] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,12 +24,20 @@ Uses various wmi classes to get every possible inventory item to set in fog
 
 ### EXAMPLE 1
 ```
-$json = Get-FogInventory
-Set-FogInventory -jsonData $json
+$json = Get-FogInventory; Set-FogInventory -jsonData $json
 ```
 
-Gets the inventory of the currenthost using wmi and formats in the proper json
+Gets the inventory of the currenthost using cim and formats in the proper json
 then sets the inventory for that host in fog.
+
+### EXAMPLE 2
+```
+Get-FogInventory -fromFog
+```
+
+Will return the inventory currently set on the fog host of the current computer
+This will happen automatically if you run it from powershell core in linux as getting
+the inventory of the linux machine isn't yet implemented
 
 ## PARAMETERS
 
@@ -46,6 +54,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: (Get-FogHost)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -fromFog
+Switch param to simply return the currently set inventory of the fog host
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

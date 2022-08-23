@@ -318,6 +318,110 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Deploy-FogImage</command:name>
+      <command:verb>Deploy</command:verb>
+      <command:noun>FogImage</command:noun>
+      <maml:description>
+        <maml:para>Start or schedule a deploy task for a fog host</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Starts or schedules a deploy task of the currently assigned image on a host</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Deploy-FogImage</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostId</maml:name>
+          <maml:description>
+            <maml:para>the hostid to start the deploy task for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StartAtTime</maml:name>
+          <maml:description>
+            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostId</maml:name>
+        <maml:description>
+          <maml:para>the hostid to start the deploy task for</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>StartAtTime</maml:name>
+        <maml:description>
+          <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+        <dev:type>
+          <maml:name>DateTime</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>The verbs used in the main name and alias names are meant to provide better usability as someone may search for approved powershell verbs  when looking for this functionality or may simply look for deploy as that is the name of the task in fog. It just happens to be an approved powershell verb too</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Deploy-FogImage -hostID "1234"</dev:code>
+        <dev:remarks>
+          <maml:para>Will queue a deploy task for host 1234 right now</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Push-FogImage -hostID "1234" -StartAtTime (Get-date 8pm)</dev:code>
+        <dev:remarks>
+          <maml:para>Using the alias name for this command, Will schedule a deploy task for the host of id 1234 at 8pm the same day</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Send-FogImage -hostID "1234" -startAtTime ((Get-Date 8pm).adddays(2)).ToDateTime($null)</dev:code>
+        <dev:remarks>
+          <maml:para>Using another alias for this command, will schedule a deploy  task for the host 1234 at 8pm 2 days from now. i.e. if today was friday, this would schedule it for sunday at 8pm.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Deploy-FogImage</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-FogActiveTasks</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FogActiveTasks</command:noun>
@@ -917,6 +1021,47 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-FogImages</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogImages</command:noun>
+      <maml:description>
+        <maml:para>Returns an object of the images defined in your fogserver</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns the images from your fog server with all their properties</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogImages</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$images = Get-FogImages; $images | select id,name</dev:code>
+        <dev:remarks>
+          <maml:para>Gets all the fog images and then lists them with just the image id and names</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogImages</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-FogInventory</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FogInventory</command:noun>
@@ -942,6 +1087,17 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>fromFog</maml:name>
+          <maml:description>
+            <maml:para>Switch param to simply return the currently set inventory of the fog host</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -957,6 +1113,18 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </dev:type>
         <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>fromFog</maml:name>
+        <maml:description>
+          <maml:para>Switch param to simply return the currently set inventory of the fog host</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
     </command:parameters>
     <command:inputTypes />
     <command:returnValues />
@@ -968,10 +1136,16 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$json = Get-FogInventory
-Set-FogInventory -jsonData $json</dev:code>
+        <dev:code>$json = Get-FogInventory; Set-FogInventory -jsonData $json</dev:code>
         <dev:remarks>
-          <maml:para>Gets the inventory of the currenthost using wmi and formats in the proper json then sets the inventory for that host in fog.</maml:para>
+          <maml:para>Gets the inventory of the currenthost using cim and formats in the proper json then sets the inventory for that host in fog.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogInventory -fromFog</dev:code>
+        <dev:remarks>
+          <maml:para>Will return the inventory currently set on the fog host of the current computer This will happen automatically if you run it from powershell core in linux as getting the inventory of the linux machine isn't yet implemented</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1255,6 +1429,72 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogObject</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogSecsSinceEpoch</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogSecsSinceEpoch</command:noun>
+      <maml:description>
+        <maml:para>Gets seconds since 1970 epoch</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets seconds since 1970 epoch to give the unix time value</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogSecsSinceEpoch</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>scheduleDate</maml:name>
+          <maml:description>
+            <maml:para>the date to get the unixtime of defaults to current datetime</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(Get-Date)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>scheduleDate</maml:name>
+        <maml:description>
+          <maml:para>the date to get the unixtime of defaults to current datetime</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(Get-Date)</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Created to be used with creating scheduled tasks in fog</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SecsSinceEpoch</dev:code>
+        <dev:remarks>
+          <maml:para>returns the unixtime value of the current time</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogSecsSinceEpoch</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1852,6 +2092,110 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/New-FogObject</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Receive-FogImage</command:name>
+      <command:verb>Receive</command:verb>
+      <command:noun>FogImage</command:noun>
+      <maml:description>
+        <maml:para>Starts or schedules a capture task on a given host</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Starts a capture task to receive a new version of an image in fog</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Receive-FogImage</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostId</maml:name>
+          <maml:description>
+            <maml:para>The id of the host to capture from</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StartAtTime</maml:name>
+          <maml:description>
+            <maml:para>When to start to capture, if not given will start now</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostId</maml:name>
+        <maml:description>
+          <maml:para>The id of the host to capture from</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>StartAtTime</maml:name>
+        <maml:description>
+          <maml:para>When to start to capture, if not given will start now</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+        <dev:type>
+          <maml:name>DateTime</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Pull and Capture are not powershell approved verbs, they are used as aliases to match the opposite Push-Image alias and to match the name of the task in the fog system. Receive is an approved verb and the closest one to what this does</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Receive-FogImage -hostID "1234"</dev:code>
+        <dev:remarks>
+          <maml:para>Will queue a capture task for host 1234 right now</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Capture-FogImage -hostID "1234" -StartAtTime (Get-date 8pm)</dev:code>
+        <dev:remarks>
+          <maml:para>Using the alias name for this command, Will schedule a capture task for the host of id 1234 at 8pm the same day</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Pull-FogImage -hostID "1234" -startAtTime ((Get-Date 8pm).adddays(2)).ToDateTime($null)</dev:code>
+        <dev:remarks>
+          <maml:para>Using another alias for this command, will schedule a capture task for the host 1234 at 8pm 2 days from now. i.e. if today was friday, this would schedule it for sunday at 8pm.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Receive-FogImage</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2486,6 +2830,142 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogSnapins</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Start-FogSnapin</command:name>
+      <command:verb>Start</command:verb>
+      <command:noun>FogSnapin</command:noun>
+      <maml:description>
+        <maml:para>Starts a single snapin task for a given machine</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Requires the hostID of the fog host and then either the name of the snapin or the id of the snapin to deploy</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Start-FogSnapin</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostID</maml:name>
+          <maml:description>
+            <maml:para>The id of the host to deploy the task for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>snapinname</maml:name>
+          <maml:description>
+            <maml:para>The name of the snapin to deploy</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Start-FogSnapin</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostID</maml:name>
+          <maml:description>
+            <maml:para>The id of the host to deploy the task for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>snapinId</maml:name>
+          <maml:description>
+            <maml:para>The id of the snapin to deploy</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostID</maml:name>
+        <maml:description>
+          <maml:para>The id of the host to deploy the task for</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>snapinname</maml:name>
+        <maml:description>
+          <maml:para>The name of the snapin to deploy</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>snapinId</maml:name>
+        <maml:description>
+          <maml:para>The id of the snapin to deploy</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Start-FogSnapin -hostID 1234 -snapinname 'office365'</dev:code>
+        <dev:remarks>
+          <maml:para>This will find the id of the snapin named 'office365' and deploy it on the host o id 1234 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Start-FogSnapin -hostID 1234 -snapinid 12</dev:code>
+        <dev:remarks>
+          <maml:para>This will deploy a single snapin task for the snapin of id 12 for host 1234 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Start-FogSnapin</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>

@@ -12,32 +12,47 @@ function Get-FogInventory {
     This is used for the inventory structure of the object
     It defaults to the current host
 
-    .EXAMPLE
-    $json = Get-FogInventory
-    Set-FogInventory -jsonData $json
+    .PARAMETER fromFog
+    Switch param to simply return the currently set inventory of the fog host
 
-    Gets the inventory of the currenthost using wmi and formats in the proper json
+    .EXAMPLE
+    $json = Get-FogInventory; Set-FogInventory -jsonData $json
+
+    Gets the inventory of the currenthost using cim and formats in the proper json
     then sets the inventory for that host in fog.
+
+    .EXAMPLE
+    Get-FogInventory -fromFog
+
+    Will return the inventory currently set on the fog host of the current computer
+    This will happen automatically if you run it from powershell core in linux as getting
+    the inventory of the linux machine isn't yet implemented
 
 #>
 
     [CmdletBinding()]
     param (
-        $hostObj = (Get-FogHost)
+        $hostObj = (Get-FogHost),
+        [switch]$fromFog
     )
 
-    begin {
-        $comp = Get-WmiObject -Class Win32_ComputerSystem;
-        $compSys = Get-WmiObject -Class Win32_ComputerSystemProduct;
-        $cpu = Get-WmiObject -Class Win32_processor;
-        $bios = Get-WmiObject -Class Win32_Bios;
-        $hdd = Get-WmiObject -Class Win32_DiskDrive | Where-Object DeviceID -match '0'; #get just drive 0 in case of multiple drives
-        $baseBoard = Get-WmiObject -Class Win32_BaseBoard;
-        $case = Get-WmiObject -Class Win32_SystemEnclosure;
-        $info = Get-ComputerInfo;
-    }
-
     process {
+        if ($IsLinux -OR $fromFog) {
+            if ($IsLinux) {
+                "Not yet implemented for getting the host inventory from linux inline, returning the hosts currently set inventory object" | out-host;
+            }
+            return $hostObj.inventory;
+        }
+        else {
+            $comp = Get-CimInstance -ClassName Win32_ComputerSystem;
+            $compSys = Get-CimInstance -ClassName Win32_ComputerSystemProduct;
+            $cpu = Get-CimInstance -ClassName Win32_processor;
+            $bios = Get-CimInstance -ClassName Win32_Bios;
+            $hdd = Get-CimInstance -ClassName Win32_DiskDrive | Where-Object DeviceID -match '0'; #get just drive 0 in case of multiple drives
+            $baseBoard = Get-CimInstance -ClassName Win32_BaseBoard;
+            $case = Get-CimInstance -ClassName Win32_SystemEnclosure;
+            $info = Get-ComputerInfo;
+        }
         $hostObj.inventory.hostID        = $hostObj.id;
         # $hostObj.inventory.primaryUser   =
         # $hostObj.inventory.other1        =
@@ -75,11 +90,9 @@ function Get-FogInventory {
         $hostObj.inventory.caseserial    = $case.SerialNumber;
         $hostObj.inventory.caseasset     = $case.SMBIOSAssetTag;
         $hostObj.inventory.memory        = "$([MATH]::Round($(($comp.TotalPhysicalMemory) / 1GB),2)) GiB";
-    }
-
-    end {
         $jsonData = $hostObj.inventory | ConvertTo-Json;
         return $jsonData;
     }
+
 
 }
