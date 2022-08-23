@@ -18,6 +18,7 @@ The versioning of this module follows this pattern
 ## Year/Month
 
 This versioning shows you first the Year and month this version of the module was published, giving you an idea of when it was last updated.
+i.e. 2208 would be august 2022.
 
 ## Major
 
