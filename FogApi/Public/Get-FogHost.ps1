@@ -6,7 +6,8 @@ function Get-FogHost {
     .DESCRIPTION
     Searches a new or existing object of hosts for a specific host (or hosts) with search options of uuid, hostname, or mac address
     if no search terms are specified then it gets the search terms from your host that is making the request and tries to find your
-    computer in fog
+    computer in fog. IF you specify the id of the host, then only that host is queried for in the api, otherwise it gets all hosts and searches
+    that object with the given parameters.
     
     .PARAMETER uuid
     the uuid of the host
@@ -21,7 +22,7 @@ function Get-FogHost {
     defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing
     
     .EXAMPLE
-    Get-FogHost -hostName MewoMachine
+    Get-FogHost -hostName MeowMachine
     
     This would return the fog details of a host named MeowMachine in your fog instance
 
@@ -30,26 +31,42 @@ function Get-FogHost {
 
     If you specify no param it will return your current host from fog
 
+    .EXAMPLE
+    Get-FogHost -hostID 1234
+
+    Will get the host of id 1234 directly, this is the fastest way to call the function
+
+    .EXAMPLE
+    Get-FogHost -serialNumber
+
 #>
     
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='searchTerm')]
     param (
+        [parameter(ParameterSetName='searchTerm')]
         [string]$uuid,
+        [parameter(ParameterSetName='searchTerm')]
         [string]$hostName,
+        [parameter(ParameterSetName='searchTerm')]
         [string]$macAddr,
+        [parameter(ParameterSetName='byID',Mandatory=$true)]
         [string]$hostID,
-        $hosts = (Get-FogHosts)
+        [parameter(ParameterSetName='serialNumber',Mandatory=$true)]
+        [string]$serialNumber
     )
 
     begin {
         [bool]$found = $false;
         Write-Verbose 'Checking for passed variables'
-        if (!$uuid -and !$hostName -and !$macAddr -and !$hostID) {
+        if ($serialNumber) {
+            $inventorys = (Get-FogObject -type object -coreObject inventory).inventorys
+            $hostID = $inventorys | Where-Object { $_.sysserial -eq $serialNumber -OR $_.mbserial -eq $serialNumber -OR $_.caseserial -eq $serialNumber } | Select-Object -ExpandProperty HostID #find the inventory where the serial number matches one of the serial numbers in a hosts inventory and select the host id from that
+        } elseif (!$uuid -and !$hostName -and !$macAddr -and !$hostID) {
             Write-Verbose 'no params given, getting current computer variables';
             try {
-                $compSys = (Get-WmiObject Win32_ComputerSystemProduct);
-            } catch {
                 $compSys = Get-CimInstance -ClassName win32_computersystemproduct
+            } catch {
+                $compSys = (Get-WmiObject Win32_ComputerSystemProduct);
             }
             if ($compSys.UUID -notmatch "12345678-9012-3456-7890-abcdefabcdef" ) {
                 $uuid = $compSys.UUID;
@@ -72,6 +89,10 @@ function Get-FogHost {
                 ).Replace("-",":");
             }
             $hostName = $(hostname);
+        } else {
+            if ($hostID) {
+                Write-Verbose "getting host from ID $hostID directly..."
+            }
         }
         Write-Verbose 'getting all hosts to search...';
         Write-Verbose "search terms: uuid is $uuid, macAddr is $macAddr, hostname is $hostName";
@@ -81,18 +102,19 @@ function Get-FogHost {
         Write-Verbose 'finding host in hosts';
         [bool]$found = $false;
         if ($hostID) {
-            $hostObj = $hosts | Where-Object id -eq $hostID;
+            $hostObj = get-fogobject -type object -coreObject host -IDofObject "$hostID";
             if ($null -ne $hostObj) {
                 $found = $true;
             }
         } else {
+            $hosts = (Get-FogHosts)
             $hostObj = $hosts | Where-Object {
                 ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) -OR `
                 ($hostName -ne "" -AND $_.name -eq $hostName) -OR `
                 ($macAddr -ne "" -AND $_.macs -contains $macAddr);
                 if  ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) {
-                    Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found";
                     $found = $true;
+                    Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found is $found";
                 }
                 if ($macAddr -ne "" -AND $_.macs -contains $macAddr) {
                     Write-Verbose "$($_.macs) matches the macaddress $macAddr`! host found";
