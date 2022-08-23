@@ -13,7 +13,7 @@ This module used to be housed at https://github.com/FOGProject/fog-community-scr
 
 The versioning of this module follows this pattern
 
-`{Year|Month}.{Major Version}.{Minor Version}.{Build/Revision #}`
+`{Year|Month}.{Major Version}.{Revision #}`
 
 ## Year/Month
 
