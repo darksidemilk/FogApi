@@ -17,9 +17,9 @@
         <maml:name>Add-FogHostMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -29,9 +29,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>macAddress</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -41,9 +41,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>primary</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -52,9 +52,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ignoreMacOnClient</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>set this switch param if you need this mac to be ignored by the fog client</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -63,9 +63,9 @@
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ignoreMacForImaging</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Set this switch param if you need this mac to be ignored by the pxe client</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -77,9 +77,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -89,9 +89,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>macAddress</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The mac address you want to add. Should be in the format of "12:34:56:78:90"</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -101,9 +101,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>primary</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>switch parameter to set the macaddress as the primary for the host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -113,9 +113,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ignoreMacOnClient</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>set this switch param if you need this mac to be ignored by the fog client</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -125,9 +125,9 @@
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ignoreMacForImaging</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Set this switch param if you need this mac to be ignored by the pxe client</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -183,9 +183,9 @@
         <maml:name>Approve-FogPendingMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -198,9 +198,9 @@
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -258,9 +258,9 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
         <maml:name>Deny-FogPendingMac</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>macObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -273,9 +273,9 @@ Approve-FogPendingMac -macObject $pendingMac</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>macObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Should be an item from the array return object from `Get-PendingMacsForHost`</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -333,9 +333,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
         <maml:name>Deploy-FogImage</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the hostid to start the deploy task for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -345,9 +345,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>StartAtTime</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -360,9 +360,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the hostid to start the deploy task for</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -372,9 +372,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>StartAtTime</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -478,9 +478,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
         <maml:name>Get-FogAssociatedSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -493,9 +493,9 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -587,9 +587,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogGroupByName</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>groupName</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The name of the group to search for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -602,9 +602,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>groupName</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The name of the group to search for</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -694,9 +694,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHost</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>uuid</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the uuid of the host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -706,9 +706,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostName</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the hostname of the host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -718,9 +718,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>macAddr</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>a mac address linked to the host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -733,9 +733,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>{{ Fill hostID Description }}</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -748,9 +748,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>serialNumber</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>{{ Fill serialNumber Description }}</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -763,9 +763,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>uuid</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the uuid of the host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -775,9 +775,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostName</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the hostname of the host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -787,9 +787,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>macAddr</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>a mac address linked to the host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -799,9 +799,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>{{ Fill hostID Description }}</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -811,9 +811,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>serialNumber</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>{{ Fill serialNumber Description }}</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -853,9 +853,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
-        <dev:code>Get-FogHost -serialNumber</dev:code>
+        <dev:code>Get-FogHost -serialNumber 12345678</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>Will find the given serial number in fog server inventory and then find the host of the hostID that inventory belongs to</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -883,9 +883,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHostGroup</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The hostid to get the group memberships of</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
             <maml:name>Int32</maml:name>
@@ -898,9 +898,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The hostid to get the group memberships of</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
           <maml:name>Int32</maml:name>
@@ -949,9 +949,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogHostMacs</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The host object you get with Get-Foghost</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -964,9 +964,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The host object you get with Get-Foghost</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1097,9 +1097,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogInventory</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObj</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1109,9 +1109,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>fromFog</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Switch param to simply return the currently set inventory of the fog host</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1123,9 +1123,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObj</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the host to get the model of the inventory object from This is used for the inventory structure of the object It defaults to the current host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1135,9 +1135,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>fromFog</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Switch param to simply return the currently set inventory of the fog host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1193,9 +1193,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>Get-FogLog</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>static</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>show the static contents of the fog log</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1207,9 +1207,9 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>static</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>show the static contents of the fog log</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1355,9 +1355,9 @@ $mods</dev:code>
         <maml:name>Get-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the type of object to get can be "objectactivetasktype","object", or "search" Search is broken in the api in versions before 1.6 as I understand</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1367,9 +1367,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the json data in json string format if required</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1379,9 +1379,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the id of the object to get</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1394,9 +1394,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the type of object to get can be "objectactivetasktype","object", or "search" Search is broken in the api in versions before 1.6 as I understand</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1406,9 +1406,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the json data in json string format if required</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1418,9 +1418,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the id of the object to get</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1469,9 +1469,9 @@ $mods</dev:code>
         <maml:name>Get-FogSecsSinceEpoch</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>scheduleDate</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the date to get the unixtime of defaults to current datetime</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1484,9 +1484,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>scheduleDate</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the date to get the unixtime of defaults to current datetime</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1617,9 +1617,9 @@ $mods</dev:code>
         <maml:name>Get-LastImageTime</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>serialNumber</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The serialnumber to search for, if not specified, it will prompt for input with readhost if none is given</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1632,9 +1632,9 @@ $mods</dev:code>
         <maml:name>Get-LastImageTime</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Specify the hostid to get the image history for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1647,9 +1647,9 @@ $mods</dev:code>
         <maml:name>Get-LastImageTime</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>fogHost</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>specify the fog host object to get the last history for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1659,9 +1659,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>currentHost</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>switch param to get the current host's foghost object and return the last image time</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -1673,9 +1673,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>serialNumber</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The serialnumber to search for, if not specified, it will prompt for input with readhost if none is given</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1685,9 +1685,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Specify the hostid to get the image history for</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1697,9 +1697,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>fogHost</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>specify the fog host object to get the last history for</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1709,9 +1709,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>currentHost</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>switch param to get the current host's foghost object and return the last image time</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -1781,9 +1781,9 @@ $mods</dev:code>
         <maml:name>Get-PendingMacsForHost</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the hostid or hostname of the fog host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1796,9 +1796,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the hostid or hostname of the fog host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1854,9 +1854,9 @@ $mods</dev:code>
         <maml:name>Install-FogService</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogServer</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the server to download from and connect to</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -1869,9 +1869,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogServer</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the server to download from and connect to</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -1920,9 +1920,9 @@ $mods</dev:code>
         <maml:name>Invoke-FogApi</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>uriPath</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Put in the path of the apicall that would follow http://fog-server/fog/ i.e. 'host/1234' would access the host with an id of 1234 This is filled by the wrapper commands using parameter validation to help ensure using the proper object names for the url</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1932,9 +1932,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Method</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Defaults to 'Get' can also be Post, put, or delete, this param is handled better by the wrapper functions get is Get-fogObject post is New-fogObject delete is Remove-fogObject put is Update-fogObject</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1944,9 +1944,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The jsondata string for including data in the body of a request</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -1959,9 +1959,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>uriPath</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Put in the path of the apicall that would follow http://fog-server/fog/ i.e. 'host/1234' would access the host with an id of 1234 This is filled by the wrapper commands using parameter validation to help ensure using the proper object names for the url</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1971,9 +1971,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Method</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Defaults to 'Get' can also be Post, put, or delete, this param is handled better by the wrapper functions get is Get-fogObject post is New-fogObject delete is Remove-fogObject put is Update-fogObject</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -1983,9 +1983,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The jsondata string for including data in the body of a request</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2041,9 +2041,9 @@ $mods</dev:code>
         <maml:name>New-FogHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>name</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The hostname of the new fog host, should not have spaces or special characters other than '-' or '_' Should follow general hostname rules. Only whitespace is currently checked. If you input an invalid hostname it may create the host but you won't be able to view the host in fog</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2053,9 +2053,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>macs</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>A single or list of mac addresses for the host. The first mac in the list will be the primary. Mac's should be in the format "00:01:23:45:67:89" additional macs can be added as a comma separated list to create a string array</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -2065,9 +2065,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>modules</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The ids of the modules to enable on the host.  Defaults to getting the modules you have set to be enabled on the fog server You can view your existing modules and create a custom list by utilizing Get-FogModules</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -2080,9 +2080,9 @@ $mods</dev:code>
         <maml:name>New-FogHost</maml:name>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>customHost</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Optionally specify a full host object to create a host object with additional params such as snapinIds and groupids, this parameter has less testing done on it but is provided for flexibility until more default parameters are added. A customHost object should at least have the properties name and macs and can have additional ones as well. It can be created like this  $customHost = @{     name = "name";     macs = "00:01:23:45:67:89";     modules = ((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id); } Refer to the fog api documentaiton and the forums for information on additional properties to add</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2095,9 +2095,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>name</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The hostname of the new fog host, should not have spaces or special characters other than '-' or '_' Should follow general hostname rules. Only whitespace is currently checked. If you input an invalid hostname it may create the host but you won't be able to view the host in fog</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2107,9 +2107,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>macs</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>A single or list of mac addresses for the host. The first mac in the list will be the primary. Mac's should be in the format "00:01:23:45:67:89" additional macs can be added as a comma separated list to create a string array</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -2119,9 +2119,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>modules</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The ids of the modules to enable on the host.  Defaults to getting the modules you have set to be enabled on the fog server You can view your existing modules and create a custom list by utilizing Get-FogModules</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -2131,9 +2131,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>customHost</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Optionally specify a full host object to create a host object with additional params such as snapinIds and groupids, this parameter has less testing done on it but is provided for flexibility until more default parameters are added. A customHost object should at least have the properties name and macs and can have additional ones as well. It can be created like this  $customHost = @{     name = "name";     macs = "00:01:23:45:67:89";     modules = ((Get-FogModules | Where-Object isDefault -eq '1') | Select-Object -ExpandProperty id); } Refer to the fog api documentaiton and the forums for information on additional properties to add</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2182,9 +2182,9 @@ $mods</dev:code>
         <maml:name>New-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the type of api object, either objecttasktype or object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2194,9 +2194,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>json data in json string for api call</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2206,9 +2206,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the id of the object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2221,9 +2221,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the type of api object, either objecttasktype or object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2233,9 +2233,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>json data in json string for api call</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2245,9 +2245,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the id of the object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2296,9 +2296,9 @@ $mods</dev:code>
         <maml:name>Receive-FogImage</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of the host to capture from</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2308,9 +2308,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>StartAtTime</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>When to start to capture, if not given will start now</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
             <maml:name>DateTime</maml:name>
@@ -2323,9 +2323,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The id of the host to capture from</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2335,9 +2335,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>StartAtTime</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>When to start to capture, if not given will start now</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
           <maml:name>DateTime</maml:name>
@@ -2400,9 +2400,9 @@ $mods</dev:code>
         <maml:name>Remove-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the type of api object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2412,9 +2412,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>json data in json string</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2424,9 +2424,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the id of the object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2439,9 +2439,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the type of api object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2451,9 +2451,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>json data in json string</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2463,9 +2463,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the id of the object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2514,9 +2514,9 @@ $mods</dev:code>
         <maml:name>Remove-UsbMac</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>usbMacs</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>a string of mac addresses like this @("01:23:45:67:89:10", "00:00:00:00:00:00")</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
             <maml:name>String[]</maml:name>
@@ -2526,9 +2526,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>hostname</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the hostname to remove the usb macs from, defaults to current hostname</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2538,9 +2538,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>macId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>{{ Fill macId Description }}</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2553,9 +2553,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>usbMacs</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>a string of mac addresses like this @("01:23:45:67:89:10", "00:00:00:00:00:00")</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
@@ -2565,9 +2565,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>hostname</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the hostname to remove the usb macs from, defaults to current hostname</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2577,9 +2577,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>macId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>{{ Fill macId Description }}</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2628,9 +2628,9 @@ $mods</dev:code>
         <maml:name>Reset-HostEncryption</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogHost</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>Defaults to getting current host or can pass a host object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2640,9 +2640,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>restartSvc</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The restartSvc switch will restart the fog service forcing a more immediate re-encryption and connection. This currently only works when used on the local computer you are resetting.</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -2654,9 +2654,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogHost</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>Defaults to getting current host or can pass a host object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2666,9 +2666,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>restartSvc</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The restartSvc switch will restart the fog service forcing a more immediate re-encryption and connection. This currently only works when used on the local computer you are resetting.</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -2717,9 +2717,9 @@ $mods</dev:code>
         <maml:name>Set-FogInventory</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostObj</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the host object to set on</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2729,9 +2729,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the jsondata with the inventory</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2744,9 +2744,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostObj</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the host object to set on</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2756,9 +2756,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the jsondata with the inventory</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2807,9 +2807,9 @@ $mods</dev:code>
         <maml:name>Set-FogServerSettings</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>fogApiToken</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>fog API token found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2819,9 +2819,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>fogUserToken</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2831,9 +2831,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>fogServer</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -2843,9 +2843,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>interactive</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>switch to make setting these an interactive process</maml:para>
-          </maml:description>
+          </maml:Description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
             <maml:uri />
@@ -2857,9 +2857,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>fogApiToken</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>fog API token found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2869,9 +2869,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>fogUserToken</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2881,9 +2881,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>fogServer</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -2893,9 +2893,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>interactive</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>switch to make setting these an interactive process</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
           <maml:name>SwitchParameter</maml:name>
@@ -2944,9 +2944,9 @@ $mods</dev:code>
         <maml:name>Set-FogSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostid</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of a host to set snapins on, defaults to finding if of current computer if none is given</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2956,9 +2956,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>pkgList</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>String array list of snapins to add to the host</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -2971,9 +2971,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostid</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The id of a host to set snapins on, defaults to finding if of current computer if none is given</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -2983,9 +2983,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>pkgList</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>String array list of snapins to add to the host</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3034,9 +3034,9 @@ $mods</dev:code>
         <maml:name>Start-FogSnapin</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of the host to deploy the task for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3046,9 +3046,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>snapinname</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The name of the snapin to deploy</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3061,9 +3061,9 @@ $mods</dev:code>
         <maml:name>Start-FogSnapin</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>hostID</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of the host to deploy the task for</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3073,9 +3073,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>snapinId</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The id of the snapin to deploy</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3088,9 +3088,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostID</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The id of the host to deploy the task for</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3100,9 +3100,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>snapinname</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The name of the snapin to deploy</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3112,9 +3112,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>snapinId</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The id of the snapin to deploy</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3170,9 +3170,9 @@ $mods</dev:code>
         <maml:name>Start-FogSnapins</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>hostid</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the hostid to start the task on</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3182,9 +3182,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>taskTypeid</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the id of the task to start, defaults to 12</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3197,9 +3197,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>hostid</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the hostid to start the task on</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3209,9 +3209,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>taskTypeid</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the id of the task to start, defaults to 12</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3260,9 +3260,9 @@ $mods</dev:code>
         <maml:name>Update-FogObject</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>type</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the type of fog object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3272,9 +3272,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>the json data string</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
             <maml:name>Object</maml:name>
@@ -3284,9 +3284,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>IDofObject</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The ID of the object</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3296,9 +3296,9 @@ $mods</dev:code>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>uri</maml:name>
-          <maml:description>
+          <maml:Description>
             <maml:para>The explicit uri to use</maml:para>
-          </maml:description>
+          </maml:Description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
             <maml:name>String</maml:name>
@@ -3311,9 +3311,9 @@ $mods</dev:code>
     <command:parameters>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>type</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the type of fog object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3323,9 +3323,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>the json data string</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
           <maml:name>Object</maml:name>
@@ -3335,9 +3335,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>IDofObject</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The ID of the object</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
@@ -3347,9 +3347,9 @@ $mods</dev:code>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>uri</maml:name>
-        <maml:description>
+        <maml:Description>
           <maml:para>The explicit uri to use</maml:para>
-        </maml:description>
+        </maml:Description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>

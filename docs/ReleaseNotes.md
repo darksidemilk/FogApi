@@ -1,4 +1,12 @@
 
+# 2208.3.3
+
+	minor syntax issue fixes for deploy and capture, and added missing example description
+
+# 2208.3.2
+
+	general updates and bug fixes
+
 # 2208.3.1
 
 	- Added serialnumber option for Get-FogHost - Added faster processing for Get-FogHost -hostid so it gets it directly rather than getting all hosts and then searching- Added Get-LastImageTime function to get a hosts last image history log entry, can search for the host by serialnumber (prompts for barcode input by default)
