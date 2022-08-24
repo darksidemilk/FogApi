@@ -37,7 +37,9 @@ function Get-FogHost {
     Will get the host of id 1234 directly, this is the fastest way to call the function
 
     .EXAMPLE
-    Get-FogHost -serialNumber
+    Get-FogHost -serialNumber 12345678
+
+    Will find the given serial number in fog server inventory and then find the host of the hostID that inventory belongs to
 
 #>
     

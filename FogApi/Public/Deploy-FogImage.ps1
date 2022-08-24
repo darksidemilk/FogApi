@@ -48,11 +48,11 @@ function Deploy-FogImage {
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
         $fogImage = ($fogImages | Where-Object name -match $currentImage)
-        "Creating Deploy Task for fog host of id $($hostID) named $(fogHost.name)" | Out-Host;
+        "Creating Deploy Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
         "Will deploy the assigned image $($fogImage.name) - $($fogImage.id) which will install the os $($fogImage.osname)" | Out-host;
         if ($PSCmdlet.ParameterSetName -eq 'now') {
             "No Time was specified, queuing the task to start now" | out-host;
-            $jsonData = "{`"taskTypeID`": '1', `"shutdown`":`"0`",`"other2`":`"0`",`"other4`":`"1`",`"isActive`":`"1`" }";
+            $jsonData = "{`"taskTypeID`": `"1`", `"shutdown`":`"0`",`"other2`":`"0`",`"other4`":`"1`",`"isActive`":`"1`" }";
         } else {
             "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
             $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime

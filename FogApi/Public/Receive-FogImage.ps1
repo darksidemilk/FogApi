@@ -49,11 +49,11 @@ function Receive-FogImage {
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
         $fogImage = ($fogImages | Where-Object name -match $currentImage)
-        "Creating Capture Task for fog host of id $($hostID) named $(fogHost.name)" | Out-Host;
+        "Creating Capture Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
         "Will capture the assigned image $($fogImage.name) - $($fogImage.id) which will capture the os $($fogImage.osname)" | Out-host;
         if ($PSCmdlet.ParameterSetName -eq 'now') {
             "No Time was specified, queuing the task to start now" | out-host;
-		    $jsonData = "{`"taskTypeID`": 2 }";
+		    $jsonData = "{`"taskTypeID`": `"2`" }";
         } else {
             "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
             $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime
