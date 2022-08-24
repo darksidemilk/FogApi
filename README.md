@@ -13,11 +13,12 @@ This module used to be housed at https://github.com/FOGProject/fog-community-scr
 
 The versioning of this module follows this pattern
 
-`{Year|Month}.{Major Version}.{Minor Version}.{Build/Revision #}`
+`{Year|Month}.{Major Version}.{Revision #}`
 
 ## Year/Month
 
 This versioning shows you first the Year and month this version of the module was published, giving you an idea of when it was last updated.
+i.e. 2208 would be august 2022.
 
 ## Major
 
