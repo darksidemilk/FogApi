@@ -18,8 +18,7 @@ function Get-FogSnapins {
     
     
     process {
-        return (Get-FogObject -type object -coreObject snapin | Select-Object -Expand snapins)
-        # return (Invoke-FogApi -Method GET -uriPath snapin).snapins;
+        return (Get-FogObject -type object -coreObject snapin).data;
     }
     
     

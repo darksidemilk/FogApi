@@ -21,8 +21,8 @@ function Get-FogMacAddresses {
     
     
     process {
-        $macs = Get-FogObject -type object -coreObject macaddressassociation | select-object -ExpandProperty macaddressassociations
-        return $macs;
+        $macs = Get-FogObject -type object -coreObject macaddressassociation;
+        return $macs.data;
     }
     
 }

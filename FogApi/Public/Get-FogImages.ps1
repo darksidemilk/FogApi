@@ -16,6 +16,6 @@ function Get-FogImages {
     param (  )
     
     process {
-        return (Get-FogObject -type object -coreObject image | select-object -ExpandProperty images);
+        return (Get-FogObject -type object -coreObject image).data;
     }
 }

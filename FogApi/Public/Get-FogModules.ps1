@@ -21,8 +21,8 @@ function Get-FogModules {
     param ()
     
     process {
-        $modules = (Get-FogObject -type object -coreObject module).modules
-        return $modules;
+        $modules = (Get-FogObject -type object -coreObject module)
+        return $modules.data;
     }
     
 }

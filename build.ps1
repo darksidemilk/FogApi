@@ -167,14 +167,14 @@ Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
 if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
 	Copy-Item "$modulePath\lib" "$buildPth\lib" -Recurse;
-	Add-Content -Path $moduleFile -Value "`$lib = `"`$PSModuleRoot\lib`"";
+	Add-Content -Path $moduleFile -Value "`$script:lib = `"`$PSModuleRoot\lib`"";
 }
 if ((Get-ChildItem "$modulePath\bin").count -gt 0) {
 	Copy-Item "$modulePath\bin" "$buildPth\bin" -Recurse;
-	Add-Content -Path $moduleFile -Value "`$bin = `"`$PSModuleRoot\bin`"";
+	Add-Content -Path $moduleFile -Value "`$script:bin = `"`$PSModuleRoot\bin`"";
 }
 # Copy-Item "$modulePath\tools" "$buildPth\tools" -Recurse;
-Add-Content -Path $moduleFile -Value "`$tools = `"`$PSModuleRoot\tools`"";
+Add-Content -Path $moduleFile -Value "`$script:tools = `"`$PSModuleRoot\tools`"";
 
 
 #Build the psm1 file

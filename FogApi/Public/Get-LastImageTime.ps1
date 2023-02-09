@@ -81,7 +81,7 @@ function Get-LastImageTime {
             }
         }
         
-        $imageLog = (get-fogobject -type object -coreObject imaginglog).imagingLogs # get the image history log
+        $imageLog = (get-fogobject -type object -coreObject imaginglog).data # get the image history log
         $hostLogs = $imageLog | where-object hostid -eq $HostID # get the image history logs for the given host
         if (!$hostLogs) {
             Write-Warning "No imaging logs found for host $($fogHost.name)!"

@@ -17,8 +17,8 @@ function Get-FogGroupAssociations {
     param ()
     
     process {
-        $groupAssocs = (Get-FogObject -type object -coreObject groupassociation).groupassociations;
-        return $groupAssocs;
+        $groupAssocs = (Get-FogObject -type object -coreObject groupassociation);
+        return $groupAssocs.data;
     }
     
 }

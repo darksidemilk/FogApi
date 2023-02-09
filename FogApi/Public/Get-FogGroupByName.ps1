@@ -23,15 +23,11 @@ function Get-FogGroupByName {
         $groupName
     )
     
-    begin {
-        $groups = (Get-FogGroups)
-    }
-    
     process {
-        $group = $groups | Where-Object name -match $groupName
-    }
-    
-    end {
+        
+        $group = (Find-FogObject -type search -coreobject group -stringToSearch $groupName);
+        $group = $group.data | Where-Object name -match $groupName;
         return $group;      
     }
+    
 }

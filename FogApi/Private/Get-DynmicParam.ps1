@@ -17,7 +17,7 @@ the position to put the dynamic parameter in
     [CmdletBinding()]
     param (
         [Parameter(Position=0)]
-        [ValidateSet('coreObject','coreTaskObject','coreActiveTaskObject','stringToSearch')]
+        [ValidateSet('coreObject','coreTaskObject','coreActiveTaskObject')]
         [string]$paramName,
         $position=1
     )

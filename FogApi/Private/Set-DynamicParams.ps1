@@ -24,7 +24,7 @@ the type of parameter
         object { Set-Param('coreObject');}
         objectactivetasktype { Set-Param('coreActiveTaskObject');}
         objecttasktype {Set-Param('coreTaskObject');}
-        search {Set-Param('stringToSearch');}
+        search {Set-Param('coreObject');}
     }
     return $paramDictionary;
 

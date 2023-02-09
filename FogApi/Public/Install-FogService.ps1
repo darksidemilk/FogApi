@@ -32,10 +32,12 @@ install of the smart installer if that fails
         Invoke-WebRequest -URI $fileUrl2 -UseBasicParsing -OutFile 'C:\fogtemp\fog.exe';
     }
     process {
-        Write-Host "installing fog service";
+        "installing fog service" | out-host;
         try {
-            Start-Process -FilePath msiexec -ArgumentList @('/i','C:\fogtemp\fog,msi','/quiet','/qn','/norestart') -NoNewWindow -Wait;
+            "Attempting silent msi install..." | out-host;
+            Start-Process -FilePath msiexec -ArgumentList @('/i','C:\fogtemp\fog,msi','/qn') -NoNewWindow -Wait;
         } catch {
+            "There was an error, attempting 'smart installer' and sending keystrokes to run through the wizard..." | out-host;
             if ($null -eq (Get-Service FogService -EA 0)) {
                 & "C:\fogTemp\fog.exe";
                 Write-Host "Waiting 10 seconds then sending 10 enter keys"

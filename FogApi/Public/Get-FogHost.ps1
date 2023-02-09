@@ -61,7 +61,7 @@ function Get-FogHost {
         [bool]$found = $false;
         Write-Verbose 'Checking for passed variables'
         if ($serialNumber) {
-            $inventorys = (Get-FogObject -type object -coreObject inventory).inventorys
+            $inventorys = (Get-FogObject -type object -coreObject inventory).data
             $hostID = $inventorys | Where-Object { $_.sysserial -eq $serialNumber -OR $_.mbserial -eq $serialNumber -OR $_.caseserial -eq $serialNumber } | Select-Object -ExpandProperty HostID #find the inventory where the serial number matches one of the serial numbers in a hosts inventory and select the host id from that
         } elseif (!$uuid -and !$hostName -and !$macAddr -and !$hostID) {
             Write-Verbose 'no params given, getting current computer variables';
@@ -104,7 +104,7 @@ function Get-FogHost {
         Write-Verbose 'finding host in hosts';
         [bool]$found = $false;
         if ($hostID) {
-            $hostObj = get-fogobject -type object -coreObject host -IDofObject "$hostID";
+            $hostObj = Get-FogObject -type object -coreObject host -IDofObject "$hostID";
             if ($null -ne $hostObj) {
                 $found = $true;
             }

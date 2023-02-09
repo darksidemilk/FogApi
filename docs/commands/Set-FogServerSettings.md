@@ -12,38 +12,52 @@ Set fog server settings
 
 ## SYNTAX
 
+### default (Default)
 ```
-Set-FogServerSettings [[-fogApiToken] <String>] [[-fogUserToken] <String>] [[-fogServer] <String>]
- [-interactive] [<CommonParameters>]
+Set-FogServerSettings [-fogApiToken <String>] [-fogUserToken <String>] [-fogServer <String>]
+ [<CommonParameters>]
+```
+
+### prompt
+```
+Set-FogServerSettings [-interactive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Set the apitokens and server settings for api calls with this module
-the settings are stored in a json file in the current users roaming appdata ($ENV:APPDATA\FogApi)
+the settings are stored in a json file in the current users roaming appdata ($home/APPDATA/Roaming/FogApi)
+In linux and mac machines The appdata/roaming folder will be created in the user's home folder
 this is to keep it locked down and inaccessible to standard users
 and keeps the settings from being overwritten when updating the module
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Set-FogServerSettings -fogapiToken "12345abcdefg" -fogUserToken "abcdefg12345" -fogServer "fog"
 ```
 
-{{ Add example description here }}
+This will set the current users FogApi/settings.json file to have the given api tokens and set it to use 
+"fog" as the server name for the uri in all api calls.
+These are of course example tokens and the actual tokens are much longer.
+
+### EXAMPLE 2
+```
+
+```
 
 ## PARAMETERS
 
 ### -fogApiToken
-fog API token found at https://fog-server/fog/management/index.php?node=about&sub=settings under API System
+fog API token is found at https://fog-server/fog/management/index.php?node=about&sub=settings under API System
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: default
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -54,11 +68,11 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: default
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,11 +83,11 @@ your fog server hostname or ip address to be used for created the url used in ap
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: default
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,7 +98,7 @@ switch to make setting these an interactive process
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: prompt
 Aliases:
 
 Required: False

@@ -1,4 +1,4 @@
-function Deploy-FogImage {
+function Send-FogImage {
     <#
     .SYNOPSIS
     Start or schedule a deploy task for a fog host
@@ -33,7 +33,7 @@ function Deploy-FogImage {
     when looking for this functionality or may simply look for deploy as that is the name of the task in fog. It just happens to be an approved powershell verb too
     #>
     [CmdletBinding(DefaultParameterSetName='now')]
-    [Alias('Push-FogImage','Send-FogImage')]
+    [Alias('Push-FogImage','Deploy-FogImage')]
     param (
         [Parameter(ParameterSetName='now')]
         [Parameter(ParameterSetName='schedule')]

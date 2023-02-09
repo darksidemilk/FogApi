@@ -38,11 +38,7 @@ function Remove-UsbMac {
         $hostId = $hostObj.id;
         # $hostId = ( (Invoke-FogApi -fogServer $fogServer -fogApiToken $fogApiToken -fogUserToken $fogUserToken).hosts | Where-Object name -match "$hostname" ).id;
         # With the host id get mac associations that match that host id.
-        try { 
-            $macs = Get-FogObject -type object -coreObject macaddressassociation | select-object -ExpandProperty macaddressassociations | Where-Object hostID -match $hostID
-        } catch {
-            $macs = (Invoke-FogApi -uriPath "macaddressassociation").macaddressassociations | Where-Object hostID -match "$hostId";
-        }
+        $macs = (Get-FogObject -type object -coreObject macaddressassociation).data | Where-Object hostID -match $hostID
 
         # Copy the return fixedsize json array collection to a new powershell list variable for add and remove functions
         $macList = New-Object System.Collections.Generic.List[System.Object];

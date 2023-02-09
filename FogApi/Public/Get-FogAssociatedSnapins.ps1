@@ -28,7 +28,7 @@ function Get-FogAssociatedSnapins {
     
     process {
         # $AllAssocs = (Invoke-FogApi -Method GET -uriPath snapinassociation).snapinassociations;
-        $AllAssocs = (Get-FogObject -type object -coreObject snapinassociation).snapinassociations
+        $AllAssocs = (Get-FogObject -type object -coreObject snapinassociation).data
         $snapins = New-Object System.Collections.Generic.List[object];
         # $allSnapins = Get-FogSnapins;
         $AllAssocs | Where-Object hostID -eq $hostID | ForEach-Object {

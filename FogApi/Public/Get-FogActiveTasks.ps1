@@ -17,6 +17,7 @@ function Get-FogActiveTasks {
     param ()
     
     process {
-        return Get-FogObject -type objectactivetasktype -coreActiveTaskObject task | Select-Object -ExpandProperty tasks        
+        $result = Get-FogObject -type objectactivetasktype -coreActiveTaskObject task
+        return $result.data;
     }
 }

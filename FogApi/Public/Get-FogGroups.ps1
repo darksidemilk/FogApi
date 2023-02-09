@@ -18,8 +18,8 @@ function Get-FogGroups {
     
     
     process {
-        $groups = (Get-FogObject -type object -coreobject group).groups;
-        return $groups;
+        $groups = (Get-FogObject -type object -coreobject group);
+        return $groups.data;
     }
     
 }

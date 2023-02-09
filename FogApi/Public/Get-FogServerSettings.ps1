@@ -20,12 +20,19 @@ and returns the api key and server name values
 
     begin {
         Write-Verbose "Pulling settings from settings file"
-        $settingsFile = "$ENV:APPDATA\FogApi\api-settings.json"
+        $settingsFile = "$home/APPDATA/Roaming/FogApi/api-settings.json"
         if (!(Test-path $settingsFile)) {
-            if (!(Test-Path "$ENV:APPDATA\FogApi")) {
-                mkdir "$ENV:APPDATA\FogApi";
+            Write-Warning "Api Settings file not yet created, creating default version now!"
+            if (!(Test-Path "$home/APPDATA")) {
+                mkdir "$home/APPDATA"
             }
-            Copy-Item "$lib\settings.json" $settingsFile -Force
+            if (!(Test-Path "$home/APPDATA/Roaming")) {
+                mkdir "$home/APPDATA/Roaming"
+            }
+            if (!(Test-Path "$home/APPDATA/Roaming/FogApi")) {
+                mkdir "$home/APPDATA/Roaming/FogApi";
+            }
+            Copy-Item -path "$script:lib\settings.json" -Destination $settingsFile -Force
         }       
     }
 

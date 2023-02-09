@@ -17,15 +17,9 @@ function Get-FogHosts {
     [CmdletBinding()]
     param ()
     
-    begin {
-        Write-Verbose "getting fog hosts"
-    }
-    
     process {
-        $hosts = Get-FogObject -type Object -CoreObject host | Select-Object -ExpandProperty hosts
-    }
-    
-    end {
+        Write-Verbose "getting fog hosts"
+        $hosts = (Get-FogObject -type Object -CoreObject host).data
         return $hosts;
     }
 

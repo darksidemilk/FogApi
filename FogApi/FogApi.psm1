@@ -1,6 +1,6 @@
 $PSModuleRoot = $PSScriptRoot
-$lib = "$PSModuleRoot\lib"
-$bin = "$PSModuleRoot\bin"
+$script:lib = "$PSModuleRoot\lib"
+$script:bin = "$PSModuleRoot\bin"
 $PublicFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Public/*.ps1" -ErrorAction SilentlyContinue )
 $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorAction SilentlyContinue )
 

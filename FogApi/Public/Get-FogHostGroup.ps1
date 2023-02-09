@@ -20,33 +20,21 @@ function Get-FogHostGroup {
     param (
         [int]$hostId
     )
- 
-    begin {
-        [bool]$found = $false;
-        Write-Verbose 'Getting all fog group associations...';
-        # $groupAssocs = (Invoke-FogApi -uriPath groupassociation).groupassociations;
-        $groupAssocs = Get-FogGroupAssociations;
-
-        Write-Verbose 'Getting all fog groups...';
-        $groups = Get-FogGroups;
-
-    }
-
+    
     process {
-        $hostGroups = $groupAssocs | Where-Object hostID -eq $hostId;
-       
-        $found = $true;
-        $group = $groups | Where-Object id -eq $hostGroups.groupID;
+        $hostGroups = (Find-FogObject -Type search -coreObject groupassociation -stringToSearch "$hostID").data
+        $hostGroups = $hostGroups | Where-Object hostID -eq $hostId;
+        $groups = New-Object System.Collections.Generic.list[system.object];
 
-        $group = $hostGroups;
-        
-    }
-
-    end {
-        if($found){
-            return $group;
+        if ($hostGroups) {
+            $hostGroups.groupID | ForEach-Object {
+                $group = Get-FogObject -type object -coreObject group -IDofObject $_
+                $groups.add(($group))
+            }
+        } else {
+            $groups = $Null;
         }
-        return $found;
+        return $groups;
     }
 
 }

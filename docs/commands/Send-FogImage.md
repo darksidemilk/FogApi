@@ -1,11 +1,11 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Deploy-FogImage
+online version: https://fogapi.readthedocs.io/en/latest/commands/Send-FogImage
 schema: 2.0.0
 ---
 
-# Deploy-FogImage
+# Send-FogImage
 
 ## SYNOPSIS
 Start or schedule a deploy task for a fog host
@@ -14,12 +14,12 @@ Start or schedule a deploy task for a fog host
 
 ### now (Default)
 ```
-Deploy-FogImage [-hostId <Object>] [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Deploy-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

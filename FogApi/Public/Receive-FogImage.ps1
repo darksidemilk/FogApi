@@ -29,12 +29,13 @@ function Receive-FogImage {
     i.e. if today was friday, this would schedule it for sunday at 8pm.
     
     .NOTES
-    Pull and Capture are not powershell approved verbs, they are used as aliases to match the opposite Push-Image alias and to match the name of the task in the fog system.
-    Receive is an approved verb and the closest one to what this does
+    Pull and Capture are not powershell approved verbs, they were used as aliases to match the opposite 
+    Push-Image alias and to match the name of the task in the fog system but that caused a constant warning when importing the module
+    Receive is an approved verb and the closest one to what this does, Save-FogImage is another alias as is Invoke-FogImageCapture.
 
     #>
     [CmdletBinding(DefaultParameterSetName='now')]
-    [Alias('Pull-FogImage','Capture-FogImage')]
+    [Alias('Save-FogImage','Invoke-FogImageCapture','Capture-FogImage','Pull-FogImage')]
     param (
         [Parameter(ParameterSetName='now')]
         [Parameter(ParameterSetName='schedule')]

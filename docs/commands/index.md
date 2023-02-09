@@ -2,11 +2,13 @@
 
 ## [Add-FogHostMac](Add-FogHostMac.md)
 
+## [Add-FogResultData](Add-FogResultData.md)
+
 ## [Approve-FogPendingMac](Approve-FogPendingMac.md)
 
 ## [Deny-FogPendingMac](Deny-FogPendingMac.md)
 
-## [Deploy-FogImage](Deploy-FogImage.md)
+## [Find-FogObject](Find-FogObject.md)
 
 ## [Get-FogActiveTasks](Get-FogActiveTasks.md)
 
@@ -63,6 +65,8 @@
 ## [Remove-UsbMac](Remove-UsbMac.md)
 
 ## [Reset-HostEncryption](Reset-HostEncryption.md)
+
+## [Send-FogImage](Send-FogImage.md)
 
 ## [Set-FogInventory](Set-FogInventory.md)
 

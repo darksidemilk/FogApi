@@ -1,4 +1,44 @@
 
+# 2209.4.7
+
+	general updates and bug fixes
+
+# 2209.4.6
+
+	general updates and bug fixes
+
+# 2209.4.5
+
+	make aliases with unapproved verbs and use approved verbs for main name of deploy and capture image functions. So the main names are Send-FogImage to deploy an image to a host and Receive-FogImage will capture an image from a host. This will get rid of the warning on import
+
+# 2209.4.4
+
+	make aliases with unapproved verbs and use approved verbs for main name of deploy and capture image functions. So the main names are Send-FogImage to deploy an image to a host and Receive-FogImage will capture an image from a host. This will get rid of the warning on import
+
+# 2209.4.3
+
+	make aliases with unapproved verbs and use approved verbs for main name of deploy and capture image functions. So the main names are Send-FogImage to deploy an image to a host and Receive-FogImage will capture an image from a host. This will get rid of the warning on import
+
+# 2209.4.2
+
+	general updates and bug fixes
+
+# 2209.4.1
+
+	increment version
+
+# 2208.3.6
+
+	updated aliases for receive-image to remove unapproved verb warnings. Updated path to api-settings.json file to work with other operating systems universally by using the home variable in a user's context. Fixed issues with set-fogserversettings so it flows better when you give some but not all parameters. Updated readme and about to include set-fogserversettings instructions more explicitly
+
+# 2208.3.5
+
+	general updates and bug fixes
+
+# 2208.3.4
+
+	general updates and bug fixes
+
 # 2208.3.3
 
 	minor syntax issue fixes for deploy and capture, and added missing example description
