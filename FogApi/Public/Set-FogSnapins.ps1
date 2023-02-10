@@ -37,8 +37,8 @@ they could then be deployed with start-fogsnapins
         if ($null -ne $pkgList) {
             $pkgList | ForEach-Object {
                 $json = @{
-                    hostID = $hostid
-                    snapinID = (($snapins | Where-Object name -match "$($_)").id);
+                    snapinID = "$((($snapins | Where-Object name -match "$($_)").id))";
+                    hostID = "$hostid"
                 };
                 Write-Verbose "$_ is pkg snapin id found is $($json.snapinID)";
                 if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id)) {

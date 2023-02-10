@@ -1,4 +1,20 @@
 
+# 2302.5.10
+
+	reverted get-foghostgroup to not use find-fogobject, updated find-fogobject output for universal search. Added a null check to add-resultdata in cases where no result was found in get-fogobject. General fixes for fog 1.6 compatibility
+
+# 2302.5.9
+
+	testing find-fogobject uni search result
+
+# 2302.5.8
+
+	revert get-foghostgroup to get-fogobject method, find-fogobject needs work
+
+# 2302.5.7
+
+	missed a .data in get-foghostgroup
+
 # 2302.5.6
 
 	get-foghost quick fix for having all fields

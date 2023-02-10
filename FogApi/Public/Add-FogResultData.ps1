@@ -25,16 +25,18 @@ function Add-FogResultData {
     
     process {
         #test if result has data property
-        if ($null -eq ($result | Get-Member -Name data)) {
-            #result doesn't have data property
-            $property = ($result | get-member -MemberType NoteProperty | Where-Object name -notmatch 'count').name
-            $newResult = [PSCustomObject]@{
-                count = $result.count;
-                data = $result.$property;
-                $property = $result.$property;
+        if ($null -ne $result) {
+            if ($null -eq ($result | Get-Member -Name data -ea 0)) {
+                #result doesn't have data property
+                $property = ($result | get-member -MemberType NoteProperty | Where-Object name -notmatch 'count').name
+                $newResult = [PSCustomObject]@{
+                    count = $result.count;
+                    data = $result.$property;
+                    $property = $result.$property;
+                }
+                $result = $newResult;
+                # $result | Add-Member -MemberType NoteProperty -Name data -Value $result.$property -Force
             }
-            $result = $newResult;
-            # $result | Add-Member -MemberType NoteProperty -Name data -Value $result.$property -Force
         }
         return $result;
     }

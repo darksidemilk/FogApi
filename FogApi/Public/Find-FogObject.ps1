@@ -25,6 +25,15 @@ function Find-FogObject {
     $result = Find-FogObject -type search -coreObject group -stringToSearch "IT"'; $result.data | Where-Object name -match "IT";
     
     This will find all groups with IT in any field. Then filter to where IT is in the name field and display that list
+
+    .EXAMPLE
+    $result = Find-FogObject -type search -coreObject unisearch -stringToSeach "stable";
+
+    Will output a table of results to the console with the count of results found in each object type.
+        This is the value of the return objects ._results property
+    For any type with a count higher than one, there is a matching property of that name where you can see the results of that property.
+    You can see a high level result with $result | format-list.
+    You can access the array of results in each object that has results. i.e. if there are 10 hosts in the result $result.host will display them
 #>
 
     [CmdletBinding()]
@@ -33,7 +42,7 @@ function Find-FogObject {
         [Parameter(Position=0)]
         [ValidateSet("search")]
         [string]$type = "search",
-        # The id of the object to get
+        # The string to search all fields for
         [Parameter(Position=2)]
         [string]$stringToSearch
     )
@@ -49,7 +58,7 @@ function Find-FogObject {
                 if ($coreObject -ne "unisearch") {
                     $uri = "$coreObject/$type/$stringToSearch";
                 } else {
-                    $uri = "$type/$stringToSearch"
+                    $uri = "$coreObject/$stringToSearch"
                 }
             }
         }
@@ -66,7 +75,12 @@ function Find-FogObject {
     
     end {
         #convert the output to use the data property added in fog 1.6
-        $result = Add-FogResultData $result;
+        if ($coreObject -ne "unisearch") {
+            $result = Add-FogResultData $result;
+        } else {
+            "Search Results: `n" | Out-Host;
+            "$($result._results | out-string)" | out-host; 
+        }
         return $result;
     }
 

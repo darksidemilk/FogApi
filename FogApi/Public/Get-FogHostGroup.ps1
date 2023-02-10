@@ -22,7 +22,10 @@ function Get-FogHostGroup {
     )
     
     process {
-        $hostGroups = (Find-FogObject -Type search -coreObject groupassociation -stringToSearch "$hostID").data
+        if (!$hostId) {
+            $hostId = (Get-FogHost).id;
+        }
+        $hostGroups = (Get-FogObject -Type object -coreObject groupassociation).data
         $hostGroups = $hostGroups | Where-Object hostID -eq $hostId;
         $groups = New-Object System.Collections.Generic.list[system.object];
 

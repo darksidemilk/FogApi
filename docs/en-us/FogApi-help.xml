@@ -471,6 +471,13 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
           <maml:para>This will find all groups with IT in any field. Then filter to where IT is in the name field and display that list</maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>$result = Find-FogObject -type search -coreObject unisearch -stringToSeach "stable";</dev:code>
+        <dev:remarks>
+          <maml:para>Will output a table of results to the console with the count of results found in each object type.     This is the value of the return objects ._results property For any type with a count higher than one, there is a matching property of that name where you can see the results of that property. You can see a high level result with $result | format-list. You can access the array of results in each object that has results. i.e. if there are 10 hosts in the result $result.host will display them</maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
