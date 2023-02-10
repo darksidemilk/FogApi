@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2302.5.4'
+ModuleVersion = '2302.5.6'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -176,6 +176,14 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2302.5.6
+
+	get-foghost quick fix for having all fields
+
+# 2302.5.5
+
+	testing get-foghost quick fix
+
 # 2302.5.4
 
 	Make sure get-foghost returns the full host field output after finding the host from the limited field version result of all hosts

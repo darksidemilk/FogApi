@@ -145,7 +145,9 @@ function Get-FogHost {
                 }
             }
             if ($null -eq ($hostObj | Get-Member -Name ADOU)) {
-                $hostObj = (Get-Fogobject -type object -coreObject host -IDofObject $hostObj.id).data;
+                Write-Verbose "Host is $($hostObj | out-string) which is missing adou, reobtaining with id"
+                $hostID = $hostObj.id;
+                $hostObj = (Get-Fogobject -type object -coreObject host -IDofObject "$hostID");
             }
             return $hostObj;
         }
