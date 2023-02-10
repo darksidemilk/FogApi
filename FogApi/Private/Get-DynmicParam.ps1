@@ -41,7 +41,7 @@ the position to put the dynamic parameter in
             "powermanagement", "printer", "printerassociation", "pxemenuoptions", "scheduledtask",
             "service", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
             "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate", "tasktype",
-            "usercleanup", "usertracking", "virus"
+            "unisearch", "usercleanup", "usertracking", "virus"
         );
         $coreTaskObjects = @("group", "host", "multicastsession", "snapinjob", "snapintask", "task");
         $coreActiveTaskObjects = @("multicastsession", "scheduledtask", "snapinjob", "snapintask", "task");

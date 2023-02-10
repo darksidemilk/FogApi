@@ -1,4 +1,9 @@
 
+# 2302.5.4
+
+	Make sure get-foghost returns the full host field output after finding the host from the limited field version result of all hosts
+
+
 # 2302.5.2
 
 	removed outdated release notes to meet the 10000 character limit

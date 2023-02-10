@@ -22,7 +22,7 @@ Searches for a given string within a given coreobject type
 Once a type has been selected the next parameter is dynamically added along with a tab completable list of options.
 i.e type of object will add the coreobject parameter 
 The stringToSearch you provide will be searched for in that object, just like if you were in the web gui searching for a host, group, etc. 
-If you are using fog 1.6, you can omit the $coreObject variable and do a universal search
+If you are using fog 1.6, you can set the $coreObject variable to 'unisearch' and it will do a universal search
 
 ## EXAMPLES
 
@@ -35,8 +35,11 @@ This will find and return all host objects that have 'computername' in any field
 
 ### EXAMPLE 2
 ```
-Find-FogObject -type search -coreObject group -stringToSearch "IT"
+$result = Find-FogObject -type search -coreObject group -stringToSearch "IT"'; $result.data | Where-Object name -match "IT";
 ```
+
+This will find all groups with IT in any field.
+Then filter to where IT is in the name field and display that list
 
 ## PARAMETERS
 

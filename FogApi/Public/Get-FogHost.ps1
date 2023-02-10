@@ -144,7 +144,9 @@ function Get-FogHost {
                     "Multiple hosts found! Review hosts in return object and select just one if needed" | Out-Host;
                 }
             }
-
+            if ($null -eq ($hostObj | Get-Member -Name ADOU)) {
+                $hostObj = (Get-Fogobject -type object -coreObject host -IDofObject $hostObj.id).data;
+            }
             return $hostObj;
         }
         return $found; #return false if host not found
