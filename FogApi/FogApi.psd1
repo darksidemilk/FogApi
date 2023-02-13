@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2302.5.13'
+ModuleVersion = '2302.5.14'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -176,6 +176,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2302.5.14
+
+	don''t attempt to convert body to string
+
 # 2302.5.13
 
 	general updates and bug fixes

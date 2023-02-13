@@ -106,11 +106,12 @@ function Invoke-FogApi {
         if ($null -eq $apiCall.Body -OR $apiCall.Body -eq "") {
             Write-Verbose "removing body from call as it is null"
             $apiCall.Remove("Body");
-        } else {
-            if (!($apiCall.Body.GetType() -eq "string")) {
-                $apiCall.Body = $apiCall.Body | ConvertTo-Json; 
-            }
         }
+        # } else {
+        #     if (!($apiCall.Body.GetType() -eq "string")) {
+        #         $apiCall.Body = $apiCall.Body | ConvertTo-Json; 
+        #     }
+        # }
 
     }
 

@@ -1,4 +1,8 @@
 
+# 2302.5.14
+
+	don't attempt to convert body to string
+
 # 2302.5.13
 
 	general updates and bug fixes

@@ -41,7 +41,7 @@ the id of the object
         switch ($type) {
             objecttasktype {
                 $uri = "$CoreTaskObject/$IDofObject/task";
-             }
+            }
             object {
                 $uri = "$CoreObject";
             }
