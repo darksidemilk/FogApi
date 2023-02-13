@@ -43,7 +43,7 @@ the id of the object
                 $uri = "$CoreTaskObject/$IDofObject/task";
              }
             object {
-                $uri = "$CoreObject/create";
+                $uri = "$CoreObject";
             }
         }
         $apiInvoke = @{

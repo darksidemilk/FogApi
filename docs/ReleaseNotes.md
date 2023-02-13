@@ -1,4 +1,16 @@
 
+# 2302.5.13
+
+	general updates and bug fixes
+
+# 2302.5.12
+
+	general updates and bug fixes
+
+# 2302.5.11
+
+	general updates and bug fixes
+
 # 2302.5.10
 
 	reverted get-foghostgroup to not use find-fogobject, updated find-fogobject output for universal search. Added a null check to add-resultdata in cases where no result was found in get-fogobject. General fixes for fog 1.6 compatibility

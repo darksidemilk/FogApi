@@ -55,7 +55,7 @@ I also will add a try/catch block to invoke-fogapi for when invoke-restmethod fa
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call";
         if([string]::IsNullOrEmpty($uri)) {
-            $uri = "$CoreObject/$IDofObject/edit";
+            $uri = "$CoreObject/$IDofObject";
         }
 
         $apiInvoke = @{
