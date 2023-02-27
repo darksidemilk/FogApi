@@ -43,21 +43,9 @@ This will set the current users FogApi/settings.json file to have the given api 
         [parameter(ParameterSetName='prompt')]
         [switch]$interactive
     )
-    begin {
-        
-        $settingsFile = "$home/APPDATA/Roaming/FogApi/api-settings.json"
-        # if (!(Test-path $settingsFile)) {
-        #     if (!(Test-Path "$home/APPDATA")) {
-        #         mkdir "$home/APPDATA"
-        #     }
-        #     if (!(Test-Path "$home/APPDATA/Roaming")) {
-        #         mkdir "$home/APPDATA/Roaming"
-        #     }
-        #     if (!(Test-Path "$home/APPDATA/Roaming/FogApi")) {
-        #         mkdir "$home/APPDATA/Roaming/FogApi";
-        #     }
-        #     Copy-Item "$script:lib\settings.json" $settingsFile -Force
-        # }
+
+    process {
+        $settingsFile = Get-FogServerSettingsFile;
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";
         $helpTxt = @{
@@ -65,15 +53,11 @@ This will set the current users FogApi/settings.json file to have the given api 
             fogUserToken = "your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
             fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer";
         }
-        
-    }
-    
-    process {
         if($interactive) {
             ($serverSettings.psobject.properties | Where-Object name -eq Keys).Value | ForEach-Object {
                 $var = (Get-Variable -Name $_);
                 if ($null -eq $var.Value -OR $var.Value -eq "") {
-                        Set-Variable -name $var.Name -Value (Read-Host -Prompt "help message: $($helpTxt.($_))`nEnter the $($var.name)");        
+                    Set-Variable -name $var.Name -Value (Read-Host -Prompt "help message: $($helpTxt.($_))`nEnter the $($var.name)");        
                 }
             }
         } elseif( #if all params are passed and not null create new settings object
@@ -126,11 +110,10 @@ This will set the current users FogApi/settings.json file to have the given api 
             Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru;
             return;
         }
-    }
-
-    end {
         Write-Verbose "Writing new Settings";
         $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
+        Write-Verbose "ensuring security is set"
+        Set-FogServerSettingsFileSecurity $settingsFile;
         return (Get-Content $settingsFile | ConvertFrom-Json);
     }
 

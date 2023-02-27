@@ -1,4 +1,8 @@
 
+# 2302.5.15
+
+	Not using alias urls for create and edit
+
 # 2302.5.14
 
 	don't attempt to convert body to string
