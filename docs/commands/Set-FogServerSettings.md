@@ -12,15 +12,15 @@ Set fog server settings
 
 ## SYNTAX
 
-### default (Default)
+### prompt (Default)
+```
+Set-FogServerSettings [-interactive] [<CommonParameters>]
+```
+
+### default
 ```
 Set-FogServerSettings [-fogApiToken <String>] [-fogUserToken <String>] [-fogServer <String>]
  [<CommonParameters>]
-```
-
-### prompt
-```
-Set-FogServerSettings [-interactive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -94,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -interactive
-switch to make setting these an interactive process
+switch to make setting these an interactive process, if you set no values this is the default
 
 ```yaml
 Type: SwitchParameter

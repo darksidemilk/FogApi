@@ -20,7 +20,7 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
 
 .PARAMETER interactive
-switch to make setting these an interactive process
+switch to make setting these an interactive process, if you set no values this is the default
 
 .EXAMPLE
 Set-FogServerSettings -fogapiToken "12345abcdefg" -fogUserToken "abcdefg12345" -fogServer "fog"
@@ -32,7 +32,7 @@ This will set the current users FogApi/settings.json file to have the given api 
 
 #>
 
-    [CmdletBinding(DefaultParameterSetName='default')]
+    [CmdletBinding(DefaultParameterSetName='prompt')]
     param (
         [parameter(ParameterSetName='default')]
         [string]$fogApiToken,
@@ -49,12 +49,12 @@ This will set the current users FogApi/settings.json file to have the given api 
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";
         $helpTxt = @{
-            fogApiToken = "fog API token found at https://fog-server/fog/management/index.php?node=about&sub=settings under API System";
-            fogUserToken = "your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
+            fogApiToken = "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
+            fogUserToken = "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
             fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer";
         }
-        if($interactive) {
-            ($serverSettings.psobject.properties | Where-Object name -eq Keys).Value | ForEach-Object {
+        if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
+            ($serverSettings.psobject.properties).Name | ForEach-Object {
                 $var = (Get-Variable -Name $_);
                 if ($null -eq $var.Value -OR $var.Value -eq "") {
                     Set-Variable -name $var.Name -Value (Read-Host -Prompt "help message: $($helpTxt.($_))`nEnter the $($var.name)");        

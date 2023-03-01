@@ -44,6 +44,8 @@
 
 ## [Get-FogServerSettings](Get-FogServerSettings.md)
 
+## [Get-FogServerSettingsFile](Get-FogServerSettingsFile.md)
+
 ## [Get-FogSnapins](Get-FogSnapins.md)
 
 ## [Get-LastImageTime](Get-LastImageTime.md)
@@ -71,6 +73,8 @@
 ## [Set-FogInventory](Set-FogInventory.md)
 
 ## [Set-FogServerSettings](Set-FogServerSettings.md)
+
+## [Set-FogServerSettingsFileSecurity](Set-FogServerSettingsFileSecurity.md)
 
 ## [Set-FogSnapins](Set-FogSnapins.md)
 

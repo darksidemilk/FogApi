@@ -1,4 +1,20 @@
 
+# 2302.5.19
+
+	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+
+# 2302.5.18
+
+	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+
+# 2302.5.17
+
+	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+
+# 2302.5.16
+
+	general updates and bug fixes
+
 # 2302.5.15
 
 	Not using alias urls for create and edit

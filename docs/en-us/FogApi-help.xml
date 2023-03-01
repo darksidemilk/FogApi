@@ -1594,7 +1594,7 @@ $mods</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Gets the current settings for use in api calls If no settings exists creates and returns the default settings</maml:para>
+      <maml:para>Gets the current settings for use in api calls If no settings exists creates and returns the default settings which explain where to get each setting. For getting the default file path for the server settings file, it uses get-fogserversettingsfile that will get the path based on the os and user If the path doesn't exist it will be created and the security settings will be set by Set-FogServerSettingsFileSecurity</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1622,6 +1622,47 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogServerSettings</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogServerSettingsFile</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogServerSettingsFile</command:noun>
+      <maml:description>
+        <maml:para>Returns the path to the fog server settings file for the current user based on the OS</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>If this is windows then the current users roaming app data folder is used as a base path.     A folder named FogApi will be created (on first call to get-fogserversettings or set-fogserversettings) and the api-settings.json will be in that folder If this is linux or mac the $home variable is used as the base path     A folder named .FogApi will be created (on first call to get-fogserversettings or set-fogserversettings) and the api-settings.json will be in that folder This is meant mainly for internal use as a universal way to get this path without repeated code. To get the settings configured use Get-FogServerSettings</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogServerSettingsFile</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogServerSettingsFile</dev:code>
+        <dev:remarks>
+          <maml:para>Will return the path for the current user's settings file,  i.e. if your username was fog and you were on windows it would return C:\users\fog\AppData\Roaming\FogApi\api-settings.json if your username was fog and you were on linux it wourld return /home/fog/.FogApi/api-settings.json</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogServerSettingsFile</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3017,7 +3058,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>interactive</maml:name>
           <maml:description>
-            <maml:para>switch to make setting these an interactive process</maml:para>
+            <maml:para>switch to make setting these an interactive process, if you set no values this is the default</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -3067,7 +3108,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>interactive</maml:name>
         <maml:description>
-          <maml:para>switch to make setting these an interactive process</maml:para>
+          <maml:para>switch to make setting these an interactive process, if you set no values this is the default</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -3104,6 +3145,72 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogServerSettings</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-FogServerSettingsFileSecurity</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>FogServerSettingsFileSecurity</command:noun>
+      <maml:description>
+        <maml:para>Set the settings file or given file to full control for owner only, no access for anyone else</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Uses chmod 700 for linux and mac, uses powershell acl commands for windows users to set</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-FogServerSettingsFileSecurity</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>settingsFile</maml:name>
+          <maml:description>
+            <maml:para>The settings file, defaults to the default path for the settings file tiy</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>(Get-FogServerSettingsFile)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>settingsFile</maml:name>
+        <maml:description>
+          <maml:para>The settings file, defaults to the default path for the settings file tiy</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>(Get-FogServerSettingsFile)</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>General notes</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>An example</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Set-FogServerSettingsFileSecurity</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
