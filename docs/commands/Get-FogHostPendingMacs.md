@@ -1,11 +1,11 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-PendingMacsForHost
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostPendingMacs
 schema: 2.0.0
 ---
 
-# Get-PendingMacsForHost
+# Get-FogHostPendingMacs
 
 ## SYNOPSIS
 Gets the pending macs for a given hosts
@@ -13,7 +13,7 @@ Gets the pending macs for a given hosts
 ## SYNTAX
 
 ```
-Get-PendingMacsForHost [[-hostID] <Object>] [<CommonParameters>]
+Get-FogHostPendingMacs [[-hostID] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION

@@ -57,9 +57,15 @@ This will set the current users FogApi/settings.json file to have the given api 
             ($serverSettings.psobject.properties).Name | ForEach-Object {
                 $var = (Get-Variable -Name $_);
                 if ($null -eq $var.Value -OR $var.Value -eq "") {
-                    Set-Variable -name $var.Name -Value (Read-Host -Prompt "help message: $($helpTxt.($_))`nEnter the $($var.name)");        
-                }
+                    Set-Variable -name $var.Name -Value (Read-Host -Prompt "help message: $($helpTxt.($_))`nEnter the $($var.name)");
+                }    
             }
+            $serverSettings = @{
+                fogApiToken = $fogApiToken;
+                fogUserToken = $fogUserToken;
+                fogServer = $fogServer;
+            }
+            $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         } elseif( #if all params are passed and not null create new settings object
             !([string]::IsNullOrEmpty($fogApiToken)) -AND
             !([string]::IsNullOrEmpty($fogUserToken)) -AND

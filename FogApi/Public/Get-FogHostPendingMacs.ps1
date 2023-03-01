@@ -1,4 +1,4 @@
-function Get-PendingMacsForHost {
+function Get-FogHostPendingMacs {
     <#
     .SYNOPSIS
     Gets the pending macs for a given hosts
@@ -23,6 +23,7 @@ function Get-PendingMacsForHost {
 
     #>
     
+    [Alias('Get-PendingMacsForHost')]
     [CmdletBinding()]
     param (
         $hostID
@@ -30,17 +31,13 @@ function Get-PendingMacsForHost {
     
     
     process {
-        if ($hostID.gettype().name -ne "Int32"){
-            try {
-                $hostID = (Get-FogHost -hostname $hostID).id
-            } catch {
-                Write-Error "Please provide a valid hostid or hostname"
-                exit;
-            }
+        $hostID = Resolve-HostID -hostID $hostid;
+        if ($null -ne $hostID) {
+            $hostMacs = Get-FogHostMacs -hostid $hostID;
+            $pendingMacs = $hostMacs | Where-Object pending -eq '1';
+        } else {
+            Write-Error "provided hostid was invalid!"
         }
-
-        $hostMacs = Get-MacsForHost -host ((Get-FogHost -hostID $hostID))
-        $pendingMacs = $hostMacs | Where-Object pending -eq '1';
         return $pendingMacs;
     }
     

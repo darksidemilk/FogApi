@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2302.5.19'
+ModuleVersion = '2302.5.26'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -125,17 +125,17 @@ FunctionsToExport = 'Add-FogHostMac', 'Add-FogResultData', 'Approve-FogPendingMa
                'Deny-FogPendingMac', 'Find-FogObject', 'Get-FogActiveTasks', 
                'Get-FogAssociatedSnapins', 'Get-FogGroupAssociations', 
                'Get-FogGroupByName', 'Get-FogGroups', 'Get-FogHost', 
-               'Get-FogHostGroup', 'Get-FogHostMacs', 'Get-FogHosts', 'Get-FogImages', 
-               'Get-FogInventory', 'Get-FogLog', 'Get-FogMacAddresses', 
-               'Get-FogModules', 'Get-FogObject', 'Get-FogSecsSinceEpoch', 
-               'Get-FogServerSettings', 'Get-FogServerSettingsFile', 
-               'Get-FogSnapins', 'Get-LastImageTime', 'Get-PendingMacsForHost', 
+               'Get-FogHostGroup', 'Get-FogHostMacs', 'Get-FogHostPendingMacs', 
+               'Get-FogHosts', 'Get-FogImages', 'Get-FogInventory', 'Get-FogLog', 
+               'Get-FogMacAddresses', 'Get-FogModules', 'Get-FogObject', 
+               'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 
+               'Get-FogServerSettingsFile', 'Get-FogSnapins', 'Get-LastImageTime', 
                'Install-FogService', 'Invoke-FogApi', 'New-FogHost', 'New-FogObject', 
                'Receive-FogImage', 'Remove-FogObject', 'Remove-UsbMac', 
-               'Reset-HostEncryption', 'Send-FogImage', 'Set-FogInventory', 
-               'Set-FogServerSettings', 'Set-FogServerSettingsFileSecurity', 
-               'Set-FogSnapins', 'Start-FogSnapin', 'Start-FogSnapins', 
-               'Update-FogObject'
+               'Reset-HostEncryption', 'Resolve-HostID', 'Send-FogImage', 
+               'Set-FogInventory', 'Set-FogServerSettings', 
+               'Set-FogServerSettingsFileSecurity', 'Set-FogSnapins', 
+               'Start-FogSnapin', 'Start-FogSnapins', 'Update-FogObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -178,6 +178,34 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2302.5.26
+
+	add default value to input validator to assume current host when none is given
+
+# 2302.5.25
+
+	add input validation to foghostmac functions via new resolve-hostid command that will get the hostid for foghost objects, or a hostname or an actual int. ALso validates that the id exists on a valid host
+
+# 2302.5.24
+
+	fix interactive server settings setter, it wasn''t updating the parent object variable after grabbing the input
+
+# 2302.5.23
+
+	Add-FogHostMac - add a check for existing mac association and allow a -forceUpdate switch to change what host a mac is associated to
+
+# 2302.5.22
+
+	add a check for existing mac association
+
+# 2302.5.21
+
+	add a check for existing mac association
+
+# 2302.5.20
+
+	general updates and bug fixes
+
 
 # 2302.5.16
 

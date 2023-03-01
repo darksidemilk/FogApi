@@ -19,18 +19,22 @@ function Get-FogHostMacs {
     [CmdletBinding()]
     [Alias('Get-MacsForHost')]
     param (
-        $hostObject = (Get-FogHost)
+        [Parameter(ParameterSetName='byHostObject')]
+        $hostObject = (Get-FogHost),
+        [Parameter(ParameterSetName='byHostID')]
+        $hostID
     )
     
-    begin {
-        $macs = Get-FogMacAddresses;   
-    }
-    
     process {
-        $hostMacs = $macs | Where-Object hostID -eq $hostObject.id
+        $hostID = Resolve-HostID $hostID
+        if ($null -ne $hostID) {
+            $macs = Get-FogMacAddresses;   
+            $hostMacs = $macs | Where-Object hostID -eq $hostId
+            return $hostMacs;   
+        } else {
+            Write-Error "invalid input!"
+            return $null;
+        }
     }
     
-    end {
-        return $hostMacs;   
-    }
 }

@@ -26,6 +26,8 @@
 
 ## [Get-FogHostMacs](Get-FogHostMacs.md)
 
+## [Get-FogHostPendingMacs](Get-FogHostPendingMacs.md)
+
 ## [Get-FogHosts](Get-FogHosts.md)
 
 ## [Get-FogImages](Get-FogImages.md)
@@ -50,8 +52,6 @@
 
 ## [Get-LastImageTime](Get-LastImageTime.md)
 
-## [Get-PendingMacsForHost](Get-PendingMacsForHost.md)
-
 ## [Install-FogService](Install-FogService.md)
 
 ## [Invoke-FogApi](Invoke-FogApi.md)
@@ -67,6 +67,8 @@
 ## [Remove-UsbMac](Remove-UsbMac.md)
 
 ## [Reset-HostEncryption](Reset-HostEncryption.md)
+
+## [Resolve-HostID](Resolve-HostID.md)
 
 ## [Send-FogImage](Send-FogImage.md)
 

@@ -12,8 +12,14 @@ Returns the macs assigned to a given host
 
 ## SYNTAX
 
+### byHostObject
 ```
-Get-FogHostMacs [[-hostObject] <Object>] [<CommonParameters>]
+Get-FogHostMacs [-hostObject <Object>] [<CommonParameters>]
+```
+
+### byHostID
+```
+Get-FogHostMacs [-hostID <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,12 +42,27 @@ The host object you get with Get-Foghost
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byHostObject
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: (Get-FogHost)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -hostID
+{{ Fill hostID Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byHostID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

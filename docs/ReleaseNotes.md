@@ -1,15 +1,32 @@
 
-# 2302.5.19
+# 2302.5.26
 
-	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+	add default value to input validator to assume current host when none is given
 
-# 2302.5.18
+# 2302.5.25
 
-	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+	add input validation to foghostmac functions via new resolve-hostid command that will get the hostid for foghost objects, or a hostname or an actual int. ALso validates that the id exists on a valid host
 
-# 2302.5.17
+# 2302.5.24
 
-	fixes for interactive setting of fog server and more secure methods for storing api settings file in each OS
+	fix interactive server settings setter, it wasn't updating the parent object variable after grabbing the input
+
+# 2302.5.23
+
+	Add-FogHostMac - add a check for existing mac association and allow a -forceUpdate switch to change what host a mac is associated to
+
+# 2302.5.22
+
+	add a check for existing mac association
+
+# 2302.5.21
+
+	add a check for existing mac association
+
+# 2302.5.20
+
+	general updates and bug fixes
+
 
 # 2302.5.16
 
