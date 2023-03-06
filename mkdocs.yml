@@ -49,7 +49,8 @@ nav:
     - 'Start-FogSnapins': 'commands/Start-FogSnapins.md'
     - 'Update-FogObject': 'commands/Update-FogObject.md'
 
-theme: material
+theme:
+  name: material
   features:
     - navigation.tabs
     - navigation.tabs.sticky
