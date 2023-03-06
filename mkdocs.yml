@@ -50,3 +50,6 @@ nav:
     - 'Update-FogObject': 'commands/Update-FogObject.md'
 
 theme: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
