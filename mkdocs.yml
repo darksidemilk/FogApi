@@ -1,4 +1,90 @@
-site_name: FogApi
+site_name: FogApi
+site_url: https://fogapi.readthedocs.io/en/latest/
+ ite_author: JJ Fullmw3
+site_description: >- 
+   Documentation for the powershell module for using the Fog Project api for various use cases
+# Repository 
+repo_name: Darksidemilk/fogApi
+repo_url: https://github.com/darksidemilk/fogApi 
+ 
+copyright:2023
+ #many of these options were taken from the material mkdocs home page so we can quickly use any options documented there 
+ theme: 
+   name: material 
+   features: 
+     - announce.dismiss 
+     - content.action.edit 
+     - content.action.view 
+     - content.code.annotate 
+     - content.code.copy 
+     - content.tabs.link 
+     - content.tooltips 
+     - navigation.footer 
+     - navigation.instant 
+     # - navigation.sections 
+     - navigation.tabs 
+     - navigation.tabs.sticky 
+     - navigation.top 
+     - navigation.tracking 
+     - navigation.indexes 
+     - search.highlight 
+     - search.share 
+     - search.suggest 
+     - toc.follow 
+     # - toc.integrate 
+   palette: 
+     - scheme: default 
+       primary: indigo 
+       accent: indigo 
+       toggle: 
+         icon: material/brightness-7 
+         name: Switch to dark mode 
+     - scheme: slate 
+       primary: indigo 
+       accent: indigo 
+       toggle: 
+         icon: material/brightness-4 
+         name: Switch to light mode 
+   font: 
+     text: Roboto 
+     code: Roboto Mono 
+   favicon: assets/favicon.png 
+   logo: assets/favicon.png 
+   icon: 
+     logo: logo 
+  
+ #extra_css: 
+   #- "assets/css/custom.css" 
+  
+ plugins: 
+   - search 
+  # - include_dir_to_nav # see also https://pypi.org/project/mkdocs-include-dir-to-nav/ this allows for an auto organized site map 
+   - roamlinks # added for support of obsidian see also https://about.gitlab.com/blog/2022/03/15/publishing-obsidian-notes-with-gitlab-pages/ and https://github.com/Jackiexiao/mkdocs-roamlinks-plugin 
+   - callouts 
+ #  - tags: # https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/ 
+     #  tags_file: tags.md 
+  
+ # Extensions 
+markdown_extensions: 
+   - abbr 
+   - admonition 
+   - attr_list 
+   - def_list 
+   - footnotes 
+   - md_in_html 
+   - pymdownx.highlight 
+   - pymdownx.superfences 
+   - pymdownx.details 
+   - pymdownx.magiclink 
+   - nl2br 
+   - pymdownx.tasklist 
+   - pymdownx.emoji: 
+       emoji_index: !!python/name:materialx.emoji.twemoji 
+       emoji_generator: !!python/name:materialx.emoji.to_svg 
+   - tables # see also https://squidfunk.github.io/mkdocs-material/reference/data-tables/ 
+   - toc: 
+       permalink: true
+
 nav:
   - Home: index.md
   - About: about_FogApi.md
