@@ -22,8 +22,8 @@ theme:
     - search.share
     - search.suggest
     - toc.follow
-  favicon: docs/assets/favicon.png
-  logo: docs/assets/favicon.png
+  favicon: assets/favicon.png
+  logo: assets/favicon.png
   icon:
     logo: logo
  
