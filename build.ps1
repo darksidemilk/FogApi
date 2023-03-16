@@ -50,10 +50,50 @@
  A string explaining what was done in the build to be added to the release notes
 
 #> 
+
 [CmdletBinding()]
 Param(
 	$releaseNote = "general updates and bug fixes"
 )
+
+function Install-Requirements {
+    [CmdletBinding()]
+    param (
+        $requirements = ".\docs\requirements.txt"
+    )
+    
+    
+    process {
+        "Installing Pre-requisites if needed..." | out-host;
+        $log = ".\.lastprereqrun"
+        $requirementsLastUpdate = (Get-item $requirements).LastWriteTime;
+        
+        if (Test-Path $log) {
+            if ((Get-item $log).LastWriteTime -lt $requirementsLastUpdate) {
+                $shouldUpdate = $true;
+            } else {
+                $shouldUpdate = $false;
+            }
+        } else {
+            $shouldUpdate = $true;
+        }
+
+        if ($shouldUpdate) {
+            $results = New-Object -TypeName 'System.collections.generic.List[System.Object]';
+            $result = & python.exe -m pip install --upgrade pip
+            $results.add(($result))
+            Get-Content $requirements | Where-Object { $_ -notmatch "#"} | ForEach-Object {
+                $result = pip install $_;
+                $results.add(($result))
+            }
+            New-Item $log -ItemType File -force -Value "requirements last installed with pip on $(Get-date)`n`n$($results | out-string)";
+        } else {
+            "Requirements already up to date" | out-host;
+        }
+        return (Get-Content $log)
+    }
+    
+}
 
 $moduleName = 'FogApi'
 $modulePath = "$PSScriptRoot\$moduleName";
@@ -130,10 +170,10 @@ nav:
 
 	}
 
-	$mkdocs += "`ntheme: readthedocs"
+	# $mkdocs += "`ntheme: readthedocs"
 
-	Set-Content $mkdocsYml -value $mkdocs;
-	Set-Content $indexFile -Value $index;
+	# Set-Content $mkdocsYml -value $mkdocs;
+	# Set-Content $indexFile -Value $index;
 
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
