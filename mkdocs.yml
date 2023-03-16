@@ -1,6 +1,6 @@
 site_name: FogApi
 site_url: https://fogapi.readthedocs.io/en/latest/
- ite_author: JJ Fullmw3
+site_author: JJ Fullmer
 site_description: >- 
    Documentation for the powershell module for using the Fog Project api for various use cases
 # Repository 
