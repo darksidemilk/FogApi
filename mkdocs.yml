@@ -28,7 +28,7 @@ theme:
     logo: logo
  
 plugins: 
-  - search 
+  - search
   - include_dir_to_nav # see also https://pypi.org/project/mkdocs-include-dir-to-nav/ this allows for an auto organized site map 
   # - roamlinks # added for support of obsidian see also https://about.gitlab.com/blog/2022/03/15/publishing-obsidian-notes-with-gitlab-pages/ and https://github.com/Jackiexiao/mkdocs-roamlinks-plugin 
   # - callouts   

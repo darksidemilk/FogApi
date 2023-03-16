@@ -33,7 +33,7 @@ Once you've obtained these you can run the command like this to save your fog ap
 Set-FogServerSettings -fogApiToken "SuperLongPastedFogToken" -fogUserToken "SuperLongPastedUserToken" -fogServer "fog-server-hostname"
 ```
 
-## [about the fogapi module](about_FogAPI.md)
+## [about the fogapi module](about_FogApi.md)
 
 This provides more information on using the fogapi module
 and what it can be used for, installing etc.
