@@ -137,17 +137,17 @@ $docsPth = "$PSScriptRoot\docs"
 	
 	# Add Online Versions to each commands markdown file
 	$indexFile = "$docsPth\commands\index.md"
-	$mkdocsYml = "$PSScriptRoot\mkdocs.yml";
-	$mkdocs = @"
-site_name: FogApi
-nav:
-  - Home: index.md
-  - About: about_FogApi.md
-  - Release Notes: ReleaseNotes.md
-  - Commands: 
-    - 'Index': 'commands/index.md'
-"@
-	$mkdocs += "`n";
+# 	$mkdocsYml = "$PSScriptRoot\mkdocs.yml";
+# 	$mkdocs = @"
+# site_name: FogApi
+# nav:
+#   - Home: index.md
+#   - About: about_FogApi.md
+#   - Release Notes: ReleaseNotes.md
+#   - Commands: 
+#     - 'Index': 'commands/index.md'
+# "@
+# 	$mkdocs += "`n";
 	$index = "# FogAPI`n`n"
 	Get-ChildItem "$docsPth\commands" | Where-Object name -NotMatch 'index' | Foreach-Object {
 		#add online version
@@ -165,7 +165,7 @@ nav:
 		#Update commands index
 		$index += "## [$basename]($name)`n`n"
 		#Update readthedocs nav index
-		$mkdocs += "    - '$basename': 'commands/$name'`n";
+		# $mkdocs += "    - '$basename': 'commands/$name'`n";
 		#maybe later add something that converts any functions in .link to related links
 
 	}
@@ -173,8 +173,8 @@ nav:
 	# $mkdocs += "`ntheme: readthedocs"
 
 	# Set-Content $mkdocsYml -value $mkdocs;
-	# Set-Content $indexFile -Value $index;
-
+	Set-Content $indexFile -Value $index;
+	Install-Requirements
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
 		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;

@@ -13,16 +13,7 @@ copyright: Copyright &copy; 2018 - 2023 JJ Fullmer
 theme:
   name: material
   features:
-    - announce.dismiss
-    - content.action.edit
-    - content.action.view
-    - content.code.annotate
-    - content.code.copy
-    - content.tabs.link
-    - content.tooltips
-    - navigation.footer
     - navigation.instant
-    # - navigation.sections
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.top
@@ -31,42 +22,19 @@ theme:
     - search.share
     - search.suggest
     - toc.follow
-    # - toc.integrate
-  palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
-  font:
-    text: Roboto
-    code: Roboto Mono
-  favicon: assets/favicon.png
-  logo: assets/favicon.png
+  favicon: docs/assets/favicon.png
+  logo: docs/assets/favicon.png
   icon:
     logo: logo
-
- #extra_css: 
-  #- "assets/css/custom.css" 
-  
- plugins: 
+ 
+plugins: 
   - search 
   - include_dir_to_nav # see also https://pypi.org/project/mkdocs-include-dir-to-nav/ this allows for an auto organized site map 
-  - roamlinks # added for support of obsidian see also https://about.gitlab.com/blog/2022/03/15/publishing-obsidian-notes-with-gitlab-pages/ and https://github.com/Jackiexiao/mkdocs-roamlinks-plugin 
-  - callouts 
- # - tags: # https://squidfunk.github.io/mkdocs-material/setup/setting-up-tags/ 
-  # tags_file: tags.md 
-  
+  # - roamlinks # added for support of obsidian see also https://about.gitlab.com/blog/2022/03/15/publishing-obsidian-notes-with-gitlab-pages/ and https://github.com/Jackiexiao/mkdocs-roamlinks-plugin 
+  # - callouts   
  # Extensions 
 markdown_extensions: 
-  - abbr 
+  - abbr
   - admonition 
   - attr_list 
   - def_list 
@@ -79,11 +47,11 @@ markdown_extensions:
   - nl2br 
   - pymdownx.tasklist 
   - pymdownx.emoji: 
-  emoji_index: !!python/name:materialx.emoji.twemoji 
-  emoji_generator: !!python/name:materialx.emoji.to_svg 
+      emoji_index: !!python/name:materialx.emoji.twemoji 
+      emoji_generator: !!python/name:materialx.emoji.to_svg 
   - tables # see also https://squidfunk.github.io/mkdocs-material/reference/data-tables/ 
   - toc: 
-  permalink: true
+      permalink: true
 
 nav:
   - Home: index.md
