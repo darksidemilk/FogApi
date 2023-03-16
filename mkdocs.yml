@@ -7,8 +7,9 @@ site_description: >-
 repo_name: Darksidemilk/fogApi
 repo_url: https://github.com/darksidemilk/fogApi 
  
-copyright:2023
- #many of these options were taken from the material mkdocs home page so we can quickly use any options documented there 
+copyright: Copyright &copy; 2018 - 2023 JJ Fullmer
+
+
 theme:
   name: material
   features:
