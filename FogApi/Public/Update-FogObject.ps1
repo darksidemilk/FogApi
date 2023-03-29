@@ -6,31 +6,27 @@ Update/patch/edit api calls
 .DESCRIPTION
 Runs update calls to the api
 
+.EXAMPLE
+$h = get-foghost; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose
+
+Will update the ADUser field on the current host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name.
+You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name
+
 .PARAMETER type
 the type of fog object
 
 .PARAMETER jsonData
-the json data string
+the json data string. You can use convertto-json to pass powershell objects in
 
 .PARAMETER IDofObject
 The ID of the object
 
 .PARAMETER uri
-The explicit uri to use
+The explicit uri to use if you run into issues, the issues that caused the need for this originally have been resolved, but kept it for safety
 
 .NOTES
- just saw this and just today was finding some issue with Update-fogobject
-The issue appears to be with the dynamic parameter variable I have in the function for the coreobjecttype.
-For some reason it is working when you call the function and brings up all the coreobject type choices but then the variable is being set to null when the function is running.
-Meaning that when function builds the uri it only gets
-http://fogserver/fog//id/edit
-instead of
-http://fogserver/fog/coreObjectType/id/edit
-
-So one workaround I will try to publish by the end of the day is adding an optional uri parameter to that function so that you can manually override it when neccesarry.
-Also I should really add more documentation to each of the functions instead of just having it all under Invoke-fogapi
-
-I also will add a try/catch block to invoke-fogapi for when invoke-restmethod fails and have it try invoke-webrequest. 
+If you are updating a fog host object, and your json includes the name of the host, but that name isn't changing, you'll get an error. You should omit the name from the json in such updates
+i.e. if your fog host name is 'computer1' and you pass in a json string link {"name":"computer1","ADUser":"ldapBind"} you will get an error, but if the name is changing or you omit it, it will work without issue. This only affects the name field
 #>
     [CmdletBinding()]
     [Alias('Set-FogObject')]
@@ -55,7 +51,7 @@ I also will add a try/catch block to invoke-fogapi for when invoke-restmethod fa
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call";
         if([string]::IsNullOrEmpty($uri)) {
-            $uri = "$CoreObject/$IDofObject";
+            $uri = "$CoreObject/$IDofObject/edit";
         }
 
         $apiInvoke = @{
@@ -63,13 +59,7 @@ I also will add a try/catch block to invoke-fogapi for when invoke-restmethod fa
             Method="PUT";
             jsonData=$jsonData;
         }
-    }
-
-    process {
         $result = Invoke-FogApi @apiInvoke;
-    }
-
-    end {
         return $result;
     }
 

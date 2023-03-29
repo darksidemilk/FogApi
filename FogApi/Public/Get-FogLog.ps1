@@ -24,14 +24,19 @@ Will return the contents of the fog log as a string
 
     [CmdletBinding()]
     param (
-        [switch]$static
+        [switch]$static,
+        [switch]$userFogLog
     )
     
-    begin {
-        $fogLog = 'C:\fog.log';
-    }
-    
     process {
+        if ($userFogLog) {
+            $fogLog = "$home/.fog_user.log"
+        } else {
+            $fogLog = 'C:\fog.log';
+            if (!Test-Path $fogLog) {
+                $fogLog = C:\ProgramData\fog\fog.log
+            }
+        }
         if (!$static) {
             "Starting dynamic fog log in new window, Hit Ctrl+C on new window or close it to exit dynamic fog log" | Out-Host;
             Start-Process Powershell.exe -ArgumentList "-Command `"Get-Content $fogLog -Wait`"";
@@ -39,10 +44,7 @@ Will return the contents of the fog log as a string
         else {
             Get-Content $fogLog;
         }
-    }
-    
-    end {
-        return;
+        return $fogLog;
     }
 
 }

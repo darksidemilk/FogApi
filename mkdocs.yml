@@ -22,6 +22,17 @@ theme:
     - search.share
     - search.suggest
     - toc.follow
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   favicon: assets/favicon.png
   logo: assets/favicon.png
   icon:
@@ -46,9 +57,9 @@ markdown_extensions:
   - pymdownx.magiclink 
   - nl2br 
   - pymdownx.tasklist 
-  - pymdownx.emoji: 
-      emoji_index: !!python/name:materialx.emoji.twemoji 
-      emoji_generator: !!python/name:materialx.emoji.to_svg 
+  # - pymdownx.emoji: 
+  #     emoji_index: !!python/name:materialx.emoji.twemoji 
+  #     emoji_generator: !!python/name:materialx.emoji.to_svg 
   - tables # see also https://squidfunk.github.io/mkdocs-material/reference/data-tables/ 
   - toc: 
       permalink: true
@@ -61,8 +72,3 @@ nav:
     - 'Index': 'commands/index.md'
     - commands
 
-theme:
-  name: material
-  features:
-    - navigation.tabs
-    - navigation.tabs.sticky

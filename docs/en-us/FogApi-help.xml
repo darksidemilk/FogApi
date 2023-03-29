@@ -1391,6 +1391,17 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>userFogLog</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill userFogLog Description }}</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -1398,6 +1409,18 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:name>static</maml:name>
         <maml:description>
           <maml:para>show the static contents of the fog log</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>userFogLog</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill userFogLog Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -3311,15 +3334,15 @@ $mods</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>General notes</maml:para>
+        <maml:para>Has a try/catch on attempting to use set-acl in case permissions required aren't present on the current user in windows</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>An example</dev:code>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>{{ Add example description here }}</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3676,7 +3699,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>jsonData</maml:name>
           <maml:description>
-            <maml:para>the json data string</maml:para>
+            <maml:para>the json data string. You can use convertto-json to pass powershell objects in</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
           <dev:type>
@@ -3700,7 +3723,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
           <maml:name>uri</maml:name>
           <maml:description>
-            <maml:para>The explicit uri to use</maml:para>
+            <maml:para>The explicit uri to use if you run into issues, the issues that caused the need for this originally have been resolved, but kept it for safety</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -3727,7 +3750,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>jsonData</maml:name>
         <maml:description>
-          <maml:para>the json data string</maml:para>
+          <maml:para>the json data string. You can use convertto-json to pass powershell objects in</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
         <dev:type>
@@ -3751,7 +3774,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>uri</maml:name>
         <maml:description>
-          <maml:para>The explicit uri to use</maml:para>
+          <maml:para>The explicit uri to use if you run into issues, the issues that caused the need for this originally have been resolved, but kept it for safety</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -3765,17 +3788,15 @@ $mods</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>just saw this and just today was finding some issue with Update-fogobject The issue appears to be with the dynamic parameter variable I have in the function for the coreobjecttype. For some reason it is working when you call the function and brings up all the coreobject type choices but then the variable is being set to null when the function is running. Meaning that when function builds the uri it only gets http://fogserver/fog//id/edit instead of http://fogserver/fog/coreObjectType/id/edit</maml:para>
-        <maml:para>So one workaround I will try to publish by the end of the day is adding an optional uri parameter to that function so that you can manually override it when neccesarry. Also I should really add more documentation to each of the functions instead of just having it all under Invoke-fogapi</maml:para>
-        <maml:para>I also will add a try/catch block to invoke-fogapi for when invoke-restmethod fails and have it try invoke-webrequest.</maml:para>
+        <maml:para>If you are updating a fog host object, and your json includes the name of the host, but that name isn't changing, you'll get an error. You should omit the name from the json in such updates i.e. if your fog host name is 'computer1' and you pass in a json string link {"name":"computer1","ADUser":"ldapBind"} you will get an error, but if the name is changing or you omit it, it will work without issue. This only affects the name field</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$h = get-foghost; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Will update the ADUser field on the current host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name. You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

@@ -21,10 +21,12 @@ Uses chmod 700 for linux and mac, uses powershell acl commands for windows users
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
-An example
-```
+
+{{ Add example description here }}
 
 ## PARAMETERS
 
@@ -51,6 +53,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-General notes
+Has a try/catch on attempting to use set-acl in case permissions required aren't present on the current user in windows
 
 ## RELATED LINKS

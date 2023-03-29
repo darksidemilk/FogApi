@@ -13,7 +13,7 @@ Get a auto updating fog log
 ## SYNTAX
 
 ```
-Get-FogLog [-static] [<CommonParameters>]
+Get-FogLog [-static] [-userFogLog] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +40,21 @@ Will return the contents of the fog log as a string
 
 ### -static
 show the static contents of the fog log
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -userFogLog
+{{ Fill userFogLog Description }}
 
 ```yaml
 Type: SwitchParameter

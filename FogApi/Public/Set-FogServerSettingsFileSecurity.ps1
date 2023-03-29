@@ -9,11 +9,8 @@ function Set-FogServerSettingsFileSecurity {
     .PARAMETER settingsFile
     The settings file, defaults to the default path for the settings file tiy
     
-    .EXAMPLE
-    An example
-    
     .NOTES
-    General notes
+    Has a try/catch on attempting to use set-acl in case permissions required aren't present on the current user in windows
     #>
     [CmdletBinding()]
     param (
@@ -22,10 +19,10 @@ function Set-FogServerSettingsFileSecurity {
     
     process {
         if ($isLinux -or $IsMacOS) {
-            "Setting linux permissions to only owner has rw" | Out-Host;
+            Write-Verbose "Setting linux permissions on api settings file so only owner has rw";
             chmod 600 $settingsFile
         } else {
-            "Setting read/write permissions for owner only" | out-host;
+            Write-Verbose "Setting read/write permissions for owner only on api settings file";
             #Get current ACL to file/folder
             $acl = Get-Acl $settingsFile
             #Disable inheritance and remove inherited permissions
@@ -36,7 +33,16 @@ function Set-FogServerSettingsFileSecurity {
             $ace = New-Object System.Security.AccessControl.FileSystemAccessRule -ArgumentList $acl.Owner, "FullControl", "Allow"
             $acl.AddAccessRule($ace)
             #Save ACL to file/
-            Set-Acl -Path $settingsFile -AclObject $acl
+            try {
+                Set-Acl -Path $settingsFile -AclObject $acl
+            } catch {
+                icacls "$settingsFile" /reset /Q /C
+                icacls "$settingsFile" /setowner $env:USERNAME /Q /C
+                icacls "$settingsFile" /inheritance:r /Q /C
+                icacls "$settingsFile" /grant "$env:USERNAME`:F" /Q /C
+                icacls "$settingsFile" /remove 'System' /Q /C
+                icacls "$settingsFile" /remove 'Administrators' /Q /C
+            }
         }    
     }
     

@@ -1,4 +1,28 @@
 
+# 2302.5.32
+
+	Make set security of settings file have less output. Added example and notes to update-fogobject concerning host updates where name isn't changing. Also added condition for a future change to location of fog log in windows
+
+# 2302.5.31
+
+	general updates and bug fixes
+
+# 2302.5.30
+
+	general updates and bug fixes
+
+# 2302.5.29
+
+	general updates and bug fixes
+
+# 2302.5.28
+
+	general updates and bug fixes
+
+# 2302.5.27
+
+	general updates and bug fixes
+
 # 2302.5.26
 
 	add default value to input validator to assume current host when none is given
