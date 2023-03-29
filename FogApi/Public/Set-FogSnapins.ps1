@@ -13,6 +13,9 @@ The id of a host to set snapins on, defaults to finding if of current computer i
 .PARAMETER pkgList
 String array list of snapins to add to the host
 
+.PARAMETER exactNames
+switch param to indicate matching to exact snapin names instead of matching the name. Useful if you have things like office and office-64 that both match to 'office'
+
 .EXAMPLE
 Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
 
@@ -25,7 +28,8 @@ they could then be deployed with start-fogsnapins
     [Alias('Add-FogSnapins')]
     param (
         $hostid = ((Get-FogHost).id),
-        $pkgList
+        $pkgList,
+        [switch]$exactNames
     )
 
     process {
@@ -36,10 +40,17 @@ they could then be deployed with start-fogsnapins
         $result = New-Object System.Collections.Generic.List[Object];
         if ($null -ne $pkgList) {
             $pkgList | ForEach-Object {
-                $json = @{
-                    snapinID = "$((($snapins | Where-Object name -match "$($_)").id))";
-                    hostID = "$hostid"
-                };
+                if ($exactNames) {
+                    $json = @{
+                        snapinID = "$((($snapins | Where-Object name -eq "$($_)").id))";
+                        hostID = "$hostid"
+                    };
+                } else {
+                    $json = @{
+                        snapinID = "$((($snapins | Where-Object name -match "$($_)").id))";
+                        hostID = "$hostid"
+                    };
+                }
                 Write-Verbose "$_ is pkg snapin id found is $($json.snapinID)";
                 if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id)) {
                     $json = $json | ConvertTo-Json;

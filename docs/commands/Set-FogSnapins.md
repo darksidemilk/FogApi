@@ -13,7 +13,7 @@ Sets a list of snapins to a host, appends to existing ones
 ## SYNTAX
 
 ```
-Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [<CommonParameters>]
+Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [-exactNames] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +58,22 @@ Aliases:
 Required: False
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -exactNames
+switch param to indicate matching to exact snapin names instead of matching the name.
+Useful if you have things like office and office-64 that both match to 'office'
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

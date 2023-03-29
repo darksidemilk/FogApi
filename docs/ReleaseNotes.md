@@ -1,4 +1,8 @@
 
+# 2302.5.33
+
+	added -exactnames switch to set-fogsnapins to allow match or eq matching of given snapin names
+
 # 2302.5.32
 
 	Make set security of settings file have less output. Added example and notes to update-fogobject concerning host updates where name isn't changing. Also added condition for a future change to location of fog log in windows
