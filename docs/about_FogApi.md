@@ -15,27 +15,24 @@ FOG is an opensource tool for imaging comptuters, this module uses the API on yo
 
 The versioning of this module follows this pattern
 
-`{Year|Quarter Number}.{Major Version}.{Minor Version}.{Build/Revision #}`
+`{Year|Month}.{Major Version}.{Build/Revision #}`
 
-## Year/Quarter
+## Year/Month
 
-This versioning shows you first the Year and Quarter the module was published, giving you an idea of when it was last updated.
+This versioning shows you first the Year and Month the module was published, giving you an idea of when it was last updated.
 
 ## Major
 
 The Major version follows the typical major versioning where any major changes will increment this version number, especially possible breaking changes or structural changes, etc.
 
-## Minor
+## Minor/Build/Revision
 
-Any time I publish a new version that isn't a major change I intend to mainly use this unless it's a quick fix or something
-
-## Build/Revision
-
-This will be used internally on git commits and occasionally in published versions. Most published versions won't have a number here unless there's just a quick revision needed. Typically this is incremented by 100 for every build and by 1 for every committed revision into the repo.
+Not every revision will be published. This is auto incremented every time the build script is used to test something. Not all of these changes are added to git or published so there is often a jump between releases representing how many builds/revisions have taken place during development. 
 
 # Installation
 
-All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use github releases 
+All completed/tested/stable releases of this module will be published to powershell gallery.
+You can also download the sources zip from the latest release and manually build the module with the build.ps1 script
 
 ## Requirements
 
@@ -45,7 +42,21 @@ To Install this module follow these steps...
 
 ## Install From PSGallery
 
-* Easiest method: [Install from PSGallery](https://www.powershellgallery.com/packages/FogApi) via a powershell console with the command `Install-Module -name fogApi` 
+* Easiest method: [Install from PSGallery](https://www.powershellgallery.com/packages/FogApi) via a powershell console with the command
+   * `Install-Module -name fogApi`
+   * 
+### Update from psgallery
+
+`Update-Module FogApi`
+
+Note: Powershell supports side by side versions, after updating you may want to uninstall old versions with this snippet to avoid conflicting versions. This needs to be run as an admin to uninstall for all users, you can also have installed the module per user, in which case you can add the 
+
+```
+#find the latest version from the psgallery
+$latestModule = Find-Module FogApi;
+#get all installed versions of the module, filter to where the version isn't the latest, and then uninstall each of those
+(Get-installedmodule FogApi -AllVersions) | Where-Object { $latestModule.version -notmatch $_.version } | Uninstall-Module -Force
+```
 
 ## Manual Installation
 
@@ -53,7 +64,7 @@ To Install this module follow these steps...
 * download the zip of this repo and extract it
     * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
 * Run the build.ps1 script
-* Copy the built module folder (C:\moduleBuild\fogAPI) into...
+* Copy the built module folder (`$env:userprofile\moduleBuild\fogAPI`) into...
     * For Windows Powershell v3-v5.1
         * C:\Program Files\WindowsPowershell\Modules
     * For Windows Powershell v6+
@@ -67,8 +78,10 @@ To Install this module follow these steps...
             * 6.x should be replaced with whatever most current version you are using
             * I haven't tested this on a mac, the module folder may be somewhere else
             this is based on where it is in other powershell 6 installs
-* Open a powershell command prompt (I always run as admin, unsure if it's required)
+* Open a powershell window
 * Run `Import-Module FogApi`
+
+You can also import the built module from its build path, the above method makes it available by name
 
 The module is now installed. 
 
