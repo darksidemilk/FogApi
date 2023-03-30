@@ -44,7 +44,8 @@ To Install this module follow these steps...
 
 * Easiest method: [Install from PSGallery](https://www.powershellgallery.com/packages/FogApi) via a powershell console with the command
    * `Install-Module -name fogApi`
-   * 
+
+
 ### Update from psgallery
 
 `Update-Module FogApi`
