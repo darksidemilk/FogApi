@@ -11,6 +11,8 @@ You can find the source code for this module on [github](https://github.com/dark
 
 You can find more discussion on the module in the [Fog Forums](https://forums.fogproject.org/topic/12026/powershell-api-module)
 
+You can find past FogApi module related help in the Fog Forums on posts tagged with  the `fogapi-psmodule` label [Fog Forum FogApi related Posts](https://forums.fogproject.org/tags/fogapi-psmodule)
+
 You can also find the published version of this module in the [Powershell Gallery](https://www.powershellgallery.com/packages/FogApi)
 
 ## Configuring the api tokens
