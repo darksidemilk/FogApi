@@ -53,7 +53,8 @@
 
 [CmdletBinding()]
 Param(
-	$releaseNote = "general updates and bug fixes"
+	$releaseNote = "general updates and bug fixes",
+	[switch]$major
 )
 
 function Install-Requirements {
@@ -259,8 +260,13 @@ $cur = test-ModuleManifest -Path $manifest;
 
 [System.Version]$oldVer = (Test-ModuleManifest $manifest).Version
 $verArgs = New-Object System.Collections.Generic.list[system.object];
-$verArgs.Add($oldVer.Major)
-$verArgs.Add($oldVer.Minor)
+$Major = (get-date -Format "yyMM")
+$verArgs.Add($Major)
+if ($major) {
+	$verArgs.Add($oldVer.Minor +1)
+} else {
+	$verArgs.Add($oldVer.Minor)
+}
 $verArgs.Add($oldVer.Build + 1)
 # $verArgs.Add(($oldVer.Revision + 1))
 if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
