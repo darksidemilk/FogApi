@@ -1,4 +1,32 @@
 
+# 2302.5.40
+
+	Fix Test-path negation test
+
+# 2302.5.39
+
+	fix test-path error
+
+# 2302.5.38
+
+	general updates and bug fixes
+
+# 2302.5.37
+
+	Fix Test-path negation test
+
+# 2302.5.36
+
+	Fix Test-path negation test
+
+# 2302.5.35
+
+	general updates and bug fixes
+
+# 2302.5.34
+
+	general updates and bug fixes
+
 # 2302.5.33
 
 	added -exactnames switch to set-fogsnapins to allow match or eq matching of given snapin names

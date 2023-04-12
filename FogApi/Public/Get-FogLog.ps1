@@ -33,8 +33,8 @@ Will return the contents of the fog log as a string
             $fogLog = "$home/.fog_user.log"
         } else {
             $fogLog = 'C:\fog.log';
-            if (!Test-Path $fogLog) {
-                $fogLog = C:\ProgramData\fog\fog.log
+            if (!(Test-Path $fogLog)) {
+                $fogLog = "C:\ProgramData\fog\fog.log"
             }
         }
         if (!$static) {
