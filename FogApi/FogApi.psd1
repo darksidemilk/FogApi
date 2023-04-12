@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2302.5.40'
+ModuleVersion = '2304.5.41'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -178,6 +178,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2304.5.41
+
+	Fix build versioning
+
 # 2302.5.40
 
 	Fix Test-path negation test

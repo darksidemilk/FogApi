@@ -260,8 +260,8 @@ $cur = test-ModuleManifest -Path $manifest;
 
 [System.Version]$oldVer = (Test-ModuleManifest $manifest).Version
 $verArgs = New-Object System.Collections.Generic.list[system.object];
-$Major = (get-date -Format "yyMM")
-$verArgs.Add($Major)
+$MajorStr = (get-date -Format "yyMM")
+$verArgs.Add($MajorStr)
 if ($major) {
 	$verArgs.Add($oldVer.Minor +1)
 } else {
