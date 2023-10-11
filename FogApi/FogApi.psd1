@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2310.6.1'
+ModuleVersion = '2310.6.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -179,15 +179,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2310.6.2
+
+	fixed duplicate release notes in manifest
+
 # 2310.6.1
-
-	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
-
-# 2310.6.43
-
-	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
-
-# 2310.5.42
 
 	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
 

@@ -1,4 +1,8 @@
 
+# 2310.6.2
+
+	fixed duplicate release notes in manifest
+
 # 2310.6.1
 
 	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
