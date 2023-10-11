@@ -4,8 +4,8 @@ function Set-FogSnapins {
 Sets a list of snapins to a host, appends to existing ones
 
 .DESCRIPTION
-Goes through a provided list variable and adds each matching snapin to the provided
-hostid
+Goes through a provided list variable and adds each matching snapin to the provided hostid
+Performs validation on the input before 
 
 .PARAMETER hostID
 The id of a host to set snapins on, defaults to finding if of current computer if none is given
@@ -36,7 +36,7 @@ they could then be deployed with start-fogsnapins
         Write-Verbose "Association snapins from package list with host";
         $snapins = Get-FogSnapins;
         # $urlPath = "snapinassociation/create"
-        $curSnapins = Get-FogAssociatedSnapins -hostId $hostid;
+        $curSnapins = Get-FogHostAssociatedSnapins -hostId $hostid;
         $result = New-Object System.Collections.Generic.List[Object];
         if ($null -ne $pkgList) {
             $pkgList | ForEach-Object {
@@ -52,7 +52,7 @@ they could then be deployed with start-fogsnapins
                     };
                 }
                 Write-Verbose "$_ is pkg snapin id found is $($json.snapinID)";
-                if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id)) {
+                if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id) -AND ($json.snapinID -ne "0")) {
                     $json = $json | ConvertTo-Json;
                     $result.add((New-FogObject -type object -coreObject snapinassociation -jsonData $json));
                 } elseif ($json.SnapinID -in $curSnapins.id) {
