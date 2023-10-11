@@ -552,73 +552,6 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
-      <command:name>Get-FogAssociatedSnapins</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>FogAssociatedSnapins</command:noun>
-      <maml:description>
-        <maml:para>Returns list of all snapins associated with a hostid</maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>Gives a full list of all snapins associated with a given host Gets the current host's associated snapins if no hostid is given Finds the associated snapins by first getting all snapinassociations with all hosts and filters to ones with the hostid It then uses the snapinid of that filtering to get and add each snapin object to a list object</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-FogAssociatedSnapins</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>hostId</maml:name>
-          <maml:description>
-            <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-          <dev:type>
-            <maml:name>Object</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>hostId</maml:name>
-        <maml:description>
-          <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
-        <dev:type>
-          <maml:name>Object</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes />
-    <command:returnValues />
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para></maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$assignedSnapins = Get-FogAssociatedSnapins
-$assignedSnapins | Where-Object name -match "office"</dev:code>
-        <dev:remarks>
-          <maml:para>Gets all the assigned snapins of the current host and then filters to any with the name office in them thus showing you what version of office you have assigned as a snapin to your host</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogAssociatedSnapins</maml:uri>
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
       <command:name>Get-FogGroupAssociations</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FogGroupAssociations</command:noun>
@@ -952,6 +885,72 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHost</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogHostAssociatedSnapins</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogHostAssociatedSnapins</command:noun>
+      <maml:description>
+        <maml:para>Returns list of all snapins associated with a given hostid, defaults to current host if no hostid is given</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Gives a full list of all snapins associated with a given host Gets the current host's associated snapins if no hostid is given Finds the associated snapins by first getting all snapinassociations with all hosts and filters to ones with the hostid It then uses the snapinid of that filtering to get and add each snapin object to a list object If it finds a snapin association with a snapinID of '0' that one will be skipped in the return and a warning will be displayed telling you to run Repair-FogSnapinAssociations</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogHostAssociatedSnapins</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>hostId</maml:name>
+          <maml:description>
+            <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>hostId</maml:name>
+        <maml:description>
+          <maml:para>The id of the host you want the assigned snapins to Defaults to getting the current hosts id with ((Get-FogHost).id)</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$assignedSnapins = Get-FogAssociatedSnapins; $assignedSnapins | Where-Object name -match "office"</dev:code>
+        <dev:remarks>
+          <maml:para>Gets all the assigned snapins of the current host and then filters to any with the name office in them thus showing you what version of office you have assigned as a snapin to your host</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostAssociatedSnapins</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1809,6 +1808,47 @@ $mods</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogServerSettingsFile</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-FogSnapinAssociations</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogSnapinAssociations</command:noun>
+      <maml:description>
+        <maml:para>Helper function that returns a list of all snapin associations to any host on the server</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns a list from the snapinassociations table. Each association has an id, hostid, and snapinid Not to be confused with Get-FogHostAssociatedSnapins which filters this list to a single hostid and then gets the snapin object for each association</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogSnapinAssociations</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogSnapinAssociations</dev:code>
+        <dev:remarks>
+          <maml:para>Will return a full list of all snapin ids associated to host ids</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogSnapinAssociations</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2793,6 +2833,51 @@ $mods</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Repair-FogSnapinAssociations</command:name>
+      <command:verb>Repair</command:verb>
+      <command:noun>FogSnapinAssociations</command:noun>
+      <maml:description>
+        <maml:para>Finds any invalid snapin associations and removes them from the server</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Finds any snapin associations that have a snapinID or hostID of 0 or a negative number or that have a snapin or host id that doesn't exist in the server Displays the ones that will be deleted if any are found and then removes them.  You can use -debug to pause and display each association before it is deleted (assuming your $debugpreference variable is set to 'inquire')</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Repair-FogSnapinAssociations</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters />
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>When running Get-FogHostAssociatedSnapins, if associations with invalid snapin ids are found,</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Repair-FogSnapinAssociations</dev:code>
+        <dev:remarks>
+          <maml:para>'Example of output when there are associations to remove' These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed:</maml:para>
+          <maml:para>id    hostID snapinID --    ------ -------- 9289  1809   0 9985  1866   0 10000 2091   0</maml:para>
+          <maml:para>These snapin assoiciations have an invalid hostID of either 0 or -1 or other negative number, or have a hostid that doesn't belong to any host and will be removed:</maml:para>
+          <maml:para>id   hostID snapinID --   ------ -------- 8281 1787   103 8513 1960   103 8597 1935   635 8598 1935   629 8599 1933   639 8600 1935   69 8601 1935   137 9353 0      681 9354 0      684</maml:para>
+          <maml:para>Snapin Association repair complete!</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Repair-FogSnapinAssociations</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Reset-HostEncryption</command:name>
       <command:verb>Reset</command:verb>
       <command:noun>HostEncryption</command:noun>
@@ -3363,7 +3448,7 @@ $mods</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Goes through a provided list variable and adds each matching snapin to the provided hostid</maml:para>
+      <maml:para>Goes through a provided list variable and adds each matching snapin to the provided hostid Performs validation on the input before</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>

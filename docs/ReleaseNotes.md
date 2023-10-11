@@ -1,4 +1,8 @@
 
+# 2310.5.42
+
+	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
+
 # 2304.5.41
 
 	Fix build versioning

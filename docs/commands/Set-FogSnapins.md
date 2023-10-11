@@ -17,8 +17,8 @@ Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [-exactNames] [<Common
 ```
 
 ## DESCRIPTION
-Goes through a provided list variable and adds each matching snapin to the provided
-hostid
+Goes through a provided list variable and adds each matching snapin to the provided hostid
+Performs validation on the input before
 
 ## EXAMPLES
 

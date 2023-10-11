@@ -12,8 +12,6 @@
 
 ## [Get-FogActiveTasks](Get-FogActiveTasks.md)
 
-## [Get-FogAssociatedSnapins](Get-FogAssociatedSnapins.md)
-
 ## [Get-FogGroupAssociations](Get-FogGroupAssociations.md)
 
 ## [Get-FogGroupByName](Get-FogGroupByName.md)
@@ -21,6 +19,8 @@
 ## [Get-FogGroups](Get-FogGroups.md)
 
 ## [Get-FogHost](Get-FogHost.md)
+
+## [Get-FogHostAssociatedSnapins](Get-FogHostAssociatedSnapins.md)
 
 ## [Get-FogHostGroup](Get-FogHostGroup.md)
 
@@ -48,6 +48,8 @@
 
 ## [Get-FogServerSettingsFile](Get-FogServerSettingsFile.md)
 
+## [Get-FogSnapinAssociations](Get-FogSnapinAssociations.md)
+
 ## [Get-FogSnapins](Get-FogSnapins.md)
 
 ## [Get-LastImageTime](Get-LastImageTime.md)
@@ -65,6 +67,8 @@
 ## [Remove-FogObject](Remove-FogObject.md)
 
 ## [Remove-UsbMac](Remove-UsbMac.md)
+
+## [Repair-FogSnapinAssociations](Repair-FogSnapinAssociations.md)
 
 ## [Reset-HostEncryption](Reset-HostEncryption.md)
 
