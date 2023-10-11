@@ -1,5 +1,5 @@
 
-# 2310.5.42
+# 2310.6.1
 
 	Added new snapin association functions for removing invalid entries and preventing any existing invalid associations from causing an error
 
