@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2310.6.2'
+ModuleVersion = '2310.6.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -145,8 +145,11 @@ CmdletsToExport = @()
 VariablesToExport = '*'
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = 'Remove-FogMac', 'Add-FogSnapins', 'Set-FogObject', 'Add-FogHost', 
-               'Get-FogGroup', 'Get-MacsForHost', 'Get-FogMacs', 'Add-FogObject'
+AliasesToExport = 'Remove-FogMac', 'Get-FogAssociatedSnapins', 'Get-FogHostSnapins', 
+               'Get-FogHostSnapinAssociations', 'Get-FogGroup', 'Get-MacsForHost', 
+               'Get-FogMacs', 'Add-FogHost', 'Add-FogObject', 'Save-FogImage', 
+               'Invoke-FogImageCapture', 'Capture-FogImage', 'Pull-FogImage', 
+               'Push-FogImage', 'Deploy-FogImage', 'Add-FogSnapins', 'Set-FogObject'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -179,6 +182,10 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
+# 2310.6.3
+
+	fixed missing aliases to export
+
 # 2310.6.2
 
 	fixed duplicate release notes in manifest

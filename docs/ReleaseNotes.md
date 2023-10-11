@@ -1,4 +1,8 @@
 
+# 2310.6.3
+
+	fixed missing aliases to export
+
 # 2310.6.2
 
 	fixed duplicate release notes in manifest
