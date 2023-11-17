@@ -54,7 +54,7 @@ function Repair-FogSnapinAssociations {
             "These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed:`n$($invalidSnapinID | out-string)" | out-host;
             $invalidSnapinID | ForEach-Object {
                 Write-Verbose "Removing association $($_ | out-string)"
-                Write-Debug "Removing association $($_ | out-string)"a
+                Write-Debug "Removing association $($_ | out-string)"
                 Remove-FogObject -type object -coreObject snapinassociation -IDofObject $_.id
             }
             #refresh association list after removing some invalids
