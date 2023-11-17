@@ -16,6 +16,9 @@ String array list of snapins to add to the host
 .PARAMETER exactNames
 switch param to indicate matching to exact snapin names instead of matching the name. Useful if you have things like office and office-64 that both match to 'office'
 
+.PARAMETER repairBeforeAdd
+Switch param to run Repair-FogSnapinAssociations before attempting to add new snapin associations, useful if you're getting 404 errors
+
 .EXAMPLE
 Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
 
@@ -29,15 +32,24 @@ they could then be deployed with start-fogsnapins
     param (
         $hostid = ((Get-FogHost).id),
         $pkgList,
-        [switch]$exactNames
+        [switch]$exactNames,
+        [switch]$repairBeforeAdd
     )
 
     process {
         Write-Verbose "Association snapins from package list with host";
+        if ($repairBeforeAdd) {
+            try {
+                Repair-FogSnapinAssociations -ea stop;
+            } catch {
+                Write-Warning "There was an issue running the repair command, still continuing to attempt to add new snapin associations"
+            }
+        }
         $snapins = Get-FogSnapins;
+
         # $urlPath = "snapinassociation/create"
         $curSnapins = Get-FogHostAssociatedSnapins -hostId $hostid;
-        $result = New-Object System.Collections.Generic.List[Object];
+        $results = New-Object System.Collections.Generic.List[Object];
         if ($null -ne $pkgList) {
             $pkgList | ForEach-Object {
                 if ($exactNames) {
@@ -52,9 +64,14 @@ they could then be deployed with start-fogsnapins
                     };
                 }
                 Write-Verbose "$_ is pkg snapin id found is $($json.snapinID)";
-                if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id) -AND ($json.snapinID -ne "0")) {
+                if (($null -ne $json.SnapinID) -AND ($json.SnapinID -notin $curSnapins.id) -AND ($json.snapinID -ge "0")) {
                     $json = $json | ConvertTo-Json;
-                    $result.add((New-FogObject -type object -coreObject snapinassociation -jsonData $json));
+                    try {
+                        $result = New-FogObject -type object -coreObject snapinassociation -jsonData $json -ea stop
+                        $results.add($result);
+                    } catch {
+                        Write-Warning "Error adding snapin for $($_)!`npassed json was $($json)"
+                    }
                 } elseif ($json.SnapinID -in $curSnapins.id) {
                     Write-Warning "$_ snapin of id $($json.SnapinID) is already associated with this host";
                 } else {
@@ -63,7 +80,7 @@ they could then be deployed with start-fogsnapins
                 # Invoke-FogApi -Method POST -uriPath $urlPath -jsonData $json;
             }
         }
-        return $result;
+        return $results;
     }
 
 
