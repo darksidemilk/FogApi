@@ -131,7 +131,7 @@ $docsPth = "$PSScriptRoot\docs"
 	$classPth | Get-ChildItem | ForEach-Object { Import-Module $_.Fullname -force;}
 	# Remove old markdown files
 	"$docsPth\commands" | Get-ChildItem -Filter '*.md' | Remove-Item -Force;
-	Remove-Item -Path "$docsPth\ReleaseNotes.md"
+	# Remove-Item -Path "$docsPth\ReleaseNotes.md"
 	New-MarkdownHelp -module $moduleName -Force -OutputFolder "$docsPth\commands";
 	
 	
@@ -264,19 +264,46 @@ $MajorStr = (get-date -Format "yyMM")
 $verArgs.Add($MajorStr)
 if ($major) {
 	$verArgs.Add($oldVer.Minor +1)
+	$verArgs.Add("0")
 } else {
 	$verArgs.Add($oldVer.Minor)
+	$verArgs.Add($oldVer.Build + 1)
 }
-$verArgs.Add($oldVer.Build + 1)
 # $verArgs.Add(($oldVer.Revision + 1))
-if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
+# if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
 $newVer = New-Object version -ArgumentList $verArgs;
-$releaseNotes = "`n# $newVer`n`n`t$releaseNote`n$($cur.ReleaseNotes)"
+$releaseNotes = "`n# $newVer`n`n`t$releaseNote"
 
 Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
 
 
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
 
+"updating release notes..." | out-host;
 #create release notes markdown
-Set-Content -Path "$docsPth\ReleaseNotes.md" -value ((Test-ModuleManifest $manifest).ReleaseNotes)
+#grab the current release notes
+$curnotes = Get-Content "$docsPth\ReleaseNotes.md" -raw;
+#create the 'major' version heading string
+$heading = "# Release Notes";
+$curnotes = $curnotes.Replace($heading,"")
+$curnotes = $curnotes.Remove(0,2);
+$majorVerStr = "`## $($newVer.Minor).x"
+if ($major) {
+	"New major version, don't remove old major ver heading. CurNotes is now:`n$curnotes" | out-host
+	# pause;
+	# $curnotes = $curnotes;
+
+} else {
+	"deleting old major ver string to be able to re-add $majorVerStr" | out-host
+	$curnotes = $curnotes.Replace($majorVerStr,"");
+	$curnotes = $curnotes.Remove(0,2);
+}
+# $curnotes = $curnotes.TrimStart("`n").TrimStart("`n");
+$newContent = $heading
+$newContent += "`n`n"
+$newContent += $majorVerStr
+$newContent += "`n`n"
+$newContent += "### $newVer`n`n`t$releaseNote`n"
+$newContent += $curNotes
+# pause;
+Set-Content -Path "$docsPth\ReleaseNotes.md" -value $newContent
