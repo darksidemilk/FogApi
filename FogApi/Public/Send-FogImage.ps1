@@ -47,7 +47,7 @@ function Send-FogImage {
         $fogHost = Get-FogHost -hostID $hostId;
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
-        $fogImage = ($fogImages | Where-Object name -match $currentImage)
+        $fogImage = ($fogImages | Where-Object name -eq $currentImage)
         "Creating Deploy Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
         "Will deploy the assigned image $($fogImage.name) - $($fogImage.id) which will install the os $($fogImage.osname)" | Out-host;
         if ($PSCmdlet.ParameterSetName -eq 'now') {
