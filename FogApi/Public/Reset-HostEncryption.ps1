@@ -30,7 +30,14 @@ function Reset-HostEncryption {
         $fogHost.sec_tok = "";
         $fogHost.sec_time = "0000-00-00 00:00:00";
 
-        $jsonData = $fogHost | Select-Object id,pub_key,sec_tok,sec-time | ConvertTo-Json;
+        try {
+            $jsonData = $fogHost | Select-Object id,pub_key,sec_tok,sec-time -ea stop | ConvertTo-Json;
+        } catch {
+            #in 1.6, if you are looping through multiple hosts gotten with get-foghosts, they have summarized data, get the individual host record if the token properties don't exist
+            $fogHOst = get-foghost -hostID $fogHost.id
+            $jsonData = $fogHost | Select-Object id,pub_key,sec_tok,sec-time | ConvertTo-Json;
+        }
+
         $result = Update-FogObject -type object -coreObject host -IDofObject $fogHost.id -jsonData $jsonData;
         if ($restartSvc) {
             Restart-Service fogservice -force;

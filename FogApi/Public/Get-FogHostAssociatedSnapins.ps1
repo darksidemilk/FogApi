@@ -32,11 +32,16 @@ function Get-FogHostAssociatedSnapins {
         $AllAssocs = Get-FogSnapinAssociations
         $snapins = New-Object System.Collections.Generic.List[object];
         # $allSnapins = Get-FogSnapins;
+        $allsnapinIDs = (Get-FogSnapins).id | Sort-Object;
         
         $AllAssocs | Where-Object hostID -eq $hostID | ForEach-Object {
             $snapinID = $_.snapinID;
-            if ($snapinID -ne 0) {
-                $snapin = Get-FogObject -type object -coreObject snapin -IDofObject $snapinID;
+            if (($snapinID -ne 0) -and ($snapinID -in $allsnapinIDs)) {
+                try {
+                    $snapin = Get-FogObject -type object -coreObject snapin -IDofObject $snapinID -ea stop;
+                } catch {
+                    Write-Warning "A snapin associated to a no longer existing or invalid snapin exists for this host! Run Repair-SnapinAssociations to fix for the server!"
+                }
             } else {
                 Write-Warning "A snapin associated to a no longer existing or invalid snapin exists for this host! Run Repair-SnapinAssociations to fix for the server!"
             }
