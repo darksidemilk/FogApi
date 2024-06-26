@@ -37,14 +37,14 @@ the position to put the dynamic parameter in
             "history", "hookevent", "host", "hostautologout", "hostscreensetting", "image",
             "imageassociation", "imagepartitiontype", "imagetype", "imaginglog", "inventory", "ipxe",
             "keysequence", "macaddressassociation", "module", "moduleassociation", "multicastsession",
-            "multicastsessionsassociation", "nodefailure", "notifyevent", "os", "oui", "plugin",
+            "multicastsessionassociation", "nodefailure", "notifyevent", "os", "oui", "plugin",
             "powermanagement", "printer", "printerassociation", "pxemenuoptions", "scheduledtask",
-            "service", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
+            "service", "setting", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
             "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate", "tasktype",
-            "unisearch", "usercleanup", "usertracking", "virus"
+            "unisearch", "user", "usercleanup", "usertracking", "virus"
         );
-        $coreTaskObjects = @("group", "host", "multicastsession", "snapinjob", "snapintask", "task");
-        $coreActiveTaskObjects = @("multicastsession", "scheduledtask", "snapinjob", "snapintask", "task");
+        $coreTaskObjects = @("group", "host", "multicastsession", "scheduledtask", "snapinjob", "snapintask", "task");
+        $coreActiveTaskObjects = @("multicastsession", "powermanagement", "scheduledtask", "snapinjob", "snapintask", "task");
     }
 
     process {
