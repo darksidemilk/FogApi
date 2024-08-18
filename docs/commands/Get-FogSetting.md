@@ -1,46 +1,63 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogVersion
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogSetting
 schema: 2.0.0
 ---
 
-# Get-FogVersion
+# Get-FogSetting
 
 ## SYNOPSIS
-Gets the version of FOG
+Get one fog setting by name or id
 
 ## SYNTAX
 
 ```
-Get-FogVersion [-noWarning] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-FogSetting [[-settingName] <Object>] [[-settingID] <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Only works for 1.6 beta and above, 1.5.x is identified as 1.5.10 if null is returned
+Gets the id, name, description, and value of a given fog setting by its ID or name
+You can get all settings with Get-FogSettings
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-FogVersion;
+Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER
 ```
 
-Will return the full version string
+Will return the value and info of FOG_QUICKREG_PENDING_MAC_FILTER
 
 ## PARAMETERS
 
-### -noWarning
-{{ Fill noWarning Description }}
+### -settingName
+The name of the setting
 
 ```yaml
-Type: SwitchParameter
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -settingID
+Alternatively use the ID of the setting to get the setting directly
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -68,5 +85,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+General notes
 
 ## RELATED LINKS

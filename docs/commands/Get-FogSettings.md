@@ -1,49 +1,34 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogVersion
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogSettings
 schema: 2.0.0
 ---
 
-# Get-FogVersion
+# Get-FogSettings
 
 ## SYNOPSIS
-Gets the version of FOG
+Get all fog settings
 
 ## SYNTAX
 
 ```
-Get-FogVersion [-noWarning] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-FogSettings [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Only works for 1.6 beta and above, 1.5.x is identified as 1.5.10 if null is returned
+Returns all settings with their ids, names, values, and descriptions
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Get-FogVersion;
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Will return the full version string
+{{ Add example description here }}
 
 ## PARAMETERS
-
-### -noWarning
-{{ Fill noWarning Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
