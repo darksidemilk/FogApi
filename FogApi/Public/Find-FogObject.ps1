@@ -49,13 +49,10 @@ function Find-FogObject {
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
 
-    begin {
+    process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         # $paramDict;
         Write-Verbose "Building uri and api call for $($paramDict.keys) $($paramDict.values.value)";
-        if (($null -eq $coreObject) -and (Get-FogVersion -like '1.6*')) {
-            $coreObject = "unisearch";
-        }
         switch ($type) {
             search {
                 if ($coreObject -ne "unisearch") {
@@ -70,13 +67,7 @@ function Find-FogObject {
             uriPath=$uri;
             Method="GET";
         }
-    }
-
-    process {
         $result = Invoke-FogApi @apiInvoke;
-    }
-    
-    end {
         #convert the output to use the data property added in fog 1.6
         if ($coreObject -ne "unisearch") {
             $result = Add-FogResultData $result;
