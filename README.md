@@ -1,5 +1,7 @@
 # Overview
 
+[![Test Build](https://github.com/darksidemilk/FogApi/actions/workflows/build-test.yml/badge.svg)](https://github.com/darksidemilk/FogApi/actions/workflows/build-test.yml)
+
 This is a powershell module to make using the Fog Project API even easier.
 FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation. It can be used to create more automation or to simply have a command line method of controlling fog operations.
 
