@@ -1,3 +1,4 @@
+# Need to modularize the build steps so that documentation related steps can be run separately from the build steps as well as the incremeneting of the version number.
 name: Test Build
 
 on:
