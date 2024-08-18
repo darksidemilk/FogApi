@@ -119,4 +119,5 @@ if ($null -ne $PrivateFunctions) {
 	}
 }
 
-
+$manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
+Copy-Item $manifest "$buildPth\$moduleName.psd1";

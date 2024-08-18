@@ -2,19 +2,12 @@
 
 ## 6.x
 
-### 2408.6.8
+### 2408.6.9
 
-	general updates and bug fixes
-### 2408.6.7
-
-	general updates and bug fixes
-### 2408.6.6
-
-	general updates and bug fixes
-### 2408.6.5
-
-	general updates and bug fixes
-
+	Created Get-FogVersion and implmented check for 1.6 version
+	so correct dynamic parameters are used for 1.5.x vs 1.6
+	Also added a separate build test script for running a build test
+	on each push.
 
 ### 2311.6.4
 
@@ -310,6 +303,7 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
