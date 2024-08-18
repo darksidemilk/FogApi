@@ -17,6 +17,7 @@ jobs:
 
         - name: Run build script
           run: |
+            install-module PlatyPS -requiredversion 0.14.2
             .\build.ps1
             if (Test-Modulemanifest -path "$Home\ModuleBuild\$moduleName\$moduleName.psd1") {
                 if (import-module "$Home\ModuleBuild\$moduleName") {
