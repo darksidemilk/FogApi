@@ -13,7 +13,8 @@ A cmdlet that uses invoke-fogapi to remove a given list of usb mac address from 
 ## SYNTAX
 
 ```
-Remove-UsbMac [[-usbMacs] <String[]>] [[-hostname] <String>] [[-macId] <Object>] [<CommonParameters>]
+Remove-UsbMac [[-usbMacs] <String[]>] [[-hostname] <String>] [[-macId] <Object>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,6 +69,21 @@ Aliases:
 
 Required: False
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

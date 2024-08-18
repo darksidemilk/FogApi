@@ -1,0 +1,37 @@
+name: Test Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+    build:
+        runs-on: windows-latest
+    
+        steps:
+        - uses: actions/checkout@v4
+
+        - name: Run build script
+          run: |
+            # Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
+            $moduleName="FogApi";
+            .\invoke-modulebuild.ps1
+            $builtPath = ".\_module_build\$moduleName"
+            ls -recurse $builtPath;
+            if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
+                import-module "$builtPath\" -ea 0
+                if ($null -ne (Get-module $modulename -ea 0)) {
+                    "Built module imported successfully!`n$((Get-module $modulename) | out-string)" | out-host
+                    return $true;
+                } else {
+                    Write-Error "Failed to import module!"
+                    return $false;
+                }
+            } else {
+                Write-Error "Manifest threw error"
+                return $false;
+            }

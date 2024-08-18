@@ -13,7 +13,8 @@ Set the settings file or given file to full control for owner only, no access fo
 ## SYNTAX
 
 ```
-Set-FogServerSettingsFileSecurity [[-settingsFile] <Object>] [<CommonParameters>]
+Set-FogServerSettingsFileSecurity [[-settingsFile] <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,6 +42,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: (Get-FogServerSettingsFile)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

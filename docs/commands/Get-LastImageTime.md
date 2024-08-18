@@ -14,17 +14,17 @@ Prompts for a serial number, finds the host by that serial number, and returns a
 
 ### bySN (Default)
 ```
-Get-LastImageTime [-serialNumber <Object>] [<CommonParameters>]
+Get-LastImageTime [-serialNumber <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byHostId
 ```
-Get-LastImageTime [-hostId <Object>] [<CommonParameters>]
+Get-LastImageTime [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byHost
 ```
-Get-LastImageTime [-fogHost <Object>] [-currentHost] [<CommonParameters>]
+Get-LastImageTime [-fogHost <Object>] [-currentHost] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -126,6 +126,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

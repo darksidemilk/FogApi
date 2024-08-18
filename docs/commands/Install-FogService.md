@@ -13,7 +13,7 @@ Attempts to install the fog service
 ## SYNTAX
 
 ```
-Install-FogService [[-fogServer] <Object>] [<CommonParameters>]
+Install-FogService [[-fogServer] <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: ((Get-FogServerSettings).fogServer)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

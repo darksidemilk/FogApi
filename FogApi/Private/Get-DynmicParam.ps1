@@ -32,17 +32,31 @@ the position to put the dynamic parameter in
 
         $attributeCollection.Add($attributes)
 
-        $coreObjects = @(
-            "clientupdater", "dircleaner", "greenfog", "group", "groupassociation",
-            "history", "hookevent", "host", "hostautologout", "hostscreensetting", "image",
-            "imageassociation", "imagepartitiontype", "imagetype", "imaginglog", "inventory", "ipxe",
-            "keysequence", "macaddressassociation", "module", "moduleassociation", "multicastsession",
-            "multicastsessionassociation", "nodefailure", "notifyevent", "os", "oui", "plugin",
-            "powermanagement", "printer", "printerassociation", "pxemenuoptions", "scheduledtask",
-            "service", "setting", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
-            "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate", "tasktype",
-            "unisearch", "user", "usercleanup", "usertracking", "virus"
-        );
+        if ((Get-FogVersion) -like '1.6*') {
+            $coreObjects = @(
+                "group", "groupassociation", "history", "hookevent", "host", "hostautologout", 
+                "hostscreensetting", "image", "imageassociation", "imagepartitiontype", "imagetype", 
+                "imaginglog", "inventory", "ipxe", "keysequence", "macaddressassociation", "module", 
+                "moduleassociation", "multicastsession", "multicastsessionassociation", "nodefailure", 
+                "notifyevent", "os", "oui", "plugin", "powermanagement", "printer", "printerassociation", 
+                "pxemenuoptions", "scheduledtask", "setting", "snapin", "snapinassociation", 
+                "snapingroupassociation", "snapinjob", "snapintask", "storagegroup", "storagenode", "task", 
+                "tasklog", "taskstate", "tasktype", "unisearch", "user", "usertracking", "setting", "user"
+            );
+        } else {
+            $coreObjects = @(
+                "clientupdater", "dircleaner", "greenfog", "group", "groupassociation",
+                "history", "hookevent", "host", "hostautologout", "hostscreensetting", "image",
+                "imageassociation", "imagepartitiontype", "imagetype", "imaginglog", "inventory", "ipxe",
+                "keysequence", "macaddressassociation", "module", "moduleassociation", "multicastsession",
+                "multicastsessionassociation", "nodefailure", "notifyevent", "os", "oui", "plugin",
+                "powermanagement", "printer", "printerassociation", "pxemenuoptions", "scheduledtask",
+                "service", "setting", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
+                "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate", "tasktype",
+                "unisearch", "user", "usercleanup", "usertracking", "virus"
+            );
+        }
+
         $coreTaskObjects = @("group", "host", "multicastsession", "scheduledtask", "snapinjob", "snapintask", "task");
         $coreActiveTaskObjects = @("multicastsession", "powermanagement", "scheduledtask", "snapinjob", "snapintask", "task");
     }

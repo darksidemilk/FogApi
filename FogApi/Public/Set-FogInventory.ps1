@@ -21,19 +21,13 @@ the jsondata with the inventory
         $jsonData = (Get-FogInventory -hostObj $hostObj)
     )
 
-    begin {
+    process {
         $inventoryApi = @{
             jsonData = $jsonData;
             Method = 'Post';
             uriPath = "inventory/new";
         }
-    }
-
-    process {
         Invoke-FogApi @inventoryApi -verbose;
-    }
-
-    end {
         return;
     }
 

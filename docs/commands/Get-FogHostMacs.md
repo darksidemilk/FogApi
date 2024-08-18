@@ -14,12 +14,12 @@ Returns the macs assigned to a given host
 
 ### byHostObject
 ```
-Get-FogHostMacs [-hostObject <Object>] [<CommonParameters>]
+Get-FogHostMacs [-hostObject <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byHostID
 ```
-Get-FogHostMacs [-hostID <Object>] [<CommonParameters>]
+Get-FogHostMacs [-hostID <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -59,6 +59,21 @@ Accept wildcard characters: False
 Type: Object
 Parameter Sets: byHostID
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

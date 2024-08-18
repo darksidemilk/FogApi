@@ -14,12 +14,13 @@ Creates a new host in fog
 
 ### default (Default)
 ```
-New-FogHost -name <String> -macs <String[]> [-modules <String[]>] [<CommonParameters>]
+New-FogHost -name <String> -macs <String[]> [-modules <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### custom
 ```
-New-FogHost -customHost <Object> [<CommonParameters>]
+New-FogHost -customHost <Object> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -112,6 +113,21 @@ Parameter Sets: custom
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

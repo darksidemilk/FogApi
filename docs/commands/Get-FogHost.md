@@ -14,17 +14,18 @@ Gets the object of a specific fog host
 
 ### searchTerm (Default)
 ```
-Get-FogHost [-uuid <String>] [-hostName <String>] [-macAddr <String>] [<CommonParameters>]
+Get-FogHost [-uuid <String>] [-hostName <String>] [-macAddr <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### byID
 ```
-Get-FogHost -hostID <String> [<CommonParameters>]
+Get-FogHost -hostID <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### serialNumber
 ```
-Get-FogHost -serialNumber <String> [<CommonParameters>]
+Get-FogHost -serialNumber <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -135,6 +136,21 @@ Parameter Sets: serialNumber
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

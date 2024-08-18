@@ -13,7 +13,7 @@ Returns list of all snapins associated with a given hostid, defaults to current 
 ## SYNTAX
 
 ```
-Get-FogHostAssociatedSnapins [[-hostId] <Object>] [<CommonParameters>]
+Get-FogHostAssociatedSnapins [[-hostId] <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,6 +47,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: ((Get-FogHost).id)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

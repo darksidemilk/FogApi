@@ -13,7 +13,8 @@ Sets a list of snapins to a host, appends to existing ones
 ## SYNTAX
 
 ```
-Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [-exactNames] [-repairBeforeAdd] [<CommonParameters>]
+Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [-exactNames] [-repairBeforeAdd]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -89,6 +90,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

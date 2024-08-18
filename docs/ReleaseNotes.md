@@ -2,6 +2,13 @@
 
 ## 6.x
 
+### 2408.6.9
+
+	Created Get-FogVersion and implmented check for 1.6 version
+	so correct dynamic parameters are used for 1.5.x vs 1.6
+	Also added a separate build test script for running a build test
+	on each push.
+
 ### 2311.6.4
 
 	typo bug fix there was a stray extra character. Also added switch for Set-FogSnapins called -repairBeforeAdd to allow running the repair before attempting to add. Also added in more try catch logic to set-fogsnapins. Also cleaned up release notes in manifest to just include the latest release to allow for faster import of module
@@ -296,5 +303,10 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
+
+
+
 
 

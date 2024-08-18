@@ -14,12 +14,14 @@ Starts a single snapin task for a given machine
 
 ### byId (Default)
 ```
-Start-FogSnapin [-hostID <Object>] [-snapinId <Object>] [<CommonParameters>]
+Start-FogSnapin [-hostID <Object>] [-snapinId <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### byName
 ```
-Start-FogSnapin [-hostID <Object>] [-snapinname <Object>] [<CommonParameters>]
+Start-FogSnapin [-hostID <Object>] [-snapinname <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -82,6 +84,21 @@ The id of the snapin to deploy
 Type: Object
 Parameter Sets: byId
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

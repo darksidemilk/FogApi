@@ -14,12 +14,13 @@ Start or schedule a deploy task for a fog host
 
 ### now (Default)
 ```
-Send-FogImage [-hostId <Object>] [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,6 +75,21 @@ The time to start the deploy task, use Get-date to create the required datetime 
 Type: DateTime
 Parameter Sets: schedule
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named
