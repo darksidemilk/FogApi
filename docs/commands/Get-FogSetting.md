@@ -30,6 +30,13 @@ Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER
 
 Will return the value and info of FOG_QUICKREG_PENDING_MAC_FILTER
 
+### EXAMPLE 2
+```
+$filteredmacs = (Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER).value.split(",");
+```
+
+Will split the value of FOG_QUICKREG_PENDING_MAC_FILTER on ','s so it's an array object
+
 ## PARAMETERS
 
 ### -settingName
@@ -85,6 +92,5 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-General notes
 
 ## RELATED LINKS

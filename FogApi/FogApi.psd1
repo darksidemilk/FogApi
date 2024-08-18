@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2408.6.14'
+ModuleVersion = '2408.6.15'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -136,9 +136,9 @@ FunctionsToExport = 'Add-FogHostMac', 'Add-FogResultData', 'Approve-FogPendingMa
                'Remove-UsbMac', 'Repair-FogSnapinAssociations', 
                'Reset-HostEncryption', 'Resolve-HostID', 'Send-FogImage', 
                'Send-FogWolTask', 'Set-FogInventory', 'Set-FogServerSettings', 
-               'Set-FogServerSettingsFileSecurity', 'Set-FogSnapins', 
-               'Start-FogSnapin', 'Start-FogSnapins', 'Test-FogVerAbove1dot6', 
-               'Update-FogObject'
+               'Set-FogServerSettingsFileSecurity', 'Set-FogSetting', 
+               'Set-FogSnapins', 'Start-FogSnapin', 'Start-FogSnapins', 
+               'Test-FogVerAbove1dot6', 'Update-FogObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -184,9 +184,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2408.6.14
+# 2408.6.15
 
-	Made basic implementation for getting all fog settings or individual setting. Dynamic Tab completer not quite working, may put in a static list or a list that gets updated on import?'
+	Implemented geting and setting fog settings in fog 1.6. Setting names support tab complete of names'
 
         # Prerelease string of this module
         # Prerelease = ''

@@ -17,16 +17,19 @@ function Get-FogSetting {
     Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER
 
     Will return the value and info of FOG_QUICKREG_PENDING_MAC_FILTER
+
+    .EXAMPLE
+    $filteredmacs = (Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER).value.split(",");
+
+    Will split the value of FOG_QUICKREG_PENDING_MAC_FILTER on ','s so it's an array object
     
-    .NOTES
-    General notes
     #>
     [CmdletBinding()]
     param (
         [Parameter()]
-        <# [ArgumentCompleter({
+        [ArgumentCompleter({
             param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
-            $r = (Get-FogObject -type object -coreObject setting).data;
+            $r = Get-FogSettings;
             # $r = $settings.Name.trim();
 
             if ($WordToComplete) {
@@ -34,7 +37,7 @@ function Get-FogSetting {
             } else {
                 $r.Name
             }
-        })] #>
+        })]
         $settingName,
         $settingID
     )
