@@ -23,7 +23,7 @@ jobs:
             $builtPath = ".\_module_build\$moduleName"
             ls -recurse $builtPath;
             if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
-                import-module "$builtPath\"
+                import-module "$builtPath\" -ea 0
                 if ($null -ne (Get-module $modulename -ea 0)) {
                     "Built module imported successfully!`n$((Get-module $modulename) | out-string)" | out-host
                     return $true;
