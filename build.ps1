@@ -49,12 +49,19 @@
  .PARAMETER releaseNote
  A string explaining what was done in the build to be added to the release notes
 
+ .PARAMETER major
+ Switch to indicate a major version change is required
+
+ .PARAMETER buildMkdocs
+ switch param to install python and requirements and create a local version of the documentation site that will show on read the docs.
+
 #> 
 
 [CmdletBinding()]
 Param(
 	$releaseNote = "general updates and bug fixes",
-	[switch]$major
+	[switch]$major,
+	[switch]$buildMkdocs
 )
 
 function Install-Requirements {
@@ -174,8 +181,10 @@ $docsPth = "$PSScriptRoot\docs"
 	# $mkdocs += "`ntheme: readthedocs"
 
 	# Set-Content $mkdocsYml -value $mkdocs;
-	Set-Content $indexFile -Value $index;
-	Install-Requirements
+	if ($buildMkdocs) {
+		Set-Content $indexFile -Value $index;
+		Install-Requirements
+	}
 	try {
 		New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -Force;
 		New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
@@ -194,7 +203,7 @@ $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
 # mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
-$buildPth = "$Home\ModuleBuild\$moduleName";
+$buildPth = "$env:userprofile\ModuleBuild\$moduleName";
 $moduleFile = "$buildPth\$moduleName.psm1";
 
 # Create the build output folder
@@ -258,7 +267,7 @@ if ($null -ne $PrivateFunctions) {
 $manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
 $cur = test-ModuleManifest -Path $manifest;
 
-[System.Version]$oldVer = (Test-ModuleManifest $manifest).Version
+[System.Version]$oldVer = $cur.Version
 $verArgs = New-Object System.Collections.Generic.list[system.object];
 $MajorStr = (get-date -Format "yyMM")
 $verArgs.Add($MajorStr)
