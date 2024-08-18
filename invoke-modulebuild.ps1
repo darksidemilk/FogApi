@@ -121,3 +121,4 @@ if ($null -ne $PrivateFunctions) {
 
 $manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
+Update-ModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName

@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2408.6.11'
+ModuleVersion = '2408.6.15'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -129,15 +129,16 @@ FunctionsToExport = 'Add-FogHostMac', 'Add-FogResultData', 'Approve-FogPendingMa
                'Get-FogImages', 'Get-FogInventory', 'Get-FogLog', 
                'Get-FogMacAddresses', 'Get-FogModules', 'Get-FogObject', 
                'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 
-               'Get-FogServerSettingsFile', 'Get-FogSnapinAssociations', 
-               'Get-FogSnapins', 'Get-FogVersion', 'Get-LastImageTime', 
-               'Install-FogService', 'Invoke-FogApi', 'New-FogHost', 'New-FogObject', 
-               'Receive-FogImage', 'Remove-FogObject', 'Remove-UsbMac', 
-               'Repair-FogSnapinAssociations', 'Reset-HostEncryption', 
-               'Resolve-HostID', 'Send-FogImage', 'Send-FogWolTask', 
-               'Set-FogInventory', 'Set-FogServerSettings', 
-               'Set-FogServerSettingsFileSecurity', 'Set-FogSnapins', 
-               'Start-FogSnapin', 'Start-FogSnapins', 'Update-FogObject'
+               'Get-FogServerSettingsFile', 'Get-FogSetting', 'Get-FogSettings', 
+               'Get-FogSnapinAssociations', 'Get-FogSnapins', 'Get-FogVersion', 
+               'Get-LastImageTime', 'Install-FogService', 'Invoke-FogApi', 
+               'New-FogHost', 'New-FogObject', 'Receive-FogImage', 'Remove-FogObject', 
+               'Remove-UsbMac', 'Repair-FogSnapinAssociations', 
+               'Reset-HostEncryption', 'Resolve-HostID', 'Send-FogImage', 
+               'Send-FogWolTask', 'Set-FogInventory', 'Set-FogServerSettings', 
+               'Set-FogServerSettingsFileSecurity', 'Set-FogSetting', 
+               'Set-FogSnapins', 'Start-FogSnapin', 'Start-FogSnapins', 
+               'Test-FogVerAbove1dot6', 'Update-FogObject'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -183,9 +184,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2408.6.11
+# 2408.6.15
 
-	Fix get-fogversion if before version 1.6 or if error on info page'
+	Implemented geting and setting fog settings in fog 1.6. Setting names support tab complete of names'
 
         # Prerelease string of this module
         # Prerelease = ''

@@ -1,49 +1,34 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogVersion
+online version: https://fogapi.readthedocs.io/en/latest/commands/Test-FogVerAbove1dot6
 schema: 2.0.0
 ---
 
-# Get-FogVersion
+# Test-FogVerAbove1dot6
 
 ## SYNOPSIS
-Gets the version of FOG
+Tests if the fog version is above 1.6 where api changes have occurred
 
 ## SYNTAX
 
 ```
-Get-FogVersion [-noWarning] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Test-FogVerAbove1dot6 [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Only works for 1.6 beta and above, 1.5.x is identified as 1.5.10 if null is returned
+Tests if the version string matches 1.5 string, if it doesn't then it's likely above 1.6
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Get-FogVersion;
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Will return the full version string
+{{ Add example description here }}
 
 ## PARAMETERS
-
-### -noWarning
-{{ Fill noWarning Description }}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
@@ -68,5 +53,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+Could also make this a script scoped variable, but getting the version requires at least the fog server name
+which has to be set in intial setup and would throw errors on first install.
 
 ## RELATED LINKS

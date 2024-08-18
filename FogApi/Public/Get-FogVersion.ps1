@@ -14,9 +14,8 @@ function Get-FogVersion {
     #>
     [CmdletBinding()]
     param (
-        
+        [switch]$noWarning
     )
-    
     
     process {
         $info = (Invoke-FogApi -uriPath "system/info" -Method Get -ea 0)
@@ -24,7 +23,9 @@ function Get-FogVersion {
             $versionStr = $info.version;
         } 
         if ([string]::IsNullOrEmpty($versionStr)) {
-            "Error finding version on system/info pass, getting version from getversion.php" | out-host;
+            if ($noWarning) {
+                Write-Warning "Error finding version on system/info pass, getting version from getversion.php"
+            } 
             $versionStr = (Invoke-FogApi -uriPath "service/getversion.php" -Method Get )
         }
         return $versionStr

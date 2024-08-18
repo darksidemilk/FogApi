@@ -2,6 +2,23 @@
 
 ## 6.x
 
+### 2408.6.15
+
+	Implemented geting and setting fog settings in fog 1.6. Setting names support tab complete of names
+
+
+### 2408.6.14
+
+	Made basic implementation for getting all fog settings or individual setting. Dynamic Tab completer not quite working, may put in a static list or a list that gets updated on import?
+	
+### 2408.6.13
+
+	general updates and bug fixes
+### 2408.6.12
+
+	general updates and bug fixes
+
+
 ### 2408.6.11
 
 	Fix get-fogversion if before version 1.6 or if error on info page
@@ -307,6 +324,10 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
+
+
 
 
 
