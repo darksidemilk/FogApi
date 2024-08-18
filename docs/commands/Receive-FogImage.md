@@ -14,12 +14,13 @@ Starts or schedules a capture task on a given host
 
 ### now (Default)
 ```
-Receive-FogImage [-hostId <Object>] [<CommonParameters>]
+Receive-FogImage [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Receive-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [<CommonParameters>]
+Receive-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,6 +75,21 @@ When to start to capture, if not given will start now
 Type: DateTime
 Parameter Sets: schedule
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

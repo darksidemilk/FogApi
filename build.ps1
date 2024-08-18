@@ -316,3 +316,5 @@ $newContent += "### $newVer`n`n`t$releaseNote`n"
 $newContent += $curNotes
 # pause;
 Set-Content -Path "$docsPth\ReleaseNotes.md" -value $newContent
+
+return $buildPth;

@@ -2,6 +2,20 @@
 
 ## 6.x
 
+### 2408.6.8
+
+	general updates and bug fixes
+### 2408.6.7
+
+	general updates and bug fixes
+### 2408.6.6
+
+	general updates and bug fixes
+### 2408.6.5
+
+	general updates and bug fixes
+
+
 ### 2311.6.4
 
 	typo bug fix there was a stray extra character. Also added switch for Set-FogSnapins called -repairBeforeAdd to allow running the repair before attempting to add. Also added in more try catch logic to set-fogsnapins. Also cleaned up release notes in manifest to just include the latest release to allow for faster import of module
@@ -296,5 +310,9 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
+
+
 
 

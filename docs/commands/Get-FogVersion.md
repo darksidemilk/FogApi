@@ -1,41 +1,32 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogModules
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogVersion
 schema: 2.0.0
 ---
 
-# Get-FogModules
+# Get-FogVersion
 
 ## SYNOPSIS
-Returns the modules in fog with their names, ids, descriptions, and if they're set to be enabled by default
+Gets the version of FOG
 
 ## SYNTAX
 
 ```
-Get-FogModules [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-FogVersion [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Returns the api module object.
-Can be utilized to find what modules are enabled by default when creating a new host
+Only works for 1.6 beta and above, 1.5.x is identified as 1.5.10 if null is returned
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$mods = Get-FogModules
-$mods
+Get-FogVersion;
 ```
 
-Will put the list of modules in a variable and then display the list
-
-### EXAMPLE 2
-```
-Get-FogModules | Where-Object isDefault -eq '1'
-```
-
-Will display the modules that are set to be enabled by default in your fog server settings
+Will return the full version string
 
 ## PARAMETERS
 
@@ -62,5 +53,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
+General notes
 
 ## RELATED LINKS

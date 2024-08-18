@@ -14,7 +14,7 @@ Adds a given macaddress to a host of a given ID
 
 ```
 Add-FogHostMac [[-hostID] <Object>] [[-macAddress] <Object>] [-primary] [-ignoreMacOnClient]
- [-ignoreMacForImaging] [-forceUpdate] [<CommonParameters>]
+ [-ignoreMacForImaging] [-forceUpdate] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -125,6 +125,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

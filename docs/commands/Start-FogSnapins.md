@@ -13,7 +13,8 @@ Starts all associated snapins of a host
 ## SYNTAX
 
 ```
-Start-FogSnapins [[-hostid] <Object>] [[-taskTypeid] <Object>] [<CommonParameters>]
+Start-FogSnapins [[-hostid] <Object>] [[-taskTypeid] <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +57,21 @@ Aliases:
 Required: False
 Position: 2
 Default value: 12
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
