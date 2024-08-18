@@ -2,6 +2,10 @@
 
 ## 6.x
 
+### 2408.6.11
+
+	Fix get-fogversion if before version 1.6 or if error on info page
+
 ### 2408.6.9
 
 	Created Get-FogVersion and implmented check for 1.6 version
@@ -303,6 +307,8 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
 
 
 

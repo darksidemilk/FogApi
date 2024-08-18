@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2408.6.9'
+ModuleVersion = '2408.6.11'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -183,12 +183,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2408.6.9
+# 2408.6.11
 
-	Created Get-FogVersion and implmented check for 1.6 version
-	so correct dynamic parameters are used for 1.5.x vs 1.6
-	Also added a separate build test script for running a build test
-	on each push.'
+	Fix get-fogversion if before version 1.6 or if error on info page'
 
         # Prerelease string of this module
         # Prerelease = ''

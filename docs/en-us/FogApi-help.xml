@@ -2587,7 +2587,7 @@ $mods</dev:code>
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>General notes</maml:para>
+        <maml:para></maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

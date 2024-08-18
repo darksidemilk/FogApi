@@ -11,8 +11,6 @@ function Get-FogVersion {
 
     Will return the full version string
     
-    .NOTES
-    General notes
     #>
     [CmdletBinding()]
     param (
@@ -21,10 +19,15 @@ function Get-FogVersion {
     
     
     process {
-        $versionStr = (Invoke-FogApi -uriPath "system/info" -Method Get).version;
+        $info = (Invoke-FogApi -uriPath "system/info" -Method Get -ea 0)
+        if ($null -ne $info) {
+            $versionStr = $info.version;
+        } 
         if ([string]::IsNullOrEmpty($versionStr)) {
-            return "1.5.10";
+            "Error finding version on system/info pass, getting version from getversion.php" | out-host;
+            $versionStr = (Invoke-FogApi -uriPath "service/getversion.php" -Method Get )
         }
+        return $versionStr
     }
     
 }
