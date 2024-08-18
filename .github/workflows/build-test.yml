@@ -22,7 +22,7 @@ jobs:
             .\invoke-modulebuild.ps1
             $builtPath = ".\_module_build\$moduleName"
             if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
-                if (import-module "$builtPath\$moduleName") {
+                if (import-module "$builtPath\$moduleName\") {
                     "Built module imported successfully!"
                     return $true;
                 } else {
