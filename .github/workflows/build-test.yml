@@ -22,7 +22,8 @@ jobs:
             .\invoke-modulebuild.ps1
             $builtPath = "$PSScriptRoot\_module_build\$moduleName"
             if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
-                if (import-module "$builtPath\$moduleName\") {
+                ls -recurse $builtPath\$moduleName;
+                if (import-module "$builtPath\$moduleName\$moduleName.psd1") {
                     "Built module imported successfully!"
                     return $true;
                 } else {
