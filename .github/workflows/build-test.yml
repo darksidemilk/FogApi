@@ -1,4 +1,3 @@
-# Need to modularize the build steps so that documentation related steps can be run separately from the build steps as well as the incremeneting of the version number.
 name: Test Build
 
 on:
@@ -18,10 +17,12 @@ jobs:
 
         - name: Run build script
           run: |
-            Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
-            .\build.ps1
-            if (Test-Modulemanifest -path "$Home\ModuleBuild\$moduleName\$moduleName.psd1") {
-                if (import-module "$Home\ModuleBuild\$moduleName") {
+            # Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
+            $moduleName="FogApi";
+            .\invoke-modulebuild.ps1
+            $builtPath = ".\_module_build\$moduleName"
+            if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
+                if (import-module "$builtPath\$moduleName") {
                     "Built module imported successfully!"
                     return $true;
                 } else {
