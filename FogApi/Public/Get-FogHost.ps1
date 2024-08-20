@@ -48,6 +48,21 @@ function Get-FogHost {
         [parameter(ParameterSetName='searchTerm')]
         [string]$uuid,
         [parameter(ParameterSetName='searchTerm')]
+        [ArgumentCompleter(
+            {
+                param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+                if(test-fogverabove1dot6) {
+                  $r = (Get-FogHosts).Name
+  
+                  if ($WordToComplete) {
+                      $r.Where{ $_ -match "^$WordToComplete" }
+                  }
+                  else {
+                      $r
+                  }
+                }
+            }
+        )]  
         [string]$hostName,
         [parameter(ParameterSetName='searchTerm')]
         [string]$macAddr,
