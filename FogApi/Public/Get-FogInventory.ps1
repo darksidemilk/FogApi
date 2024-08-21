@@ -41,7 +41,11 @@ function Get-FogInventory {
             if ($IsLinux) {
                 "Not yet implemented for getting the host inventory from linux inline, returning the hosts currently set inventory object" | out-host;
             }
-            return $hostObj.inventory;
+            if ($null -eq $hostObj.inventory) {
+                return (Get-FogHost -hostID $hostObj.ID).inventory
+            } else {
+                return $hostObj.inventory;
+            }
         }
         else {
             $comp = Get-CimInstance -ClassName Win32_ComputerSystem;
