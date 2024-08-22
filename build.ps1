@@ -135,12 +135,18 @@ function Get-AliasesToExport {
 	[CmdletBinding()]
 	param (
 		[string]$psm1Path,
-		[bool]$loop=$false
+		[bool]$loop=$false,
+		[string]$modulePath
 	)
 
 	process {
 		if ($loop -eq $false) {
-			$modulePath = (Get-Item $psm1Path).PSParentPath;
+			if ([string]::IsNullOrEmpty($modulePath)) {
+				$modulePath = "$((Get-Item $psm1Path).PSParentPath)";
+				if (!(Test-Path $modulePath)) {
+					$modulePath = "$((Get-Item $psm1Path).PSParentPath)\$((Get-item $psm1Path).BaseName)";
+				}
+			}
 			$PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;;
 			if ($null -ne $PublicFunctions) {
 				$aliasList = New-Object System.Collections.Generic.List[string];
@@ -199,7 +205,7 @@ function Get-AliasesToExport {
 			}
 			$aliases += $null;
 		}
-		return $aliases;
+		return $aliases | Sort-Object -Unique;
 	}
 }
 function Install-Requirements {
@@ -346,7 +352,7 @@ $moduleFile = "$buildPth\$moduleName.psm1";
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
-$aliases = Get-AliasesToExport -psm1Path $moduleFile;
+$aliases = Get-AliasesToExport -psm1Path $moduleFile -modulePath $modulePath;
 # mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
 # $buildPth = "$env:userprofile\ModuleBuild\$moduleName";
 
