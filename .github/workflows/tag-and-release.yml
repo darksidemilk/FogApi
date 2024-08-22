@@ -30,7 +30,7 @@ jobs:
           $runid=((& gh run list --workflow build-test.yml --json databaseId --limit 1) | convertfrom-json).databaseId
           echo "RUNID=$runid" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
     
-      - name: confirm build didn't fail
+      - name: confirm build succeeded
         run: |
           $runstatus=""
           while (($runstatus -ne "success") -AND ($runstatus -ne "failure")) {
@@ -46,8 +46,28 @@ jobs:
   publish-built-module:
       needs: confirm-build-test
       runs-on: windows-latest
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GalKey: ${{ secrets.PSGALLERY }}
       steps:
-        - name: test
-          run: echo 'build success!'
+        - uses: actions/checkout@v4
+        - name: Build and publish module
+          run: |
+            "Building and publishing module and committing changes" | out-host;
+            Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
+            $releaseNote = (git log -1 --pretty=%B)
+            "Setting release note to last commit message:`n$releaseNote" | out-host;
+            "Building docs, module, and incrementing version..." | out-host;
+            .\build.ps1 -releasenote $releaseNote
+            $version = (Test-ModuleManifest .\FogApi\FogApi.psd1).version
+            "Pushing Changes from publish" | out-host;
+            git add -a
+            git commit -m "$releaseNote - publish build for $version"
+            git push
+            "Publishing module to gallery..." | out-host;
+            Publish-PSResource -apikey $env:GalKey -Path .\_module_build\FogApi -Repository PSGallery;
+            "Creating Github Release..." | out-host;
+            gh release create $version --latest --generate-notes --target master
+
         
     
