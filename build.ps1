@@ -407,6 +407,8 @@ $docsPth = "$PSScriptRoot\docs"
 # $ses | Remove-PsSession;
 
 $moduleFile = "$buildPth\$moduleName.psm1";
+New-Item $moduleFile -Force | Out-Null;
+
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
@@ -420,7 +422,6 @@ if (Test-Path $buildPth) {
 }
 mkdir $buildPth | Out-Null;
 
-New-Item $moduleFile -Force | Out-Null;
 Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
 if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
