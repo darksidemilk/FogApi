@@ -58,11 +58,11 @@ jobs:
             $releaseNote = (git log -1 --pretty=%B)
             "Setting release note to last commit message:`n$releaseNote" | out-host;
             "Building docs, module, and incrementing version..." | out-host;
-            .\build.ps1 -releasenote $releaseNote
+            .\build.ps1 -releasenote "$($releaseNote | out-string)"
             $version = (Test-ModuleManifest .\FogApi\FogApi.psd1).version
             "Pushing Changes from publish" | out-host;
-            git add -a
-            git commit -m "$releaseNote - publish build for $version"
+            git add -A
+            git commit -m "$($releaseNote | out-string) - publish build for $version"
             git push
             "Publishing module to gallery..." | out-host;
             Publish-PSResource -apikey $env:GalKey -Path .\_module_build\FogApi -Repository PSGallery;
