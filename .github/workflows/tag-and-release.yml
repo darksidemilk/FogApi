@@ -1,0 +1,45 @@
+name: Tag, Release, and Publish to Gallery
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  run-build-test:
+    runs-on: windows-latest
+    steps:
+      - name: Call main workflow that calls all the distros
+        run: gh workflow run build-test.yml
+
+  confirm-build-test:
+    runs-on: windows-latest
+    steps:
+      - name: Wait a minute for the runs to start
+        run: start-sleep 60
+
+      - name: Get run IDs
+        run: |
+          $runid=((& gh run list --workflow built-test.yml --json databaseId --limit 1) | convertfrom-json)[0].databaseId
+          echo "RUNID=$runid" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+    
+      - name: confirm build didn't fail
+        run: |
+          $runstatus=""
+          while (($runstatus -ne "success") -AND ($run_status -ne "failure")) {
+              start-sleep 15
+              $runstatus=((& gh run view $env:RUN_ID --exit-status --json conclusion) | Convertfrom-json).conclusion
+          }    
+          if ($runstatus -eq "failure") {
+              exit 1
+          } else { 
+              exit 0
+          }
+
+  publish-built-module:
+      needs: confirm-build-test
+      runs-on: windows-latest
+      steps:
+        - name: test
+          run: echo 'build success!'
+        
+    
