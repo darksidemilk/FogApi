@@ -10,9 +10,13 @@ jobs:
     steps:
       - name: Call main workflow that calls all the distros
         run: gh workflow run build-test.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   confirm-build-test:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Wait a minute for the runs to start
         run: start-sleep 60
