@@ -10,31 +10,32 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-      - name: Call main workflow that calls all the distros
+      - name: Run the build test workflow
         run: gh workflow run build-test.yml
         env:
           GH_TOKEN: ${{ github.token }}
 
   confirm-build-test:
+    needs: run-build-test
     runs-on: windows-latest
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
-      - name: Wait a minute for the runs to start
+      - name: Wait for the runs to start
         run: start-sleep 60
 
       - name: Get run IDs
         run: |
-          $runid=((& gh run list --workflow built-test.yml --json databaseId --limit 1) | convertfrom-json)[0].databaseId
+          $runid=((& gh run list --workflow build-test.yml --json databaseId --limit 1) | convertfrom-json).databaseId
           echo "RUNID=$runid" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
     
       - name: confirm build didn't fail
         run: |
           $runstatus=""
-          while (($runstatus -ne "success") -AND ($run_status -ne "failure")) {
+          while (($runstatus -ne "success") -AND ($runstatus -ne "failure")) {
               start-sleep 15
-              $runstatus=((& gh run view $env:RUN_ID --exit-status --json conclusion) | Convertfrom-json).conclusion
+              $runstatus=((& gh run view $env:RUNID --exit-status --json conclusion) | Convertfrom-json).conclusion
           }    
           if ($runstatus -eq "failure") {
               exit 1

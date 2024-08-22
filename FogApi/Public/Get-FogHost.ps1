@@ -13,7 +13,7 @@ function Get-FogHost {
     the uuid of the host
     
     .PARAMETER hostName
-    the hostname of the host
+    the hostname of the host, if your FOG version is 1.6 or above you can use tab complete for hostnames
     
     .PARAMETER macAddr
     a mac address linked to the host
@@ -25,6 +25,7 @@ function Get-FogHost {
     Get-FogHost -hostName MeowMachine
     
     This would return the fog details of a host named MeowMachine in your fog instance
+    If using pwsh 7+ and your FOG service is 1.6 or above, you can tab complete to search for existing hosts by name
 
     .EXAMPLE
     Get-FogHost
@@ -48,21 +49,19 @@ function Get-FogHost {
         [parameter(ParameterSetName='searchTerm')]
         [string]$uuid,
         [parameter(ParameterSetName='searchTerm')]
-        [ArgumentCompleter(
-            {
-                param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
-                if(test-fogverabove1dot6) {
-                  $r = (Get-FogHosts).Name
-  
-                  if ($WordToComplete) {
-                      $r.Where{ $_ -match "^$WordToComplete" }
-                  }
-                  else {
-                      $r
-                  }
+        [ArgumentCompleter({
+            param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+            if(Test-FogVerAbove1dot6) {
+                $r = (Get-FogHosts).Name
+
+                if ($WordToComplete) {
+                    $r.Where{ $_ -match "^$WordToComplete" }
+                }
+                else {
+                    $r
                 }
             }
-        )]  
+        })]  
         [string]$hostName,
         [parameter(ParameterSetName='searchTerm')]
         [string]$macAddr,
