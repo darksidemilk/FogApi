@@ -413,6 +413,7 @@ $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
 $aliases = Get-AliasesToExport -psm1Path $moduleFile -modulePath $modulePath;
+
 # mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
 # $buildPth = "$env:userprofile\ModuleBuild\$moduleName";
 
@@ -513,9 +514,11 @@ if($null -eq $aliases) {
 	$manifestSplat.Remove('AliasesToExport')
 }
 
-
 # Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
 Update-ModuleManifest @manifestSplat;
+
+Set-EmptyExportArray -psd1Path $Manifest -ExportType Cmdlets;
+Set-EmptyExportArray -psd1Path $Manifest -ExportType Variables;
 
 
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
