@@ -7,7 +7,9 @@ jobs:
 
   run-build-test:
     runs-on: windows-latest
+    
     steps:
+      - uses: actions/checkout@v4
       - name: Call main workflow that calls all the distros
         run: gh workflow run build-test.yml
         env:
@@ -18,6 +20,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
+      - uses: actions/checkout@v4
       - name: Wait a minute for the runs to start
         run: start-sleep 60
 
