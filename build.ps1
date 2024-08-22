@@ -43,8 +43,7 @@
 
 .DESCRIPTION 
  Script to manually build the module, this will install the third party platyps module 
- This is a light version of the build script I use, but it should be enough for basic testing
- of new features. The original contains propietary code that can't be shared.
+ This simply creates docs from 
 
  .PARAMETER releaseNote
  A string explaining what was done in the build to be added to the release notes
@@ -59,17 +58,155 @@
 
 [CmdletBinding()]
 Param(
-	$releaseNote = "general updates and bug fixes",
+	[string]$releaseNote,
+	[string]$buildPth,
 	[switch]$major,
 	[switch]$buildMkdocs
 )
 
+
+
+function Set-EmptyExportArray {
+	<#
+		.SYNOPSIS
+		Sets the string in a psd1 file of an export array to be an empty array for best performance
+	
+		.DESCRIPTION
+		When there are none of something to export from a module it should be set to empty
+	
+		.PARAMETER psd1Path
+		The path to the module manifest file
+	
+		.PARAMETER ExportType
+		The type of export being edited, Functions, Aliases, Cmdlets, or Variables
+	
+		.EXAMPLE
+		Set-EmptyExportArray -psd1path $path -ExportType Aliases
+	
+		.LINK
+		https://kb.arrowheaddental.com/display/PS/Set-EmptyExportArray
+	#>
+	[CmdletBinding()]
+	param (
+		$psd1Path,
+		[Parameter()]
+		[ValidateSet('Functions','Cmdlets','Aliases','Variables','NestedModules')]
+		[String]$ExportType
+	)
+	
+	process {
+		if ($ExportType -ne "NestedModules") {
+			$Pattern = $ExportType+'ToExport';
+		} else {
+			$Pattern = $ExportType;
+		}
+		$content = Get-Content $psd1path;
+		$replaceStr = $content | Select-String -SimpleMatch -Pattern $Pattern | Select-object -ExpandProperty Line;
+		Write-Verbose "Changing '$replaceStr' to '$Pattern = @()'"
+		Set-Content -Path ($psd1path.Replace('psm1','psd1')) -Value ($content.Replace($replaceStr,"$Pattern = @()"))
+		$replaceStr = $null;
+		return "$Pattern = @()";
+	}
+
+}
+	
+function Get-AliasesToExport {
+	<#
+		.SYNOPSIS
+		Gets the function aliases from a psm1 module file
+	
+		.DESCRIPTION
+		Parses the content of a psm1 file finding the strings matching the pattern for declaring an alias
+			Goes through each of those and gets the array of aliases in them and adds them to a list
+			Converts that list to an array and returns the value.
+			If no aliases exist edits the psd1 file to have aliasestoexport = @()
+	
+		.PARAMETER psm1Path
+		The path to the module script file
+	
+		.PARAMETER loop
+		keep this set to false. Internal bool param used for creating loops at key points of this function
+		so that it can process the list of functions differently
+	
+	.LINK
+		https://kb.arrowheaddental.com/display/PS/Get-AliasesToExport
+	
+	#>
+	[CmdletBinding()]
+	param (
+		[string]$psm1Path,
+		[bool]$loop=$false
+	)
+
+	process {
+		if ($loop -eq $false) {
+			$modulePath = (Get-Item $psm1Path).PSParentPath;
+			$PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;;
+			if ($null -ne $PublicFunctions) {
+				$aliasList = New-Object System.Collections.Generic.List[string];
+				$PublicFunctions | ForEach-Object {
+					# $_ | out-host;
+					(Get-AliasesToExport -psm1Path $_.FullName -loop $true) | ForEach-Object {
+						$aliasList.add($_);
+					}
+					# $_ | Out-Host;
+					# $aliases | Out-host;
+				}
+				$loop = $true;
+				$aliases = $aliasList.ToArray();
+			}
+			Write-Debug "aliases is $($aliases)";
+			Write-Debug "list is $($aliasList)";
+		}
+		$content = Get-content $psm1path;
+		$cmdletBndLines = ($content | Select-String -Pattern "\[CmdletBinding." | Where-Object Line -NotMatch 'Select-String').LineNumber;
+		
+		# [string[]]$aliasStr = (($content)) | Select-String -SimpleMatch -Pattern "[Alias(" | Where-Object Line -NotMatch 'Select-String').Line;
+		if ($null -ne $cmdletBndLines) {
+			$aliasList = New-Object System.Collections.Generic.List[string];
+			$cmdletBndLines | ForEach-Object {
+				# $aliasIndex = ($content.indexof($_)) + 1
+				$aliasStr = $content[$_];
+				# $aliasStr;
+				if (($aliasStr -match "\[Alias\(") -and ($aliasStr -notmatch "#\[Alias\(")) { #don't grab aliases that have been commented out
+					$funcAliases = $aliasStr.substring($aliasStr.indexOf("(")).TrimEnd(']').TrimEnd(')').TrimStart('(').Replace("'",'') -split ','
+					# $aliasIndex;
+					# $funcAliases;
+					$funcAliases.ForEach({
+						if ((Test-String $_) -and ($_ -notlike "*alias-name*")  ) {
+							if ($_ -match "<#") {
+								#remove any commented out aliases from split string
+								$funcAlias = $_;
+								$funcAlias = $funcAlias.remove($funcalias.indexof("<#"),$funcalias.indexof("#>")-$funcalias.indexof("<#")+2)
+								if (Test-String $funcAlias) {
+									$aliasList.add($funcAlias)
+								}
+							} else {
+								$aliasList.add($_)
+							}
+						}
+					})
+				}
+			}
+			$aliases += $aliasList;
+			Write-Debug "Alias List: $($aliasList)";
+			Write-Debug "Aliases: $($aliases)"
+		} else {
+			if ($psm1Path -notmatch '.ps1' -AND $loop -eq $false -AND ($null -eq $PublicFunctions)){
+				"here" | Out-Host
+				$psm1Path | Out-Host;
+				Set-EmptyExportArray -psd1Path (($psm1path.Replace('psm1','psd1'))) -ExportType Aliases
+			}
+			$aliases += $null;
+		}
+		return $aliases;
+	}
+}
 function Install-Requirements {
-    [CmdletBinding()]
+	[CmdletBinding()]
     param (
-        $requirements = ".\docs\requirements.txt"
-    )
-    
+		$requirements = ".\docs\requirements.txt"
+	)
     
     process {
         "Installing Pre-requisites if needed..." | out-host;
@@ -105,6 +242,12 @@ function Install-Requirements {
 
 $moduleName = 'FogApi'
 $modulePath = "$PSScriptRoot\$moduleName";
+if([string]::IsNullOrEmpty($releaseNote)) {
+	$releaseNote = (git log -1 --pretty=%B)
+}
+if([string]::IsNullOrEmpty($buildPth)) {
+	$buildPth = ".\_module_build\$moduleName";
+}
 
 mkdir $modulePath -EA 0;
 # mkdir "$modulePath\tools" -EA 0;
@@ -199,12 +342,13 @@ $docsPth = "$PSScriptRoot\docs"
 
 # $ses | Remove-PsSession;
 
+$moduleFile = "$buildPth\$moduleName.psm1";
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
+$aliases = Get-AliasesToExport -psm1Path $moduleFile;
 # mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
-$buildPth = "$env:userprofile\ModuleBuild\$moduleName";
-$moduleFile = "$buildPth\$moduleName.psm1";
+# $buildPth = "$env:userprofile\ModuleBuild\$moduleName";
 
 # Create the build output folder
 if (Test-Path $buildPth) {
@@ -283,7 +427,30 @@ if ($major) {
 $newVer = New-Object version -ArgumentList $verArgs;
 $releaseNotes = "`n# $newVer`n`n`t$releaseNote"
 
-Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+$copyRight = (get-date -Format yyyy).tostring()
+if ($cur.Copyright -notlike "*-$copyRight") {
+	$NewCopyRight = $cur.Copyright -replace("-(.*)","-$copyright")
+} else {
+	$NewCopyRight = $cur.Copyright;
+}
+
+$manifestSplat = @{
+	Path = $manifest;
+	ReleaseNotes = $releaseNotes;
+	ModuleVersion = $newver;
+	RootModule = "$moduleName.psm1";
+	FunctionsToExport = ($PublicFunctions.BaseName)
+	AliasesToExport = $aliases;
+	Copyright = $NewCopyRight
+}
+
+if($null -eq $aliases) {
+	$manifestSplat.Remove('AliasesToExport')
+}
+
+
+# Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+Update-ModuleManifest @manifestSplat;
 
 
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
