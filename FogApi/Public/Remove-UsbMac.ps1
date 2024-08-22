@@ -22,24 +22,47 @@ function Remove-UsbMac {
 #>
     [CmdletBinding()]
     param (
-        [string[]]$usbMacs,
-        [string]$hostname = "$(hostname)",
-        $macId
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
+        $hostObj,
+        [parameter(ParameterSetName='byName')]
+        [ArgumentCompleter({
+            param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+            if(Test-FogVerAbove1dot6) {
+                $r = (Get-FogHosts).Name
+
+                if ($WordToComplete) {
+                    $r.Where{ $_ -match "^$WordToComplete" }
+                }
+                else {
+                    $r
+                }
+            }
+        })]  
+        [string]$hostName= "$(hostname)",
+        [parameter(ParameterSetName='byName')]
+        [parameter(ParameterSetName='byHost')]
+        [string[]]$usbMacs
+        # $macId
     )
-        
-    begin {
+    
+    process {
         if ($null -eq $usbMacs) {
             Write-Error "no macs to remove given";
             exit;   
         }
+        if ($null -ne $_) {
+            $hostObj = $_;
+        } else {
+            $hostObj = Get-FogHost -hostName $hostname;
+        }
         Write-Verbose "remove usb ethernet adapter from host $hostname on fog server $fogServer ....";
         # get the host id by getting all hosts and searching the hosts array of the returned json for the item that has a name matching the current hostname and get the host id of that item
-        $hostObj = Get-FogHost -hostName $hostname;
         $hostId = $hostObj.id;
         # $hostId = ( (Invoke-FogApi -fogServer $fogServer -fogApiToken $fogApiToken -fogUserToken $fogUserToken).hosts | Where-Object name -match "$hostname" ).id;
         # With the host id get mac associations that match that host id.
-        $macs = (Get-FogObject -type object -coreObject macaddressassociation).data | Where-Object hostID -match $hostID
-
+        
+        $macs = Get-FogMacAddresses | Where-Object hostID -match $hostID
+    
         # Copy the return fixedsize json array collection to a new powershell list variable for add and remove functions
         $macList = New-Object System.Collections.Generic.List[System.Object];
         try {
@@ -49,9 +72,6 @@ function Remove-UsbMac {
                 $macList.add($_.mac);
             }
         }
-    }
-
-    process {
         # Check if any usbmacs are contained in the host's macs
         $usbMacs | ForEach-Object { #loop through list of usbMacs
             if ( $macList.contains($_) ) { # check if the usbMac is contained in the mac list of the host
@@ -102,13 +122,9 @@ function Remove-UsbMac {
                 Write-Verbose "Usb macs $usbMacs have been removed from $hostname on the $fogServer";
             }
         }
-    }
-
-    end {
         if ($null -eq $result) {
             $result = "no usb adapters found"; #replace string if found
         }
         return $result;
     }
-
 }

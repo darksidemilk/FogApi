@@ -12,9 +12,16 @@ A cmdlet that uses invoke-fogapi to remove a given list of usb mac address from 
 
 ## SYNTAX
 
+### byHost
 ```
-Remove-UsbMac [[-usbMacs] <String[]>] [[-hostname] <String>] [[-macId] <Object>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Remove-UsbMac [-hostObj <Object>] [-usbMacs <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### byName
+```
+Remove-UsbMac [-hostName <String>] [-usbMacs <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +36,36 @@ Remove-UsbMacs -fogServer "foggy" -usbMacs @("01:23:45:67:89:10", "00:00:00:00:0
 
 ## PARAMETERS
 
+### -hostObj
+{{ Fill hostObj Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byHost
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -hostName
+the hostname to remove the usb macs from, defaults to current hostname
+
+```yaml
+Type: String
+Parameter Sets: byName
+Aliases:
+
+Required: False
+Position: Named
+Default value: "$(hostname)"
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -usbMacs
 a string of mac addresses like this @("01:23:45:67:89:10", "00:00:00:00:00:00")
 
@@ -38,37 +75,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -hostname
-the hostname to remove the usb macs from, defaults to current hostname
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: "$(hostname)"
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -macId
-{{ Fill macId Description }}
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

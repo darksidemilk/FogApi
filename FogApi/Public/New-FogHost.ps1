@@ -55,9 +55,9 @@ function New-FogHost {
         [object]$customHost
     )
     
-    begin {
+    process {
         if ($PSCmdlet.ParameterSetName -eq 'default') {
-
+    
             if ($name -match " ") {
                 Write-Warning "name $name includes whitespace, replacing whitespace with - if not at end of string";
                 $name = $name.TrimEnd();
@@ -75,9 +75,6 @@ function New-FogHost {
         }
         $hostJson = $hostObject | ConvertTo-Json;
         
-    }
-    
-    process {
         if ($PSCmdlet.ParameterSetName -eq 'default') {
             try {
                 Write-Verbose "Checking for existing name"
@@ -107,9 +104,6 @@ function New-FogHost {
         "Creating new Host $hostObject" | Out-Host;
         
         $newHost = New-FogObject -type object -coreObject host -jsonData $hostJson
-    }
-    
-    end {
         if ($null -ne $newHost) {
             return $newHost;
         }

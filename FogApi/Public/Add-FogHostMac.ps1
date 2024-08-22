@@ -36,17 +36,34 @@ function Add-FogHostMac {
     
 #>
     
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='byHost')]
     param ( 
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
+        $fogHost,
+        [parameter(ParameterSetName='byId')]
         $hostID,
+        [parameter(ParameterSetName='byHost')]
+        [parameter(ParameterSetName='byId')]
         $macAddress,
+        [parameter(ParameterSetName='byHost')]
+        [parameter(ParameterSetName='byId')]
         [switch]$primary,
+        [parameter(ParameterSetName='byHost')]
+        [parameter(ParameterSetName='byId')]
         [switch]$ignoreMacOnClient,
+        [parameter(ParameterSetName='byHost')]
+        [parameter(ParameterSetName='byId')]
         [switch]$ignoreMacForImaging,
+        [parameter(ParameterSetName='byHost')]
+        [parameter(ParameterSetName='byId')]
         [switch]$forceUpdate
     )
 
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostID = $fogHost.id;
+        }
         $hostID = Resolve-HostID $hostID
         if ($null -ne $hostID) {
             if ($primary) {

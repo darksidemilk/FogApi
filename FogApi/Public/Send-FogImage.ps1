@@ -11,6 +11,9 @@ function Send-FogImage {
     
     .PARAMETER StartAtTime
     The time to start the deploy task, use Get-date to create the required datetime object
+
+    .PARAMETER fogHost
+    fogHost object (get-foghost) that can be brought in from pipeline
     
     .EXAMPLE
     Deploy-FogImage -hostID "1234"
@@ -38,13 +41,27 @@ function Send-FogImage {
         [Parameter(ParameterSetName='now')]
         [Parameter(ParameterSetName='schedule')]
         $hostId,
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='now-byhost')]
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='schedule-byhost')]
+        $fogHost,
         [Parameter(ParameterSetName='schedule')]
+        [Parameter(ParameterSetName='schedule-byhost')]
         [datetime]$StartAtTime
     )
     
     
     process {
-        $fogHost = Get-FogHost -hostID $hostId;
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostId = $fogHost.id
+        } 
+        if ($null -eq $hostId) {
+            $hostId = $fogHost.id;
+        }
+        if ($null -eq $fogHost) {
+            $fogHost = Get-FogHost -hostID $hostId;
+        }
+        # $fogHost = Get-FogHost -hostID $hostId;
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
         $fogImage = ($fogImages | Where-Object name -eq $currentImage)

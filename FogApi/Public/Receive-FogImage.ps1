@@ -40,13 +40,26 @@ function Receive-FogImage {
         [Parameter(ParameterSetName='now')]
         [Parameter(ParameterSetName='schedule')]
         $hostId,
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='now')]
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='schedule')]
+        $fogHost,
         [Parameter(ParameterSetName='schedule')]
         [datetime]$StartAtTime
     )
     
     
     process {
-        $fogHost = Get-FogHost -hostID $hostId;
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostId = $fogHost.id
+        } 
+        if ($null -eq $hostId) {
+            $hostId = $fogHost.id;
+        }
+        if ($null -eq $fogHost) {
+            $fogHost = Get-FogHost -hostID $hostId;
+        }
+        
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
         $fogImage = ($fogImages | Where-Object name -match $currentImage)

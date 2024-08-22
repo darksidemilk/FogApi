@@ -11,7 +11,7 @@ Performs validation on the input before
 The id of a host to set snapins on, defaults to finding if of current computer if none is given
 
 .PARAMETER pkgList
-String array list of snapins to add to the host
+String array list of snapins to add to the host, supports tab completion.
 
 .PARAMETER exactNames
 switch param to indicate matching to exact snapin names instead of matching the name. Useful if you have things like office and office-64 that both match to 'office'
@@ -30,13 +30,41 @@ they could then be deployed with start-fogsnapins
     [CmdletBinding()]
     [Alias('Add-FogSnapins')]
     param (
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byObject')]
+        $hostObj,
+        [parameter(ParameterSetName='byId')]
         $hostid = ((Get-FogHost).id),
-        $pkgList,
+        [parameter(ParameterSetName='byId')]
+        [parameter(ParameterSetName='byObject')]
+        [ArgumentCompleter({
+            param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+            # if(Test-FogVerAbove1dot6) {
+            $r = (Get-FogSnapins)
+
+            if ($WordToComplete) {
+                $r.Where.Name{ $_ -match "^$WordToComplete" }
+            }
+            else {
+                $r.Name
+            }
+            # }
+        })]
+        [string]$pkgList,
+        [parameter(ParameterSetName='byId')]
+        [parameter(ParameterSetName='byObject')]
         [switch]$exactNames,
+        [parameter(ParameterSetName='byId')]
+        [parameter(ParameterSetName='byObject')]
         [switch]$repairBeforeAdd
     )
 
     process {
+        if ($null -ne $_) {
+            $hostObj = $_;
+        }
+        if ($null -ne $hostObj) {
+            $hostid = $hostObj.id;
+        }
         Write-Verbose "Association snapins from package list with host";
         if ($repairBeforeAdd) {
             try {

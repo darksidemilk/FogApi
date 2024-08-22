@@ -12,8 +12,15 @@ Sets a list of snapins to a host, appends to existing ones
 
 ## SYNTAX
 
+### byObject
 ```
-Set-FogSnapins [[-hostid] <Object>] [[-pkgList] <Object>] [-exactNames] [-repairBeforeAdd]
+Set-FogSnapins [-hostObj <Object>] [-pkgList <String>] [-exactNames] [-repairBeforeAdd]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### byId
+```
+Set-FogSnapins [-hostid <Object>] [-pkgList <String>] [-exactNames] [-repairBeforeAdd]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -33,31 +40,46 @@ they could then be deployed with start-fogsnapins
 
 ## PARAMETERS
 
+### -hostObj
+{{ Fill hostObj Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byObject
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -hostid
 The id of a host to set snapins on, defaults to finding if of current computer if none is given
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byId
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: ((Get-FogHost).id)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -pkgList
-String array list of snapins to add to the host
+String array list of snapins to add to the host, supports tab completion.
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

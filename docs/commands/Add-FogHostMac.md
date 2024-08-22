@@ -12,9 +12,16 @@ Adds a given macaddress to a host of a given ID
 
 ## SYNTAX
 
+### byHost (Default)
 ```
-Add-FogHostMac [[-hostID] <Object>] [[-macAddress] <Object>] [-primary] [-ignoreMacOnClient]
+Add-FogHostMac [-fogHost <Object>] [-macAddress <Object>] [-primary] [-ignoreMacOnClient]
  [-ignoreMacForImaging] [-forceUpdate] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### byId
+```
+Add-FogHostMac [-hostID <Object>] [-macAddress <Object>] [-primary] [-ignoreMacOnClient] [-ignoreMacForImaging]
+ [-forceUpdate] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,16 +45,31 @@ Uses the hostname to find the hostid in fog then adds "12:34:56:78:90" as a seco
 
 ## PARAMETERS
 
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byHost
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -hostID
 Can either be the id number of the host object or the name of the host in a string
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byId
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -63,7 +85,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -28,10 +28,14 @@ function Approve-FogPendingMac {
     
     [CmdletBinding()]
     param ( 
+        [parameter(ValueFromPipeline=$true)]
         [object]$macObject
     )
 
     process {
+        if ($null -ne $_) {
+            $macObject = $_;
+        }
         $macObject.pending = '0';
         $data = ($macObject | ConvertTo-Json);
         $result = Update-FogObject -type object -coreObject macaddressassociation -IDofObject $macObject.id -jsonData $data 

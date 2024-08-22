@@ -42,8 +42,8 @@ function Get-FogObject {
     )
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
-
-    begin {
+    
+    process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         # $paramDict;
         Write-Verbose "Building uri and api call for $($paramDict.keys) $($paramDict.values.value)";
@@ -76,18 +76,13 @@ function Get-FogObject {
         if ($null -eq $apiInvoke.jsonData -OR $apiInvoke.jsonData -eq "") {
             $apiInvoke.Remove("jsonData");
         }
-    }
-
-    process {
         $result = Invoke-FogApi @apiInvoke;
-    }
-    
-    end {
         #if the api call wasn't for a specific object, convert the output to use the data property added in fog 1.6
         if (!$IDofObject) {
             $result = Add-FogResultData $result;
         }
         return $result;
     }
+    
 
 }

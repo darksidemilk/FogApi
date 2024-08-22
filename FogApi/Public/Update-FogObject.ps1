@@ -47,7 +47,7 @@ i.e. if your fog host name is 'computer1' and you pass in a json string link {"n
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict; }
 
-    begin {
+    process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call";
         if([string]::IsNullOrEmpty($uri)) {

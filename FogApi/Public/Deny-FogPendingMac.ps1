@@ -26,11 +26,14 @@ function Deny-FogPendingMac {
     [CmdletBinding()]
     [Alias('Remove-FogMac')]
     param ( 
-        [Parameter(Mandatory=$true)]        
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
         $macObject
     )
 
     process {
+        if ($null -ne $_) {
+            $macObject = $_;
+        }
         return Remove-FogObject -type object -coreObject macaddressassociation -IDofObject $macObject.id;
     }
     

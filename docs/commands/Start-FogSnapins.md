@@ -12,8 +12,15 @@ Starts all associated snapins of a host
 
 ## SYNTAX
 
+### byObj
 ```
-Start-FogSnapins [[-hostid] <Object>] [[-taskTypeid] <Object>] [-ProgressAction <ActionPreference>]
+Start-FogSnapins [-fogHost <Object>] [-taskTypeid <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### byid
+```
+Start-FogSnapins [-hostid <Object>] [-taskTypeid <Object>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -31,16 +38,31 @@ will get the current hosts id and start all snapins on it
 
 ## PARAMETERS
 
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byObj
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -hostid
 the hostid to start the task on
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byid
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: ((Get-FogHost).id)
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -55,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: 12
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -19,7 +19,7 @@ Send-FogWolTask [-hostObj <Object>] [-ProgressAction <ActionPreference>] [<Commo
 
 ### byname
 ```
-Send-FogWolTask [-computername <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Send-FogWolTask [-computername <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 The name of the computer to get the fog host of
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: byname
 Aliases:
 

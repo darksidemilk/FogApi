@@ -53,7 +53,7 @@ function Get-LastImageTime {
         $serialNumber, #scan the barcode input into powershell
         [parameter(ParameterSetName='byHostId')]
         $hostId,
-        [parameter(ParameterSetName='byHost')]
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
         $fogHost,
         [parameter(ParameterSetName='byHost')]
         [switch]$currentHost
@@ -73,7 +73,11 @@ function Get-LastImageTime {
                 $fogHost = Get-FogHost -hostID $hostId;
             }
             byHost {
-                if (!$fogHost) {
+                if ($null -ne $_) {
+                    $fogHost = $_;
+                }
+                
+                if ($currentHost -or ($null -eq $fogHost)) {
                     Write-Verbose "getting host of current machine"
                     $fogHost = (Get-FogHost)
                 }

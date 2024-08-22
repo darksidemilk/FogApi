@@ -12,8 +12,14 @@ returns the group objects that a host belongs to
 
 ## SYNTAX
 
+### byId (Default)
 ```
-Get-FogHostGroup [[-hostId] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-FogHostGroup [-hostId <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### byHost
+```
+Get-FogHostGroup [-fogHost <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,16 +36,31 @@ Gets the fog group membership(s) of the fog host with the name computerName
 
 ## PARAMETERS
 
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byHost
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -hostId
 The hostid to get the group memberships of
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: byId
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False

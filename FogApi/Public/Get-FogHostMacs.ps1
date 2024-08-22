@@ -19,13 +19,17 @@ function Get-FogHostMacs {
     [CmdletBinding()]
     [Alias('Get-MacsForHost')]
     param (
-        [Parameter(ParameterSetName='byHostObject')]
+        [Parameter(ParameterSetName='byHostObject',ValueFromPipeline=$true)]
         $hostObject = (Get-FogHost),
         [Parameter(ParameterSetName='byHostID')]
         $hostID
     )
     
     process {
+        if ($null -ne $_) {
+            $hostObject = $_;
+            $hostID = $hostObject.id;
+        }
         $hostID = Resolve-HostID $hostID
         if ($null -ne $hostID) {
             $macs = Get-FogMacAddresses;   

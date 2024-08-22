@@ -24,13 +24,20 @@ function Get-FogHostPendingMacs {
     #>
     
     [Alias('Get-PendingMacsForHost')]
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='byId')]
     param (
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
+        $fogHost,
+        [parameter(ParameterSetName='byId')]
         $hostID
     )
     
     
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostId = $fogHost.id;
+        }
         $hostID = Resolve-HostID -hostID $hostid;
         if ($null -ne $hostID) {
             $hostMacs = Get-FogHostMacs -hostid $hostID;

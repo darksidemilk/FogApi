@@ -14,13 +14,25 @@ Starts a single snapin task for a given machine
 
 ### byId (Default)
 ```
-Start-FogSnapin [-hostID <Object>] [-snapinId <Object>] [-ProgressAction <ActionPreference>]
+Start-FogSnapin [-hostID <Object>] [-snapinId <String[]>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
 ### byName
 ```
-Start-FogSnapin [-hostID <Object>] [-snapinname <Object>] [-ProgressAction <ActionPreference>]
+Start-FogSnapin [-hostID <Object>] [-snapinname <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### byName-byobj
+```
+Start-FogSnapin [-fogHost <Object>] [-snapinname <String[]>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### byId-byobj
+```
+Start-FogSnapin [-fogHost <Object>] [-snapinId <String[]>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -52,7 +64,7 @@ The id of the host to deploy the task for
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byId, byName
 Aliases:
 
 Required: False
@@ -62,12 +74,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -snapinname
-The name of the snapin to deploy
+### -fogHost
+{{ Fill fogHost Description }}
 
 ```yaml
 Type: Object
-Parameter Sets: byName
+Parameter Sets: byName-byobj, byId-byobj
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -snapinname
+The name of the snapin to deploy or list of names
+
+```yaml
+Type: String[]
+Parameter Sets: byName, byName-byobj
 Aliases:
 
 Required: False
@@ -81,8 +108,8 @@ Accept wildcard characters: False
 The id of the snapin to deploy
 
 ```yaml
-Type: Object
-Parameter Sets: byId
+Type: String[]
+Parameter Sets: byId, byId-byobj
 Aliases:
 
 Required: False

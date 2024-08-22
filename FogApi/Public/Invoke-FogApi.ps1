@@ -72,30 +72,38 @@ function Invoke-FogApi {
         [string]$jsonData
     )
 
-    begin {
+    process {
         Write-Verbose "Pulling settings from settings file"
         # Set-FogServerSettings;
         $serverSettings = Get-FogServerSettings;
-
+    
         [string]$fogApiToken = $serverSettings.fogApiToken;
         [string]$fogUserToken = $serverSettings.fogUserToken;
         [string]$fogServer = $serverSettings.fogServer;
-
-        $baseUri = "http://$fogServer/fog";
-
+    
+        if ($fogServer -like "http*") {
+            $baseUri = "$fogServer/fog";
+        } else {
+            $baseUri = "http://$fogServer/fog";
+        }
+    
         # Create headers
         Write-Verbose "Building Headers...";
         $headers = @{};
         $headers.Add('fog-api-token', $fogApiToken);
         $headers.Add('fog-user-token', $fogUserToken);
-
+    
         # Set the Uri
         Write-Verbose "Building api call URI...";
         $uri = "$baseUri/$uriPath";
         $uri = $uri.Replace('//','/')
-        $uri = $uri.Replace('http:/','http://')
-
-
+        if ($fogServer -notlike "https://*") {
+            $uri = $uri.Replace('http:/','http://')
+        } else {
+            $uri = $uri.Replace('https:/','https://')
+        }
+    
+    
         $apiCall = @{
             Uri = $uri;
             Method = $Method;
@@ -112,19 +120,12 @@ function Invoke-FogApi {
         #         $apiCall.Body = $apiCall.Body | ConvertTo-Json; 
         #     }
         # }
-
-    }
-
-    process {
         Write-Verbose "$Method`ing $jsonData to/from $uri";
         try {
             $result = Invoke-RestMethod @apiCall -ea Stop;
         } catch {
             $result = Invoke-WebRequest @apiCall;
         }
-    }
-
-    end {
         Write-Verbose "finished api call";
         return $result;
     }

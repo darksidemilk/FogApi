@@ -10,7 +10,7 @@ function Start-FogSnapin {
     The id of the host to deploy the task for
     
     .PARAMETER snapinname
-    The name of the snapin to deploy
+    The name of the snapin to deploy or list of names
     
     .PARAMETER snapinId
     The id of the snapin to deploy
@@ -33,33 +33,75 @@ function Start-FogSnapin {
         [parameter(ParameterSetName='byId')]
         [parameter(ParameterSetName='byName')]
         $hostID,
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byId-byobj')]
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byName-byobj')]
+        $fogHost,
         [parameter(ParameterSetName='byName')]
-        $snapinname,
+        [parameter(ParameterSetName='byName-byobj')]
+        [ArgumentCompleter({
+            param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+            # if(Test-FogVerAbove1dot6) {
+            $r = (Get-FogSnapins)
+
+            if ($WordToComplete) {
+                $r.Where.Name{ $_ -match "^$WordToComplete" }
+            }
+            else {
+                $r.Name
+            }
+            # }
+        })]  
+        [string[]]$snapinname,
         [parameter(ParameterSetName='byId')]
-        $snapinId
+        [parameter(ParameterSetName='byId-byobj')]
+        [string[]]$snapinId
     )
     
     
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostID = $fogHost.id;
+        }
         $snapins = Get-FogSnapins;
-        if  ($PSCmdlet.ParameterSetName -eq 'byName') {
-            $snapin = $snapins | Where-Object name -eq $snapinname;
-            $snapinId = $snapin.id
+        if  (($PSCmdlet.ParameterSetName -eq 'byName') -OR ($PSCmdlet.ParameterSetName -eq 'byName-byObj')) {
+            # $snapin = "$((($snapins | Where-Object name -eq "$($_)")))";
+            $snapinIDs = New-Object System.Collections.Generic.List[Object];
+
+            $snapinname | ForEach-Object {
+                $snapinIds.add(("$((($snapins | Where-Object name -eq "$($_)").id))"))
+            }
+            # $snapinId = $snapinIDs -join ","
+            # "$snapinID" | out-host;
+            # $snapinname = $snapinname
         } else {
-            $snapin = $snapins | Where-Object id -eq $snapinId;
+            # $snapinID | ForEach-Object {
+            # }
+            $snapin = $snapins | Where-Object id -in $snapinId;
             $snapinname = $snapin.name
         }
-        if ($null -eq $snapinId) {
+        if (($null -eq $snapinId) -and ($null -eq $snapinIDs)) {
             Write-Warning "No snapinid was found for the snapin $snapinName! not running any actions"
             return $null
         } else {
-            $json = (@{
-                "taskTypeID"='13';
-                "deploySnapins"="$snapinId";
-            } | ConvertTo-Json);
-            $fogHost = Get-Foghost -hostID $hostID;
-            "Deploying the snapin $snapinname to the host $($fogHost.name)" | out-host;
-            New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID";
+            if ($null -ne $snapinIDs) {
+                $snapinID = $snapinIDs
+            }
+            $results = New-Object System.Collections.Generic.List[Object];
+            $snapinId | ForEach-Object {
+                $json = (@{
+                    "taskTypeID"='13';
+                    "deploySnapins"="$_";
+                } | ConvertTo-Json);
+                if ($null -eq $fogHost) {
+                    $fogHost = Get-Foghost -hostID $hostID;
+                }
+                $snapinname = ($snapins | Where-Object id -in $_).name
+                "Deploying the snapin $snapinname to the host $($fogHost.name)" | out-host;
+                $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID";
+                $results.add(($result));
+            }
+            return $results;
         }
     }
     

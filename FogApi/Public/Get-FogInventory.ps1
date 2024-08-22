@@ -31,12 +31,17 @@ function Get-FogInventory {
 #>
 
     [CmdletBinding()]
+    [Alias('Get-FogHostInventory','Get-WinInventoryForFog')]
     param (
+        [Parameter(ValueFromPipeline=$true)]
         $hostObj = (Get-FogHost),
         [switch]$fromFog
     )
 
     process {
+        if ($null -ne $_) {
+            $hostObj = $_;
+        }
         if ($IsLinux -OR $fromFog) {
             if ($IsLinux) {
                 "Not yet implemented for getting the host inventory from linux inline, returning the hosts currently set inventory object" | out-host;

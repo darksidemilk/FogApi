@@ -43,6 +43,7 @@ Get-FogHost -hostName MeowMachine
 ```
 
 This would return the fog details of a host named MeowMachine in your fog instance
+If using pwsh 7+ and your FOG service is 1.6 or above, you can tab complete to search for existing hosts by name
 
 ### EXAMPLE 2
 ```
@@ -83,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -hostName
-the hostname of the host
+the hostname of the host, if your FOG version is 1.6 or above you can use tab complete for hostnames
 
 ```yaml
 Type: String

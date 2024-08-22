@@ -24,10 +24,17 @@ function Get-FogHostAssociatedSnapins {
     [CmdletBinding()]
     [Alias('Get-FogAssociatedSnapins','Get-FogHostSnapins','Get-FogHostSnapinAssociations')]
     param (
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
+        $fogHost = (Get-FogHost),
+        [parameter(ParameterSetName='byId')]
         $hostId=((Get-FogHost).id)
     )
     
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostId = $fogHost.id;
+        }
         # $AllAssocs = (Invoke-FogApi -Method GET -uriPath snapinassociation).snapinassociations;
         $AllAssocs = Get-FogSnapinAssociations
         $snapins = New-Object System.Collections.Generic.List[object];

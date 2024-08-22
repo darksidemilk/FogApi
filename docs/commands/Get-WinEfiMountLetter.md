@@ -1,24 +1,24 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Set-FogInventory
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-WinEfiMountLetter
 schema: 2.0.0
 ---
 
-# Set-FogInventory
+# Get-WinEfiMountLetter
 
 ## SYNOPSIS
-Sets a fog hosts inventory
+If the EFI partition is mounted this returns the current drive letter
 
 ## SYNTAX
 
 ```
-Set-FogInventory [[-hostObj] <Object>] [[-jsonData] <Object>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-WinEfiMountLetter [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets the inventory of a fog host object to json data gotten from get-foginventory
+Runs the mountvol.exe tool and parses out the string at the end of the output
+that states if and where the EFI system partition is mounted
 
 ## EXAMPLES
 
@@ -30,36 +30,6 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
-
-### -hostObj
-the host object to set on
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: (Get-FogHost)
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -jsonData
-the jsondata with the inventory
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ProgressAction
 {{ Fill ProgressAction Description }}

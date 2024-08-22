@@ -20,9 +20,9 @@ function Get-FogSecsSinceEpoch {
     param (
         $scheduleDate = (Get-Date)
     )
-        process {
-            $EpochDiff = New-TimeSpan "01 January 1970 00:00:00" $($scheduleDate)
-            $EpochSecs = [INT] $EpochDiff.TotalSeconds - [timezone]::CurrentTimeZone.GetUtcOffset($(get-date)).totalseconds
-            return $EpochSecs
-        }
+    process {
+        $EpochDiff = New-TimeSpan "01 January 1970 00:00:00" $($scheduleDate)
+        $EpochSecs = [INT] $EpochDiff.TotalSeconds - [timezone]::CurrentTimeZone.GetUtcOffset($(get-date)).totalseconds
+        return $EpochSecs
+    }
 }

@@ -33,20 +33,38 @@ function Send-FogWolTask {
         [Parameter(ParameterSetName='byHostObject')]
         $hostObj,
         [Parameter(ParameterSetName='byname')]
-        $computername
-    )
-    if ($PSCmdlet.ParameterSetName -eq 'byHostObject') {
-        $hostID = $hostObj.id
-    } else {
-        $hostID= (get-foghost -hostName $computername).id
-    }
-    $jsonData = @{
-        taskTypeID = "14";
-        wol = "1";
-        other2 = "-1";
-        other4 = "1";
-        isActive = "1;"
-    }
+        [ArgumentCompleter({
+            param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
+            if(Test-FogVerAbove1dot6) {
+                $r = (Get-FogHosts).Name
 
-    return New-FogObject -type objecttasktype -coreTaskObject host -jsonData ($jsonData | ConvertTo-Json) -IDofObject $hostID
+                if ($WordToComplete) {
+                    $r.Where{ $_ -match "^$WordToComplete" }
+                }
+                else {
+                    $r
+                }
+            }
+        })]  
+        [string]$computername
+    )
+    process {
+        if ($PSCmdlet.ParameterSetName -eq 'byHostObject') {
+            if ($null -ne $_) {
+                $hostObj = $_;
+            }
+            $hostID = $hostObj.id
+        } else {
+            $hostID= (get-foghost -hostName $computername).id
+        }
+        $jsonData = @{
+            taskTypeID = "14";
+            wol = "1";
+            other2 = "-1";
+            other4 = "1";
+            isActive = "1;"
+        }
+    
+        return New-FogObject -type objecttasktype -coreTaskObject host -jsonData ($jsonData | ConvertTo-Json) -IDofObject $hostID
+    }
 }

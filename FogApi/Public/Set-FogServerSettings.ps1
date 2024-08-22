@@ -18,6 +18,7 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 
 .PARAMETER fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
+You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver
 
 .PARAMETER interactive
 switch to make setting these an interactive process, if you set no values this is the default
@@ -51,7 +52,7 @@ This will set the current users FogApi/settings.json file to have the given api 
         $helpTxt = @{
             fogApiToken = "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
             fogUserToken = "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
-            fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer";
+            fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
             ($serverSettings.psobject.properties).Name | ForEach-Object {

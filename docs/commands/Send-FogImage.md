@@ -23,6 +23,17 @@ Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-ProgressAction <Act
  [<CommonParameters>]
 ```
 
+### schedule-byhost
+```
+Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### now-byhost
+```
+Send-FogImage [-fogHost <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Starts or schedules a deploy task of the currently assigned image on a host
 
@@ -58,7 +69,7 @@ the hostid to start the deploy task for
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: now, schedule
 Aliases:
 
 Required: False
@@ -68,12 +79,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -fogHost
+fogHost object (get-foghost) that can be brought in from pipeline
+
+```yaml
+Type: Object
+Parameter Sets: schedule-byhost, now-byhost
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -StartAtTime
 The time to start the deploy task, use Get-date to create the required datetime object
 
 ```yaml
 Type: DateTime
-Parameter Sets: schedule
+Parameter Sets: schedule, schedule-byhost
 Aliases:
 
 Required: False

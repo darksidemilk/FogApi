@@ -82,9 +82,6 @@ function Set-EmptyExportArray {
 	
 		.EXAMPLE
 		Set-EmptyExportArray -psd1path $path -ExportType Aliases
-	
-		.LINK
-		https://kb.arrowheaddental.com/display/PS/Set-EmptyExportArray
 	#>
 	[CmdletBinding()]
 	param (
@@ -127,9 +124,6 @@ function Get-AliasesToExport {
 		.PARAMETER loop
 		keep this set to false. Internal bool param used for creating loops at key points of this function
 		so that it can process the list of functions differently
-	
-	.LINK
-		https://kb.arrowheaddental.com/display/PS/Get-AliasesToExport
 	
 	#>
 	[CmdletBinding()]

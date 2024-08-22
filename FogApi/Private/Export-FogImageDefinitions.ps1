@@ -22,7 +22,7 @@ function Export-FogImageDefinitions {
     
     
     process {
-        if ($IsLinux -AND ($env:HOSTNAME -eq (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
+        if ($IsLinux -AND ($env:HOSTNAME -match (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
             "This is linux, is the fogserver set in the api settings and no export path was given" | Out-Host;
             "Assuming you want to create a /images/imageDefinitions folder for migrating your fog server images to another server" | out-host;
             $exportPath = "/images/imageDefinitions"

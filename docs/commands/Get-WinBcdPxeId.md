@@ -1,76 +1,63 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-FogHostPendingMacs
+online version: https://fogapi.readthedocs.io/en/latest/commands/Get-WinBcdPxeId
 schema: 2.0.0
 ---
 
-# Get-FogHostPendingMacs
+# Get-WinBcdPxeId
 
 ## SYNOPSIS
-Gets the pending macs for a given hosts
+Searches bcd firmware options for a given or model specific search string and returns the boot device guid
 
 ## SYNTAX
 
-### byId (Default)
 ```
-Get-FogHostPendingMacs [-hostID <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### byHost
-```
-Get-FogHostPendingMacs [-fogHost <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-WinBcdPxeId [[-searchString] <String>] [-notBootMgr] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Gets the macs for a host and filters them to just pending ones.
-The returned object can then be approved with approve-fogpendingmac
-or denied with deny-fogpendingmac
+Searches bcd firmware options for a given or model specific search string and returns the boot device guid 
+The id can be used with \`bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfirst\` to be set as the first boot option in the computer's bios boot order
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-PendingMacsForhost -hostID 123
+Get-BcdPxeBootID
 ```
 
-gets the macs if any for foghost 123
-
-### EXAMPLE 2
-```
-Get-PendingMacsForhost -hostID 'ComputerName'
-```
-
-Returns the pending macs for the host with the name ComputerName
+Will return the guid of the native pxe boot option if one is found.
 
 ## PARAMETERS
 
-### -fogHost
-{{ Fill fogHost Description }}
+### -searchString
+Optionatlly specify a search string, can be pxe related or try to find a different id from \`bcdedit /enum firmware\`
 
 ```yaml
-Type: Object
-Parameter Sets: byHost
+Type: String
+Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -hostID
-the hostid or hostname of the fog host
+### -notBootMgr
+switch param to not return the main bootmgr entry if it is returned
 
 ```yaml
-Type: Object
-Parameter Sets: byId
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

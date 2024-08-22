@@ -1,24 +1,23 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Set-FogInventory
+online version: https://fogapi.readthedocs.io/en/latest/commands/Disable-FogApiHTTPS
 schema: 2.0.0
 ---
 
-# Set-FogInventory
+# Disable-FogApiHTTPS
 
 ## SYNOPSIS
-Sets a fog hosts inventory
+Enforce http in the url used in all api calls
 
 ## SYNTAX
 
 ```
-Set-FogInventory [[-hostObj] <Object>] [[-jsonData] <Object>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Disable-FogApiHTTPS [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets the inventory of a fog host object to json data gotten from get-foginventory
+Prepends http to the fogserver property of fog server settings
 
 ## EXAMPLES
 
@@ -30,36 +29,6 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
-
-### -hostObj
-the host object to set on
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: (Get-FogHost)
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -jsonData
-the jsondata with the inventory
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ProgressAction
 {{ Fill ProgressAction Description }}

@@ -14,13 +14,14 @@ Starts or schedules a capture task on a given host
 
 ### now (Default)
 ```
-Receive-FogImage [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Receive-FogImage [-hostId <Object>] [-fogHost <Object>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Receive-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Receive-FogImage [-hostId <Object>] [-fogHost <Object>] [-StartAtTime <DateTime>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,6 +66,21 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

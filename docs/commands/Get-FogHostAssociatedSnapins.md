@@ -12,8 +12,14 @@ Returns list of all snapins associated with a given hostid, defaults to current 
 
 ## SYNTAX
 
+### byHost
 ```
-Get-FogHostAssociatedSnapins [[-hostId] <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-FogHostAssociatedSnapins [-fogHost <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### byId
+```
+Get-FogHostAssociatedSnapins [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,17 +41,32 @@ thus showing you what version of office you have assigned as a snapin to your ho
 
 ## PARAMETERS
 
+### -fogHost
+{{ Fill fogHost Description }}
+
+```yaml
+Type: Object
+Parameter Sets: byHost
+Aliases:
+
+Required: False
+Position: Named
+Default value: (Get-FogHost)
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
 ### -hostId
 The id of the host you want the assigned snapins to
 Defaults to getting the current hosts id with ((Get-FogHost).id)
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: byId
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: ((Get-FogHost).id)
 Accept pipeline input: False
 Accept wildcard characters: False

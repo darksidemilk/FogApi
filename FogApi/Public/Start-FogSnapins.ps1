@@ -20,11 +20,18 @@ function Start-FogSnapins {
 
     [CmdletBinding()]
     param (
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byObj')]
+        $fogHost,
+        [parameter(ParameterSetName='byid')]
         $hostid = ((Get-FogHost).id),
         $taskTypeid = '12'
     )
-
-    begin {
+    
+    process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostid = $fogHost.id;
+        }
         Write-Verbose "Stopping any queued snapin tasks";
         try {
             $tasks = Get-FogActiveTasks;
@@ -45,20 +52,14 @@ function Start-FogSnapins {
         }
         # $snapAssocs = Invoke-FogApi -uriPath snapinassociation -Method Get;
         # $snaps = $snapAssocs.snapinassociations | ? hostid -eq $hostid;
-    }
-
-    process {
         Write-Verbose "starting all snapin task for host";
         $json = (@{
             "taskTypeID"=$taskTypeid;
             "deploySnapins"=-1;
         } | ConvertTo-Json);
-        New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject $hostid;
-    }
-
-    end {
+        $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject $hostid;
         Write-Verbose "Snapin tasks have been queued on the server";
-        return;
+        return $result;
     }
 
 }

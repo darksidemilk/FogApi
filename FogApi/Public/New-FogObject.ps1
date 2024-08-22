@@ -35,8 +35,8 @@ the id of the object
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
 
-    begin {
-        $paramDict | % { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
+    process {
+        $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call";
         switch ($type) {
             objecttasktype {
@@ -51,13 +51,7 @@ the id of the object
             Method="POST";
             jsonData=$jsonData;
         }
-    }
-
-    process {
         $result = Invoke-FogApi @apiInvoke;
-    }
-
-    end {
         return $result;
     }
 

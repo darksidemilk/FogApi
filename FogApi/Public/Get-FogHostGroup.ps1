@@ -15,13 +15,20 @@ function Get-FogHostGroup {
     Gets the fog group membership(s) of the fog host with the name computerName
 
 #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName='byId')]
     [Alias('Get-FogGroup')]
     param (
+        [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
+        $fogHost,
+        [parameter(ParameterSetName='byId')]
         [int]$hostId
     )
     
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+            $hostId = $fogHost.id;
+        }
         if (!$hostId) {
             $hostId = (Get-FogHost).id;
         }

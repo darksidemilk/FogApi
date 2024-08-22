@@ -33,7 +33,7 @@ the id of the object
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
 
-    begin {
+    process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}
         Write-Verbose "Building uri and api call";
         switch ($type) {
@@ -52,16 +52,10 @@ the id of the object
             Method="DELETE";
             jsonData=$jsonData;
         }
-        if ($apiInvoke.jsonData -eq $null -OR $apiInvoke.jsonData -eq "") {
+        if (($null -eq $apiInvoke.jsonData) -OR ($apiInvoke.jsonData -eq "")) {
             $apiInvoke.Remove("jsonData");
         }
-    }
-
-    process {
         $result = Invoke-FogApi @apiInvoke;
-    }
-
-    end {
         return $result;
     }
 

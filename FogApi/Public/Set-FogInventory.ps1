@@ -17,17 +17,25 @@ the jsondata with the inventory
 
     [CmdletBinding()]
     param (
+        [parameter(ValueFromPipeline=$true)]
         $hostObj = (Get-FogHost),
-        $jsonData = (Get-FogInventory -hostObj $hostObj)
+        $jsonData
     )
 
     process {
+        if ($null -ne $_) {
+            $hostObj = $_;
+        }
+        if ($null -eq $jsonData) {
+            $jsonData = (Get-FogInventory -hostObj $hostObj)
+        } 
         $inventoryApi = @{
             jsonData = $jsonData;
             Method = 'Post';
             uriPath = "inventory/new";
         }
         Invoke-FogApi @inventoryApi -verbose;
+        $jsonData = (Get-FogInventory -hostObj $hostObj)
         return;
     }
 

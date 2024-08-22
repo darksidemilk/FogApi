@@ -22,16 +22,20 @@ install of the smart installer if that fails
     param (
         $fogServer = ((Get-FogServerSettings).fogServer)
     )
-    begin {
-        $fileUrl = "http://$fogServer/fog/client/download.php?newclient";
-        $fileUrl2 = "http://$fogServer/fog/client/download.php?smartinstaller";
+
+    process {
+        if ($fogServer -like "http*") {
+            $fileUrl = "$fogServer/fog/client/download.php?newclient";
+            $fileUrl2 = "$fogServer/fog/client/download.php?smartinstaller";
+        } else {
+            $fileUrl = "http://$fogServer/fog/client/download.php?newclient";
+            $fileUrl2 = "http://$fogServer/fog/client/download.php?smartinstaller";
+        }
         Write-Host "Making temp download dir";
         mkdir C:\fogtemp;
         Write-Host "downloading installer";
         Invoke-WebRequest -URI $fileUrl -UseBasicParsing -OutFile 'C:\fogtemp\fog.msi';
         Invoke-WebRequest -URI $fileUrl2 -UseBasicParsing -OutFile 'C:\fogtemp\fog.exe';
-    }
-    process {
         "installing fog service" | out-host;
         try {
             "Attempting silent msi install..." | out-host;
@@ -60,8 +64,6 @@ install of the smart installer if that fails
                 $wshell.SendKeys("{Enter}")
             }
         }
-    }
-    end {
         Write-Host "removing download file and temp folder";
         Remove-Item -Force -Recurse C:\fogtemp;
         Write-Host "Starting fogservice";

@@ -1,27 +1,27 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Reset-HostEncryption
+online version: https://fogapi.readthedocs.io/en/latest/commands/Mount-WinEfi
 schema: 2.0.0
 ---
 
-# Reset-HostEncryption
+# Mount-WinEfi
 
 ## SYNOPSIS
-Reset the host encryption data on a given host
+Mounts the EFI system partition to a specified mount letter
 
 ## SYNTAX
 
 ```
-Reset-HostEncryption [[-fogHost] <Object>] [-restartSvc] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Mount-WinEfi [[-mountLtr] <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Default to getting the current host, but can also pass the object returned from Get-FogHost
-and its parameters for any other host.
-Removes/resets the pub_key, sec_tok, and sec_time properties of a host so it can be re-encrypted by
-the fogservice to form a new connection.
+Uses the mountvol tool to mount the system partition
+defaults to using A:\ but other drive letters can be specified.
+If it is already mounted on the specified drive it will return null
+if it is already mounted on a different drive, it will dismount it and remount on the specified letter
+Use get-efimountletter to get where it is currently mounted
 
 ## EXAMPLES
 
@@ -34,8 +34,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -fogHost
-Defaults to getting current host or can pass a host object
+### -mountLtr
+The mount letter to use in A: format for mounting the EFI system partition
 
 ```yaml
 Type: Object
@@ -44,25 +44,7 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: (Get-FogHost)
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -restartSvc
-The restartSvc switch will restart the fog service
-forcing a more immediate re-encryption and connection.
-This currently only works when used on the local computer
-you are resetting.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
+Default value: A:
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

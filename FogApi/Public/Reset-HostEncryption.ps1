@@ -21,11 +21,15 @@ function Reset-HostEncryption {
     
     [CmdletBinding()]
     param (
+        [parameter(ValueFromPipeline=$true)]
         $fogHost = (Get-FogHost),
         [switch]$restartSvc
      )
 
     process {
+        if ($null -ne $_) {
+            $fogHost = $_;
+        }
         $fogHost.pub_key = "";
         $fogHost.sec_tok = "";
         $fogHost.sec_time = "0000-00-00 00:00:00";

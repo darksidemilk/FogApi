@@ -52,13 +52,13 @@ function Get-FogHost {
         [ArgumentCompleter({
             param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
             if(Test-FogVerAbove1dot6) {
-                $r = (Get-FogHosts).Name
+                $r = Get-FogHosts;
 
                 if ($WordToComplete) {
-                    $r.Where{ $_ -match "^$WordToComplete" }
+                    $r.Name.Where{ $_ -match "^$WordToComplete" }
                 }
                 else {
-                    $r
+                    $r.Name
                 }
             }
         })]  
