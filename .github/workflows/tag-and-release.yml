@@ -51,6 +51,7 @@ jobs:
         GalKey: ${{ secrets.PSGALLERY }}
       steps:
         - uses: actions/checkout@v4
+        - uses: fregante/setup-git-user@v2.0.2
         - name: Build and publish module
           run: |
             "Building and publishing module and committing changes" | out-host;

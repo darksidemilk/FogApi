@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2408.9.1'
+ModuleVersion = '2408.9.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -187,9 +187,22 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2408.9.1
+        # 2408.9.2
 
-	resolves Auto add aliases on build #9 '
+        Release Commit of Major Changes (some changes in other commits)
+        - Handled Auto add aliases on build #9 so added aliases are available to users.
+        - Implemented Add foghost name tab completion #8
+        - Added github actions for testing build and releasing versions
+        - Fixed issue with getting fog inventory in 1.6
+        - Implemented #16 for getting and setting fog global settings in fog 1.6
+        - Implemented #14 for getting the fog version
+        - Implemented #13 for invoking  wol task for a host
+        - Added basic pipeline functionality for foghost objects in all applicable functions.
+        - Made it possible to send multiple specified snapins in a single start-fogsnapin call
+        - Added tab completion of server specific host names and snapin names in various functions like get-foghost, start-fogsnapin. set-fogsnapins, remove-usbmac
+        - removed advanced function begin/end blocks where they weren''t being used as such, kept things in process block
+        - implemented Add https option to fog server settings #15 by making it so you can put http://fogserver or https://fogserver or fogserver as the fogserver property in settings to implement that change with minimal issues with existing setting configs. Added an enable-FogApiHTTPS funcction as well as a disable to easily enable that.
+        - Implemented Add function for attempting to set windows machine to boot to pxe from within windows #17'
 
         # Prerelease string of this module
         # Prerelease = ''
