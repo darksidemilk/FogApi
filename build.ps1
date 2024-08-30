@@ -54,6 +54,15 @@
  .PARAMETER buildMkdocs
  switch param to install python and requirements and create a local version of the documentation site that will show on read the docs.
 
+ .PARAMETER buildPth
+ Provide an explicit path to create the built module in, defaults to creating a _module_build folder in the current directory that is ignored by .gitignore
+
+ .PARAMETER noMkdocsPause
+ When buildmkdocs switch is present, the default behavior will be to pause before the build takes place to inform the user how to close the local server. This pause can be bypassed with this switch
+
+ .PARAMETER NoVerStep
+ Switch to build without incrementing the version or adding to the release notes, can be used for testing full builds locally and allowing the github actions release workflow handle version increments.
+
 #> 
 
 [CmdletBinding()]
@@ -62,6 +71,7 @@ Param(
 	[string]$buildPth,
 	[switch]$major,
 	[switch]$buildMkdocs,
+	[switch]$noMkdocsPause,
 	[switch]$NoVerStep
 )
 
@@ -139,7 +149,14 @@ Get-ChildItem "$docsPth\commands" | Where-Object name -NotMatch 'index' | Foreac
 	$onlineStr = ($content | Select-String "online version: *" -Raw).tostring();
 	$newOnlineStr = "$onlineStr $link";
 	$content = $content.replace($onlineStr,$newOnlineStr);
-	Set-Content -Path $file -Value $content;
+	try {
+		Set-Content -Path $file -Value $content -ea stop;
+	} catch {
+		"File $file is in use, waiting 2 seconds, running garbage collection, and try again with force" | out-host;
+		start-sleep -Seconds 2;
+		[gc]::Collect()
+		Set-Content -Path $file -Value $content -Force;
+	}
 	
 	#Update commands index
 	$index += "## [$basename]($name)`n`n"
@@ -153,10 +170,7 @@ Get-ChildItem "$docsPth\commands" | Where-Object name -NotMatch 'index' | Foreac
 
 # Set-Content $mkdocsYml -value $mkdocs;
 Set-Content $indexFile -Value $index;
-if ($buildMkdocs) {
-	Install-Requirements
-	Start-MkDocsBuild -sourcedir $docsPth
-}
+
 
 #build external help xml file for module from md
 try {
@@ -321,8 +335,22 @@ $newContent += "`n`n"
 $newContent += $majorVerStr
 $newContent += "`n`n"
 $newContent += "### $newVer`n`n`t$releaseNote`n"
-$newContent += $curNotes
 # pause;
-Set-Content -Path "$docsPth\ReleaseNotes.md" -value $newContent
+if ($NoVerStep) {
+	"Not updating release notes markdown because noverstep specified! would have added $($newContent | out-string)" | out-host;
+} else {
+	$newContent += $curNotes
+	Set-Content -Path "$docsPth\ReleaseNotes.md" -value $newContent
+}
+
+
+if ($buildMkdocs) {
+	Install-Requirements
+	Write-Host "After you hit any key to continue, mkdocs will build from your local repo, local mkdocs temp site url will open in default browser and then the local mkdocs server will be started, it will take a moment to show in the browser, hit ctrl+C in this window to close out the local mkdocs test server" -BackgroundColor Yellow
+	if (!$noMkdocsPause) {
+		pause;
+	}
+	Start-MkDocsBuild
+}
 
 return $buildPth;

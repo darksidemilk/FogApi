@@ -199,6 +199,65 @@ function Get-AliasesToExport {
 		return $aliases | Sort-Object -Unique;
 	}
 }
+
+function Get-Python {
+    [CmdletBinding()]
+    param (
+        
+    )
+    
+    process {
+        "Ensuring Python is installed...." | out-host;
+
+        if (!(Get-Command "python.exe" -ea 0)) {
+            Write-Warning "Python not detected in path! Attempting to install with chocolatey package manager"
+            Write-Warning "May we install/use chocolatey package manager and install python? This will require admin rights in an elevated shell and the package will handle updating path variables"
+            $installCHoco = Read-Host -Prompt "Install choco and python with choco? (Y/N)"
+            if ($installCHoco -eq "Y") {
+                if (!(Get-Command 'choco' -ea 0)) {
+                    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+                }
+                choco upgrade python -y --no-progress;
+                Import-Module C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1;
+                Update-SessionEnvironment
+            } else {
+                Write-Warning "Python not detected in path! Attempting to Install with winget via msstore or winget version and adding to the path"
+                if (Get-Command "winget" -ea 0) {
+                    try {
+                        winget.exe install "Python 3.11" -s msstore
+                    }  catch {
+                        "There was an error with winget install, trying winget source" | Out-Host
+                        winget.exe install "Python 3.11" -s winget
+                    }
+                } else {
+                    Write-Error "Please manually install python and add it to the environment path then re-run this build/make script";
+                    pause;
+                    exit;
+                }
+            }	
+            #python should now be installed, make sure it is in $ENV:PATH as well as the script subdir for putting mkdocs in the path
+            if (!(Get-Command "python.exe" -ea 0)) {
+                "searching for python.exe..."
+                $pythonPth = (Get-ChildItem -Filter "python.exe" -Recurse -file -Path "\" -force -ea 0).FullName
+                if ($null -ne $pythonPth.count) {
+                    if ($pythonPth.count -gt 1) {
+                        $pythonPath = $pythonPth | Where-Object {
+                            Test-path ("$(Split-Path $($_) -Parent)\Scripts")
+                        }
+                        $pythonPth = $pythonPath[0];
+                    }
+                }
+                "python found at $($pythonPth), adding parent folder to path, and scripts folder to path" | out-host;
+                $ENV:PATH += ";$(Split-Path $($pythonPth[0]) -Parent)"
+                $ENV:PATH += ";$(Split-Path $($pythonPth[0]) -Parent)\Scripts"
+                Update-SessionEnvVariables;
+            }
+        }
+        
+    }
+    
+}
+
 function Install-Requirements {
 	[CmdletBinding()]
     param (
@@ -206,6 +265,7 @@ function Install-Requirements {
 	)
     
     process {
+        Get-Python;
         "Installing Pre-requisites if needed..." | out-host;
         $log = ".\.lastprereqrun"
         $requirementsLastUpdate = (Get-item $requirements).LastWriteTime;
@@ -270,7 +330,9 @@ function Start-MkDocsBuild {
                 return "mkdocs not found";
             }
         }
+        
         start "http:\\localhost:8000"
+        
         & mkdocs.exe serve 
         # "$buildDir\index.html"
         return "local dev server version opened in default browser"
