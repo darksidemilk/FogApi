@@ -49,7 +49,7 @@ they could then be deployed with start-fogsnapins
             }
             # }
         })]
-        [string]$pkgList,
+        [string[]]$pkgList,
         [parameter(ParameterSetName='byId')]
         [parameter(ParameterSetName='byObject')]
         [switch]$exactNames,

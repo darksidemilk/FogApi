@@ -5,6 +5,7 @@
 ### 2408.9.1
 
 	resolves Auto add aliases on build #9 
+	
 ### 2408.9.0
 
 	Major version doc updates, added many new functions and implemented some pipeline functionality
