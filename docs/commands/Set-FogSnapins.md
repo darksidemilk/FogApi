@@ -14,13 +14,13 @@ Sets a list of snapins to a host, appends to existing ones
 
 ### byObject
 ```
-Set-FogSnapins [-hostObj <Object>] [-pkgList <String>] [-exactNames] [-repairBeforeAdd]
+Set-FogSnapins [-hostObj <Object>] [-pkgList <String[]>] [-exactNames] [-repairBeforeAdd]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byId
 ```
-Set-FogSnapins [-hostid <Object>] [-pkgList <String>] [-exactNames] [-repairBeforeAdd]
+Set-FogSnapins [-hostid <Object>] [-pkgList <String[]>] [-exactNames] [-repairBeforeAdd]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 String array list of snapins to add to the host, supports tab completion.
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 

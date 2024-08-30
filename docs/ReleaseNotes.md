@@ -2,6 +2,13 @@
 
 ## 9.x
 
+### 2408.9.3
+
+	Fix missing release note and try using fregante/setup-git-user@v2.0.2 to ensure publish build and commit gets pushed
+
+
+
+
 ### 2408.9.2
 
 	# 2408.9.2
@@ -353,6 +360,7 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
