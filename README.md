@@ -42,15 +42,29 @@ To Install this module follow these steps...
 
 ## Install From PSGallery
 
-* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi via a powershell console with the command `Install-Module -name fogApi` 
+* Easiest method, cross platform: Install from PSGallery https://www.powershellgallery.com/packages/FogApi via a powershell console with the command `Install-Module -name fogApi`
+* You can also use PSResourceGet `Install-PSRe
+
+## Install via Chocolatey
+
+* https://community.chocolatey.org/packages/FogApi
+* You can install the module as a chocolatey package with `choco upgrade FogApi -y`
+  * This will install it in the Windows PowerShell and Powershell Core module paths complete with the hidden psgetxml file that makes it so the module is registered as installed when using commands like `Get-InstalledModule`
 
 ## Manual Installation
 
+### Use assets from the release
+
+* Use Chocolatey, PackageManagement, Nuget or what have you to install the *chocolatey.nupkg or *.psgallery.nupkg file from the release assets
+* Extract the *builtModule.zip from the release and run `import-module` on the resulting folder for a portable installation. You can also extract to the paths outlined below in the manual build install steps for a more system wide install
+
+### Manually build the module
+
 * Manual Method:
-* download the zip of this repo and extract it
+* download the zip of this repo and extract it (or use git clone)
     * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
 * Run the build.ps1 script
-* Copy the built module folder (C:\moduleBuild\fogAPI) into...
+* Copy the built module folder (.\_module_build) into...
     * For Windows Powershell v3-v5.1
         * C:\Program Files\WindowsPowershell\Modules
     * For Windows Powershell v6+
