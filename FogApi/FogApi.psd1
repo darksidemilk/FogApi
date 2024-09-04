@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2408.9.3'
+ModuleVersion = '2409.9.4'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -192,9 +192,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2408.9.3
+# 2409.9.4
 
-	Fix missing release note and try using fregante/setup-git-user@v2.0.2 to ensure publish build and commit gets pushed
+	"Adding Chocolatey package and updates to auto adding various assets to each release. Also updated some manifest things. No Code changes, really just a maintenance release"
 
 '
 
