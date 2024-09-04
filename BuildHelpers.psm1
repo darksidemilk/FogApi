@@ -618,3 +618,49 @@ function Grant-FullRightsToPath {
     }
     
 }
+
+function Find-Replace {
+    <#
+    .SYNOPSIS
+    A helper function for doing find and replace operations
+    
+    .DESCRIPTION
+    Finds and replaces given strings of a given file using the $string.replace("find","replace") method
+    Gets the content of the file with get-content and then sets the content to the modified string after runnning the replace method
+    
+    .PARAMETER file
+    The file to perform find and replace on
+    
+    .PARAMETER findStr
+    The string to find
+    
+    .PARAMETER replaceStr
+    The string to replace
+    
+    .EXAMPLE
+    $functionFile = "C:\path\to\function\get-file.ps1"
+    $verb = "Get";
+    Find-Replace -file $functionFile -findStr '[Verb]' -replaceStr $verb;
+    
+    This example is from the New-Function command. 
+    It is finding the template variable for the verb in a new file created from the function template
+    Then it is replacing it with the given verb string, 'Get' in this example.
+    
+    #>
+    
+        [CmdletBinding()]
+        param (
+            $file,
+            $findStr,
+            $replaceStr
+        )
+        
+        process {
+            $content = Get-Content $file;
+            $content = $content.Replace($findStr,$replaceStr);
+            Set-Content -Path $file -Value $content;
+            return;
+        }
+    
+    }
+    
