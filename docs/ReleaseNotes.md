@@ -2,6 +2,11 @@
 
 ## 9.x
 
+### 2409.9.5
+
+	Updated and unified various docs, added icon packaging with best practicies for chocolatey and psgallery. Updated chocolatey packaging and build functions.
+
+
 ### 2409.9.4
 
 	Adding Chocolatey package and updates to auto adding various assets to each release. 
@@ -363,6 +368,7 @@
     * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 

@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2409.9.4'
+ModuleVersion = '2409.9.5'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -304,11 +304,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-    # 2409.9.4
-    
-        Adding Chocolatey package and updates to auto adding various assets to each release. Also updated some manifest things. No Code changes, really just a maintenance release
-    
-    '
+# 2409.9.5
+
+	Updated and unified various docs, added icon packaging with best practicies for chocolatey and psgallery. Updated chocolatey packaging and build functions.'
 
         # Prerelease string of this module
         # Prerelease = ''

@@ -43,6 +43,8 @@
 [CmdletBinding()]
 Param()
 
+Import-Module .\BuildHelpers.psm1
+
 $moduleName = 'FogApi'
 $modulePath = "$PSScriptRoot\$moduleName";
 
@@ -121,4 +123,12 @@ if ($null -ne $PrivateFunctions) {
 
 $manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
-Update-ModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+
+if (Get-Command Update-PSModuleManifest) {
+    Update-PSModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+} else {
+	"PSResourceGet version of update manifest not found, reverting to psget version, may cause issues with choco nuspec" | out-host; 
+	Update-ModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+}
+Set-EmptyExportArray -psd1Path "$buildPth\$moduleName.psd1" -ExportType Cmdlets;
+Set-EmptyExportArray -psd1Path "$buildPth\$moduleName.psd1" -ExportType Variables;

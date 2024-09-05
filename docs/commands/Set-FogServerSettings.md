@@ -96,6 +96,7 @@ Accept wildcard characters: False
 
 ### -interactive
 switch to make setting these an interactive process, if you set no values this is the default
+Warning, this can have issues in linux, especially when working in a remote shell, the paste into read-host can behave odd.
 
 ```yaml
 Type: SwitchParameter
