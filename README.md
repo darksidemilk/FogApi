@@ -2,8 +2,17 @@
 
 [![Test Build](https://github.com/darksidemilk/FogApi/actions/workflows/build-test.yml/badge.svg?branch=master)](https://github.com/darksidemilk/FogApi/actions/workflows/build-test.yml)
 
+[![Tag, Release, and Publish to PSGallery and Chocolatey Community Repo](https://github.com/darksidemilk/FogApi/actions/workflows/tag-and-release.yml/badge.svg)](https://github.com/darksidemilk/FogApi/actions/workflows/tag-and-release.yml)
+
 This is a powershell module to make using the Fog Project API even easier.
-FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation. It can be used to create more automation or to simply have a command line method of controlling fog operations.
+FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
+It can be used to create more automation or to simply have a command line method of controlling fog operations.
+For more information about FOG see
+
+* https://FOGProject.org
+* https://docs.fogproject.org
+* https://github.com/FOGProject
+* https://github.com/FOGProject/fogproject
 
 Docs can be found at https://fogapi.readthedocs.io/en/latest/
 
@@ -32,24 +41,34 @@ Any time I publish a new version that isn't a major change I'll increment the re
 
 # Installation
 
-All completed/tested/stable releases of this module will be published to powershell gallery. I don't currently have any plans to use github releases 
+The module can be installed via PowershellGet, PSResourceGet, Chocolatey, or Manually
 
-## Requirements
+## Installation Methods
+    
+To install this module you need at least powershell v3, it was originally created with 5.1,
+but now for BEST EXPERIENCE use Powershell Core 7+ to be able to use tab completion when running Fog 1.6
 
-To install this module you need at least powershell v3, was created with 5.1 and intended to be cross platform compatible with powershell v6 and v7
+To Install this module follow these steps
 
-To Install this module follow these steps...
+### Install from PSgallery
 
-## Install From PSGallery
+* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi with powershellget or PSResourceGet
+    * `Install-Module -name FogApi -Scope AllUsers`
+    * `Install-PSResource -Name FogApi -scope -Scope AllUsers`
+* updating is then as easy as
+    * `Update-Module -name FogApi`
+    * `Update-PSResource -Name FogApi`
 
-* Easiest method, cross platform: Install from PSGallery https://www.powershellgallery.com/packages/FogApi via a powershell console with the command `Install-Module -name fogApi`
-* You can also use PSResourceGet `Install-PSRe
+### Install with Chocolatey
 
-## Install via Chocolatey
+If you have chocolatey package manager, you can use the published package that manually installs the module the same way the PSGet managers do.
+https://community.chocolatey.org/packages/FogApi
+See https://chocolatey.org for more information on chocolatey package manager
 
-* https://community.chocolatey.org/packages/FogApi
-* You can install the module as a chocolatey package with `choco upgrade FogApi -y`
-  * This will install it in the Windows PowerShell and Powershell Core module paths complete with the hidden psgetxml file that makes it so the module is registered as installed when using commands like `Get-InstalledModule`
+* Install with chocolatey (will install the module by copying the built version to the powershell core and windows powershell paths, will remove any existing versions)
+    * `choco install fogapi -y`
+* Upgrading is as easy as (note that you can also use this same command for a new install)
+    * `choco upgrade fogapi -y`
 
 ## Manual Installation
 
@@ -66,61 +85,96 @@ To Install this module follow these steps...
 * Run the build.ps1 script
 * Copy the built module folder (.\_module_build) into...
     * For Windows Powershell v3-v5.1
-        * C:\Program Files\WindowsPowershell\Modules
-    * For Windows Powershell v6+
-        * C:\Program Files\PowerShell\6-preview\Modules
-            * 6-Preview may need to be replaced with whatever current version you have installed
-    * For Linux Powershell v6+
-        * /opt/microsoft/powershell/6.1.0-preview.2/Modules
-            * 6.1.0-preview.2 may need to be replaced with whatever current version you have installed
-    * For Mac Powershell v6+ (untested)
-        * /usr/local/microsoft/powershell/6.x/Modules
-            * 6.x should be replaced with whatever most current version you are using
+        * C:\Program Files\WindowsPowershell\Modules\FogApi
+    * For Powershell Core (pwsh) on Windows v7+
+        * C:\Program Files\PowerShell\Modules\FogApi
+    * For Linux Powershell Core (pwsh) v7+
+        * /usr/local/share/powershell/Modules/FogApi
+    * For Mac Powershell Core (pwsh) v7+ (untested)
+        * /usr/local/share/powershell/Modules/FogApi
             * I haven't tested this on a mac, the module folder may be somewhere else
-            this is based on where it is in other powershell 6 installs
-* Open a powershell command prompt (I always run as admin, unsure if it's required)
+            this is based on where it is in other powershell core installs
+* Open powershell (as admin recommended)
 * Run `Import-Module FogApi`
 
 The module is now installed. 
 
 # Using The Module
 
-The first time you try to run a command the settings.json file will automatically open
-in notepad on windows, nano on linux, or TextEdit on Mac
-You can also open the settings.json file and edit it manually before running your first command.
-The default settings are explanations of where to find the proper settings since json can't have comments
+You can use `Set-FogServerSettings` to set your fogserver hostname and api keys.
 
-Once the settings are set you can have a jolly good time utilzing the fog documentation 
+The first time you try to run a command the settings.json file will automatically open if it isn't already configured
+in notepad on windows, nano on linux, or TextEdit on Mac
+
+You can also open the settings.json file and edit it manually before running your first command, but it's best to use the `Set-FogServerSettings -interactive` function and switch for first time setup.
+The default settings in `settings.json` are explanations of where to find the proper settings since json can't have comments
+
+Once the settings are set you can have a jolly good time utilzing the fog documentation
 found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
 
 i.e.
 
-Get-FogObject has a type param that validates to object, objectactivetasktype, and search as those are the options given in the documentation.
+`Get-FogObject` has a type param that validates to `object, objectactivetasktype, and search` as those are the options given in the documentation.
 Each of those types validates (which means autocompletion) to the core types listed in the documentation.
-So if you typed in `Get-FogObject -Type object -Object  h` and then started hitting tab, it would loop through the possible core objects you can get from the api that start with 'h' such as history, host, etc.
+So if you typed in `Get-FogObject -Type object -Object h` and then started hitting tab, it would loop through the possible core objects you can get from the api that start with `h` such as history, host, etc.
 
-Unless you filter a get with a json body it will return all the results into a powershell object. That object is easy to work with to create other commands. Note: Full Pipeline support will come at a later time 
- i.e.
+Unless you filter a GET with a json body it will return all the results into a powershell object. 
+That object is easy to work with to create other commands. Note: Full Pipeline support will come at a later time
+i.e.
 
- `$hosts = Get-FogObject -Type Object -CoreObject Host `# calls get on http://fog-server/fog/host to list all hosts
- Now you can search all your hosts for the one or ones you're looking for with powershell
- maybe you want to find all the hosts with 'IT' in the name  (note '?' is an alias for Where-Object)
-`$ITHosts = $hosts.hosts | ? name -match 'IT';`
-
-Now maybe you want to change the image all of these computers use to one named 'IT-Image'
-You can edit the object in powershell with a foreach-object ('%' is an alias for foreach-object)
-`$updatedITHosts = $ITHosts | % { $_.imagename = 'IT-image'}`
-
-Then you need to convert that object to json and pass each object into one api call at a time. Which sounds complicated, but it's not, it's as easy as
 ```
-$updateITHosts | % { 
-    $jsonData = $_ | ConvertTo-Json;
-    Update-FogObject -Type object -CoreObject host -objectID $_.id -jsonData $jsonData;
-    #successful result of updated objects properties 
-    #or any error messages will output to screen for each object
-} 
+hosts = Get-FogObject -Type Object -CoreObject Host # calls GET on {your-fog-server}/fog/host to list all hosts
+```
+
+Now you can search all your hosts for the one or ones you are looking for with powershell
+maybe you want to find all the hosts with ''IT'' in the name  (note `?` is an alias for `Where-Object`)
+
+```
+$ITHosts = $hosts.data | ? name -match ''IT'';
+```
+
+Now maybe you want to change the image all of these computers use to one named ''''IT-Image''''
+You can edit the object in powershell with a foreach-object (`%` is an alias for `foreach-object`)
+
+```
+#get the id of the image by getting all images and finding the one with the IT-image name
+$image = Get-FogImages | ? name -eq "IT-image"
+$updatedITHosts = $ITHosts | % { $_.imageid = $image.id}
+```
+
+Then you need to convert that object to json and pass each object into one api call at a time. 
+Which sounds complicated, but it's not, it's as easy as
+
+```
+$updatedITHosts | % {
+    Update-FogObject -Type object -CoreObject host -objectID $_.id -jsonData ($_ | ConvertTo-Json);
+}
 ```
 
 This is just one small example of the limitless things you can do with the api and powershell objects.
+There are also many ''helper'' functions that make various operations easier.
+i.e. Maybe you want to create a host and deploy that "IT-image" image to it.
 
-see also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2 
+```
+#create the host
+New-FogHost -name "test-host" -macs "01:23:45:67:89:00"
+
+#add the image to the host
+$foghost = get-foghost -hostname "test-host";
+$image = Get-FogImages | ? name -eq "IT-image"
+$foghost.imageid = $image.id;
+$jsonData = $fogHost | ConvertTo-Json;
+Update-FogObject -Type object -CoreObject host -objectID $foghost.id -jsonData jsonData;
+
+#start the image task on the host now
+get-foghost -hostname "test-host" | send-fogimage
+```
+
+```
+#alternatively, schedule the image for later, like 10pm tomorrow
+get-foghost -hostname "test-host" | send-fogimage -StartAtTime (Get-Date 10pm).AddDays(1)
+```
+
+## Additional info
+
+See also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
