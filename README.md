@@ -7,14 +7,17 @@
 This is a powershell module to make using the Fog Project API even easier.
 FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
 It can be used to create more automation or to simply have a command line method of controlling fog operations.
+
+Docs for this module can be found at https://fogapi.readthedocs.io/en/latest/
+
 For more information about FOG see
 
 - https://FOGProject.org
 - https://docs.fogproject.org
 - https://github.com/FOGProject
 - https://github.com/FOGProject/fogproject
+- https://forums.fogproject.org
 
-Docs can be found at https://fogapi.readthedocs.io/en/latest/
 
 ## Notes about its new home and future structuring
 
