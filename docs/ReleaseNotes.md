@@ -4,10 +4,9 @@
 
 ### 2409.9.4
 
-	"Adding Chocolatey package and updates to auto adding various assets to each release. Also updated some manifest things. No Code changes, really just a maintenance release"
-
-
-
+	Adding Chocolatey package and updates to auto adding various assets to each release. 
+	Also updated some manifest things.
+	No Code changes, really just a maintenance release
 
 ### 2408.9.3
 
@@ -24,7 +23,7 @@
 	- Fixed issue with getting fog inventory in 1.6
 	- Implemented #16 for getting and setting fog global settings in fog 1.6
 	- Implemented #14 for getting the fog version
-	- Implemented #13 for invoking  wol task for a host
+	- Implemented #13 for invoking wol task for a host
 	- Added basic pipeline functionality for foghost objects in all applicable functions.
 	- Made it possible to send multiple specified snapins in a single start-fogsnapin call
 	- Added tab completion of server specific host names and snapin names in various functions like get-foghost, start-fogsnapin. set-fogsnapins, remove-usbmac

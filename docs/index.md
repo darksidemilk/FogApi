@@ -17,10 +17,22 @@ You can also find the published version of this module in the [Powershell Galler
 
 ## Configuring the api tokens
 
-In order to use the api, you need to have it enabled in the fog server and you need the api token for the server and the one for your user.
+In order to use the api, you need to have it enabled in the fog server and you need the api token for the server and the one for your user. You can do this with `Set-FogServerSettings` i.e.
 
-The first time you try to run a command the settings.json file will automatically open
-in notepad on windows, nano on linux, or TextEdit on Mac
+```
+Set-FogServerSettings -fogApiToken "SuperLongPastedFogToken" -fogUserToken "SuperLongPastedUserToken" -fogServer "fog-server-hostname"
+```
+
+or you can try 
+
+```
+Set-FogServerSettings -interactive
+```
+
+If you don't configure it with that command, then the first time you try to run a command the settings.json file will automatically open
+* in vscode if present or notepad if it's not on windows
+* nano if present or vi if it's not on linux
+* or TextEdit on Mac
 You can also open the settings.json file and edit it manually before running your first command.
 The default settings are explanations of where to find the proper settings since json can't have comments
 You can also use Set-FogServerSettings to set the api tokens for the sever and your user in one command. You first need to obtain these keys/tokens from the fog web gui. replace fog-server in the below example links with the name of your internal fog server if different
@@ -29,7 +41,7 @@ You can also use Set-FogServerSettings to set the api tokens for the sever and y
 - The fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab
 - the fog server name is the name of your fog server, it defaults to `fog-server` but can be updated if you aren't using that default name as the hostname or an alias
 
-Once you've obtained these you can run the command like this to save your fog api settings for the current user in a json file under `$home/APPDATA/Roaming/FogApi/api-settings.json` (this appdata path is created in linux/mac home folders) 
+Once you've obtained these you can run the command like this to save your fog api settings for the current user in a json file under `$env:APPDATA/FogApi/api-settings.json` if running in Windows, it's at `$home/.FogApi/api-settings.json` if running in Linux or Mac
 
 ```
 Set-FogServerSettings -fogApiToken "SuperLongPastedFogToken" -fogUserToken "SuperLongPastedUserToken" -fogServer "fog-server-hostname"
