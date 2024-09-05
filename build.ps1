@@ -1,7 +1,7 @@
 
 <#PSScriptInfo
 
-.VERSION 2.0.0.0
+.VERSION 3.0.0
 
 .GUID 473e8205-f9ee-4185-9daa-096fb36cf0b6
 
@@ -9,7 +9,7 @@
 
 .COMPANYNAME FogProject
 
-.COPYRIGHT 2019
+.COPYRIGHT 2019-2024
 
 .TAGS
 
@@ -26,6 +26,10 @@
 .EXTERNALSCRIPTDEPENDENCIES
 
 .RELEASENOTES
+
+		3.0.0
+			Updated to be compatible with github actions automated build and release flow
+			Added BuildHelpers.psm1 adhoc module functions
 
 		2.0.0.0
 			Updated with documentation integrations
@@ -95,6 +99,8 @@ mkdir "$modulePath\bin" -EA 0;
 mkdir "$modulePath\Public" -EA 0;
 mkdir "$modulePath\Private" -EA 0;
 mkdir "$modulePath\Classes" -EA 0;
+mkdir "$modulePath\icons" -EA 0;
+
 
 #update documentation
 
@@ -184,25 +190,34 @@ try {
 	New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 }
 
-
-$moduleFile = "$buildPth\$moduleName.psm1";
-New-Item $moduleFile -Force | Out-Null;
-
 $PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
 $Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
-$aliases = Get-AliasesToExport -psm1Path $moduleFile -modulePath $modulePath;
+$aliases = Get-AliasesToExport -psm1Path "$modulePath\$moduleName.psm1" -modulePath $modulePath;
 
 # mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
 # $buildPth = "$env:userprofile\ModuleBuild\$moduleName";
 
+"Creating new module build folder" | out-host;
 # Create the build output folder
 if (Test-Path $buildPth) {
 	Remove-Item $buildPth -force -recurse;
 }
 mkdir $buildPth | Out-Null;
 
+"Copying xml docs to build path" | out-host;
 Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
+
+"Copying icons folder" | out-host;
+Copy-item "$modulePath\icons" "$buildPth\icons" -Recurse -force -ea 0;
+
+"Building module file" | out-host;
+
+$moduleFile = "$buildPth\$moduleName.psm1";
+New-Item $moduleFile -Force | Out-Null;
+
+
+"Adding module file header" | out-host;
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
 if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
 	Copy-Item "$modulePath\lib" "$buildPth\lib" -Recurse;
@@ -218,33 +233,33 @@ Add-Content -Path $moduleFile -Value "`$script:tools = `"`$PSModuleRoot\tools`""
 
 #Build the psm1 file
 
-
 #Add Classes
 if ($null -ne $Classes) {
-
+	"Adding classes to module file" | out-host;
 	$Classes | ForEach-Object {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);
 	}
-
 }
 # Add-PublicFunctions
-Add-Content -Path $moduleFile -Value $heading
-        # $PublicFunctions;
-        $PublicFunctions | ForEach-Object { # Replace the comment block with external help link
-            $rawContent = (Get-Content $_.FullName -Raw);
-            $commentStartIdx = $rawContent.indexOf('<#');
-            if ($commentStartIdx -ge 0) {
-                $commentEndIdx = $rawContent.IndexOf('#>');
-                $commentLength = $commentEndIdx - ($commentStartIdx-2); #-2 to adjust for the # in front of > and the index starting at 0
-                $comment = $rawContent.Substring($commentStartIdx,$commentLength);
-                $newComment = "# .ExternalHelp $moduleName-help.xml"
-                $Function = $rawContent.Replace($comment,$newComment);
-            } else {
-                $Function = $rawContent;
-            }
-            Add-Content -Path $moduleFile -Value $Function
-        }
+# Add-Content -Path $moduleFile -Value $heading
+# $PublicFunctions;
+"Adding public functions to module file" | Out-Host;
+$PublicFunctions | ForEach-Object { # Replace the comment block with external help link
+	$rawContent = (Get-Content $_.FullName -Raw);
+	$commentStartIdx = $rawContent.indexOf('<#');
+	if ($commentStartIdx -ge 0) {
+		$commentEndIdx = $rawContent.IndexOf('#>');
+		$commentLength = $commentEndIdx - ($commentStartIdx-2); #-2 to adjust for the # in front of > and the index starting at 0
+		$comment = $rawContent.Substring($commentStartIdx,$commentLength);
+		$newComment = "# .ExternalHelp $moduleName-help.xml"
+		$Function = $rawContent.Replace($comment,$newComment);
+	} else {
+		$Function = $rawContent;
+	}
+	Add-Content -Path $moduleFile -Value $Function
+}
 #Add Private Functions
+"Adding private functions to module file" | Out-Host;
 if ($null -ne $PrivateFunctions) {
 	$PrivateFunctions | ForEach-Object {
 		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);            
@@ -252,7 +267,7 @@ if ($null -ne $PrivateFunctions) {
 }
 
 #Update The Manifest
-
+"Updating the module manifest" 
 $manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
 $cur = test-ModuleManifest -Path $manifest;
 
@@ -302,11 +317,17 @@ if($null -eq $aliases) {
 }
 
 # Update-ModuleManifest -Path $manifest -ReleaseNotes $releaseNotes -ModuleVersion $newVer -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
-Update-ModuleManifest @manifestSplat;
+if (Get-Command Update-PSModuleManifest) {
+	Update-PSModuleManifest @manifestSplat;
+} else {
+	"PSResourceGet version of update manifest not found, reverting to psget version, may cause issues with choco nuspec" | out-host; 
+	Update-ModuleManifest @manifestSplat;
+}
 
 Set-EmptyExportArray -psd1Path $Manifest -ExportType Cmdlets;
 Set-EmptyExportArray -psd1Path $Manifest -ExportType Variables;
 
+"Adding manifest to build path" | out-host;
 
 Copy-Item $manifest "$buildPth\$moduleName.psd1";
 
