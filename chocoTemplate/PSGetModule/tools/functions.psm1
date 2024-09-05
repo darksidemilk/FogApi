@@ -37,10 +37,10 @@ function Grant-FullRightsToPath {
     Switch to enable a wait at the end of the function for all running icacls to finish, and then generate and display a string output
 
     .EXAMPLE
-    Grant-FullRightsToPath -path "C:\Program Files\3shape","C:\ProgramData\3Shape","C:\Program Files (x86)\3shape" -user "Authenticated Users","ARROWHEAD\CAD"
+    Grant-FullRightsToPath -path "C:\Program Files\WindowsPowershell\Modules\FogApi","C:\Program Files\Powershell\Modules\FogApi" -user "Authenticated Users"
 
-    This will give the CAD usergroup as well as the authenticated users group full access to the program files and program data
-    for 3shape programs and files on each file explicitly
+    This will give the authenticated users group full access to the install folder of the FogAPI module
+    This helps during install/uninstall/update of the module. The settings.json file that contains the api key is stored elsewhere per user
     
     .NOTES
     This is a simple wrapper for a common use of icacls. This is the help info for icacls:    
@@ -179,9 +179,6 @@ function Grant-FullRightsToPath {
             - Will grant the user defined by sid S-1-1-0 Delete and
               Write DAC permissions to file.
 
-
-	.LINK
-	https://kb.arrowheaddental.com/display/PS/Grant-FullRightsToPath
     #>
     [CmdletBinding()]
     param (
