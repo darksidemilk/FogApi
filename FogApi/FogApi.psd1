@@ -39,14 +39,15 @@ Description = '
         It can be used to create more automation or to simply have a command line method of controlling fog operations.
         This essentially gives you a crossplatform commandline interface for fog tasks and makes many things easier to automate.
         
-        The documentation is hosted on readthedocs at https://fogapi.readthedocs.io/en/latest/
-    
+        Docs for this module can be found at https://fogapi.readthedocs.io/en/latest/
+
         For more information about FOG see
 
         - https://FOGProject.org
         - https://docs.fogproject.org
         - https://github.com/FOGProject
         - https://github.com/FOGProject/fogproject
+        - https://forums.fogproject.org
 
         # Versioning
 
