@@ -16,10 +16,10 @@ This essentially gives you a crossplatform commandline interface for fog tasks a
 
 For more information about FOG see
 
-* https://FOGProject.org
-* https://docs.fogproject.org
-* https://github.com/FOGProject
-* https://github.com/FOGProject/fogproject
+- https://FOGProject.org
+- https://docs.fogproject.org
+- https://github.com/FOGProject
+- https://github.com/FOGProject/fogproject
 
 # Versioning
 
@@ -53,12 +53,12 @@ To Install this module follow these steps
 
 ### Install from PSgallery
 
-* Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi with powershellget or PSResourceGet
-    * `Install-Module -name FogApi -Scope AllUsers`
-    * `Install-PSResource -Name FogApi -scope -Scope AllUsers`
-* updating is then as easy as
-    * `Update-Module -name FogApi`
-    * `Update-PSResource -Name FogApi`
+- Easiest method: Install from PSGallery https://www.powershellgallery.com/packages/FogApi with powershellget or PSResourceGet
+    - `Install-Module -name FogApi -Scope AllUsers`
+    - `Install-PSResource -Name FogApi -scope -Scope AllUsers`
+- updating is then as easy as
+    - `Update-Module -name FogApi`
+    - `Update-PSResource -Name FogApi`
 
 ### Install with Chocolatey
 
@@ -66,37 +66,37 @@ If you have chocolatey package manager, you can use the published package that m
 https://community.chocolatey.org/packages/FogApi
 See https://chocolatey.org for more information on chocolatey package manager
 
-* Install with chocolatey (will install the module by copying the built version to the powershell core and windows powershell paths, will remove any existing versions)
-    * `choco install fogapi -y`
-* Upgrading is as easy as (note that you can also use this same command for a new install)
-    * `choco upgrade fogapi -y`
+- Install with chocolatey (will install the module by copying the built version to the powershell core and windows powershell paths, will remove any existing versions)
+    - `choco install fogapi -y`
+- Upgrading is as easy as (note that you can also use this same command for a new install)
+    - `choco upgrade fogapi -y`
 
 ## Manual Installation
 
 ### Use assets from the release
 
-* Use Chocolatey, PackageManagement, Nuget or what have you to install the *chocolatey.nupkg or *.psgallery.nupkg file from the release assets
-* Extract the *builtModule.zip from the release and run `import-module` on the resulting folder for a portable installation. You can also extract to the paths outlined below in the manual build install steps for a more system wide install
+- Use Chocolatey, PackageManagement, Nuget or what have you to install the *chocolatey.nupkg or *.psgallery.nupkg file from the release assets
+- Extract the *builtModule.zip from the release and run `import-module` on the resulting folder for a portable installation. You can also extract to the paths outlined below in the manual build install steps for a more system wide install
 
 ### Manually build the module
 
-* Manual Method:
-* download the zip of this repo and extract it (or use git clone)
-    * Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
-* Run the build.ps1 script
-* Copy the built module folder (.\_module_build) into...
-    * For Windows Powershell v3-v5.1
-        * C:\Program Files\WindowsPowershell\Modules\FogApi
-    * For Powershell Core (pwsh) on Windows v7+
-        * C:\Program Files\PowerShell\Modules\FogApi
-    * For Linux Powershell Core (pwsh) v7+
-        * /usr/local/share/powershell/Modules/FogApi
-    * For Mac Powershell Core (pwsh) v7+ (untested)
-        * /usr/local/share/powershell/Modules/FogApi
-            * I haven't tested this on a mac, the module folder may be somewhere else
+- Manual Method:
+- download the zip of this repo and extract it (or use git clone)
+    - Or clone the repo using your favorite git tool, you just need the FogApi Folder this readme is in
+- Run the build.ps1 script
+- Copy the built module folder (.\_module_build) into...
+    - For Windows Powershell v3-v5.1
+        - C:\Program Files\WindowsPowershell\Modules\FogApi
+    - For Powershell Core (pwsh) on Windows v7+
+        - C:\Program Files\PowerShell\Modules\FogApi
+    - For Linux Powershell Core (pwsh) v7+
+        - /usr/local/share/powershell/Modules/FogApi
+    - For Mac Powershell Core (pwsh) v7+ (untested)
+        - /usr/local/share/powershell/Modules/FogApi
+            - I haven't tested this on a mac, the module folder may be somewhere else
             this is based on where it is in other powershell core installs
-* Open powershell (as admin recommended)
-* Run `Import-Module FogApi`
+- Open powershell (as admin recommended)
+- Run `Import-Module FogApi`
 
 The module is now installed. 
 

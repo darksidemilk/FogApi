@@ -357,17 +357,17 @@
 
 ### 2004.2.2.1
 
-    * Mainly a bug fix release for issues with pending mac handling.Ended up adding some extra helper functions along the way
-    * Added more get functions for ease of use including
+    - Mainly a bug fix release for issues with pending mac handling.Ended up adding some extra helper functions along the way
+    - Added more get functions for ease of use including
         - Get-FogGroupAssociations
         - Get-FogGroupByName
         - Get-FogGroups
         - Get-FogHostGroup (replaces Get-FogGroup, but kept Get-FogGroup as an alias as to not break anyones scripts)
         - Get-FogMacAddresses (has alias of Get-FogMacs)
         - Get-MacsForHost
-    * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
-    * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
-    * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+    - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
+    - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
+    - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
 
 
 

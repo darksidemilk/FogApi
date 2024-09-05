@@ -30,9 +30,9 @@ Set-FogServerSettings -interactive
 ```
 
 If you don't configure it with that command, then the first time you try to run a command the settings.json file will automatically open
-* in vscode if present or notepad if it's not on windows
-* nano if present or vi if it's not on linux
-* or TextEdit on Mac
+- in vscode if present or notepad if it's not on windows
+- nano if present or vi if it's not on linux
+- or TextEdit on Mac
 You can also open the settings.json file and edit it manually before running your first command.
 The default settings are explanations of where to find the proper settings since json can't have comments
 You can also use Set-FogServerSettings to set the api tokens for the sever and your user in one command. You first need to obtain these keys/tokens from the fog web gui. replace fog-server in the below example links with the name of your internal fog server if different
