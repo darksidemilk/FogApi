@@ -334,7 +334,7 @@ $newContent = $heading
 $newContent += "`n`n"
 $newContent += $majorVerStr
 $newContent += "`n`n"
-$newContent += "### $newVer`n`n`t$releaseNote`n"
+$newContent += "### $newVer`n`n`t$releaseNote`nsee https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log"
 # pause;
 if ($NoVerStep) {
 	"Not updating release notes markdown because noverstep specified! would have added $($newContent | out-string)" | out-host;
