@@ -72,9 +72,9 @@ ForEach ($destPath in $destinationPath) {
     #copy the psgetmoduleinfo files for the modules
     Write-Verbose "Copy PSGetModuleInfo xml"
     if ($destPath -match "\\Powershell\\Modules") {
-        $psgetXmlSrc = "$toolsDir\sources\PSGetModuleInfo-ps7.xml"
+        $psgetXmlSrc = "$toolsDir\files\PSGetModuleInfo-ps7.xml"
     } else {
-        $psgetXmlSrc = "$toolsDir\sources\PSGetModuleInfo-ps5.xml"
+        $psgetXmlSrc = "$toolsDir\files\PSGetModuleInfo-ps5.xml"
     }
     Copy-Item $psgetXmlSrc "$destPath\PSGetModuleInfo.xml" -Force
     $psgetxml = Get-Item "$destPath\PSGetModuleInfo.xml" -force;
