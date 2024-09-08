@@ -162,7 +162,7 @@ $filesSnippet = @"
     <file src="icons\**" target="icons" />
     <file src="en-us\**" target="en-us" />
     <file src="lib\**" target="lib" />
-    <file src="bin\**" target="bin" />
+    <!-- <file src="bin\**" target="bin" /> -->
     <file src=".\$moduleName.psd1" target=".\$moduleName.psd1" />
     <file src=".\$moduleName.psm1" target=".\$moduleName.psm1" />
 </files>
