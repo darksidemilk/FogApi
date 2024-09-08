@@ -58,7 +58,7 @@ ForEach ($destPath in $destinationPath) {
         } else {
             #this is the tools dir, make sure to not copy the chocolatey install scripts or psgetxml sources folder to the module install folder
             try {
-                Copy-Item $_ -Destination $destPath -Exclude "sources","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","PSGetModuleInfo-ps5.xml","PSGetModuleInfo-ps7.xml" -force -Recurse
+                Copy-Item $_ -Destination $destPath -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","PSGetModuleInfo-ps5.xml","PSGetModuleInfo-ps7.xml" -force -Recurse
             } catch {
                 if ($compare) {
                     Write-Verbose "The module may have already been installed, ignoring errors"
@@ -72,9 +72,9 @@ ForEach ($destPath in $destinationPath) {
     #copy the psgetmoduleinfo files for the modules
     Write-Verbose "Copy PSGetModuleInfo xml"
     if ($destPath -match "\\Powershell\\Modules") {
-        $psgetXmlSrc = "$toolsDir\sources\PSGetModuleInfo-ps7.xml"
+        $psgetXmlSrc = "$toolsDir\files\PSGetModuleInfo-ps7.xml"
     } else {
-        $psgetXmlSrc = "$toolsDir\sources\PSGetModuleInfo-ps5.xml"
+        $psgetXmlSrc = "$toolsDir\files\PSGetModuleInfo-ps5.xml"
     }
     Copy-Item $psgetXmlSrc "$destPath\PSGetModuleInfo.xml" -Force
     $psgetxml = Get-Item "$destPath\PSGetModuleInfo.xml" -force;
@@ -115,9 +115,13 @@ ForEach ($destPath in $destinationRootPath) {
         if ($null -ne $oldVersions) {
             Write-verbose "Taking ownership of path $($_) and setting permissions";
             $oldVersions | ForEach-Object {
-                $takeOwn = start-process -FilePath takeown.exe -ArgumentList "/F `"$($_)`" /R /A /D Y" -wait -NoNewWindow -PassThru -RedirectStandardOutput "C:\logs\takeown-$modulename-paths.log"
-                Write-Verbose "Take Ownership result is $($takeOwn | out-string) - $(Get-content "C:\logs\takeown-$modulename-paths.log" | out-string)"
-                Remove-Item "C:\logs\takeown-$modulename-paths.log" -force -Recurse -ea 0;
+                $logDir = "$env:temp\logs"
+                if (!(Test-Path $logDir)) {
+                    mkdir $logDir -ea 0;
+                }
+                $takeOwn = start-process -FilePath takeown.exe -ArgumentList "/F `"$($_)`" /R /A /D Y" -wait -NoNewWindow -PassThru -RedirectStandardOutput "$logDir\takeown-$modulename-paths.log"
+                Write-Verbose "Take Ownership result is $($takeOwn | out-string) - $(Get-content "$logDir\takeown-$modulename-paths.log" | out-string)"
+                Remove-Item "$logDir\takeown-$modulename-paths.log" -force -Recurse -ea 0;
             }
             try {
                 $perms = Grant-FullRightsToPath -path $oldVersions -recurseInherit -ea stop -wa 0 -wait -NoOutHost
