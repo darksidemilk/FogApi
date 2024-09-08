@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2409.9.6'
+ModuleVersion = '2409.9.7'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -184,9 +184,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2409.9.6
+# 2409.9.7
 
-	Fix choco template issue of typo of folder name sources vs files'
+	Fix choco package building issue where not all files were being properly included in the package'
 
         # Prerelease string of this module
         # Prerelease = ''

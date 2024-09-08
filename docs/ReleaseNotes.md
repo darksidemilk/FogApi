@@ -2,6 +2,9 @@
 
 ## 9.x
 
+### 2409.9.7
+
+	Fix choco package building issue where not all files were being properly included in the package
 ### 2409.9.6
 
 	Fix choco template issue of typo of folder name sources vs files
@@ -373,6 +376,7 @@
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
