@@ -14,7 +14,7 @@ function Get-WinBcdPxeId {
     switch param to not return the main bootmgr entry if it is returned
 
     .EXAMPLE
-    Get-BcdPxeBootID
+    Get-WinBcdPxeId
 
     Will return the guid of the native pxe boot option if one is found.
     
@@ -29,33 +29,55 @@ function Get-WinBcdPxeId {
         if ($IsLinux -or $IsMacOS) {
             Write-Warning "This is currently only implemented for windows"
         } else {
-            if (!(Test-String $searchString)) {
-                $searchString = "IPV4"
-                $searchString2 = "Network"
-                $searchString3 = "LAN"
-                $searchString4 = (Get-NetAdapter -ea 0 | Where-Object status -eq up | Where-Object name -match 'Ethernet' | Select-Object -First 1)
+            if (!(Test-StringNotNullOrEmpty $searchString)) {
+                [object]$searchString = (Get-NetAdapter -ea 0 | Where-Object status -eq up | Where-Object name -match 'Ethernet')[0]
+                $searchString2 = "IPV4"
+                $searchString3 = "Network"
+                $searchString4 = "LAN"
                 $searchString5 = "PXE"
             }
-            Write-Verbose "Searching bcd firmware boot options for description that matches $searchString"
-            $search = (bcdedit /enum firmware | select-string $searchString -Context 3,0 -ea 0);
-            if ($null -ne $searchString2) {
-                #search for PXE string that doesn't match ipxe that might match 'Network' (or 'EFI Network' on a surface go 2)
-                $search2 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString2 -Context 3,0 -ea 0);
-            }
-            if (($null -eq $search2) -and ($null -ne $searchString3)) {
-                #search for PXE string that doesn't match ipxe but does match 'LAN'
-                $search3 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString3 -Context 3,0 -ea 0);
-            }
-            if (($null -eq $search3) -and ($null -ne $searchString4)) {
+            # $searchString;
+            # pause;
+            if ((Test-StringNotNullOrEmpty "$($searchString.InterfaceDescription)" -ea 0)) {
                 #search for PXE string that doesn't match ipxe but does match the interface description of the first ethernet adapter that is currently up
-                if ($null -ne $searchString4.InterfaceDescription) {
-                    $searchString4 = $searchString4.InterfaceDescription
-                    $search4 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString4 -Context 3,0 -ea 0);
-                }
+                $searchString = $searchString.InterfaceDescription;
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString"
+                $search = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString -Context 3,0 -SimpleMatch -ea 0);
+                Write-Verbose "Result of search: $($search | out-string)"
+            } else {
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString"
+                $search = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString -Context 3,0 -ea 0);
+                Write-Verbose "Result of search: $($search | out-string)"
             }
-            if (($null -eq $search4) -and ($null -ne $searchString5)) {
+            if (($null -eq $search) -and ($null -ne $searchString2)) {
+                
+                #search for PXE string that doesn't match ipxe that might match 'ipv4'
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString2"
+                $search2 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString2 -Context 3,0 -ea 0);
+                Write-Verbose "Result of search: $($search2 | out-string)"
+            }
+            if (($null -eq $search) -and ($null -eq $search2) -and ($null -ne $searchString3)) {
+                #search for PXE string that doesn't match ipxe that might match 'Network' (or 'EFI Network' on a surface go 2)
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString3"
+                $search3 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString3 -Context 3,0 -ea 0);
+                Write-Verbose "Result of search: $($search3 | out-string)"
+            }
+            if (($null -eq $search) -and ($null -eq $search2) -and ($null -eq $search3) -and ($null -ne $searchString4)) {
+                #search for PXE string that doesn't match ipxe but does match 'LAN'
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString4"
+                $search4 = (bcdedit /enum firmware | select-string $searchString4 -Context 3,0 -ea 0);
+                Write-Verbose "Result of search: $($search4 | out-string)"
+                
+                # if ($null -ne $searchString4.InterfaceDescription) {
+                #     $searchString4 = $searchString4.InterfaceDescription
+                #     $search4 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString4 -Context 3,0 -ea 0);
+                # }
+            }
+            if (($null -eq $search) -and ($null -eq $search2) -and ($null -eq $search3) -and ($null -eq $search4) -and ($null -ne $searchString5)) {
                 #search for PXE string that doesn't match ipxe but does match 'PXE'
+                Write-Verbose "Searching bcd firmware boot options for description that matches $searchString5"
                 $search5 = (bcdedit /enum firmware | Where-Object { $_ -notmatch 'ipxe'} | select-string $searchString5 -Context 3,0 -ea 0);
+                Write-Verbose "Result of search: $($search5 | out-string)"
             }
     
             if ($null -ne $search) {
@@ -63,30 +85,35 @@ function Get-WinBcdPxeId {
                 $pxeID = ($search.Context.PreContext | Where-Object { $_ -match "identifier"})
                 if ($null  -ne $pxeID) {
                     $pxeID = $pxeID.trimstart("identifier").trim()
+                    $vbOut = $search;
                 }
             } elseif($null -ne $search2) {
                 Write-verbose "Found $($search2 | Out-String) returning just identifier"
                 $pxeID = ($search2.Context.PreContext | Where-Object { $_ -match "identifier"})
                 if ($null  -ne $pxeID) {
                     $pxeID = $pxeID.trimstart("identifier").trim()
+                    $vbOut = $search2;
                 }
             } elseif($null -ne $search3) {
                 Write-verbose "Found $($search3 | Out-String) returning just identifier"
                 $pxeID = ($search3.Context.PreContext | Where-Object { $_ -match "identifier"})
                 if ($null  -ne $pxeID) {
                     $pxeID = $pxeID.trimstart("identifier").trim()
+                    $vbOut = $search3;
                 }
             } elseif($null -ne $search4) {
                 Write-verbose "Found $($search4 | Out-String) returning just identifier"
                 $pxeID = ($search4.Context.PreContext | Where-Object { $_ -match "identifier"})
                 if ($null  -ne $pxeID) {
                     $pxeID = $pxeID.trimstart("identifier").trim()
+                    $vbOut = $search4;
                 }
             } elseif($null -ne $search5) {
                 Write-verbose "Found $($search5 | Out-String) returning just identifier"
                 $pxeID = ($search5.Context.PreContext | Where-Object { $_ -match "identifier"})
                 if ($null  -ne $pxeID) {
                     $pxeID = $pxeID.trimstart("identifier").trim()
+                    $vbOut = $search5;
                 }
             } else {
                 Write-Warning "no pxe boot options found in bcdedit matching $searchString!"
@@ -105,6 +132,7 @@ function Get-WinBcdPxeId {
                     $pxeID = $null
                 }
             }
+            "pxeID found is $pxeID full context is $($vbOut | Out-String)" | Out-Host;
             return $pxeID
         }
         

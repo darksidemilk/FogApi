@@ -25,7 +25,7 @@ The id can be used with \`bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfir
 
 ### EXAMPLE 1
 ```
-Get-BcdPxeBootID
+Get-WinBcdPxeId
 ```
 
 Will return the guid of the native pxe boot option if one is found.

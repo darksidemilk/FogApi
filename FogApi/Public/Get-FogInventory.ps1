@@ -10,7 +10,7 @@ function Get-FogInventory {
     .PARAMETER hostObj
     the host to get the model of the inventory object from
     This is used for the inventory structure of the object
-    It defaults to the current host
+    It defx`aults to the current host
 
     .PARAMETER fromFog
     Switch param to simply return the currently set inventory of the fog host
@@ -58,6 +58,7 @@ function Get-FogInventory {
             $cpu = Get-CimInstance -ClassName Win32_processor;
             $bios = Get-CimInstance -ClassName Win32_Bios;
             $hdd = Get-CimInstance -ClassName Win32_DiskDrive | Where-Object DeviceID -match '0'; #get just drive 0 in case of multiple drives
+            $gpu = Get-CimInstance -ClassName Win32_VideoController;
             $baseBoard = Get-CimInstance -ClassName Win32_BaseBoard;
             $case = Get-CimInstance -ClassName Win32_SystemEnclosure;
             $info = Get-ComputerInfo;
@@ -98,6 +99,12 @@ function Get-FogInventory {
             $hostObj.inventory.caseserial    = $case.SerialNumber;
             $hostObj.inventory.caseasset     = $case.SMBIOSAssetTag;
             $hostObj.inventory.memory        = "$([MATH]::Round($(($comp.TotalPhysicalMemory) / 1GB),2)) GiB";
+            if ($null -ne $hostObj.inventory.gpuvendors) {
+                $hostObj.inventory.gpuvendors = $gpu.AdapterCompatibility;
+            }
+            if ($null -ne $hostObj.inventory.gpuproducts) {
+                $hostObj.inventory.gpuproducts = $gpu.VideoProcessor;
+            }
             $jsonData = $hostObj.inventory | ConvertTo-Json;
             return $jsonData;
         }
