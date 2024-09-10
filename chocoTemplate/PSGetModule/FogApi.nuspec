@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>FogApi</id>
+    <title>FogApi Powershell Module</title>
+    <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
+    <version>[[ModuleVersion]]</version>
+    <authors>JJ Fullmer</authors>
+    <owners>FOG Project</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/darksidemilk/FogApi/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>
+    <iconUrl>https://cdn.statically.io/gh/darksidemilk/FogApi/0ed5e87e/FogApi/icons/favicon.png</iconUrl>
+    <description>
+[[ModuleDescription]]</description>
+    <releaseNotes>
+[[ModuleReleaseNote]]</releaseNotes>
+    <copyright>2018-2024</copyright>
+    <tags>PSModule fog fogapi imaging provisioning fogproject</tags>
+    <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
+    <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
+    <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
+    <projectSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</projectSourceUrl>
+</metadata>
+<files>
+    <!-- this section controls what actually gets packaged into the Chocolatey package -->
+    <!-- make sure that all files used in the module are included-->
+    <file src="tools\**" target="tools" />
+    <file src="icons\**" target="icons" />
+    <file src="en-us\**" target="en-us" />
+    <file src="lib\**" target="lib" />
+    <!-- <file src="bin\**" target="bin" /> -->
+    <file src=".\FogApi.psd1" target=".\FogApi.psd1" />
+    <file src=".\FogApi.psm1" target=".\FogApi.psm1" />
+    <!-- <file src="..\..\_module_build\FogApi.psm1" target=".\FogApi.psm1" /> -->
+    <!-- <file src="..\..\_module_build\FogApi.psd1" target=".\FogApi.psd1" /> -->
+</files>
+</package>

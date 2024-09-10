@@ -30,7 +30,7 @@ $destinationPath = New-Object -TypeName 'System.Collections.generic.list[System.
 $destinationPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName\$moduleVersion"))
 $destinationPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName\$moduleVersion"))
 
-"Installing $modulename version $moduleVersion in bothe pwsh 7+ and windows powershell 5.1 system paths" | out-host;
+"Installing $modulename version $moduleVersion in both pwsh 7+ and windows powershell 5.1 system paths" | out-host;
 ForEach ($destPath in $destinationPath) {
     Write-Verbose "Installing '$modulename' to '$destPath'."
 
@@ -58,12 +58,26 @@ ForEach ($destPath in $destinationPath) {
         } else {
             #this is the tools dir, make sure to not copy the chocolatey install scripts or psgetxml sources folder to the module install folder
             try {
-                Copy-Item $_ -Destination $destPath -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","PSGetModuleInfo-ps5.xml","PSGetModuleInfo-ps7.xml" -force -Recurse
+                Copy-Item $_ -Destination $destPath -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","PSGetModuleInfo-ps5.xml","PSGetModuleInfo-ps7.xml","functions.psm1" -force -Recurse
             } catch {
                 if ($compare) {
                     Write-Verbose "The module may have already been installed, ignoring errors"
                 } else {
                     throw "Error during copy of $($_) to $destPath!"
+                }
+            }
+            Write-Verbose "Removing any empty directories within tools directory"
+            "files","sources" | ForEach-Object {
+                if (Test-path "$destPath\$_") {
+                    if ((Get-ChildItem -Path "$destPath\$_").count -eq 0) {
+                        Remove-Item "$destPath\$_" -Force -Recurse;
+                    }
+                }
+            }
+            Write-Verbose "Empty tools directory from installed location if it is empty"
+            if (Test-path "$destPath") {
+                if ((Get-ChildItem -Path "$destPath").count -eq 0) {
+                    Remove-Item "$destPath" -Force -Recurse;
                 }
             }
         }
@@ -131,6 +145,7 @@ ForEach ($destPath in $destinationRootPath) {
                 Write-Verbose "Grant-fullrightstopath had an error, icacls native grant result is $($perms | out-string)"
             }
             $oldVersions | Foreach-object { 
+                #uninstall from rare path scenario
                 if ($_ -match 'config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache') {
                     $inetCache = "C:\windows\system32\config\systemprofile\AppData\Local\Microsoft\Windows\INetCache"
                     if (Test-Path $inetCache) {
@@ -143,8 +158,10 @@ ForEach ($destPath in $destinationRootPath) {
                         remove-item $inetCache -Force -Recurse
                     }
                 } elseif ($_ -match "AppData\\Local\\Application Data") {
+                    #uninstall from rare path scenario
                     Write-Warning "$($_) is a symlink path with no access, skip this install, this may indicate other misconfigurations! Skipping removal attempts of this path"
                 } else {
+                    #standard uninstall
                     try {
                         if (Test-Path $_) {
                             Write-Verbose "Attempting removal of old version of $moduleName installed at $($_)"
@@ -178,7 +195,7 @@ $sourcePath | ForEach-Object {
     } else {
         #is toolsdir, keep install scripts
         if (Test-Path $_) {
-            $_ | Get-ChildItem -Exclude "sources","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1" | ForEach-Object {
+            $_ | Get-ChildItem -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","functions.psm1" | ForEach-Object {
                 Remove-item $_.fullname -force -recurse -ea 0;
             }
         }
