@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2409.9.13'
+ModuleVersion = '2409.9.14'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -189,9 +189,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2409.9.13
+# 2409.9.14
 
-	Updated Send-FogImage with params for 1.6 and added switch options and autocomplete for available fog images. Also added a basic Set-FogHostImage function, needs to be further flushes out but the basic functionality is there.
+	Filter out rdp display driver when getting host inventory details and append video memory in GB to each adapter name
 
 Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'
 

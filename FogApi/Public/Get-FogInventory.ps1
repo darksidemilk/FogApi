@@ -58,7 +58,7 @@ function Get-FogInventory {
             $cpu = Get-CimInstance -ClassName Win32_processor;
             $bios = Get-CimInstance -ClassName Win32_Bios;
             $hdd = Get-CimInstance -ClassName Win32_DiskDrive | Where-Object DeviceID -match '0'; #get just drive 0 in case of multiple drives
-            $gpu = Get-CimInstance -ClassName Win32_VideoController;
+            $gpu = Get-CimInstance -ClassName Win32_VideoController | Where-Object name -notmatch 'Microsoft Remote Display Adapter'; #filter out rdp display adapter
             $baseBoard = Get-CimInstance -ClassName Win32_BaseBoard;
             $case = Get-CimInstance -ClassName Win32_SystemEnclosure;
             $info = Get-ComputerInfo;
@@ -103,7 +103,9 @@ function Get-FogInventory {
                 $hostObj.inventory.gpuvendors = $gpu.AdapterCompatibility;
             }
             if ($null -ne $hostObj.inventory.gpuproducts) {
-                $hostObj.inventory.gpuproducts = $gpu.VideoProcessor;
+                $hostObj.inventory.gpuproducts = $gpu | Foreach-Object {
+                    "$($_.VideoProcessor) - ($([math]::round($_.AdapterRAM/1GB))GB)";
+                }
             }
             $jsonData = $hostObj.inventory | ConvertTo-Json;
             return $jsonData;
