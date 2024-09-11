@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2409.9.14'
+ModuleVersion = '2409.9.15'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -189,9 +189,9 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2409.9.14
+# 2409.9.15
 
-	Filter out rdp display driver when getting host inventory details and append video memory in GB to each adapter name
+	revert change of appending gpu ram
 
 Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'
 

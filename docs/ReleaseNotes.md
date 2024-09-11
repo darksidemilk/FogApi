@@ -2,6 +2,10 @@
 
 ## 9.x
 
+### 2409.9.15
+
+	revert change of appending gpu ram
+
 ### 2409.9.14
 
 	Filter out rdp display driver when getting host inventory details and append video memory in GB to each adapter name
@@ -406,6 +410,7 @@
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 

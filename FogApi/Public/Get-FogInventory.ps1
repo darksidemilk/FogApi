@@ -103,9 +103,11 @@ function Get-FogInventory {
                 $hostObj.inventory.gpuvendors = $gpu.AdapterCompatibility;
             }
             if ($null -ne $hostObj.inventory.gpuproducts) {
-                $hostObj.inventory.gpuproducts = $gpu | Foreach-Object {
+                $hostObj.inventory.gpuproducts = $gpu.VideoProcessor
+                #below is an attempt to append the video memoery of each gpu, but it gave wrong values on some cards
+                <# $hostObj.inventory.gpuproducts = $gpu | Foreach-Object {
                     "$($_.VideoProcessor) - ($([math]::round($_.AdapterRAM/1GB))GB)";
-                }
+                } #>
             }
             $jsonData = $hostObj.inventory | ConvertTo-Json;
             return $jsonData;
