@@ -2,6 +2,22 @@
 
 ## 9.x
 
+### 2409.9.12
+
+	Updated choco build and build function formatting operations further
+
+### 2409.9.11
+
+	Updated choco build to reformat release notes and description
+
+### 2409.9.10
+
+	Updated release note formatting in manifest to always link to full change log
+
+### 2409.9.9
+
+	Adding choco package template for source url and fix releasenote md formattinc in nuspec
+
 ### 2409.9.8
 
 	Added gpu properties to get-foginventory for upcoming add of gpu info to fog inventory records and fixed missing functions in in get-winbcdpxeid
@@ -10,15 +26,14 @@
 ### 2409.9.7
 
 	Fix choco package building issue where not all files were being properly included in the package
+
 ### 2409.9.6
 
 	Fix choco template issue of typo of folder name sources vs files
 
-
 ### 2409.9.5
 
 	Updated and unified various docs, added icon packaging with best practicies for chocolatey and psgallery. Updated chocolatey packaging and build functions.
-
 
 ### 2409.9.4
 
@@ -381,6 +396,10 @@
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
+
+
 
 
 

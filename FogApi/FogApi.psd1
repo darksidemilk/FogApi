@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2409.9.8'
+ModuleVersion = '2409.9.12'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,59 +30,63 @@ CompanyName = 'FOG Project'
 Copyright = '2018-2024'
 
 # Description of the functionality provided by this module
-Description = 'This is a powershell module to simplify the use of the Fog Project API.
-        This module is used to easily run Fog API commands on your fogserver from a powershell console or script.
-        FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to 
-        perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
-        It can be used to create more automation or to simply have a command line method of controlling fog operations.
-        This essentially gives you a crossplatform commandline interface for fog tasks and makes many things easier to automate.
-        
-        Docs for this module can be found at https://fogapi.readthedocs.io/en/latest/
+Description = '
+# FOG Api Powershell Module
 
-        For more information about FOG see
+This is a powershell module to simplify the use of the Fog Project API.
+This module is used to easily run Fog API commands on your fogserver from a powershell console or script.
+FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to 
+perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
+It can be used to create more automation or to simply have a command line method of controlling fog operations.
+This essentially gives you a crossplatform commandline interface for fog tasks and makes many things easier to automate.
 
-        - https://FOGProject.org
-        - https://docs.fogproject.org
-        - https://github.com/FOGProject
-        - https://github.com/FOGProject/fogproject
-        - https://forums.fogproject.org
+Docs for this module can be found at https://fogapi.readthedocs.io/en/latest/
 
-        # Versioning
+For more information about FOG see
 
-        The versioning of this module follows this pattern
+- https://FOGProject.org
+- https://docs.fogproject.org
+- https://github.com/FOGProject
+- https://github.com/FOGProject/fogproject
+- https://forums.fogproject.org
 
-        `{Year|Month}.{Major Version}.{Revision #}`
+# Versioning
 
-        ## Year/Month
+The versioning of this module follows this pattern
 
-        This versioning shows you first the Year and month this version of the module was published, giving you an idea of when it was last updated.
-        i.e. 2208 would be august 2022.
+`{Year|Month}.{Major Version}.{Revision #}`
 
-        ## Major
+## Year/Month
 
-        The Major version follows the typical major versioning where any major changes will increment this version number, especially possible breaking changes or structural changes, etc.
+This versioning shows you first the Year and month this version of the module was published, giving you an idea of when it was last updated.
+i.e. 2208 would be august 2022.
 
-        ## Minor/Revision
+## Major
 
-        Any time I publish a new version that isn''t a major change I''ll increment the revision. This may also be incremented for each build test and increment by more than one for each published version
-        
-        # Usage
-    
-        You can use Set-fogserverSettings to set your fogserver hostname and api keys.
-        The first time you try to run a command the settings.json file will automatically open
-        in notepad on windows, nano on linux, or TextEdit on Mac
-        You can also open the settings.json file and edit it manually before running your first command.
-        The default settings are explanations of where to find the proper settings since json can''''t have comments
-    
-        Once the settings are set you can have a jolly good time utilzing the fog documentation
-        found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
+The Major version follows the typical major versioning where any major changes will increment this version number, especially possible breaking changes or structural changes, etc.
 
-        See https://github.com/darksidemilk/FogApi/blob/master/README.md for more examples and see https://fogapi.readthedocs.io/en/latest/commands/ for a list of all the commands
-    
-        # Additional info
-    
-        See also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
-        '
+## Minor/Revision
+
+Any time I publish a new version that isn''t a major change I''ll increment the revision. This may also be incremented for each build test and increment by more than one for each published version
+
+# Usage
+
+You can use Set-fogserverSettings to set your fogserver hostname and api keys.
+The first time you try to run a command the settings.json file will automatically open
+in notepad on windows, nano on linux, or TextEdit on Mac
+You can also open the settings.json file and edit it manually before running your first command.
+The default settings are explanations of where to find the proper settings since json can''''t have comments
+
+Once the settings are set you can have a jolly good time utilzing the fog documentation
+found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
+
+See https://github.com/darksidemilk/FogApi/blob/master/README.md for more examples and see https://fogapi.readthedocs.io/en/latest/commands/ for a list of all the commands
+
+# Additional info
+
+See also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
+Full change log available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/
+'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '3.0'
@@ -185,9 +189,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2409.9.8
+# 2409.9.12
 
-	Added gpu properties to get-foginventory for upcoming add of gpu info to fog inventory records and fixed missing functions in in get-winbcdpxeid'
+	Updated choco build and build function formatting operations further
+
+Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'
 
         # Prerelease string of this module
         # Prerelease = ''

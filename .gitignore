@@ -2,3 +2,4 @@ _build
 _module_build
 .lastprereqrun
 .vscode
+.nupkg

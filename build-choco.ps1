@@ -36,6 +36,13 @@
 .DESCRIPTION
 build choco module to install published powershell module
 
+.PARAMETER buildPth
+Specificy a non-default path to where the built module is found
+
+.PARAMETER useLocal
+Switch param to create a temp repository to publish the built module to and download the nuspec and psgetxml from the local 
+repo and then adjust that xml to point to the psgallery as the publish repository. Default behavior is to download and package based on latest publicly available package in psgallery
+
 #>
 [CmdletBinding()]
 Param(
@@ -139,12 +146,13 @@ if (!(Get-command choco.exe)) {
 }
 Set-Location "$chocoPth\$modulename\$version"
 "Updating nuspec" | out-host;
+$nuspec ="$pwd\$moduleName.nuspec"
 
 $nuspecSnippet = @"
   <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
     <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
     <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
-    <projectSourceUrl>https://github.com/darksidemilk/FogApi</projectSourceUrl>
+    <projectSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</projectSourceUrl>
 </metadata>
 "@
 $titleSnippet = @"
@@ -152,12 +160,13 @@ $titleSnippet = @"
     <title>FogApi Powershell Module</title>
     <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
 "@
-$softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
+# $softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
 
 $filesSnippet = @"
 </metadata>
 <files>
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
+    <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
     <file src="icons\**" target="icons" />
     <file src="en-us\**" target="en-us" />
@@ -165,18 +174,26 @@ $filesSnippet = @"
     <!-- <file src="bin\**" target="bin" /> -->
     <file src=".\$moduleName.psd1" target=".\$moduleName.psd1" />
     <file src=".\$moduleName.psm1" target=".\$moduleName.psm1" />
+    <!-- <file src="..\..\_module_build\$moduleName.psm1" target=".\$moduleName.psm1" /> -->
+    <!-- <file src="..\..\_module_build\$moduleName.psd1" target=".\$moduleName.psd1" /> -->
 </files>
 "@
 
-$nuspec ="$pwd\$moduleName.nuspec"
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$nuspecSnippet) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<id>FogApi</id>",$titleSnippet) -Force;
-Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
+# Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$filesSnippet) -Force;
 
 if ($useLocal) {
     Unregister-PSResourceRepository -name temp -ea 0;
     remove-item $env:temp\modules -force -Recurse -ea 0;
 }
+#fix description and release notes
+$nuspecContent = Get-Content $nuspec;
+[xml]$nuspecXml = $nuspecContent;
+$nuspecXml.package.metadata.description = "`n$($nuspecXml.package.metadata.description)"
+$nuspecXml.package.metadata.releaseNotes = "`n$($nuspecXml.package.metadata.releaseNotes)"
+$nuspecXml.Save($nuspec);
+
 
 choco pack

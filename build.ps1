@@ -285,7 +285,7 @@ if ($major) {
 # $verArgs.Add(($oldVer.Revision + 1))
 # if($verArgs[-1] -eq 0) {$verArgs[-1] += 1}
 $newVer = New-Object version -ArgumentList $verArgs;
-$releaseNotes = "`n# $newVer`n`n`t$releaseNote"
+$releaseNotes = "`n# $newVer`n`n`t$releaseNote`n`nFull change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/"
 
 
 $copyRight = (get-date -Format yyyy).tostring()
@@ -355,7 +355,7 @@ $newContent = $heading
 $newContent += "`n`n"
 $newContent += $majorVerStr
 $newContent += "`n`n"
-$newContent += "### $newVer`n`n`t$releaseNote`n"
+$newContent += "### $newVer`n`n`t$releaseNote`n`n"
 # pause;
 if ($NoVerStep) {
 	"Not updating release notes markdown because noverstep specified! would have added $($newContent | out-string)" | out-host;
