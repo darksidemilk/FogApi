@@ -96,6 +96,8 @@
 
 ## [Send-FogWolTask](Send-FogWolTask.md)
 
+## [Set-FogHostImage](Set-FogHostImage.md)
+
 ## [Set-FogInventory](Set-FogInventory.md)
 
 ## [Set-FogServerSettings](Set-FogServerSettings.md)

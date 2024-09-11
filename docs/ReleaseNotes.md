@@ -2,6 +2,12 @@
 
 ## 9.x
 
+### 2409.9.13
+
+	Updated Send-FogImage with params for 1.6 and added switch options and autocomplete for available fog images. Also added a basic Set-FogHostImage function, needs to be further flushes out but the basic functionality is there.
+
+
+
 ### 2409.9.12
 
 	Updated choco build and build function formatting operations further
@@ -396,6 +402,7 @@
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 

@@ -14,24 +14,26 @@ Start or schedule a deploy task for a fog host
 
 ### now (Default)
 ```
-Send-FogImage [-hostId <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
+ [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### schedule-byhost
 ```
-Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
+ [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### now-byhost
 ```
-Send-FogImage [-fogHost <Object>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Send-FogImage [-fogHost <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -105,6 +107,84 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -imageName
+The name of the image to deploy, uses currently set image if not specified
+Tab completion of your fog server's image names if you're on pwsh 7+
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -debugMode
+Switch param to mark the task as a debug task
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWol
+Switch param to not use wake on lan in the task, default is to use wake on lan
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -shutdown
+Switch param to indicate the host should shutdown at the end of the task instead of restarting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoSnapins
+Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
+assigned snapins aren't auto scheduled too.
+Only works in FOG 1.6+
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: schedule, schedule-byhost
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
