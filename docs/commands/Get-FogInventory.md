@@ -44,7 +44,7 @@ the inventory of the linux machine isn't yet implemented
 ### -hostObj
 the host to get the model of the inventory object from
 This is used for the inventory structure of the object
-It defaults to the current host
+It defx\`aults to the current host
 
 ```yaml
 Type: Object

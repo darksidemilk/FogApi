@@ -2,12 +2,58 @@
 
 ## 9.x
 
+### 2409.9.15
+
+	revert change of appending gpu ram
+
+### 2409.9.14
+
+	Filter out rdp display driver when getting host inventory details and append video memory in GB to each adapter name
+
+### 2409.9.13
+
+	Updated Send-FogImage with params for 1.6 and added switch options and autocomplete for available fog images. Also added a basic Set-FogHostImage function, needs to be further flushes out but the basic functionality is there.
+
+
+
+### 2409.9.12
+
+	Updated choco build and build function formatting operations further
+
+### 2409.9.11
+
+	Updated choco build to reformat release notes and description
+
+### 2409.9.10
+
+	Updated release note formatting in manifest to always link to full change log
+
+### 2409.9.9
+
+	Adding choco package template for source url and fix releasenote md formattinc in nuspec
+
+### 2409.9.8
+
+	Added gpu properties to get-foginventory for upcoming add of gpu info to fog inventory records and fixed missing functions in in get-winbcdpxeid
+
+
+### 2409.9.7
+
+	Fix choco package building issue where not all files were being properly included in the package
+
+### 2409.9.6
+
+	Fix choco template issue of typo of folder name sources vs files
+
+### 2409.9.5
+
+	Updated and unified various docs, added icon packaging with best practicies for chocolatey and psgallery. Updated chocolatey packaging and build functions.
+
 ### 2409.9.4
 
-	"Adding Chocolatey package and updates to auto adding various assets to each release. Also updated some manifest things. No Code changes, really just a maintenance release"
-
-
-
+	Adding Chocolatey package and updates to auto adding various assets to each release. 
+	Also updated some manifest things.
+	No Code changes, really just a maintenance release
 
 ### 2408.9.3
 
@@ -24,7 +70,7 @@
 	- Fixed issue with getting fog inventory in 1.6
 	- Implemented #16 for getting and setting fog global settings in fog 1.6
 	- Implemented #14 for getting the fog version
-	- Implemented #13 for invoking  wol task for a host
+	- Implemented #13 for invoking wol task for a host
 	- Added basic pipeline functionality for foghost objects in all applicable functions.
 	- Made it possible to send multiple specified snapins in a single start-fogsnapin call
 	- Added tab completion of server specific host names and snapin names in various functions like get-foghost, start-fogsnapin. set-fogsnapins, remove-usbmac
@@ -353,17 +399,28 @@
 
 ### 2004.2.2.1
 
-    * Mainly a bug fix release for issues with pending mac handling.Ended up adding some extra helper functions along the way
-    * Added more get functions for ease of use including
+    - Mainly a bug fix release for issues with pending mac handling.Ended up adding some extra helper functions along the way
+    - Added more get functions for ease of use including
         - Get-FogGroupAssociations
         - Get-FogGroupByName
         - Get-FogGroups
         - Get-FogHostGroup (replaces Get-FogGroup, but kept Get-FogGroup as an alias as to not break anyones scripts)
         - Get-FogMacAddresses (has alias of Get-FogMacs)
         - Get-MacsForHost
-    * Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
-    * Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
-    * Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+    - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
+    - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
+    - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
+
+
+
+
+
+
+
+
+
 
 
 

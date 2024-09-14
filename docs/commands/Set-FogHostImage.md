@@ -1,64 +1,64 @@
 ---
 external help file: FogApi-help.xml
 Module Name: FogApi
-online version: https://fogapi.readthedocs.io/en/latest/commands/Get-WinBcdPxeId
+online version: https://fogapi.readthedocs.io/en/latest/commands/Set-FogHostImage
 schema: 2.0.0
 ---
 
-# Get-WinBcdPxeId
+# Set-FogHostImage
 
 ## SYNOPSIS
-Searches bcd firmware options for a given or model specific search string and returns the boot device guid
+Function to set a given image object to a host by its id
 
 ## SYNTAX
 
 ```
-Get-WinBcdPxeId [[-searchString] <String>] [-notBootMgr] [-ProgressAction <ActionPreference>]
+Set-FogHostImage [-hostID] <Object> [[-fogImage] <Object>] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Searches bcd firmware options for a given or model specific search string and returns the boot device guid 
-The id can be used with \`bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfirst\` to be set as the first boot option in the computer's bios boot order
+Function to set a given image object to a host by its id
+Will be expanded for better usability in the future
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Get-WinBcdPxeId
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Will return the guid of the native pxe boot option if one is found.
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -searchString
-Optionatlly specify a search string, can be pxe related or try to find a different id from \`bcdedit /enum firmware\`
+### -hostID
+the host id to set an image on
 
 ```yaml
-Type: String
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -notBootMgr
-switch param to not return the main bootmgr entry if it is returned
+### -fogImage
+the image object gotten from get-fogimages
 
 ```yaml
-Type: SwitchParameter
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 

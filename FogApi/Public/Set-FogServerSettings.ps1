@@ -22,6 +22,7 @@ You can enforce the use of http or https in api calls by specifying the serverna
 
 .PARAMETER interactive
 switch to make setting these an interactive process, if you set no values this is the default
+Warning, this can have issues in linux, especially when working in a remote shell, the paste into read-host can behave odd.
 
 .EXAMPLE
 Set-FogServerSettings -fogapiToken "12345abcdefg" -fogUserToken "abcdefg12345" -fogServer "fog"
@@ -55,6 +56,9 @@ This will set the current users FogApi/settings.json file to have the given api 
             fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
+            if ($IsLinux) {
+                Write-Warning "If you have issues with pasting your apikeys into these prompts (issue with read-host in some linux instances of pwsh), try again without -interactive and paste into each param. i.e. `Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'"
+            }
             ($serverSettings.psobject.properties).Name | ForEach-Object {
                 $var = (Get-Variable -Name $_);
                 if ($null -eq $var.Value -OR $var.Value -eq "") {
@@ -106,13 +110,21 @@ This will set the current users FogApi/settings.json file to have the given api 
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null or still set to its default help text, opening the settings file for you to set the settings"
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
             if ($isLinux) {
-                $editor = 'nano';
+                if (Get-Command nano) {
+                    $editor = 'nano';
+                } else {
+                    $editor = 'vi';
+                }
             }
             elseif($IsMacOS) {
                 $editor = 'TextEdit';
             }
             else {
-                $editor = 'notepad.exe';
+                if ((Get-Command 'code.exe')) {
+                    $editor = 'code.exe';
+                } else {
+                    $editor = 'notepad.exe';
+                }
             }
             Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru;
             return;
