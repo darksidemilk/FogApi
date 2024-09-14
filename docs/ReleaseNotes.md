@@ -2,6 +2,50 @@
 
 ## 9.x
 
+### 2409.9.16
+
+	add publishing chocolatey package to release flow (#22)
+
+* Updated docs to be more unified in their appearance where information is purposely duplicated.
+
+* Added icon to module files and included staically.io cdn version of icon in manifest. Unified the manifest description with the Readme as the manifest description is  used in choco package description.
+Want to be sure any new user gets the same information now matter how they find the module.
+
+* Added chocolatey packaging that includes the psgetmoduleinfo.xml to install the module in an alternative method outside of psget and psresourceget while maintaining compatibility with psget and psresourceget.
+Also reordered some functions in the build script and made other various improvements to the build process.
+
+* Added comment in the set-fogserversettings function help and a warning when running in linux about paste issues that sometimes occur when running set-fogserversettings -interactive.
+
+* Updated and unified various docs, added icon packaging with best practicies for chocolatey and psgallery. Updated chocolatey packaging and build functions. Updated docs for set-fogserversettings.md and added psresourceget methods to invoke-modulebuild for test builds to use the same methodology as prod builds
+
+* use '-' instead of '*' in markdown formats
+
+* verbage fix and add forums link
+
+* unify the overview docs
+
+* Fix choco template issue of typo of folder name sources vs files
+
+* Shortened the manifest and nuspec description
+
+* Update files section of nuspec to properly include the module files
+
+* Added gpu properties to get-foginventory for upcoming add of gpu info to fog inventory records and fixed missing functions in in get-winbcdpxeid
+
+* Added nuspec and psgetmodule info templates
+
+* Updates to release note formatting, manifest description format, and build script improvements
+
+* Updated Send-FogImage with params for 1.6 and added switch options and autocomplete for available fog images. Also added a basic Set-FogHostImage function, needs to be further flushes out but the basic functionality is there.
+
+* Filter out rdp display driver when getting host inventory details and append video memory in GB to each adapter name
+
+* revert change of appending gpu ram as it doesn't work for all gpus equally
+
+* Update tag-and-release.yml - Comment out the choco community publish, will continue to have the choco nupkg attached to the release until the first version is approved.
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2409.9.15
 
 	revert change of appending gpu ram
@@ -410,6 +454,7 @@
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
