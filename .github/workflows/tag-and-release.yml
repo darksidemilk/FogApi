@@ -93,18 +93,18 @@ jobs:
             gh release upload $version ".\_module_build\FogApi.$version.psgallery.nupkg"
             gh release upload $version ".\_module_build\FogApi.$version.BuiltModule.zip"
 
-            "building choco package..." | out-host;
-            .\build-choco.ps1;
+            "building choco package from local build and temp psresource repo..." | out-host;
+            .\build-choco.ps1 -uselocal;
             
             "adding choco package to release" | out-host;
             copy-item ".\FogApi.$version.nupkg" ".\FogApi.$version.chocolatey.nupkg"
             gh release upload $version ".\FogApi.$version.chocolatey.nupkg"
             remove-item ".\FogApi.$version.chocolatey.nupkg" -force -recurse -ea 0;
             
-            "publishing choco package..." | out-host;
-            choco apikey add -s "https://push.chocolatey.org/" -k="$env:ChocoKey"
-            choco apikey add -s "https://community.chocolatey.org/api/v2/" -k="$env:ChocoKey"
-            choco push "FogApi.$version.nupkg" --source https://push.chocolatey.org/
+            #"publishing choco package..." | out-host;
+            #choco apikey add -s "https://push.chocolatey.org/" -k="$env:ChocoKey"
+            #choco apikey add -s "https://community.chocolatey.org/api/v2/" -k="$env:ChocoKey"
+            #choco push "FogApi.$version.nupkg" --source https://push.chocolatey.org/
 
 
 
