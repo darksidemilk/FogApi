@@ -168,7 +168,7 @@ $filesSnippet = @"
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
     <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
-    <file src="icons\**" target="icons" />
+    <!-- <file src="icons\**" target="icons" /> -->
     <file src="en-us\**" target="en-us" />
     <file src="lib\**" target="lib" />
     <!-- <file src="bin\**" target="bin" /> -->

@@ -5,8 +5,8 @@
     <title>FogApi Powershell Module</title>
     <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
     <version>[[ModuleVersion]]</version>
-    <authors>JJ Fullmer</authors>
-    <owners>FOG Project</owners>
+    <authors>JJ Fullmer, FOG Project</authors>
+    <owners>JJ Fullmer</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/darksidemilk/FogApi/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>
@@ -26,7 +26,7 @@
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
     <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
-    <file src="icons\**" target="icons" />
+    <!-- <file src="icons\**" target="icons" /> -->
     <file src="en-us\**" target="en-us" />
     <file src="lib\**" target="lib" />
     <!-- <file src="bin\**" target="bin" /> -->

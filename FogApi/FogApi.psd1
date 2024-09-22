@@ -15,13 +15,13 @@ RootModule = 'FogApi.psm1'
 ModuleVersion = '2409.9.16'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop','Core')
 
 # ID used to uniquely identify this module
 GUID = '7aa922fa-bb4f-46a0-a478-684e9535c65d'
 
 # Author of this module
-Author = 'JJ Fullmer'
+Author = 'JJ Fullmer, FOG Project'
 
 # Company or vendor of this module
 CompanyName = 'FOG Project'
@@ -89,7 +89,7 @@ Full change log available at https://fogapi.readthedocs.io/en/latest/ReleaseNote
 '
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
