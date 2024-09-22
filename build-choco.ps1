@@ -99,10 +99,10 @@ try {
 #create the tools and files folders for choco pkg
 mkdir "$chocoPth\$moduleName\$version\tools" -ea 0 | out-null;
 mkdir "$chocoPth\$moduleName\$version\tools\files" -ea 0 | out-null;
-if (!(Test-Path "$chocoPth\$moduleName\$version\icons")) {
-    mkdir "$chocoPth\$moduleName\$version\icons" -ea 0 | out-null;
-    Copy-Item "$PSScriptRoot\$modulename\icons\favicon.png" "$chocoPth\$moduleName\$version\icons\favicon.png"
-}
+# if (!(Test-Path "$chocoPth\$moduleName\$version\icons")) {
+#     mkdir "$chocoPth\$moduleName\$version\icons" -ea 0 | out-null;
+#     Copy-Item "$PSScriptRoot\$modulename\icons\favicon.png" "$chocoPth\$moduleName\$version\icons\favicon.png"
+# }
 
 
 #extract the nupkg as a zip and grab the nuspec
@@ -135,11 +135,11 @@ $chocoTemplateDir = '.\chocoTemplate\PSGetModule\tools';
 Copy-Item "$chocoTemplateDir\chocolateyInstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1" -Force;
 Copy-Item "$chocoTemplateDir\functions.psm1" "$chocoPth\$moduleName\$version\tools\functions.psm1" -Force;
 Copy-Item "$chocoTemplateDir\chocolateyUninstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1" -Force;
-$chocoInstall = "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1";
-$chocoUninstall = "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1";
-Find-Replace -file $chocoInstall -findStr '[[PackageName]]' -replaceStr $moduleName;
-Find-Replace -file $chocoInstall -findStr '[[PackageVersion]]' -replaceStr $version;
-Find-Replace -file $chocoUninstall -findStr '[[PackageName]]' -replaceStr $moduleName;
+# $chocoInstall = "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1";
+# $chocoUninstall = "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1";
+# Find-Replace -file $chocoInstall -findStr '[[PackageName]]' -replaceStr $moduleName;
+# Find-Replace -file $chocoInstall -findStr '[[PackageVersion]]' -replaceStr $version;
+# Find-Replace -file $chocoUninstall -findStr '[[PackageName]]' -replaceStr $moduleName;
 if (!(Get-command choco.exe)) {
     #taken from https://chocolatey.org/install#individual
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
