@@ -1,7 +1,7 @@
 # Choco Package Template
 
 This is the template for the creating the chocolatey package with the build-choco.ps1 script at the root of this repo. 
-[build-choco.ps1](https://github.com/darksidemilk/FogApi/blob/master/build-choco.ps1) is run after running the  [build.ps1](https://github.com/darksidemilk/FogApi/blob/master/build. ps1) is run and typically after publishing to the powershell gallery so the same nuspec published to the psgallery is used for the choco package (with some chocolatey specific alterations)
+[build-choco.ps1](https://github.com/darksidemilk/FogApi/blob/master/build-choco.ps1) is run after running the  [build.ps1](https://github.com/darksidemilk/FogApi/blob/master/build.ps1) is run and typically after publishing to the powershell gallery so the same nuspec published to the psgallery is used for the choco package (with some chocolatey specific alterations)
 The nuspec found here is a general template for what is built, it isn't actually used in the build script at this time.
 Could have the main build function build into here 
 
