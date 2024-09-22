@@ -149,18 +149,20 @@ Set-Location "$chocoPth\$modulename\$version"
 $nuspec ="$pwd\$moduleName.nuspec"
 
 $nuspecSnippet = @"
-  <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
+    <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
     <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
     <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
-    <projectSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</projectSourceUrl>
+    <projectSourceUrl>https://github.com/darksidemilk/FogApi</projectSourceUrl>
+    <packageSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</packageSourceUrl>
 </metadata>
 "@
+#add summary and lowercase id for choco
 $titleSnippet = @"
-<id>FogApi</id>
+<id>fogapi</id>
     <title>FogApi Powershell Module</title>
     <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
 "@
-# $softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
+$softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
 
 $filesSnippet = @"
 </metadata>
@@ -182,7 +184,7 @@ $filesSnippet = @"
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$nuspecSnippet) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<id>FogApi</id>",$titleSnippet) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<owners>FOG Project</owners>","<owners>JJ Fullmer</owners>") -Force;
-# Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
+Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$filesSnippet) -Force;
 
 if ($useLocal) {

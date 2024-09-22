@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>FogApi</id>
+    <id>fogapi</id>
     <title>FogApi Powershell Module</title>
     <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
     <version>[[ModuleVersion]]</version>
@@ -9,7 +9,7 @@
     <owners>JJ Fullmer</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/darksidemilk/FogApi/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>
+    <projectUrl>https://fogproject.org</projectUrl>
     <iconUrl>https://cdn.statically.io/gh/darksidemilk/FogApi/0ed5e87e/FogApi/icons/favicon.png</iconUrl>
     <description>
 [[ModuleDescription]]</description>
@@ -20,7 +20,8 @@
     <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
     <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
     <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
-    <projectSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</projectSourceUrl>
+    <projectSourceUrl>https://github.com/darksidemilk/FogApi</projectSourceUrl>
+    <packageSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</packageSourceUrl>
 </metadata>
 <files>
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
