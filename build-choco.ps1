@@ -181,6 +181,7 @@ $filesSnippet = @"
 
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$nuspecSnippet) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<id>FogApi</id>",$titleSnippet) -Force;
+Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<owners>FOG Project</owners>","<owners>JJ Fullmer</owners>") -Force;
 # Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$filesSnippet) -Force;
 
