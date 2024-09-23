@@ -289,13 +289,18 @@ param (
   $modulename,
   $moduleversion,
   [switch]$ps5only,
-  [switch]$ps7only
+  [switch]$ps7only,
+  [switch]$allversions
 )
 process {
   $destinationPath = @()
-  if ($ps5only) {
+  if ($allversions) {
+    #if removing all versions, just remove the top level path, get the top level path per the be
+    $moduleversion = $null;
+  }
+  if($ps7only) {
     $destinationPath += Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName\$moduleVersion"
-  } elseif($ps7only) {
+  } elseif ($ps5only) {
     $destinationPath += Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName\$moduleVersion"
   } else {
     $destinationPath += Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName\$moduleVersion"

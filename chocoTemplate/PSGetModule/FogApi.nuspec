@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<!-- Read this before creating packages: https://chocolatey.org/docs/create-packages -->
+<!-- It is especially important to read the above link to understand additional requirements when publishing packages to the community feed aka dot org (https://chocolatey.org/packages). -->
+<!-- Test your packages in a test environment: https://github.com/chocolatey/chocolatey-test-environment -->
+<!--
+This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Reference. Chocolatey uses a special version of NuGet.Core that allows us to do more than was initially possible. As such there are certain things to be aware of:
+
+* the package xmlns schema url may cause issues with nuget.exe
+* Any of the following elements can ONLY be used by choco tools - projectSourceUrl, docsUrl, mailingListUrl, bugTrackerUrl, packageSourceUrl, provides, conflicts, replaces 
+* nuget.exe can still install packages with those elements but they are ignored. Any authoring tools or commands will error on those elements 
+-->
+<!-- You can embed software files directly into packages, as long as you are not bound by distribution rights. -->
+<!-- * If you are an organization making private packages, you probably have no issues here -->
+<!-- * If you are releasing to the community feed, you need to consider distribution rights. -->
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>fogapi</id>
     <title>FogApi Powershell Module</title>
@@ -12,7 +26,34 @@
     <projectUrl>https://fogproject.org</projectUrl>
     <iconUrl>https://cdn.statically.io/gh/darksidemilk/FogApi/0ed5e87e/FogApi/icons/favicon.png</iconUrl>
     <description>
-[[ModuleDescription]]</description>
+# FogApi Powershell Module Chocolatey Package
+
+Requires Powershell 5.1+ (Core 7+ recommended).
+
+This package installs the FogApi module in the AllUsers/System scope for:
+
+    - Powershell 7+ (C:\Program Files\Powershell\Modules\FogApi{version})
+    - Powershell 5.1 (C:\Program Files\WindowsPowershell\Modules\FogApi{version})
+
+This ensures compatibility across pwsh versions (which are both included in Win11), removing any other existing versions to avoid conflicts.
+The uninstall script removes the specific package version of the given Chocolatey package.
+You can customize this behavior with package parameters, though defaults are recommended.
+
+## Package Parameters
+
+You can set the following parameters to alter the install behavior:
+
+    - /PS7Only: (true/false) - Install/uninstall only for Powershell 7. Defaults to false. Overwrites PS5Only if BOTH are true
+    - /PS5Only: (true/false) - Install/uninstall only for Powershell 5. Defaults to false.
+    - /NoRemove: (true/false) - (Install only) Do not remove other versions. Defaults to false.
+    - /RemoveAll: (true/false) - (Uninstall only) Uninstall all versions. Defaults to false.
+
+Examples:
+
+Install for Pwsh 7 only without removing other versions: `choco install fogapi --params "'/PS7Only:true /NoRemove:true'"`
+Uninstall all versions: `choco uninstall fogapi --params "'/RemoveAll'"`
+        
+[[ModuleDescriptionFromManifest]]</description>
     <releaseNotes>
 [[ModuleReleaseNote]]</releaseNotes>
     <copyright>2018-2024</copyright>
@@ -27,13 +68,5 @@
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
     <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
-    <!-- <file src="icons\**" target="icons" /> -->
-    <file src="en-us\**" target="en-us" />
-    <file src="lib\**" target="lib" />
-    <!-- <file src="bin\**" target="bin" /> -->
-    <file src=".\FogApi.psd1" target=".\FogApi.psd1" />
-    <file src=".\FogApi.psm1" target=".\FogApi.psm1" />
-    <!-- <file src="..\..\_module_build\FogApi.psm1" target=".\FogApi.psm1" /> -->
-    <!-- <file src="..\..\_module_build\FogApi.psd1" target=".\FogApi.psd1" /> -->
 </files>
 </package>

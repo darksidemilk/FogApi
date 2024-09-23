@@ -96,15 +96,19 @@ jobs:
             "building choco package from local build and temp psresource repo..." | out-host;
             .\build-choco.ps1 -uselocal;
             
-            "adding choco package to release" | out-host;
+            "adding choco package and zip to release" | out-host;
             copy-item ".\FogApi.$version.nupkg" ".\FogApi.$version.chocolatey.nupkg"
             gh release upload $version ".\FogApi.$version.chocolatey.nupkg"
             remove-item ".\FogApi.$version.chocolatey.nupkg" -force -recurse -ea 0;
+            gh release upload $version ".\fogapi.$version.IncludeXml.zip"
             
-            #"publishing choco package..." | out-host;
-            #choco apikey add -s "https://push.chocolatey.org/" -k="$env:ChocoKey"
-            #choco apikey add -s "https://community.chocolatey.org/api/v2/" -k="$env:ChocoKey"
-            #choco push "FogApi.$version.nupkg" --source https://push.chocolatey.org/
+            try {
+              "publishing choco package..." | out-host;
+              choco apikey add -s "https://push.chocolatey.org/" -k="$env:ChocoKey"
+              choco push "FogApi.$version.nupkg" --source https://push.chocolatey.org/
+            } catch {
+              "Choco package could not be published, there may be a version still pending approval" | out-host; 
+            }
 
 
 
