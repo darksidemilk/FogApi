@@ -122,14 +122,28 @@ if ($useLocal) {
 }
 
 #set the ps5 install location and export
-$psgetXml.InstalledLocation = "C:\Program Files\WindowsPowerShell\Modules\$moduleName\$version"
-$psgetXml | Export-Clixml -path "$chocoPth\$moduleName\$version\tools\files\PSGetModuleInfo-ps5.xml"
+# $psgetXml.InstalledLocation = "C:\Program Files\WindowsPowerShell\Modules\$moduleName\$version"
+# $psgetXml | Export-Clixml -path "$chocoPth\$moduleName\$version\tools\files\PSGetModuleInfo-ps5.xml"
 
 #set the ps7 install location and export
 $psgetXml.InstalledLocation = "C:\Program Files\PowerShell\Modules\$moduleName\$version"
-$psgetXml | Export-Clixml -path "$chocoPth\$moduleName\$version\tools\files\PSGetModuleInfo-ps7.xml"
+$psgetXml | Export-Clixml -path "$chocoPth\$moduleName\$version\PSGetModuleInfo.xml" -Force;
 
-remove-item "$chocoPth\$moduleName\$version\PSGetModuleInfo.xml" -force -ea 0;
+$sourcePath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
+Get-ChildItem "$chocoPth\$moduleName\$version" -Exclude ".chocolateyPending","*.nuspec","*.nupkg","tools","icons" | ForEach-Object {
+    $src = $_.fullname;
+    if ((Test-Path $src) -AND ($src -ne "$chocoPth\$moduleName\$version")) {
+        $sourcePath.add(($src))
+    }
+}
+
+Compress-Archive -Path $sourcePath -DestinationPath "$chocoPth\$moduleName\$version\tools\files\$moduleName.$version.zip"
+
+# Remove-Item -Path $sourcePath -Force -ea 0 -Recurse;
+# $sourcepath | ForEach-Object {
+#     Remove-item
+# }
+# remove-item "$chocoPth\$moduleName\$version\PSGetModuleInfo.xml" -force -ea 0;
 
 $chocoTemplateDir = '.\chocoTemplate\PSGetModule\tools';
 Copy-Item "$chocoTemplateDir\chocolateyInstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1" -Force;
@@ -171,11 +185,11 @@ $filesSnippet = @"
     <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
     <!-- <file src="icons\**" target="icons" /> -->
-    <file src="en-us\**" target="en-us" />
-    <file src="lib\**" target="lib" />
+    <!-- <file src="en-us\**" target="en-us" /> -->
+    <!-- <file src="lib\**" target="lib" /> -->
     <!-- <file src="bin\**" target="bin" /> -->
-    <file src=".\$moduleName.psd1" target=".\$moduleName.psd1" />
-    <file src=".\$moduleName.psm1" target=".\$moduleName.psm1" />
+    <!-- <file src=".\$moduleName.psd1" target=".\$moduleName.psd1" /> -->
+    <!-- <file src=".\$moduleName.psm1" target=".\$moduleName.psm1" /> -->
     <!-- <file src="..\..\_module_build\$moduleName.psm1" target=".\$moduleName.psm1" /> -->
     <!-- <file src="..\..\_module_build\$moduleName.psd1" target=".\$moduleName.psd1" /> -->
 </files>
