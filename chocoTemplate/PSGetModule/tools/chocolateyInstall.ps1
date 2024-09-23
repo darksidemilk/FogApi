@@ -1,39 +1,49 @@
 ﻿$ErrorActionPreference = 'Stop'
 
 $toolsDir = Split-Path -parent $MyInvocation.MyCommand.Definition
+#include the additional functions for install
 Import-Module "$toolsDir\functions.psm1"
 
-$moduleName = '[[PackageName]]' 
-$moduleVersion = '[[PackageVersion]]' #specify explicit version so install script can be run independently if needed
-# $moduleVersion = $env:ChocolateyPackageVersion  # this may change so keep this here
-
-# $savedParamsPath = Join-Path $toolsDir -ChildPath 'parameters.saved'
-# $depModulesPath = Join-Path $toolsdir -ChildPath 'dependent.modules'
+$moduleName = $env:chocolateyPackageName 
+$moduleVersion = $env:ChocolateyPackageVersion
 
 # module may already be installed outside of Chocolatey, if so get it out of the current session
 Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
 
 #install the new version
 
-#get all the files and folders to copy
+#get all the files and folders to copy for installing the module (exclude the tools folder and chocolatey package files)
 $sourcePath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
-#exclude the folders/files auto created by nuget in the nupkg, add all other source files/folders to sourcePath array
-(Split-Path -Path $toolsDir -Parent) | Get-ChildItem -Exclude ".chocolateyPending","*.nuspec","*.nupkg" | ForEach-Object {
+(Split-Path -Path $toolsDir -Parent) | Get-ChildItem -Exclude ".chocolateyPending","*.nuspec","*.nupkg","tools" | ForEach-Object {
     $src = $_.fullname;
     if (Test-Path $src) {
         $sourcePath.add(($src))
     }
 }
 
-$destinationPath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
+<# 
+#sourcepath contextual paths examples for files used to install a module
+.\en-us #if present as well as any other translated languages for module docs
+.\lib #if present
+.\bin #if present
+.\modulename.psd1
+.\modulename.psm1
+#>
+#the above files will be installed to the default program files module install path for
+#PS5 and PS7 with the addition of the psgetmoduleinfo.xml from the tools\files for the ps5 and ps7 versions;
 
-$destinationPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName\$moduleVersion"))
-$destinationPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName\$moduleVersion"))
+$destinationRootPath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
 
+#ps 5.1 installed system mods
+$destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName"))
+
+#ps 7 installed system mods
+$destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName"))
+ 
 "Installing $modulename version $moduleVersion in both pwsh 7+ and windows powershell 5.1 system paths" | out-host;
-ForEach ($destPath in $destinationPath) {
-    Write-Verbose "Installing '$modulename' to '$destPath'."
-
+ForEach ($dest in $destinationRootPath) {
+    $destPath = "$dest\$moduleVersion"
+    Write-Verbose "Installing '$modulename' of version '$moduleVersion' to '$destPath'."
     # check destination path exists and create if not
     if (!(Test-Path -Path $destPath)) {
         $null = New-Item -Path $destPath -ItemType Directory -Force -ea 0;
@@ -45,45 +55,17 @@ ForEach ($destPath in $destinationPath) {
 
     $sourcePath | ForEach-Object {
         #copy each source path to the current destination
-        if ($_ -ne $toolsDir) {
-            try {
-                Copy-Item $_ -Destination $destPath -force -Recurse -ea stop
-            } catch {
-                if ($compare) {
-                    Write-Verbose "The module may have already been installed, ignoring errors"
-                } else {
-                    throw "Error during copy of $($_) to $destPath!"
-                }
-            }
-        } else {
-            #this is the tools dir, make sure to not copy the chocolatey install scripts or psgetxml sources folder to the module install folder
-            try {
-                Copy-Item $_ -Destination $destPath -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","PSGetModuleInfo-ps5.xml","PSGetModuleInfo-ps7.xml","functions.psm1" -force -Recurse
-            } catch {
-                if ($compare) {
-                    Write-Verbose "The module may have already been installed, ignoring errors"
-                } else {
-                    throw "Error during copy of $($_) to $destPath!"
-                }
-            }
-            Write-Verbose "Removing any empty directories within tools directory"
-            "files","sources" | ForEach-Object {
-                if (Test-path "$destPath\$_") {
-                    if ((Get-ChildItem -Path "$destPath\$_").count -eq 0) {
-                        Remove-Item "$destPath\$_" -Force -Recurse;
-                    }
-                }
-            }
-            Write-Verbose "Empty tools directory from installed location if it is empty"
-            if (Test-path "$destPath") {
-                if ((Get-ChildItem -Path "$destPath").count -eq 0) {
-                    Remove-Item "$destPath" -Force -Recurse;
-                }
+        try {
+            Copy-Item $_ -Destination $destPath -force -Recurse -ea stop
+        } catch {
+            if ($compare) {
+                Write-Verbose "The module may have already been installed, ignoring errors"
+            } else {
+                throw "Error during copy of $($_) to $destPath!"
             }
         }
-       
     }
-    #copy the psgetmoduleinfo files for the modules
+    #copy the psgetmoduleinfo files for the specific powershell version paths from the files folder
     Write-Verbose "Copy PSGetModuleInfo xml"
     if ($destPath -match "\\Powershell\\Modules") {
         $psgetXmlSrc = "$toolsDir\files\PSGetModuleInfo-ps7.xml"
@@ -92,42 +74,22 @@ ForEach ($destPath in $destinationPath) {
     }
     Copy-Item $psgetXmlSrc "$destPath\PSGetModuleInfo.xml" -Force
     $psgetxml = Get-Item "$destPath\PSGetModuleInfo.xml" -force;
-    $psgetxml.Attributes = "Hidden";
+    $psgetxml.Attributes = "Hidden"; #set the file to be hidden the same way an install from psresourceget or psget does
 }
 
 
-#uninstall old versions before adding the new one
-Write-Verbose "Finding and uninstalling/removing any old versions of $modulename"
-"Finding and removing any old versions of $modulename" | out-host;
+#uninstall other versions after adding the new one
 
-$destinationRootPath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
-
-#ps 5.1 installed system mods
-$destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName"))
-#ps 7 installed system mods
-$destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName"))
-#built in powershell mods, actually don't touch these, it's a bad plan
-# $destinationRootPath += Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\7\Modules\$moduleName"
-# $destinationRootPath += Join-Path -Path $env:SystemRoot -ChildPath "System32\WindowsPowerShell\v1.0\Modules\$moduleName"
-#user module paths
-$splitModPaths = $ENV:PSModulePath -split ';'
-$splitModPaths | Where-Object { $_ -match "C:\\Users\\(.*)\\Documents\\(.*Powershell)\\Modules"} | ForEach-Object {
-    $destinationRootPath.add(("$($_)\$moduleName"));
-}
-
+Write-Verbose "Finding and uninstalling/removing any other versions of $modulename"
+"Finding and removing any other versions of $modulename so only the latest is available at system level" | out-host;
 
 ForEach ($destPath in $destinationRootPath) {
     if (Test-path $destPath) {
-        Write-Verbose "Uninstalling any old versions installed at $destPath"
-        if (($destPath -match "C:\\Users\\(.*)\\Documents\\(.*Powershell)\\Modules\\$moduleName")) {
-            Write-verbose "removing user installed versions of module, remove whole top level module folder by name"
-            $oldVersions = $destPath;       
-        } else {
-            Write-verbose "removing system wide versions of module, remove module version folders that aren't the current version"
-            $oldVersions = (Get-ChildItem $destPath -Directory -ea 0 -Exclude $moduleVersion).FullName;
-        }
+        Write-Verbose "Uninstalling any other versions installed at $destPath"
+        Write-verbose "removing system wide versions of module, remove module version folders that aren't the current version"
+        $oldVersions = (Get-ChildItem $destPath -Directory -ea 0 -Exclude $moduleVersion).FullName;
         if ($null -ne $oldVersions) {
-            Write-verbose "Taking ownership of path $($_) and setting permissions";
+            Write-verbose "Taking ownership of path $($_) and setting permissions to ensure clean removal";
             $oldVersions | ForEach-Object {
                 $logDir = "$env:temp\logs"
                 if (!(Test-Path $logDir)) {
@@ -138,6 +100,7 @@ ForEach ($destPath in $destinationRootPath) {
                 Remove-Item "$logDir\takeown-$modulename-paths.log" -force -Recurse -ea 0;
             }
             try {
+                #give full rights to path being deleted to authenticated users
                 $perms = Grant-FullRightsToPath -path $oldVersions -recurseInherit -ea stop -wa 0 -wait -NoOutHost
                 Write-Verbose "grant result is $($perms | out-string)"
             } catch {
@@ -145,40 +108,22 @@ ForEach ($destPath in $destinationRootPath) {
                 Write-Verbose "Grant-fullrightstopath had an error, icacls native grant result is $($perms | out-string)"
             }
             $oldVersions | Foreach-object { 
-                #uninstall from rare path scenario
-                if ($_ -match 'config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache') {
-                    $inetCache = "C:\windows\system32\config\systemprofile\AppData\Local\Microsoft\Windows\INetCache"
-                    if (Test-Path $inetCache) {
-                        "system profile inetcache folder detected, modules aren't actually installed here, deleting the parent folder and skipping this instance" | out-host;
-                        $takeOwn = takeown.exe /F "$inetCache" /R /A /D Y
-                        $takeOwn = takeown.exe /F "$inetCache\Content.IE5" /R /A /D Y
-                        Write-Verbose "Ownership result is $($takeOwn | out-string)"
-                        $perms = Grant-FullRightsToPath -path $inetCache -recurseInherit -ea 0 -wa 0 -NoOutHost -wait
-                        Write-Verbose "perms result was $($perms | Out-String)"
-                        remove-item $inetCache -Force -Recurse
+                try {
+                    if (Test-Path $_) {
+                        Write-Verbose "Attempting removal of old version of $moduleName installed at $($_)"
+                        # "Attempting removal of old version of $moduleName installed at $($_)" | out-host;
+                        [gc]::collect()
+                        [gc]::waitforpendingfinalizers()
+                        [gc]::collect()
+                        Remove-Item -Path $_ -Force -Recurse -EA stop;
+                    } else {
+                        "No install for $modulename found at $($_)" | out-host;
                     }
-                } elseif ($_ -match "AppData\\Local\\Application Data") {
-                    #uninstall from rare path scenario
-                    Write-Warning "$($_) is a symlink path with no access, skip this install, this may indicate other misconfigurations! Skipping removal attempts of this path"
-                } else {
-                    #standard uninstall
-                    try {
-                        if (Test-Path $_) {
-                            Write-Verbose "Attempting removal of old version of $moduleName installed at $($_)"
-                            # "Attempting removal of old version of $moduleName installed at $($_)" | out-host;
-                            [gc]::collect()
-                            [gc]::waitforpendingfinalizers()
-                            [gc]::collect()
-                            Remove-Item -Path $_ -Force -Recurse -EA stop;
-                        } else {
-                            "No install for $modulename found at $($_)" | out-host;
-                        }
-                    } catch {
-                        Write-Warning "Version of $moduleName at $($_) could not be removed, most likely a dll was still loaded, attempting removal of all but dlls"
-                        
-                        Get-ChildItem $_ -Exclude "*.dll" -Recurse | ForEach-Object {
-                            Remove-Item -path $_.FullName -force -ea 0;
-                        }
+                } catch {
+                    Write-Warning "Version of $moduleName at $($_) could not be removed, most likely a dll was still loaded, attempting removal of all but dlls"
+                    
+                    Get-ChildItem $_ -Exclude "*.dll" -Recurse | ForEach-Object {
+                        Remove-Item -path $_.FullName -force -ea 0;
                     }
                 }
             }
@@ -186,18 +131,11 @@ ForEach ($destPath in $destinationRootPath) {
     }
 }
 
-
-
-#clean up chocolatey local lib path
+#clean up chocolatey local lib path, remove the module files and the psgemoduleinfo.xml files keeping only the nuspec/nupkg and chocolatey scripts in the programdata\chocolatey\lib\modulename path
 $sourcePath | ForEach-Object {
-    if ($_ -ne $toolsDir) {
-        remove-Item $_ -force -recurse -ea 0
-    } else {
-        #is toolsdir, keep install scripts
-        if (Test-Path $_) {
-            $_ | Get-ChildItem -Exclude "sources","files","chocolateyInstall.ps1","chocolateyUninstall.ps1","chocolateyBeforeModify.ps1","functions.psm1" | ForEach-Object {
-                Remove-item $_.fullname -force -recurse -ea 0;
-            }
-        }
-    }
+    remove-Item $_ -force -recurse -ea 0    
+}
+if (Test-Path "$toolsDir\files") {
+    Set-Location $home;
+    Remove-Item -Path "$toolsDir\files" -Force -Recurse -EA stop;
 }

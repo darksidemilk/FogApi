@@ -99,10 +99,10 @@ try {
 #create the tools and files folders for choco pkg
 mkdir "$chocoPth\$moduleName\$version\tools" -ea 0 | out-null;
 mkdir "$chocoPth\$moduleName\$version\tools\files" -ea 0 | out-null;
-if (!(Test-Path "$chocoPth\$moduleName\$version\icons")) {
-    mkdir "$chocoPth\$moduleName\$version\icons" -ea 0 | out-null;
-    Copy-Item "$PSScriptRoot\$modulename\icons\favicon.png" "$chocoPth\$moduleName\$version\icons\favicon.png"
-}
+# if (!(Test-Path "$chocoPth\$moduleName\$version\icons")) {
+#     mkdir "$chocoPth\$moduleName\$version\icons" -ea 0 | out-null;
+#     Copy-Item "$PSScriptRoot\$modulename\icons\favicon.png" "$chocoPth\$moduleName\$version\icons\favicon.png"
+# }
 
 
 #extract the nupkg as a zip and grab the nuspec
@@ -135,11 +135,11 @@ $chocoTemplateDir = '.\chocoTemplate\PSGetModule\tools';
 Copy-Item "$chocoTemplateDir\chocolateyInstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1" -Force;
 Copy-Item "$chocoTemplateDir\functions.psm1" "$chocoPth\$moduleName\$version\tools\functions.psm1" -Force;
 Copy-Item "$chocoTemplateDir\chocolateyUninstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1" -Force;
-$chocoInstall = "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1";
-$chocoUninstall = "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1";
-Find-Replace -file $chocoInstall -findStr '[[PackageName]]' -replaceStr $moduleName;
-Find-Replace -file $chocoInstall -findStr '[[PackageVersion]]' -replaceStr $version;
-Find-Replace -file $chocoUninstall -findStr '[[PackageName]]' -replaceStr $moduleName;
+# $chocoInstall = "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1";
+# $chocoUninstall = "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1";
+# Find-Replace -file $chocoInstall -findStr '[[PackageName]]' -replaceStr $moduleName;
+# Find-Replace -file $chocoInstall -findStr '[[PackageVersion]]' -replaceStr $version;
+# Find-Replace -file $chocoUninstall -findStr '[[PackageName]]' -replaceStr $moduleName;
 if (!(Get-command choco.exe)) {
     #taken from https://chocolatey.org/install#individual
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
@@ -149,18 +149,20 @@ Set-Location "$chocoPth\$modulename\$version"
 $nuspec ="$pwd\$moduleName.nuspec"
 
 $nuspecSnippet = @"
-  <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
+    <docsUrl>https://fogapi.readthedocs.io/en/latest</docsUrl>
     <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
     <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
-    <projectSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</projectSourceUrl>
+    <projectSourceUrl>https://github.com/darksidemilk/FogApi</projectSourceUrl>
+    <packageSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</packageSourceUrl>
 </metadata>
 "@
+#add summary and lowercase id for choco
 $titleSnippet = @"
-<id>FogApi</id>
+<id>fogapi</id>
     <title>FogApi Powershell Module</title>
     <summary>Powershell Module for using the FOG Project API to simplify imaging and provisioning automations</summary>
 "@
-# $softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
+$softwareSite = "<projectUrl>https://FOGProject.org</projectUrl>"
 
 $filesSnippet = @"
 </metadata>
@@ -168,7 +170,7 @@ $filesSnippet = @"
     <!-- this section controls what actually gets packaged into the Chocolatey package -->
     <!-- make sure that all files used in the module are included-->
     <file src="tools\**" target="tools" />
-    <file src="icons\**" target="icons" />
+    <!-- <file src="icons\**" target="icons" /> -->
     <file src="en-us\**" target="en-us" />
     <file src="lib\**" target="lib" />
     <!-- <file src="bin\**" target="bin" /> -->
@@ -181,7 +183,8 @@ $filesSnippet = @"
 
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$nuspecSnippet) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<id>FogApi</id>",$titleSnippet) -Force;
-# Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
+Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<owners>FOG Project</owners>","<owners>JJ Fullmer</owners>") -Force;
+Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("<projectUrl>https://github.com/darksidemilk/FogApi</projectUrl>",$softwareSite) -Force;
 Set-Content -Path $nuspec -Value (Get-Content $nuspec).Replace("</metadata>",$filesSnippet) -Force;
 
 if ($useLocal) {
