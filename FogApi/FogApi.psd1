@@ -61,13 +61,12 @@ See https://github.com/darksidemilk/FogApi?tab=readme-ov-file#versioning for mor
 # Usage
 
 You can use Set-fogserverSettings to set your fogserver hostname and api keys.
-Or, the first time you try to run a command the settings.json file will automatically open
-in notepad on windows, nano on linux, or TextEdit on Mac
+Or, the first time you try to run a command the settings.json file will automatically open in an OS Specific editor.
 You can also open the settings.json file and edit it manually before running your first command.
 The default settings are explanations of where to find the proper settings since json cannot have comments
 
-Once the settings are set you can have a jolly good time utilzing the fog documentation
-found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
+Once the settings are set you can utilze the fog documentation found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters for Get-FogObject, Update-FogObject, and Remove-FogObject.
+You can also utilize simpler functions of common tasks, see the links below for more info.
 
 # Additional info
 
