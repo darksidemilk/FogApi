@@ -5,7 +5,7 @@
 [![Tag, Release, and Publish to PSGallery and Chocolatey Community Repo](https://github.com/darksidemilk/FogApi/actions/workflows/tag-and-release.yml/badge.svg)](https://github.com/darksidemilk/FogApi/actions/workflows/tag-and-release.yml)
 
 This is a powershell module to make using the Fog Project API even easier.
-FOG is an opensource tool for imaging comptuters, this module uses the API on your internal fog server to perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
+FOG is an open-source tool for imaging computers, this module uses the API on your internal fog server to perform almost any operation you can do in the GUI of Fog and provides you with the ability to extend things further.
 It can be used to create more automation or to simply have a command line method of controlling fog operations.
 
 Docs for this module can be found at https://fogapi.readthedocs.io/en/latest/
@@ -18,10 +18,9 @@ For more information about FOG see
 - https://github.com/FOGProject/fogproject
 - https://forums.fogproject.org
 
-
 ## Notes about its new home and future structuring
 
-This module used to be housed at https://github.com/FOGProject/fog-community-scripts/tree/master/PowershellModules/FogApi but has been now moved to its own repo to follow best practicies for powershell modules. Overtime I hope to add pester tests and use other powershell build tools like invoke-build or psake. For now there's a simpler build.ps1 script for combinging the functions into a single module and generating/building/compiling the documentation (using the platyps module). You only need to use the build.ps1 if you want to manually install it instead of using the simpler `Install-Module fogapi` to install it from the powershell gallery.
+This module used to be housed at https://github.com/FOGProject/fog-community-scripts/tree/master/PowershellModules/FogApi but has been now moved to its own repo to follow best practices for powershell modules. Overtime I hope to add pester tests and use other powershell build tools like invoke-build or psake. For now there's a simpler build.ps1 script for combining the functions into a single module and generating/building/compiling the documentation (using the platyps module). You only need to use the build.ps1 if you want to manually install it instead of using the simpler `Install-Module fogapi` to install it from the powershell gallery.
 
 # Versioning
 
@@ -47,7 +46,7 @@ Any time I publish a new version that isn't a major change I'll increment the re
 The module can be installed via PowershellGet, PSResourceGet, Chocolatey, or Manually
 
 ## Installation Methods
-    
+
 To install this module you need at least powershell v3, it was originally created with 5.1,
 but now for BEST EXPERIENCE use Powershell Core 7+ to be able to use tab completion when running Fog 1.6
 
@@ -100,7 +99,7 @@ See https://chocolatey.org for more information on chocolatey package manager
 - Open powershell (as admin recommended)
 - Run `Import-Module FogApi`
 
-The module is now installed. 
+The module is now installed.
 
 # Using The Module
 
@@ -112,7 +111,7 @@ in notepad on windows, nano on linux, or TextEdit on Mac
 You can also open the settings.json file and edit it manually before running your first command, but it's best to use the `Set-FogServerSettings -interactive` function and switch for first time setup.
 The default settings in `settings.json` are explanations of where to find the proper settings since json can't have comments
 
-Once the settings are set you can have a jolly good time utilzing the fog documentation
+Once the settings are set you can have a jolly good time utilizing the fog documentation
 found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
 
 i.e.
@@ -125,30 +124,30 @@ Unless you filter a GET with a json body it will return all the results into a p
 That object is easy to work with to create other commands. Note: Full Pipeline support will come at a later time
 i.e.
 
-```
+```powershell
 hosts = Get-FogObject -Type Object -CoreObject Host # calls GET on {your-fog-server}/fog/host to list all hosts
 ```
 
 Now you can search all your hosts for the one or ones you are looking for with powershell
 maybe you want to find all the hosts with ''IT'' in the name  (note `?` is an alias for `Where-Object`)
 
-```
+```powershell
 $ITHosts = $hosts.data | ? name -match ''IT'';
 ```
 
 Now maybe you want to change the image all of these computers use to one named ''''IT-Image''''
 You can edit the object in powershell with a foreach-object (`%` is an alias for `foreach-object`)
 
-```
+```powershell
 #get the id of the image by getting all images and finding the one with the IT-image name
 $image = Get-FogImages | ? name -eq "IT-image"
 $updatedITHosts = $ITHosts | % { $_.imageid = $image.id}
 ```
 
-Then you need to convert that object to json and pass each object into one api call at a time. 
+Then you need to convert that object to json and pass each object into one api call at a time.
 Which sounds complicated, but it's not, it's as easy as
 
-```
+```powershell
 $updatedITHosts | % {
     Update-FogObject -Type object -CoreObject host -objectID $_.id -jsonData ($_ | ConvertTo-Json);
 }
@@ -158,7 +157,7 @@ This is just one small example of the limitless things you can do with the api a
 There are also many ''helper'' functions that make various operations easier.
 i.e. Maybe you want to create a host and deploy that "IT-image" image to it.
 
-```
+```powershell
 #create the host
 New-FogHost -name "test-host" -macs "01:23:45:67:89:00"
 
@@ -173,11 +172,11 @@ Update-FogObject -Type object -CoreObject host -objectID $foghost.id -jsonData j
 get-foghost -hostname "test-host" | send-fogimage
 ```
 
-```
+```powershell
 #alternatively, schedule the image for later, like 10pm tomorrow
 get-foghost -hostname "test-host" | send-fogimage -StartAtTime (Get-Date 10pm).AddDays(1)
 ```
 
 ## Additional info
 
-See also the fogforum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
+See also the fog forum thread for the module https://forums.fogproject.org/topic/12026/powershell-api-module/2
