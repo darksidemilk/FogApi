@@ -2,6 +2,26 @@
 
 ## 9.x
 
+### 2411.9.17
+
+	Update receive-fogimage and test choco publish (#31)
+
+* Fix some typos in descriptions and add step in Remove-ModuleManually to remove the parent install folder if no other versions exist.
+
+* Update README.md
+
+markdown fixes and spell checking
+
+* Add error handling if a module path doesn't exist for choco package install template
+
+* Should resolve Add pipeline and task options to Receive-FogImage #29
+
+---------
+
+Co-authored-by: geotsot <geotsot@gmail.com>
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2409.9.16
 
 	add publishing chocolatey package to release flow (#22)
@@ -454,6 +474,7 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 

@@ -14,14 +14,26 @@ Starts or schedules a capture task on a given host
 
 ### now (Default)
 ```
-Receive-FogImage [-hostId <Object>] [-fogHost <Object>] [-ProgressAction <ActionPreference>]
+Receive-FogImage [-hostId <Object>] [-debugMode] [-NoWol] [-shutdown] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
 ### schedule
 ```
-Receive-FogImage [-hostId <Object>] [-fogHost <Object>] [-StartAtTime <DateTime>]
+Receive-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-debugMode] [-NoWol] [-shutdown]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### schedule-byhost
+```
+Receive-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-debugMode] [-NoWol] [-shutdown]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### now-byhost
+```
+Receive-FogImage [-fogHost <Object>] [-debugMode] [-NoWol] [-shutdown] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +64,13 @@ Using another alias for this command, will schedule a capture task for the host 
 i.e.
 if today was friday, this would schedule it for sunday at 8pm.
 
+### EXAMPLE 4
+```
+Get-FogHost | Receive-FogImage -debugMode -shutdown
+```
+
+Capture an image from the current host right now in debug mode, shutdown the computer after complete
+
 ## PARAMETERS
 
 ### -hostId
@@ -59,7 +78,7 @@ The id of the host to capture from
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: now, schedule
 Aliases:
 
 Required: False
@@ -70,11 +89,11 @@ Accept wildcard characters: False
 ```
 
 ### -fogHost
-{{ Fill fogHost Description }}
+fogHost object (get-foghost) that can be brought in from pipeline
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: schedule-byhost, now-byhost
 Aliases:
 
 Required: False
@@ -89,12 +108,57 @@ When to start to capture, if not given will start now
 
 ```yaml
 Type: DateTime
-Parameter Sets: schedule
+Parameter Sets: schedule, schedule-byhost
 Aliases:
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -debugMode
+Switch param to mark the task as a debug task
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWol
+Switch param to not use wake on lan in the task, default is to use wake on lan
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -shutdown
+Switch param to indicate the host should shutdown at the end of the task instead of restarting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
