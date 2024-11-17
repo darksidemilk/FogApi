@@ -127,7 +127,7 @@ if (($pp.NoRemove)) {
         if (Test-path $destPath) {
             Write-Verbose "Uninstalling any other versions installed at $destPath"
             Write-verbose "removing system wide versions of module, remove module version folders that aren't the current version"
-            $oldVersions = (Get-ChildItem $destPath -Directory -ea 0 -Exclude $moduleVersion).FullName;
+            $oldVersions = (Get-ChildItem $destPath -Directory -ea 0 -Exclude $moduleVersion);
             if ($null -ne $oldVersions) {
                 $oldVersions | ForEach-Object {
                     $oldVersion = $_.fullname | Split-Path -leaf;
