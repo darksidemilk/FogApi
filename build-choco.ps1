@@ -240,11 +240,12 @@ Requires Powershell 5.1+ (Core 7+ recommended).
 
 This package installs the FogApi module in the AllUsers/System scope for:
 
-  - Powershell 7+ (C:\Program Files\Powershell\Modules\FogApi{version})
-  - Powershell 5.1 (C:\Program Files\WindowsPowershell\Modules\FogApi{version})
+  - Powershell 7+ (C:\Program Files\Powershell\Modules\FogApi\{version})
+  - Powershell 5.1 (C:\Program Files\WindowsPowershell\Modules\FogApi\{version})
 
-This ensures compatibility across pwsh versions (which are both included in Win11), removing any other existing versions to avoid conflicts.
-The uninstall script removes the specific package version of the given Chocolatey package.
+This ensures compatibility across pwsh versions (which are both included in Win11).
+During default install, any other existing module versions are removed from both pwsh versions to avoid version conflicts.
+The default uninstall behavior removes the specific module version of the given Chocolatey package.
 You can customize this behavior with package parameters, though defaults are recommended.
 
 ## Package Parameters

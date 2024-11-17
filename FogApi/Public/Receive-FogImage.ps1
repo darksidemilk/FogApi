@@ -11,6 +11,18 @@ function Receive-FogImage {
     
     .PARAMETER StartAtTime
     When to start to capture, if not given will start now
+
+    .PARAMETER fogHost
+    fogHost object (get-foghost) that can be brought in from pipeline
+
+    .PARAMETER NoWol
+    Switch param to not use wake on lan in the task, default is to use wake on lan
+
+    .PARAMETER debugMode
+    Switch param to mark the task as a debug task
+
+    .PARAMETER shutdown
+    Switch param to indicate the host should shutdown at the end of the task instead of restarting.
     
     .EXAMPLE
     Receive-FogImage -hostID "1234"
@@ -27,6 +39,11 @@ function Receive-FogImage {
 
     Using another alias for this command, will schedule a capture task for the host 1234 at 8pm 2 days from now.
     i.e. if today was friday, this would schedule it for sunday at 8pm.
+
+    .EXAMPLE
+    Get-FogHost | Receive-FogImage -debugMode -shutdown
+
+    Capture an image from the current host right now in debug mode, shutdown the computer after complete
     
     .NOTES
     Pull and Capture are not powershell approved verbs, they were used as aliases to match the opposite 
@@ -40,11 +57,27 @@ function Receive-FogImage {
         [Parameter(ParameterSetName='now')]
         [Parameter(ParameterSetName='schedule')]
         $hostId,
-        [Parameter(ValueFromPipeline=$true,ParameterSetName='now')]
-        [Parameter(ValueFromPipeline=$true,ParameterSetName='schedule')]
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='now-byhost')]
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='schedule-byhost')]
         $fogHost,
         [Parameter(ParameterSetName='schedule')]
-        [datetime]$StartAtTime
+        [Parameter(ParameterSetName='schedule-byhost')]
+        [datetime]$StartAtTime,
+        [Parameter(ParameterSetName='now')]
+        [Parameter(ParameterSetName='now-byhost')]
+        [Parameter(ParameterSetName='schedule')]
+        [Parameter(ParameterSetName='schedule-byhost')]
+        [switch]$debugMode,
+        [Parameter(ParameterSetName='now')]
+        [Parameter(ParameterSetName='now-byhost')]
+        [Parameter(ParameterSetName='schedule')]
+        [Parameter(ParameterSetName='schedule-byhost')]
+        [switch]$NoWol,
+        [Parameter(ParameterSetName='now')]
+        [Parameter(ParameterSetName='now-byhost')]
+        [Parameter(ParameterSetName='schedule')]
+        [Parameter(ParameterSetName='schedule-byhost')]
+        [switch]$shutdown
     )
     
     
@@ -59,6 +92,26 @@ function Receive-FogImage {
         if ($null -eq $fogHost) {
             $fogHost = Get-FogHost -hostID $hostId;
         }
+
+        if (Test-FogVerAbove1dot6) {
+            $debugstr = "$($debugMode.IsPresent)"
+        } else {
+            if ($debugMode) {
+                $debugStr = "0"
+            } else {
+                $debugStr = "1"
+            }
+        }
+        if ($Nowol) {
+            $wolstr = "0"
+        } else {
+            $wolStr = "1"
+        }
+        if ($shutdown) {
+            $shutdownStr = "1"
+        } else {
+            $shutdownStr = "0"
+        }
         
         $currentImage = $fogHost.imageName;
         $fogImages = Get-FogImages;
@@ -67,26 +120,67 @@ function Receive-FogImage {
         "Will capture the assigned image $($fogImage.name) - $($fogImage.id) which will capture the os $($fogImage.osname)" | Out-host;
         if ($PSCmdlet.ParameterSetName -eq 'now') {
             "No Time was specified, queuing the task to start now" | out-host;
-		    $jsonData = "{`"taskTypeID`": `"2`" }";
+		    if (Test-FogVerAbove1dot6) {
+
+                $jsonData = @"
+                {
+                    "taskTypeID": "2"
+                    "shutdown":"$shutDownStr",
+                    "debug":"$debugStr",
+                    "wol":"$wolStr",
+                    "isActive":"1"
+                }
+"@
+            } else {
+                $jsonData = @"
+                {
+                    "taskTypeID": "2"
+                    "shutdown":"$shutDownStr",
+                    "other2":"$debugStr",
+                    "other4":"$wolStr",
+                    "isActive":"1"
+                }
+"@
+            }
+
         } else {
             "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
             $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime
             $runTime = get-date $StartAtTime -Format "yyyy-M-d HH:MM"
-            $jsonData = @"
-                    {
-                        "name":"Capture Task",
-                        "type":"S",
-                        "taskTypeID":"2",
-                        "runTime":"$runTime",
-                        "scheduleTime":"$scheduleTime",
-                        "isGroupTask":"0",
-                        "hostID":"$($hostId)",
-                        "shutdown":"0",
-                        "other2":"0",
-                        "other4":"1",
-                        "isActive":"1"
-                    }
+            if (Test-FogVerAbove1dot6) {
+                $jsonData = @"
+                {
+                    "taskName":"Capture Task",
+                    "type":"S",
+                    "taskTypeID":"2",
+                    "runTime":"$runTime",
+                    "scheduleTime":"$scheduleTime",
+                    "isGroupTask":"0",
+                    "hostID":"$($hostId)",
+                    "shutdown":"$shutdownStr",
+                    "debug":"$debugStr",
+                    "wol":"$wolStr",
+                    "isActive":"1"
+                }
 "@
+            } else {
+
+                $jsonData = @"
+                {
+                    "name":"Capture Task",
+                    "type":"S",
+                    "taskTypeID":"2",
+                    "runTime":"$runTime",
+                    "scheduleTime":"$scheduleTime",
+                    "isGroupTask":"0",
+                    "hostID":"$($hostId)",
+                    "shutdown":"0",
+                    "other2":"0",
+                    "other4":"1",
+                    "isActive":"1"
+                }
+"@
+            }
         }
         return New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject "$hostId";
     }

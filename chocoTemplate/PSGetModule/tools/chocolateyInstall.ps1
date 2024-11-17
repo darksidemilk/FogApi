@@ -42,21 +42,52 @@ if ($pp.RemoveAll) {
 # module may already be installed outside of Chocolatey, if so get it out of the current session
 Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
 
+#get the destination paths to install too
+
 $destinationRootPath = New-Object -TypeName 'System.Collections.generic.list[System.Object]';
+$ps7Pth = (Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName")
+$ps5Pth = (Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName")
+
 if($pp.PS7Only) {
-    $destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName"))
+    if (Test-Path ($ps7Pth | Split-Path)) { #check if parent path exists
+        $destinationRootPath.add($ps7Pth)
+    } else {
+        Write-Error "Powershell core module path doesn't exist but PS7Only was specified! install powershell-core package to install!"
+        Set-PowershellExitCode -exitcode 1
+        exit 1;
+    }
     "Installing $modulename version $moduleVersion in pwsh 7+ system path only" | out-host;
 } elseif ($pp.PS5Only) {
-    $destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName"))
+    if (Test-Path ($ps5Pth | Split-Path)) { #check if parent path exists
+        $destinationRootPath.add($ps5Pth)
+    } else {
+        Write-Error "Powershell 5.1 module path doesn't exist and ps5only was specified, install powershell package to install"
+        Set-PowershellExitCode -exitcode 1
+        exit 1;
+    }
     "Installing $modulename version $moduleVersion in windows powershell 5.1 system path only" | out-host;
 } else {
-    #ps 5.1 installed system mods
-    $destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName"))
-    #ps 7 installed system mods
-    $destinationRootPath.add((Join-Path -Path $env:ProgramFiles -ChildPath "PowerShell\Modules\$moduleName"))
+    #add ps5 path
+    if (Test-Path ($ps5Pth | Split-Path)) { #make sure parent path exists before adding it as a destination
+        $destinationRootPath.add($ps5Pth)
+    } else {
+        Write-Warning "Powershell 5.1 module path doesn't exist, install powershell package for best experience"
+    }
+    #add ps7 path if exists
+    if (Test-Path ($ps7Pth | Split-Path)) { #make sure parent path exists before adding it as a destination
+        $destinationRootPath.add($ps7Pth)
+    } else {
+        Write-Warning "Powershell core path doesn't exist, install powershell-core package for best experience"
+    }
     "Installing $modulename version $moduleVersion in both pwsh 7+ and windows powershell 5.1 system paths" | out-host;
 }
- 
+
+if ($destinationRootPath.count -eq 0) {
+    Write-Error "Neither powershell module path exists! Install powershell and or powershell-core and try again"
+    Set-PowershellExitCode -exitcode 1
+    exit 1
+}
+
 ForEach ($dest in $destinationRootPath) {
     $destPath = "$dest\$moduleVersion"
     Write-Verbose "Installing '$modulename' of version '$moduleVersion' to '$destPath'."
@@ -89,7 +120,7 @@ ForEach ($dest in $destinationRootPath) {
 if (($pp.NoRemove)) {
     "'NoRemove' was specified, not removing any other installed versions of $modulename" | out-host;
 } else {
-    Write-Verbose "Finding and uninstalling/removing any other versions of $modulename"
+    Write-Verbose "Finding and uninstalling/removing any other versions (older or newer) of $modulename"
     "Finding and removing any other versions of $modulename so only the latest is available at system level" | out-host;
     
     ForEach ($destPath in $destinationRootPath) {
@@ -120,3 +151,4 @@ $($destinationRootPath | ForEach-Object {"`t- $($_)\$moduleVersion`n"})
 - Use 'Get-Help about_fogapi' for an overview of the module
 -----------------------------------------------------------------------------
 "@
+Set-PowershellExitCode -exitcode 0
