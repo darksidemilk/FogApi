@@ -297,6 +297,8 @@ function Remove-ModuleManually {
     if ($allversions) {
       #if removing all versions, just remove the top level path, get the top level path per the be
       $moduleversion = $null;
+    } else {
+      Write-Verbose "Removing version $moduleVersion of $moduleName"
     }
     if($ps7only) {
       $destinationPath += Join-Path -Path $env:ProgramFiles -ChildPath "WindowsPowerShell\Modules\$moduleName\$moduleVersion"
