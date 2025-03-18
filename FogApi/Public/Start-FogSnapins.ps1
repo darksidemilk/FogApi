@@ -6,6 +6,10 @@ function Start-FogSnapins {
     .DESCRIPTION
     Starts the allsnapins task on a provided hostid
 
+    .PARAMETER fogHost
+    the foghost object to start the snapin task on, should be an object returned from get-foghost
+    Can also be brought in via pipeline
+
     .PARAMETER hostid
     the hostid to start the task on
 
@@ -15,7 +19,19 @@ function Start-FogSnapins {
     .EXAMPLE
     Start-FogSnapins
 
-    will get the current hosts id and start all snapins on it
+    will get the current host's id and start all snapins on it
+
+    .EXAMPLE
+    Start-FogSnapins -hostid 1234
+
+    will start all snapins on the host with the id 1234
+
+    .EXAMPLE
+    Get-foghost -hostname 'somehost' | Start-FogSnapins
+
+    will get the host object for the host named 'somehost' and start all snapins on it
+
+
 #>
 
     [CmdletBinding()]
