@@ -34,12 +34,27 @@ Starts the allsnapins task on a provided hostid
 Start-FogSnapins
 ```
 
-will get the current hosts id and start all snapins on it
+will get the current host's id and start all snapins on it
+
+### EXAMPLE 2
+```
+Start-FogSnapins -hostid 1234
+```
+
+will start all snapins on the host with the id 1234
+
+### EXAMPLE 3
+```
+Get-foghost -hostname 'somehost' | Start-FogSnapins
+```
+
+will get the host object for the host named 'somehost' and start all snapins on it
 
 ## PARAMETERS
 
 ### -fogHost
-{{ Fill fogHost Description }}
+the foghost object to start the snapin task on, should be an object returned from get-foghost
+Can also be brought in via pipeline
 
 ```yaml
 Type: Object
