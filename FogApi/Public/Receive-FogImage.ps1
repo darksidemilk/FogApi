@@ -124,7 +124,8 @@ function Receive-FogImage {
 
                 $jsonData = @"
                 {
-                    "taskTypeID": "2"
+                    "taskName":"Capture Task",
+                    "taskTypeID": "2",
                     "shutdown":"$shutDownStr",
                     "debug":"$debugStr",
                     "wol":"$wolStr",
