@@ -148,7 +148,7 @@ function Send-FogImage {
                 Write-Verbose "Image $imageName already set on host"
             } else {
                 "Host $($foghost.name) has image $currentImage set, changing image to $imageName!" | out-host;
-                $fogHost = Set-FogImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
+                $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
                 $currentImage = $fogHost.imageName;
             }
         }
