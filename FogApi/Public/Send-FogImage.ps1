@@ -30,7 +30,7 @@ function Send-FogImage {
 
     .PARAMETER NoSnapins
     Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
-    assigned snapins aren't auto scheduled too. Only works in FOG 1.6+
+    assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.
     
     .EXAMPLE
     Deploy-FogImage -hostID "1234"
@@ -52,22 +52,14 @@ function Send-FogImage {
     The verbs used in the main name and alias names are meant to provide better usability as someone may search for approved powershell verbs 
     when looking for this functionality or may simply look for deploy as that is the name of the task in fog. It just happens to be an approved powershell verb too
     #>
-    [CmdletBinding(DefaultParameterSetName='now')]
+    [CmdletBinding()]
     [Alias('Push-FogImage','Deploy-FogImage')]
     param (
-        [Parameter(ParameterSetName='now')]
-        [Parameter(ParameterSetName='schedule')]
+        [Parameter(ParameterSetName='byId')]
         $hostId,
-        [Parameter(ValueFromPipeline=$true,ParameterSetName='now-byhost')]
-        [Parameter(ValueFromPipeline=$true,ParameterSetName='schedule-byhost')]
+        [Parameter(ValueFromPipeline=$true,ParameterSetName='byhost')]
         $fogHost,
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [datetime]$StartAtTime,
-        [Parameter(ParameterSetName='now')]
-        [Parameter(ParameterSetName='now-byhost')]
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [ArgumentCompleter({
             param($Command, $Parameter, $WordToComplete, $CommandAst, $FakeBoundParams)
             
@@ -82,24 +74,13 @@ function Send-FogImage {
             
         })]  
         [string]$imageName,
-        [Parameter(ParameterSetName='now')]
-        [Parameter(ParameterSetName='now-byhost')]
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [switch]$debugMode,
-        [Parameter(ParameterSetName='now')]
-        [Parameter(ParameterSetName='now-byhost')]
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [switch]$NoWol,
-        [Parameter(ParameterSetName='now')]
-        [Parameter(ParameterSetName='now-byhost')]
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [switch]$shutdown,
         [Parameter(ParameterSetName='schedule')]
         [Parameter(ParameterSetName='schedule-byhost')]
-        [switch]$NoSnapins
+        [switch]$NoSnapins,
+        [switch]$force
     )
     
     
@@ -107,7 +88,14 @@ function Send-FogImage {
         if ($null -ne $_) {
             $fogHost = $_;
             $hostId = $fogHost.id
-        } 
+        }
+        if ($null -ne $hostIdNum) {
+            $hostId = $hostIdNum;
+        }
+        if ($null -ne $fogHostObject) {
+            $fogHost = $fogHostObject;
+            $hostId = $fogHost.id;
+        }
         if ($null -eq $hostId) {
             $hostId = $fogHost.id;
         }
@@ -134,91 +122,115 @@ function Send-FogImage {
         } else {
             $shutdownStr = "0"
         }
-        if ($NoSnapins) {
-            $deploySnapins = $false;
+       
+
+        
+        $tasks = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
+        if (($tasks.count -gt 0) -and $force) {
+            "Active tasks for this host already exist, cancelling them before making new tasks..." | out-host;
+            $tasks | ForEach-Object {
+                $removeResult = Remove-FogObject -type object -coreObject task -IDofObject $_.id;
+                Write-Verbose "Removal of task result was $($removeResult | out-string)"
+            }
+            $shouldprocess = $true;
+        } elseif(($tasks.count -gt 0) -and !$force) {
+            Write-Warning "A task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
+            $shouldprocess = $false;
+            return $tasks;
         } else {
-            $deploySnapins = $true;
+            $shouldprocess = $true;
         }
         
-        
-        $currentImage = $fogHost.imageName;
-        $fogImages = Get-FogImages;
-        if ($null -ne $imageName) {
-            if ($currentImage -eq $imageName) {
-                Write-Verbose "Image $imageName already set on host"
-            } else {
-                "Host $($foghost.name) has image $currentImage set, changing image to $imageName!" | out-host;
-                $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
-                $currentImage = $fogHost.imageName;
-            }
-        }
-        $fogImage = ($fogImages | Where-Object name -eq $currentImage)
-        "Creating Deploy Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
-        "Will deploy the assigned image $($fogImage.name) - $($fogImage.id) which will install the os $($fogImage.osname)" | Out-host;
-        if ($PSCmdlet.ParameterSetName -eq 'now') {
-            "No Time was specified, queuing the task to start now" | out-host;
-            if (Test-FogVerAbove1dot6) {
-                $jsonData = @"
-                {
-                    "taskName":"Deploy Task for $($fogHost.name) id $($foghost.id)",
-                    "taskTypeID":"1",
-                    "shutdown":"$shutDownStr",
-                    "debug":"$debugStr",
-                    "wol":"$wolStr",
-                    "isActive":"1"
+        if ($shouldprocess) {
+
+            $currentImage = $fogHost.imageName;
+            $fogImages = Get-FogImages;
+            if ($null -ne $imageName) {
+                if ($currentImage -eq $imageName) {
+                    Write-Verbose "Image $imageName already set on host"
+                } else {
+                    "Host $($foghost.name) has image $currentImage set, changing image to $imageName!" | out-host;
+                    $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
+                    $currentImage = $fogHost.imageName;
                 }
-"@
-            } else {
-                $jsonData = @"
-                {
-                    "taskTypeID":"1",
-                    "shutdown":"$shutDownStr",
-                    "other2":"$debugStr",
-                    "other4":"$wolStr",
-                    "isActive":"1"
-                }
-"@
             }
-        } else {
-            "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
-            $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime
-            $runTime = get-date $StartAtTime -Format "yyyy-M-d HH:MM"
-            if (Test-FogVerAbove1dot6) {
-                $jsonData = @"
+            $fogImage = ($fogImages | Where-Object name -eq $currentImage)
+            "Creating Deploy Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
+            "Will deploy the assigned image $($fogImage.name) - $($fogImage.id) which will install the os $($fogImage.osname)" | Out-host;
+            # if ($PSCmdlet.ParameterSetName -in 'now','now-byhost') {
+            if ($null -eq $StartAtTime) {
+                "No Time was specified, queuing the task to start now" | out-host;
+                if (Test-FogVerAbove1dot6) {
+                    $jsonData = @"
                     {
-                        "taskName":"Deploy Task",
-                        "type":"S",
+                        "taskName":"Deploy Task for $($fogHost.name) id $($foghost.id)",
                         "taskTypeID":"1",
-                        "runTime":"$runTime",
-                        "scheduleTime":"$scheduleTime",
-                        "isGroupTask":"0",
-                        "hostID":"$($hostId)",
-                        "shutdown":"$shutdownStr",
+                        "shutdown":"$shutDownStr",
                         "debug":"$debugStr",
                         "wol":"$wolStr",
-                        "isActive":"1",
-                        "deploySnapins":"$deploySnapins"
+                        "isActive":"1"
                     }
 "@
-            } else {
-                $jsonData = @"
+                } else {
+                    $jsonData = @"
                     {
-                        "name":"Deploy Task",
-                        "type":"S",
                         "taskTypeID":"1",
-                        "runTime":"$runTime",
-                        "scheduleTime":"$scheduleTime",
-                        "isGroupTask":"0",
-                        "hostID":"$($hostId)",
-                        "shutdown":"$shutdownStr",
+                        "shutdown":"$shutDownStr",
                         "other2":"$debugStr",
                         "other4":"$wolStr",
                         "isActive":"1"
                     }
 "@
+                }
+            } else {
+                if ($NoSnapins) {
+                    $deploySnapins = $false;
+                } else {
+                    $deploySnapins = $true;
+                }
+                "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
+                $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime
+                $runTime = get-date $StartAtTime -Format "yyyy-M-d HH:MM"
+                if (Test-FogVerAbove1dot6) {
+                    $jsonData = @"
+                        {
+                            "taskName":"Deploy Task",
+                            "type":"S",
+                            "taskTypeID":"1",
+                            "runTime":"$runTime",
+                            "scheduleTime":"$scheduleTime",
+                            "isGroupTask":"0",
+                            "hostID":"$($hostId)",
+                            "shutdown":"$shutdownStr",
+                            "debug":"$debugStr",
+                            "wol":"$wolStr",
+                            "isActive":"1",
+                            "deploySnapins":"$deploySnapins"
+                        }
+"@
+                } else {
+                    $jsonData = @"
+                        {
+                            "name":"Deploy Task",
+                            "type":"S",
+                            "taskTypeID":"1",
+                            "runTime":"$runTime",
+                            "scheduleTime":"$scheduleTime",
+                            "isGroupTask":"0",
+                            "hostID":"$($hostId)",
+                            "shutdown":"$shutdownStr",
+                            "other2":"$debugStr",
+                            "other4":"$wolStr",
+                            "isActive":"1"
+                        }
+"@
+                }
             }
+            $newTask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject "$hostId";
+            Write-Verbose "New task created: $($newTask)"
+            $task = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
+            return $task;
         }
-        return New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject "$hostId";
-    }
-    
+
+    }   
 }
