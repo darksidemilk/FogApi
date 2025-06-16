@@ -15,25 +15,13 @@ Start or schedule a deploy task for a fog host
 ### byId
 ```
 Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byhost
 ```
 Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### schedule-byhost
-```
-Send-FogImage [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown] [-NoSnapins]
- [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### schedule
-```
-Send-FogImage [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown] [-NoSnapins]
- [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,6 +51,21 @@ Send-FogImage -hostID "1234" -startAtTime ((Get-Date 8pm).adddays(2)).ToDateTime
 Using another alias for this command, will schedule a deploy  task for the host 1234 at 8pm 2 days from now.
 i.e.
 if today was friday, this would schedule it for sunday at 8pm.
+
+### EXAMPLE 4
+```
+Send-FogImage -fogHost (Get-FogHost -hostname "comp-name") -imageName "Windows 10"
+```
+
+Will find the host by name "comp-name" and send the the image right now.
+
+### EXAMPLE 5
+```
+Get-foghost -hostname "comp-name" | Send-FogImage -startAtTime (Get-Date 8pm) -debugMode
+```
+
+Will get the foghost object of name 'comp-name' and pipe it into the command.
+It will queue a debug deploy task for the host at 8pm the same day.
 
 ## PARAMETERS
 
@@ -179,7 +182,7 @@ Only works in FOG 1.6+ and only with scheduled tasks.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: schedule-byhost, schedule
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -190,7 +193,9 @@ Accept wildcard characters: False
 ```
 
 ### -force
-{{ Fill force Description }}
+Switch param to force the removal of existing tasks for this host before creating a new task.
+If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one.
+Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.
 
 ```yaml
 Type: SwitchParameter

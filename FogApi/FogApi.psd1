@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2506.9.20'
+ModuleVersion = '2506.9.21'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop', 'Core'
@@ -177,14 +177,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2506.9.20
+# 2506.9.21
 
-	Merge pull request #37 from darksidemilk/dev
+	Merge pull request #38 from darksidemilk/dev
 
-make sure scheduled tasks are also found and removed if present and -force is used.
-Made sure to add -force switch to the help doc. Added some more examples to the help as well.
-Realized I missed these things 2 seconds after queueing the last release...
-
+fix -nosnapins paramset issues and scheduled task creation so send-fogimage can create scheduled deploy tasks correctly.
 
 
 Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'

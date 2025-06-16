@@ -5326,9 +5326,20 @@ $mods</dev:code>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NoSnapins</maml:name>
+          <maml:description>
+            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>force</maml:name>
           <maml:description>
-            <maml:para>{{ Fill force Description }}</maml:para>
+            <maml:para>Switch param to force the removal of existing tasks for this host before creating a new task. If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one. Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5421,89 +5432,6 @@ $mods</dev:code>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>force</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill force Description }}</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
-          <maml:name>ProgressAction</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
-          <dev:type>
-            <maml:name>ActionPreference</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-      <command:syntaxItem>
-        <maml:name>Send-FogImage</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>StartAtTime</maml:name>
-          <maml:description>
-            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
-          <dev:type>
-            <maml:name>DateTime</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>imageName</maml:name>
-          <maml:description>
-            <maml:para>The name of the image to deploy, uses currently set image if not specified Tab completion of your fog server's image names if you're on pwsh 7+</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>debugMode</maml:name>
-          <maml:description>
-            <maml:para>Switch param to mark the task as a debug task</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>NoWol</maml:name>
-          <maml:description>
-            <maml:para>Switch param to not use wake on lan in the task, default is to use wake on lan</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>shutdown</maml:name>
-          <maml:description>
-            <maml:para>Switch param to indicate the host should shutdown at the end of the task instead of restarting.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NoSnapins</maml:name>
           <maml:description>
             <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
@@ -5517,101 +5445,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>force</maml:name>
           <maml:description>
-            <maml:para>{{ Fill force Description }}</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
-          <maml:name>ProgressAction</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
-          <dev:type>
-            <maml:name>ActionPreference</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-      <command:syntaxItem>
-        <maml:name>Send-FogImage</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>StartAtTime</maml:name>
-          <maml:description>
-            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
-          <dev:type>
-            <maml:name>DateTime</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>imageName</maml:name>
-          <maml:description>
-            <maml:para>The name of the image to deploy, uses currently set image if not specified Tab completion of your fog server's image names if you're on pwsh 7+</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>debugMode</maml:name>
-          <maml:description>
-            <maml:para>Switch param to mark the task as a debug task</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>NoWol</maml:name>
-          <maml:description>
-            <maml:para>Switch param to not use wake on lan in the task, default is to use wake on lan</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>shutdown</maml:name>
-          <maml:description>
-            <maml:para>Switch param to indicate the host should shutdown at the end of the task instead of restarting.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>NoSnapins</maml:name>
-          <maml:description>
-            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>force</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill force Description }}</maml:para>
+            <maml:para>Switch param to force the removal of existing tasks for this host before creating a new task. If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one. Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5733,7 +5567,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>force</maml:name>
         <maml:description>
-          <maml:para>{{ Fill force Description }}</maml:para>
+          <maml:para>Switch param to force the removal of existing tasks for this host before creating a new task. If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one. Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -5782,6 +5616,20 @@ $mods</dev:code>
         <dev:code>Send-FogImage -hostID "1234" -startAtTime ((Get-Date 8pm).adddays(2)).ToDateTime($null)</dev:code>
         <dev:remarks>
           <maml:para>Using another alias for this command, will schedule a deploy  task for the host 1234 at 8pm 2 days from now. i.e. if today was friday, this would schedule it for sunday at 8pm.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
+        <dev:code>Send-FogImage -fogHost (Get-FogHost -hostname "comp-name") -imageName "Windows 10"</dev:code>
+        <dev:remarks>
+          <maml:para>Will find the host by name "comp-name" and send the the image right now.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 5 --------------------------</maml:title>
+        <dev:code>Get-foghost -hostname "comp-name" | Send-FogImage -startAtTime (Get-Date 8pm) -debugMode</dev:code>
+        <dev:remarks>
+          <maml:para>Will get the foghost object of name 'comp-name' and pipe it into the command. It will queue a debug deploy task for the host at 8pm the same day.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

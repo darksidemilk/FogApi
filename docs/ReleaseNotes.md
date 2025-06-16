@@ -2,6 +2,14 @@
 
 ## 9.x
 
+### 2506.9.21
+
+	Merge pull request #38 from darksidemilk/dev
+
+fix -nosnapins paramset issues and scheduled task creation so send-fogimage can create scheduled deploy tasks correctly.
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2506.9.20
 
 	Merge pull request #37 from darksidemilk/dev
@@ -501,6 +509,7 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
