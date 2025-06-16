@@ -12,28 +12,28 @@ Start or schedule a deploy task for a fog host
 
 ## SYNTAX
 
-### now (Default)
-```
-Send-FogImage [-hostId <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### schedule
+### byId
 ```
 Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
+### byhost
+```
+Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
+ [-shutdown] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### schedule-byhost
 ```
-Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Send-FogImage [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown] [-NoSnapins]
+ [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
-### now-byhost
+### schedule
 ```
-Send-FogImage [-fogHost <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Send-FogImage [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown] [-NoSnapins]
+ [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,7 +71,7 @@ the hostid to start the deploy task for
 
 ```yaml
 Type: Object
-Parameter Sets: now, schedule
+Parameter Sets: byId
 Aliases:
 
 Required: False
@@ -86,7 +86,7 @@ fogHost object (get-foghost) that can be brought in from pipeline
 
 ```yaml
 Type: Object
-Parameter Sets: schedule-byhost, now-byhost
+Parameter Sets: byhost
 Aliases:
 
 Required: False
@@ -101,7 +101,7 @@ The time to start the deploy task, use Get-date to create the required datetime 
 
 ```yaml
 Type: DateTime
-Parameter Sets: schedule, schedule-byhost
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -175,11 +175,26 @@ Accept wildcard characters: False
 ### -NoSnapins
 Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
 assigned snapins aren't auto scheduled too.
-Only works in FOG 1.6+
+Only works in FOG 1.6+ and only with scheduled tasks.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: schedule, schedule-byhost
+Parameter Sets: schedule-byhost, schedule
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -force
+{{ Fill force Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
 Required: False
