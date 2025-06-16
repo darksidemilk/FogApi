@@ -31,6 +31,11 @@ function Send-FogImage {
     .PARAMETER NoSnapins
     Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
     assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.
+
+    .PARAMETER force
+    Switch param to force the removal of existing tasks for this host before creating a new task.
+    If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one.
+    Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.
     
     .EXAMPLE
     Deploy-FogImage -hostID "1234"
@@ -47,6 +52,16 @@ function Send-FogImage {
 
     Using another alias for this command, will schedule a deploy  task for the host 1234 at 8pm 2 days from now.
     i.e. if today was friday, this would schedule it for sunday at 8pm.
+
+    .EXAMPLE
+    Send-FogImage -fogHost (Get-FogHost -hostname "comp-name") -imageName "Windows 10"
+
+    Will find the host by name "comp-name" and send the the image right now.
+
+    .EXAMPLE
+    Get-foghost -hostname "comp-name" | Send-FogImage -startAtTime (Get-Date 8pm) -debugMode
+
+    Will get the foghost object of name 'comp-name' and pipe it into the command. It will queue a debug deploy task for the host at 8pm the same day.
     
     .NOTES
     The verbs used in the main name and alias names are meant to provide better usability as someone may search for approved powershell verbs 
@@ -77,8 +92,6 @@ function Send-FogImage {
         [switch]$debugMode,
         [switch]$NoWol,
         [switch]$shutdown,
-        [Parameter(ParameterSetName='schedule')]
-        [Parameter(ParameterSetName='schedule-byhost')]
         [switch]$NoSnapins,
         [switch]$force
     )
