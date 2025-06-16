@@ -124,9 +124,20 @@ function Send-FogImage {
         }
        
 
-        
         $tasks = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
-        if (($tasks.count -gt 0) -and $force) {
+        $schtasks = get-fogobject -type object -coreObject scheduledtask -jsonData "{`"isActive`":`"`1`",`"hostID`":`"$hostID`"}"
+        if (($schtasks.data.count -ne 0) -and $force) {
+            "Scheduled tasks for this host already exist, canceling them before making new tasks..." | out-host;
+            $schtasks.data | ForEach-Object { 
+                $removeResult = Remove-FogObject -type object -coreObject scheduledtask -IDofObject $_.id;
+                Write-Verbose "Removal of task result was $($removeResult | out-string)"
+            }
+            $shouldprocess = $true;
+        } elseif (($schtasks.data.count -ne 0) -and !$force) {
+            Write-Warning "A scheduled task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
+            $shouldprocess = $false;
+            return $schtasks.data;
+        } elseif (($tasks.count -gt 0) -and $force) {
             "Active tasks for this host already exist, cancelling them before making new tasks..." | out-host;
             $tasks | ForEach-Object {
                 $removeResult = Remove-FogObject -type object -coreObject task -IDofObject $_.id;
