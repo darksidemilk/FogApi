@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2506.9.19'
+ModuleVersion = '2506.9.20'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop', 'Core'
@@ -177,11 +177,14 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2506.9.19
+# 2506.9.20
 
-	Merge pull request #36 from darksidemilk/dev
+	Merge pull request #37 from darksidemilk/dev
 
-Fix parameter set conflict issues in send-fogimage
+make sure scheduled tasks are also found and removed if present and -force is used.
+Made sure to add -force switch to the help doc. Added some more examples to the help as well.
+Realized I missed these things 2 seconds after queueing the last release...
+
 
 
 Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'
