@@ -12,28 +12,16 @@ Start or schedule a deploy task for a fog host
 
 ## SYNTAX
 
-### now (Default)
-```
-Send-FogImage [-hostId <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### schedule
+### byId
 ```
 Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
-### schedule-byhost
+### byhost
 ```
 Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
-### now-byhost
-```
-Send-FogImage [-fogHost <Object>] [-imageName <String>] [-debugMode] [-NoWol] [-shutdown]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +52,21 @@ Using another alias for this command, will schedule a deploy  task for the host 
 i.e.
 if today was friday, this would schedule it for sunday at 8pm.
 
+### EXAMPLE 4
+```
+Send-FogImage -fogHost (Get-FogHost -hostname "comp-name") -imageName "Windows 10"
+```
+
+Will find the host by name "comp-name" and send the the image right now.
+
+### EXAMPLE 5
+```
+Get-foghost -hostname "comp-name" | Send-FogImage -startAtTime (Get-Date 8pm) -debugMode
+```
+
+Will get the foghost object of name 'comp-name' and pipe it into the command.
+It will queue a debug deploy task for the host at 8pm the same day.
+
 ## PARAMETERS
 
 ### -hostId
@@ -71,7 +74,7 @@ the hostid to start the deploy task for
 
 ```yaml
 Type: Object
-Parameter Sets: now, schedule
+Parameter Sets: byId
 Aliases:
 
 Required: False
@@ -86,7 +89,7 @@ fogHost object (get-foghost) that can be brought in from pipeline
 
 ```yaml
 Type: Object
-Parameter Sets: schedule-byhost, now-byhost
+Parameter Sets: byhost
 Aliases:
 
 Required: False
@@ -101,7 +104,7 @@ The time to start the deploy task, use Get-date to create the required datetime 
 
 ```yaml
 Type: DateTime
-Parameter Sets: schedule, schedule-byhost
+Parameter Sets: (All)
 Aliases:
 
 Required: False
@@ -175,11 +178,28 @@ Accept wildcard characters: False
 ### -NoSnapins
 Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
 assigned snapins aren't auto scheduled too.
-Only works in FOG 1.6+
+Only works in FOG 1.6+ and only with scheduled tasks.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: schedule, schedule-byhost
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -force
+Switch param to force the removal of existing tasks for this host before creating a new task.
+If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one.
+Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases:
 
 Required: False
