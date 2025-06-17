@@ -35,6 +35,9 @@ function Send-FogImage {
     assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.
     If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.
 
+    .PARAMETER bypassbitlocker
+    Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.
+
     .PARAMETER force
     Switch param to force the removal of existing tasks for this host before creating a new task.
     If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one.
@@ -96,6 +99,7 @@ function Send-FogImage {
         [switch]$NoWol,
         [switch]$shutdown,
         [switch]$NoSnapins,
+        [switch]$bypassbitlocker,
         [switch]$force
     )
     
@@ -144,12 +148,14 @@ function Send-FogImage {
         } else {
             $shutdownStr = "0"
         }
-        if (($NoSnapins) -and ($null -eq $StartAtTime) -and !($debugMode)) {
+        $bitlockerStr = "$($bypassbitlocker.IsPresent.ToInt64($null))";
+        if (($NoSnapins -or $bypassbitlocker) -and ($null -eq $StartAtTime) -and !($debugMode)) {
             Write-Warning "-NoSnapins only works with scheduled tasks, adding a scheduled start time of 5 seconds from now, may still take 1-2 minutes for FOG.SCHEDULER service to pick up the task and run it"
             $StartAtTime = (Get-Date).AddSeconds(5);
         } else {
-            if ($NoSnapins -and $debugMode) {
-                Write-Warning "-NoSnapins does not work with debug mode because nosnapins requires a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins"
+            if (($NoSnapins -or $bypassbitlocker) -and $debugMode) {
+                Write-Warning "-NoSnapins and -bypassbitlocker doe not work with debug mode because they require a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins and -bypassbitlocker"
+                $StartAtTime = $null;
             }
         }
        
@@ -228,9 +234,9 @@ function Send-FogImage {
                 $newtask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject $hostId;
             } else {
                 if ($NoSnapins) {
-                    $deploySnapins = $false;
+                    $deploySnapins = "0";
                 } else {
-                    $deploySnapins = $true;
+                    $deploySnapins = "-1";
                 }
                 "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;
                 $scheduleTime = Get-FogSecsSinceEpoch -scheduleDate $StartAtTime
@@ -249,9 +255,10 @@ function Send-FogImage {
                             "shutdown":"$shutdownStr",
                             "debug":"$($debugmode.ispresent)",
                             "wol":"$wolStr",
-                            "other2":"$debugStr",
+                            "other2":"$deploySnapins",
                             "other3":"API",
                             "other4":"$wolStr",
+                            "other5":"$bitlockerStr",
                             "isActive":"1",
                             "deploySnapins":"$deploySnapins"
                         }
@@ -267,9 +274,10 @@ function Send-FogImage {
                             "isGroupTask":"0",
                             "hostID":"$($hostId)",
                             "shutdown":"$shutdownStr",
-                            "other2":"$debugStr",
+                            "other2":"$deploySnapins",
                             "other3":"API",
                             "other4":"$wolStr",
+                            "other5":"$bitlockerStr",
                             "isActive":"1"
                         }
 "@
