@@ -51,7 +51,14 @@ function Test-StringNotNullOrEmpty {
             $empty = [string]::IsNullOrEmpty($str)
             $whitespace = [string]::IsNullOrWhiteSpace($str)
         } else {
-            $valid = $false;
+            Write-Warning "input $($str) is not a string object it is of type $($str.gettype().name), cannot test for empty or whitespace, will test for null only";
+            if ($null -eq $str) {
+                "This is not a string, but it is null, returning false";
+                $valid = $false;
+            } else {
+                "This is not a string, but it is not null, returning true";
+                $valid = $true;
+            }
         }
         
         if (!$empty -and !$whitespace -and $isString) {

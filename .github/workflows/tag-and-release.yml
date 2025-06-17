@@ -80,6 +80,8 @@ jobs:
             "Adding link to release notes doc page in release..." | out-host;
             $notes = (gh release view $version --json body | convertfrom-json).body
             $notes += "`n**Full Release Note History**: https://fogapi.readthedocs.io/en/latest/ReleaseNotes/"
+            $notes += "`n**Powershell Gallery Listing for this version**: https://www.powershellgallery.com/packages/FogApi/$version"
+            $notes += "`n**Chocolatey Package Listing for this version (may take 1-60 days from release to be approved by chocolatey moderators)**: https://community.chocolatey.org/packages/FogApi/$version"
             gh release edit $version -n $notes
             
             "Zipping up built and published module..." | out-host;
