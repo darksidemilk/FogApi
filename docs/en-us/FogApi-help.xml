@@ -2622,6 +2622,102 @@ $mods</dev:code>
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-FogScheduledTasks</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FogScheduledTasks</command:noun>
+      <maml:description>
+        <maml:para>Gets the current Scheduled tasks, by default only active scheduled tasks</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Gets the current Scheduled tasks and expands them into an object</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FogScheduledTasks</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>all</maml:name>
+          <maml:description>
+            <maml:para>If specified, will return all scheduled tasks, not just active ones. This is useful for viewing historically scheduled tasks that have been completed or are no longer active.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>all</maml:name>
+        <maml:description>
+          <maml:para>If specified, will return all scheduled tasks, not just active ones. This is useful for viewing historically scheduled tasks that have been completed or are no longer active.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-FogScheduledTasks</dev:code>
+        <dev:remarks>
+          <maml:para>This will list any scheduled tasks and their properties</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogScheduledTasks | Where-Object hostid -eq (Get-Foghost -hostname "comp-name").id</dev:code>
+        <dev:remarks>
+          <maml:para>This will list any scheduled tasks for the host with the hostname "comp-name" by searching for the hostid of that computer and filtering the results to the hostid.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Get-FogScheduledTasks</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-FogSecsSinceEpoch</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FogSecsSinceEpoch</command:noun>
@@ -5271,7 +5367,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>StartAtTime</maml:name>
           <maml:description>
-            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
+            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object i.e. (get-date 8pm) for 8pm today or (get-date 2am).adddays(1) for 2am tomorrow.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
@@ -5295,7 +5391,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>debugMode</maml:name>
           <maml:description>
-            <maml:para>Switch param to mark the task as a debug task</maml:para>
+            <maml:para>Switch param to mark the task as a debug task. Will switch to an immediate task if a start time is specified. Debug mode is only available for immediate tasks, it will not work with scheduled tasks.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5328,7 +5424,18 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NoSnapins</maml:name>
           <maml:description>
-            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks. If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>bypassbitlocker</maml:name>
+          <maml:description>
+            <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5377,7 +5484,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>StartAtTime</maml:name>
           <maml:description>
-            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
+            <maml:para>The time to start the deploy task, use Get-date to create the required datetime object i.e. (get-date 8pm) for 8pm today or (get-date 2am).adddays(1) for 2am tomorrow.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
           <dev:type>
@@ -5401,7 +5508,7 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>debugMode</maml:name>
           <maml:description>
-            <maml:para>Switch param to mark the task as a debug task</maml:para>
+            <maml:para>Switch param to mark the task as a debug task. Will switch to an immediate task if a start time is specified. Debug mode is only available for immediate tasks, it will not work with scheduled tasks.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5434,7 +5541,18 @@ $mods</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NoSnapins</maml:name>
           <maml:description>
-            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+            <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks. If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>bypassbitlocker</maml:name>
+          <maml:description>
+            <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -5495,7 +5613,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>StartAtTime</maml:name>
         <maml:description>
-          <maml:para>The time to start the deploy task, use Get-date to create the required datetime object</maml:para>
+          <maml:para>The time to start the deploy task, use Get-date to create the required datetime object i.e. (get-date 8pm) for 8pm today or (get-date 2am).adddays(1) for 2am tomorrow.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
         <dev:type>
@@ -5519,7 +5637,7 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>debugMode</maml:name>
         <maml:description>
-          <maml:para>Switch param to mark the task as a debug task</maml:para>
+          <maml:para>Switch param to mark the task as a debug task. Will switch to an immediate task if a start time is specified. Debug mode is only available for immediate tasks, it will not work with scheduled tasks.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -5555,7 +5673,19 @@ $mods</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>NoSnapins</maml:name>
         <maml:description>
-          <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+          <maml:para>Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks. If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>bypassbitlocker</maml:name>
+        <maml:description>
+          <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
