@@ -11,12 +11,14 @@ function Send-FogImage {
     
     .PARAMETER StartAtTime
     The time to start the deploy task, use Get-date to create the required datetime object
+    i.e. (get-date 8pm) for 8pm today or (get-date 2am).adddays(1) for 2am tomorrow.
 
     .PARAMETER fogHost
     fogHost object (get-foghost) that can be brought in from pipeline
 
     .PARAMETER debugMode
-    Switch param to mark the task as a debug task
+    Switch param to mark the task as a debug task. Will switch to an immediate task if a start time is specified.
+    Debug mode is only available for immediate tasks, it will not work with scheduled tasks.
 
     .PARAMETER imageName
     The name of the image to deploy, uses currently set image if not specified
@@ -31,6 +33,7 @@ function Send-FogImage {
     .PARAMETER NoSnapins
     Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
     assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.
+    If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.
 
     .PARAMETER force
     Switch param to force the removal of existing tasks for this host before creating a new task.
@@ -116,14 +119,20 @@ function Send-FogImage {
             $fogHost = Get-FogHost -hostID $hostId;
         }
         # $fogHost = Get-FogHost -hostID $hostId;
-        if (Test-FogVerAbove1dot6) {
-            $debugstr = "$($debugMode.IsPresent)"
-        } else {
-            if ($debugMode) {
-                $debugStr = "0"
-            } else {
-                $debugStr = "1"
-            }
+        #it seems that debugmode value reverted to 1 and 0 instead of true and false in FOG 1.6
+        # if (Test-FogVerAbove1dot6) {
+            # $debugstr = "$($debugMode.IsPresent)"
+        # } else {
+            # if ($debugMode) {
+            #     $debugStr = "1"
+            # } else {
+            #     $debugStr = "0"
+            # }
+        # }
+        $debugStr = "$($debugMode.IsPresent.toInt64($null))";
+        if (($debugMode) -and ($null -ne $StartAtTime)) {
+            Write-Warning "You cannot use -debugMode with a scheduled task, debug mode requires the task to start immediately, switching to immediate start"
+            $StartAtTime = $null;
         }
         if ($Nowol) {
             $wolstr = "0"
@@ -135,21 +144,29 @@ function Send-FogImage {
         } else {
             $shutdownStr = "0"
         }
+        if (($NoSnapins) -and ($null -eq $StartAtTime) -and !($debugMode)) {
+            Write-Warning "-NoSnapins only works with scheduled tasks, adding a scheduled start time of 5 seconds from now, may still take 1-2 minutes for FOG.SCHEDULER service to pick up the task and run it"
+            $StartAtTime = (Get-Date).AddSeconds(5);
+        } else {
+            if ($NoSnapins -and $debugMode) {
+                Write-Warning "-NoSnapins does not work with debug mode because nosnapins requires a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins"
+            }
+        }
        
 
         $tasks = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
-        $schtasks = get-fogobject -type object -coreObject scheduledtask -jsonData "{`"isActive`":`"`1`",`"hostID`":`"$hostID`"}"
-        if (($schtasks.data.count -ne 0) -and $force) {
+        $schtasks = (Get-FogScheduledTasks | Where-Object hostid -eq $hostID)
+        if (($schtasks.count -ne 0) -and $force) {
             "Scheduled tasks for this host already exist, canceling them before making new tasks..." | out-host;
-            $schtasks.data | ForEach-Object { 
+            $schtasks | ForEach-Object { 
                 $removeResult = Remove-FogObject -type object -coreObject scheduledtask -IDofObject $_.id;
                 Write-Verbose "Removal of task result was $($removeResult | out-string)"
             }
             $shouldprocess = $true;
-        } elseif (($schtasks.data.count -ne 0) -and !$force) {
+        } elseif (($schtasks.count -ne 0) -and !$force) {
             Write-Warning "A scheduled task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
             $shouldprocess = $false;
-            return $schtasks.data;
+            return $schtasks;
         } elseif (($tasks.count -gt 0) -and $force) {
             "Active tasks for this host already exist, cancelling them before making new tasks..." | out-host;
             $tasks | ForEach-Object {
@@ -169,7 +186,7 @@ function Send-FogImage {
 
             $currentImage = $fogHost.imageName;
             $fogImages = Get-FogImages;
-            if ($null -ne $imageName) {
+            if ((Test-StringNotNullOrEmpty $imageName)) {
                 if ($currentImage -eq $imageName) {
                     Write-Verbose "Image $imageName already set on host"
                 } else {
@@ -177,6 +194,8 @@ function Send-FogImage {
                     $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
                     $currentImage = $fogHost.imageName;
                 }
+            } else {
+                "No image name specified, using currently assigned image $currentImage" | out-host;
             }
             $fogImage = ($fogImages | Where-Object name -eq $currentImage)
             "Creating Deploy Task for fog host of id $($hostID) named $($fogHost.name)" | Out-Host;
@@ -203,9 +222,10 @@ function Send-FogImage {
                         "other2":"$debugStr",
                         "other4":"$wolStr",
                         "isActive":"1"
-                    }
+                    }   
 "@
                 }
+                $newtask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject $hostId;
             } else {
                 if ($NoSnapins) {
                     $deploySnapins = $false;
@@ -219,6 +239,7 @@ function Send-FogImage {
                     $jsonData = @"
                         {
                             "taskName":"Deploy Task",
+                            "description":"Scheduled Deploy Task for $($fogHost.name) id $($foghost.id) on $($StartAtTime.DateTime.ToString())",
                             "type":"S",
                             "taskTypeID":"1",
                             "runTime":"$runTime",
@@ -226,8 +247,11 @@ function Send-FogImage {
                             "isGroupTask":"0",
                             "hostID":"$($hostId)",
                             "shutdown":"$shutdownStr",
-                            "debug":"$debugStr",
+                            "debug":"$($debugmode.ispresent)",
                             "wol":"$wolStr",
+                            "other2":"$debugStr",
+                            "other3":"API",
+                            "other4":"$wolStr",
                             "isActive":"1",
                             "deploySnapins":"$deploySnapins"
                         }
@@ -244,15 +268,25 @@ function Send-FogImage {
                             "hostID":"$($hostId)",
                             "shutdown":"$shutdownStr",
                             "other2":"$debugStr",
+                            "other3":"API",
                             "other4":"$wolStr",
                             "isActive":"1"
                         }
 "@
                 }
+                $newtask = New-FogObject -type object -coreObject scheduledtask -jsonData $jsonData
             }
-            $newTask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject "$hostId";
+
+            if ($null -ne $StartAtTime) {
+                $task = Get-FogScheduledTasks | Where-Object hostid -eq $hostID;
+            } elseif (($null -eq $task) -or ($null -eq $StartAtTime)) {
+                $task = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
+            } else {
+                Write-Warning "Task was not found in active scheduled tasks or active tasks, returning the result of creating the new task."
+                $task = $newtask;
+            }
+
             Write-Verbose "New task created: $($newTask)"
-            $task = (Get-FogActiveTasks | Where-Object hostid -eq $hostID)
             return $task;
         }
 
