@@ -41,7 +41,7 @@ the position to put the dynamic parameter in
                 "notifyevent", "os", "oui", "plugin", "powermanagement", "printer", "printerassociation", 
                 "pxemenuoptions", "scheduledtask", "setting", "snapin", "snapinassociation", 
                 "snapingroupassociation", "snapinjob", "snapintask", "storagegroup", "storagenode", "task", 
-                "tasklog", "taskstate", "tasktype", "unisearch", "user", "usertracking", "setting", "user"
+                "tasklog", "taskstate", "tasktype", "unisearch", "user", "usertracking", "setting", "user", "site", "siteassociation"
             );
         } else {
             $coreObjects = @(
