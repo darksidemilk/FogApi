@@ -101,6 +101,35 @@ See https://chocolatey.org for more information on chocolatey package manager
 
 The module is now installed.
 
+### Test the current dev branch version of the module
+
+This wil NOT install the dev version of the module in a persistent fashion, but it will let you test it adhoc in a single powershell session.
+
+You can use this snippet to download the zip of the current dev branch and then import the working version for testing, it will remove any installed versions of the fogapi module already imported in your session to avoid conflicts.
+
+```powershell
+$webClient = [System.Net.WebClient]::new();
+$url = "https://github.com/darksidemilk/FogApi/archive/refs/heads/dev.zip"
+$zip = "$env:temp\fogapi-dev.zip"
+$tempModPath = "$env:temp\fogapi-dev"
+if (Resolve-Path $zip -ea 0) {
+    remove-item $zip -ea 0 -force; #remove the downloaded zip if the file already exists
+}
+$webClient.DownloadFile($url,$zip) #download with webclient for faster download vs invoke-webrequest
+if (Resolve-Path $tempModPath -ea 0) {
+    remove-item $tempModPath -force -recurse -ea 0
+}
+expand-archive $zip -destination "$env:temp\" -force #expand the zip in C:\temp\fogapi-dev
+Remove-item $zip -force -ea 0;
+rmo fogapi -force -ea 0; #remove the installed module if present
+ipmo "$env:temp\fogapi-dev\FogApi" #import the module from the working/non built version
+```
+
+To remove the temp module:
+```powershell
+remove-item "$env:temp\fogapi-dev" -force -recurse -ea 0;
+```
+
 # Using The Module
 
 You can use `Set-FogServerSettings` to set your fogserver hostname and api keys.
