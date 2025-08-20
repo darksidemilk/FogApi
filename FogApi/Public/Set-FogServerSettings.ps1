@@ -18,7 +18,9 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 
 .PARAMETER fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
-You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS or Disable-FogApiHTTPS later to enable or disable https in the api calls.
+You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver,
+you can also use Enable-FogApiHTTPS or Disable-FogApiHTTPS later to enable or disable https in the api calls.
+If you specify the hostname or ip without http or https, it will default to prepending http:// for you.
 
 .PARAMETER interactive
 switch to make setting these an interactive process, if you set no values this is the default
@@ -50,10 +52,17 @@ This will set the current users FogApi/settings.json file to have the given api 
         $settingsFile = Get-FogServerSettingsFile;
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";
+        $initialSettings = Get-content -raw "$script:lib\settings.json" | ConvertFrom-Json
         $helpTxt = @{
-            fogApiToken = "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
-            fogUserToken = "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
-            fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
+            fogApiToken = $initialSettings.fogApiToken; # "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
+            fogUserToken = $initialSettings.fogUserToken; # "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
+            fogServer = $initialSettings.fogServer; # "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
+        }
+        if (Test-StringNotNullOrEmpty -str $fogServer) {
+            if (($fogServer -notlike "http://*") -and ($fogServer -notlike "https://*")) {
+                Write-Warning "raw server name $fogServer does not start with http:// or https://, prepending http:// to the server name, use enable-fogapihttps to enforce https in api calls later if desired";
+                $fogServer = "http://$fogServer";
+            }
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
             if ($IsLinux) {
@@ -107,14 +116,14 @@ This will set the current users FogApi/settings.json file to have the given api 
         
 
         Write-Verbose "making sure all settings are set";
-        if ( $ServerSettings.fogApiToken -eq $helpTxt.fogApiToken -OR
-            $ServerSettings.fogUserToken -eq $helpTxt.fogUserToken -OR 
-            $ServerSettings.fogServer -eq $helpTxt.fogServer -or
-            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogApiToken) -OR 
+        if ( ($ServerSettings.fogApiToken -eq $helpTxt.fogApiToken -or $ServerSettings.fogApiToken -match " ") -OR
+            ($ServerSettings.fogUserToken -eq $helpTxt.fogUserToken -or $ServerSettings.fogUserToken -match " ") -OR
+            ($ServerSettings.fogServer -eq $helpTxt.fogServer -or $ServerSettings.fogServer -match " ") -or
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogApiToken) -OR
             !(Test-StringNotNullOrEmpty -str $ServerSettings.fogUserToken) -OR
             !(Test-StringNotNullOrEmpty -str $ServerSettings.fogServer)
         ) {
-            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null or still set to its default help text, opening the settings file for you to set the settings"
+            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null, still set to its default help text, or contains whitespace, opening the settings file for you to set the settings"
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
             if ($isLinux) {
                 if (Get-Command nano) {
@@ -127,7 +136,7 @@ This will set the current users FogApi/settings.json file to have the given api 
                 $editor = 'TextEdit';
             }
             else {
-                if ((Get-Command 'code.cmd')) {
+                if ((Get-Command 'code.cmd' -ea 0)) {
                     $editor = 'code.cmd';
                 } else {
                     $editor = 'notepad.exe';
