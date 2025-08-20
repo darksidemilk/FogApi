@@ -154,7 +154,7 @@ function Send-FogImage {
             $StartAtTime = (Get-Date).AddSeconds(5);
         } else {
             if (($NoSnapins -or $bypassbitlocker) -and $debugMode) {
-                Write-Warning "-NoSnapins and -bypassbitlocker doe not work with debug mode because they require a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins and -bypassbitlocker"
+                Write-Warning "-NoSnapins and -bypassbitlocker does not work with debug mode because they require a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins and -bypassbitlocker"
                 $StartAtTime = $null;
             }
         }
