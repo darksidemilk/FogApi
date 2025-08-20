@@ -31,7 +31,18 @@ function Get-FogScheduledTasks {
         if ($all) {
             $result = get-fogobject -type object -coreObject scheduledtask
         } else {
-            $result = get-fogobject -type object -coreObject scheduledtask -jsondata $jsondata
+            try {
+                $result = get-fogobject -type object -coreObject scheduledtask -jsondata $jsondata -ea stop;
+                if ($null -eq $result) {
+                    throw "error getting scheduled tasks filtered to active in api call";
+                } 
+            } catch {
+                Write-Warning "There was an error filtering to active scheduled tasks in the api call, getting all scheduled tasks and filtering to active locally";
+                $result = get-fogobject -type object -coreObject scheduledtask;
+                $result.data = $result.data | Where-Object {
+                    $_.isActive -in "1","Yes"
+                }
+            }
         }
         return $result.data;
     }

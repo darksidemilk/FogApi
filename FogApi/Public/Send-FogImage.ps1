@@ -154,7 +154,7 @@ function Send-FogImage {
             $StartAtTime = (Get-Date).AddSeconds(5);
         } else {
             if (($NoSnapins -or $bypassbitlocker) -and $debugMode) {
-                Write-Warning "-NoSnapins and -bypassbitlocker doe not work with debug mode because they require a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins and -bypassbitlocker"
+                Write-Warning "-NoSnapins and -bypassbitlocker does not work with debug mode because they require a scheduled task and debug mode requires an immediate task, ignoring -NoSnapins and -bypassbitlocker"
                 $StartAtTime = $null;
             }
         }
@@ -173,19 +173,24 @@ function Send-FogImage {
             Write-Warning "A scheduled task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
             $shouldprocess = $false;
             return $schtasks;
-        } elseif (($tasks.count -gt 0) -and $force) {
-            "Active tasks for this host already exist, cancelling them before making new tasks..." | out-host;
-            $tasks | ForEach-Object {
-                $removeResult = Remove-FogObject -type object -coreObject task -IDofObject $_.id;
-                Write-Verbose "Removal of task result was $($removeResult | out-string)"
-            }
-            $shouldprocess = $true;
-        } elseif(($tasks.count -gt 0) -and !$force) {
-            Write-Warning "A task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
-            $shouldprocess = $false;
-            return $tasks;
         } else {
             $shouldprocess = $true;
+        } 
+        if ($shouldprocess) {
+            if ((($null -ne $tasks) -or ($tasks.count -gt 0)) -and $force) {
+                "Active tasks for this host already exist, cancelling them before making new tasks..." | out-host;
+                $tasks | ForEach-Object {
+                    $removeResult = Remove-FogObject -type object -coreObject task -IDofObject $_.id;
+                    Write-Verbose "Removal of task result was $($removeResult | out-string)"
+                }
+                $shouldprocess = $true;
+            } elseif((($null -ne $tasks) -or ($tasks.count -gt 0)) -and !$force) {
+                Write-Warning "A task already exists for this host, use -force to remove them before creating a new task, no new task will be created! Existing task will be returned!"
+                $shouldprocess = $false;
+                return $tasks;
+            } else {
+                $shouldprocess = $true;
+            }
         }
         
         if ($shouldprocess) {
@@ -293,7 +298,6 @@ function Send-FogImage {
                 Write-Warning "Task was not found in active scheduled tasks or active tasks, returning the result of creating the new task."
                 $task = $newtask;
             }
-
             Write-Verbose "New task created: $($newTask)"
             return $task;
         }

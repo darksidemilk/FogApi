@@ -18,7 +18,9 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 
 .PARAMETER fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
-You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver
+You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver,
+you can also use Enable-FogApiHTTPS or Disable-FogApiHTTPS later to enable or disable https in the api calls.
+If you specify the hostname or ip without http or https, it will default to prepending http:// for you.
 
 .PARAMETER interactive
 switch to make setting these an interactive process, if you set no values this is the default
@@ -50,10 +52,17 @@ This will set the current users FogApi/settings.json file to have the given api 
         $settingsFile = Get-FogServerSettingsFile;
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";
+        $initialSettings = Get-content -raw "$script:lib\settings.json" | ConvertFrom-Json
         $helpTxt = @{
-            fogApiToken = "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
-            fogUserToken = "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
-            fogServer = "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
+            fogApiToken = $initialSettings.fogApiToken; # "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
+            fogUserToken = $initialSettings.fogUserToken; # "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
+            fogServer = $initialSettings.fogServer; # "your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer, to enforce http/https input this as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS later";
+        }
+        if (Test-StringNotNullOrEmpty -str $fogServer) {
+            if (($fogServer -notlike "http://*") -and ($fogServer -notlike "https://*")) {
+                Write-Warning "raw server name $fogServer does not start with http:// or https://, prepending http:// to the server name, use enable-fogapihttps to enforce https in api calls later if desired";
+                $fogServer = "http://$fogServer";
+            }
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
             if ($IsLinux) {
@@ -72,10 +81,11 @@ This will set the current users FogApi/settings.json file to have the given api 
             }
             $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         } elseif( #if all params are passed and not null create new settings object
-            !([string]::IsNullOrEmpty($fogApiToken)) -AND
-            !([string]::IsNullOrEmpty($fogUserToken)) -AND
-            !([string]::IsNullOrEmpty($fogServer))
+            (Test-StringNotNullOrEmpty -str $fogApiToken) -AND
+            (Test-StringNotNullOrEmpty -str $fogUserToken) -AND
+            (Test-StringNotNullOrEmpty -str $fogServer)
         ) {
+            Write-Verbose "All parameters present, creating new settings object";
             $serverSettings = @{
                 fogApiToken = $fogApiToken;
                 fogUserToken = $fogUserToken;
@@ -83,56 +93,68 @@ This will set the current users FogApi/settings.json file to have the given api 
             }
         } else {
             #check for some setting being passed but not all and set them individually
-            if (!([string]::IsNullOrEmpty($fogApiToken))) {
+            if ((Test-StringNotNullOrEmpty -str $fogApiToken)) {
                 $ServerSettings.fogApiToken = $fogApiToken;
+            } else {
+                Write-Verbose "fogapitoken not given, keeping old value of $($ServerSettings.fogApiToken)";
             }
-            if (!([string]::IsNullOrEmpty($fogUserToken))) {
+            if ((Test-StringNotNullOrEmpty -str $fogUserToken)) {
                 $ServerSettings.fogUserToken = $fogUserToken;
+            } else {
+                Write-Verbose "fogusertoken not given, keeping old value of $($ServerSettings.fogUserToken)";
             }
-            if (!([string]::IsNullOrEmpty($fogServer))) {
+            if ((Test-StringNotNullOrEmpty -str $fogServer)) {
                 $ServerSettings.fogServer = $fogServer;
+            } else {
+                Write-Verbose "fogserver not given, keeping old value of $($ServerSettings.fogServer)";
             }
-            $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
+            # $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         }
-        # If given paras are null just pulls from settings file
+        # If given params are null just pulls from settings file
         # If they are not null sets the object to passed value
         
         
 
         Write-Verbose "making sure all settings are set";
-        if ( $ServerSettings.fogApiToken -eq $helpTxt.fogApiToken -OR
-            $ServerSettings.fogUserToken -eq $helpTxt.fogUserToken -OR 
-            $ServerSettings.fogServer -eq $helpTxt.fogServer -or
-            ([string]::IsNullOrEmpty($ServerSettings.fogApiToken)) -OR 
-            ([string]::IsNullOrEmpty($ServerSettings.fogUserToken)) -OR
-            ([string]::IsNullOrEmpty($ServerSettings.fogServer))
+        if ( ($ServerSettings.fogApiToken -eq $helpTxt.fogApiToken -or $ServerSettings.fogApiToken -match " ") -OR
+            ($ServerSettings.fogUserToken -eq $helpTxt.fogUserToken -or $ServerSettings.fogUserToken -match " ") -OR
+            ($ServerSettings.fogServer -eq $helpTxt.fogServer -or $ServerSettings.fogServer -match " ") -or
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogApiToken) -OR
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogUserToken) -OR
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogServer)
         ) {
-            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null or still set to its default help text, opening the settings file for you to set the settings"
+            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null, still set to its default help text, or contains whitespace, opening the settings file for you to set the settings manually";
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
             if ($isLinux) {
-                if (Get-Command nano) {
-                    $editor = 'nano';
-                } else {
+                if (Get-Command vi) {
                     $editor = 'vi';
+                } else {
+                    $editor = 'nano';
                 }
             }
             elseif($IsMacOS) {
                 $editor = 'TextEdit';
             }
             else {
-                if ((Get-Command 'code.exe')) {
-                    $editor = 'code.exe';
+                if ((Get-Command 'code.cmd' -ea 0)) {
+                    $editor = 'code.cmd';
                 } else {
                     $editor = 'notepad.exe';
                 }
             }
-            Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru;
-            return;
+            if ($IsLinux) {
+                #wait to open the editor until the user has a chance to read the warning
+                "Editor $editor will open in 5 seconds, please read the warning above before editing the settings file" | out-host;
+                "Tip: use the insert key to enter insert mode if using vi then 'esc' then ':wq' to save and exit in vi, or 'ctrl+x' then 'y' to save and exit in nano" | out-host;
+                start-sleep -Seconds 5;
+            }
+            return Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru -Wait;
         }
         Write-Verbose "Writing new Settings";
         $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         Write-Verbose "ensuring security is set"
-        Set-FogServerSettingsFileSecurity $settingsFile;
+        $sec = Set-FogServerSettingsFileSecurity $settingsFile;
+        Write-Verbose "Security settings applied:$($sec | Out-String)"
         return (Get-Content $settingsFile | ConvertFrom-Json);
     }
 
