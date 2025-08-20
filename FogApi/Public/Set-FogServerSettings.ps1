@@ -123,7 +123,7 @@ This will set the current users FogApi/settings.json file to have the given api 
             !(Test-StringNotNullOrEmpty -str $ServerSettings.fogUserToken) -OR
             !(Test-StringNotNullOrEmpty -str $ServerSettings.fogServer)
         ) {
-            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null, still set to its default help text, or contains whitespace, opening the settings file for you to set the settings"
+            Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null, still set to its default help text, or contains whitespace, opening the settings file for you to set the settings manually";
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
             if ($isLinux) {
                 if (Get-Command nano) {
@@ -142,8 +142,11 @@ This will set the current users FogApi/settings.json file to have the given api 
                     $editor = 'notepad.exe';
                 }
             }
-            Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru;
-            return;
+            if ($IsLinux) {
+                #wait to open the editor until the user has a chance to read the warning
+                start-sleep -Seconds 5;
+            }
+            return Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru -Wait;
         }
         Write-Verbose "Writing new Settings";
         $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
