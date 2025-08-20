@@ -126,10 +126,10 @@ This will set the current users FogApi/settings.json file to have the given api 
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null, still set to its default help text, or contains whitespace, opening the settings file for you to set the settings manually";
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
             if ($isLinux) {
-                if (Get-Command nano) {
-                    $editor = 'nano';
-                } else {
+                if (Get-Command vi) {
                     $editor = 'vi';
+                } else {
+                    $editor = 'nano';
                 }
             }
             elseif($IsMacOS) {
