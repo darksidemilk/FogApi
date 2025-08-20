@@ -145,6 +145,7 @@ This will set the current users FogApi/settings.json file to have the given api 
             if ($IsLinux) {
                 #wait to open the editor until the user has a chance to read the warning
                 "Editor $editor will open in 5 seconds, please read the warning above before editing the settings file" | out-host;
+                "Tip: use the insert key to enter insert mode if using vi then 'esc' then ':wq' to save and exit in vi, or 'ctrl+x' then 'y' to save and exit in nano" | out-host;
                 start-sleep -Seconds 5;
             }
             return Start-Process -FilePath $editor -ArgumentList "$SettingsFile" -NoNewWindow -PassThru -Wait;
