@@ -18,7 +18,7 @@ your fog user api token found in the user settings https://fog-server/fog/manage
 
 .PARAMETER fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
-You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver
+You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver, you can also use Enable-FogApiHTTPS or Disable-FogApiHTTPS later to enable or disable https in the api calls.
 
 .PARAMETER interactive
 switch to make setting these an interactive process, if you set no values this is the default
@@ -72,10 +72,11 @@ This will set the current users FogApi/settings.json file to have the given api 
             }
             $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         } elseif( #if all params are passed and not null create new settings object
-            !([string]::IsNullOrEmpty($fogApiToken)) -AND
-            !([string]::IsNullOrEmpty($fogUserToken)) -AND
-            !([string]::IsNullOrEmpty($fogServer))
+            (Test-StringNotNullOrEmpty -str $fogApiToken) -AND
+            (Test-StringNotNullOrEmpty -str $fogUserToken) -AND
+            (Test-StringNotNullOrEmpty -str $fogServer)
         ) {
+            Write-Verbose "All parameters present, creating new settings object";
             $serverSettings = @{
                 fogApiToken = $fogApiToken;
                 fogUserToken = $fogUserToken;
@@ -83,18 +84,24 @@ This will set the current users FogApi/settings.json file to have the given api 
             }
         } else {
             #check for some setting being passed but not all and set them individually
-            if (!([string]::IsNullOrEmpty($fogApiToken))) {
+            if ((Test-StringNotNullOrEmpty -str $fogApiToken)) {
                 $ServerSettings.fogApiToken = $fogApiToken;
+            } else {
+                Write-Verbose "fogapitoken not given, keeping old value of $($ServerSettings.fogApiToken)";
             }
-            if (!([string]::IsNullOrEmpty($fogUserToken))) {
+            if ((Test-StringNotNullOrEmpty -str $fogUserToken)) {
                 $ServerSettings.fogUserToken = $fogUserToken;
+            } else {
+                Write-Verbose "fogusertoken not given, keeping old value of $($ServerSettings.fogUserToken)";
             }
-            if (!([string]::IsNullOrEmpty($fogServer))) {
+            if ((Test-StringNotNullOrEmpty -str $fogServer)) {
                 $ServerSettings.fogServer = $fogServer;
+            } else {
+                Write-Verbose "fogserver not given, keeping old value of $($ServerSettings.fogServer)";
             }
-            $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
+            # $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         }
-        # If given paras are null just pulls from settings file
+        # If given params are null just pulls from settings file
         # If they are not null sets the object to passed value
         
         
@@ -103,9 +110,9 @@ This will set the current users FogApi/settings.json file to have the given api 
         if ( $ServerSettings.fogApiToken -eq $helpTxt.fogApiToken -OR
             $ServerSettings.fogUserToken -eq $helpTxt.fogUserToken -OR 
             $ServerSettings.fogServer -eq $helpTxt.fogServer -or
-            ([string]::IsNullOrEmpty($ServerSettings.fogApiToken)) -OR 
-            ([string]::IsNullOrEmpty($ServerSettings.fogUserToken)) -OR
-            ([string]::IsNullOrEmpty($ServerSettings.fogServer))
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogApiToken) -OR 
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogUserToken) -OR
+            !(Test-StringNotNullOrEmpty -str $ServerSettings.fogServer)
         ) {
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "a fog setting is either null or still set to its default help text, opening the settings file for you to set the settings"
             Write-Host -BackgroundColor Yellow -ForegroundColor Red -Object "This script will close after opening settings in notepad, please re-run command after updating settings file";
@@ -120,8 +127,8 @@ This will set the current users FogApi/settings.json file to have the given api 
                 $editor = 'TextEdit';
             }
             else {
-                if ((Get-Command 'code.exe')) {
-                    $editor = 'code.exe';
+                if ((Get-Command 'code.cmd')) {
+                    $editor = 'code.cmd';
                 } else {
                     $editor = 'notepad.exe';
                 }
@@ -132,7 +139,8 @@ This will set the current users FogApi/settings.json file to have the given api 
         Write-Verbose "Writing new Settings";
         $serverSettings | ConvertTo-Json | Out-File -FilePath $settingsFile -Encoding oem -Force;
         Write-Verbose "ensuring security is set"
-        Set-FogServerSettingsFileSecurity $settingsFile;
+        $sec = Set-FogServerSettingsFileSecurity $settingsFile;
+        Write-Verbose "Security settings applied:$($sec | Out-String)"
         return (Get-Content $settingsFile | ConvertFrom-Json);
     }
 

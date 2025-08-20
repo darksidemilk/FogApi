@@ -34,15 +34,18 @@ function Set-FogServerSettingsFileSecurity {
             $acl.AddAccessRule($ace)
             #Save ACL to file/
             try {
-                Set-Acl -Path $settingsFile -AclObject $acl
+                Set-Acl -Path $settingsFile -AclObject $acl -ea stop;
             } catch {
-                icacls "$settingsFile" /reset /Q /C
-                icacls "$settingsFile" /setowner $env:USERNAME /Q /C
-                icacls "$settingsFile" /inheritance:r /Q /C
-                icacls "$settingsFile" /grant "$env:USERNAME`:F" /Q /C
-                icacls "$settingsFile" /remove 'System' /Q /C
-                icacls "$settingsFile" /remove 'Administrators' /Q /C
+                $icaclsResult = ""
+                $icaclsResult += (icacls "$settingsFile" /reset /Q /C)
+                $icaclsResult += (icacls "$settingsFile" /setowner $env:USERNAME /Q /C)
+                $icaclsResult += (icacls "$settingsFile" /inheritance:r /Q /C)
+                $icaclsResult += (icacls "$settingsFile" /grant "$env:USERNAME`:F" /Q /C)
+                $icaclsResult += (icacls "$settingsFile" /remove 'System' /Q /C)
+                $icaclsResult += (icacls "$settingsFile" /remove 'Administrators' /Q /C)
+                Write-Verbose "icacls result: $icaclsResult";
             }
+            return Get-Acl $settingsFile;
         }    
     }
     
