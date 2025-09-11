@@ -12,7 +12,7 @@
 RootModule = 'FogApi.psm1'
 
 # Version number of this module.
-ModuleVersion = '2509.9.24'
+ModuleVersion = '2509.9.25'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Desktop', 'Core'
@@ -178,11 +178,11 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-# 2509.9.24
+# 2509.9.25
 
-	Allow pushing multiple pxe boot options to top of boot order (#43)
+	Merge pull request #45 from darksidemilk/dev
 
-* Allow pushing multiple pxe boot options to top of boot order rather than only the first one found
+allow pushing multiple pxe boot options to top of boot order
 
 
 Full change log history available at https://fogapi.readthedocs.io/en/latest/ReleaseNotes/'
