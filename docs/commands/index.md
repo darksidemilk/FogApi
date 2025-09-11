@@ -48,6 +48,8 @@
 
 ## [Get-FogObject](Get-FogObject.md)
 
+## [Get-FogScheduledTasks](Get-FogScheduledTasks.md)
+
 ## [Get-FogSecsSinceEpoch](Get-FogSecsSinceEpoch.md)
 
 ## [Get-FogServerSettings](Get-FogServerSettings.md)

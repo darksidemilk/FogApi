@@ -80,7 +80,9 @@ Accept wildcard characters: False
 
 ### -fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
-You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver
+You can enforce the use of http or https in api calls by specifying the servername as https://fogserver or http://fogserver,
+you can also use Enable-FogApiHTTPS or Disable-FogApiHTTPS later to enable or disable https in the api calls.
+If you specify the hostname or ip without http or https, it will default to prepending http:// for you.
 
 ```yaml
 Type: String
