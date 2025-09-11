@@ -15,13 +15,13 @@ Start or schedule a deploy task for a fog host
 ### byId
 ```
 Send-FogImage [-hostId <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-bypassbitlocker] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ### byhost
 ```
 Send-FogImage [-fogHost <Object>] [-StartAtTime <DateTime>] [-imageName <String>] [-debugMode] [-NoWol]
- [-shutdown] [-NoSnapins] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-shutdown] [-NoSnapins] [-bypassbitlocker] [-force] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -101,6 +101,8 @@ Accept wildcard characters: False
 
 ### -StartAtTime
 The time to start the deploy task, use Get-date to create the required datetime object
+i.e.
+(get-date 8pm) for 8pm today or (get-date 2am).adddays(1) for 2am tomorrow.
 
 ```yaml
 Type: DateTime
@@ -131,7 +133,9 @@ Accept wildcard characters: False
 ```
 
 ### -debugMode
-Switch param to mark the task as a debug task
+Switch param to mark the task as a debug task.
+Will switch to an immediate task if a start time is specified.
+Debug mode is only available for immediate tasks, it will not work with scheduled tasks.
 
 ```yaml
 Type: SwitchParameter
@@ -179,6 +183,22 @@ Accept wildcard characters: False
 Switch param for when running a scheduled task, you can choose to set deploysnapins to false so the
 assigned snapins aren't auto scheduled too.
 Only works in FOG 1.6+ and only with scheduled tasks.
+If you specify this switch without a startattime it will automatically set the start time to 5 seconds from now.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -bypassbitlocker
+Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.
 
 ```yaml
 Type: SwitchParameter

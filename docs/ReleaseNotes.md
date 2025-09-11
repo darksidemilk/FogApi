@@ -2,6 +2,45 @@
 
 ## 9.x
 
+### 2508.9.23
+
+	Fix #41 and add some other user experience improvements (#42)
+
+* Error in send-fogimage command
+Fixes #41 When powershell 5.1 is used, invoke-restmethod and invoke-webrequest don't auto change the method from GET to POST when a body exists in the call. Added a check in invoke-fogapi for if body is not null and method is get, when true will change to a POST method.
+* Also added a failsafe try/catch in Get-FogScheduledTasks in case this still happens somehow. It will catch if the result is null.
+* Also found that active tasks weren't always being force closed with -force. Changed the null/count check for active tasks to ensure they get canceled when -force is used with send-fogimage and ensured that both existing scheduled tasks and active tasks are checked for by separating their if/else branches.
+
+* Minor changes to setting fog settings. Fixing erroneous error when setting the security of the settings file as a standard user, set-acl was displaying an error even though it was being caught and falling back to icacls which works for a standard user. Also changed to using the internal Test-StringNotNullOrEmpty function for null checks when setting settings.
+
+* Add how to download and import a temp version of the dev branch module.
+
+* Add linux compatible dev import in readme.
+
+* Fixed a warning message typo
+
+* Pull help text from default settings file instead of hard coding it so only 1 place to update. Also testing for whitespace in apitokens and server name as a fallback for testing validity. Added a catch for if the fogserver name is specified as just a hostname, it will prepend http:// in this case and display a warning.
+
+* added a timer so linux users can read the warning before the editor opens to manually edit the settings file
+
+* display message about the wait before opening the commandline editor for linux users
+
+* default to vi instead of nano
+
+* added Quick vi/nano edit tips
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
+### 2506.9.22
+
+	Merge pull request #39 from darksidemilk/dev
+
+Did further testing on more complicated use cases and made sure they all worked as intended.
+Added support for bypassbitlocker flag.
+Updated github release notes template to include version specific links for psgallery and chocolatey resolving issue #24 and made progress on #33
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2506.9.21
 
 	Merge pull request #38 from darksidemilk/dev
@@ -509,6 +548,8 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
+
 
 
 
