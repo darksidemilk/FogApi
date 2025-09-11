@@ -119,13 +119,14 @@ function Get-WinBcdPxeId {
                 Write-Warning "no pxe boot options found in bcdedit matching $searchString!"
                 $pxeID = $null;
             }
+            # $pxeID = $pxeID | Where-Object { $_ -notmatch "v6" } #maybe filter out ipv6 options if they are present
             if ($pxeID.count -gt 1) {
                 if ($notBootMgr) {
                     $pxeID = $pxeID | Where-Object { $_ -notmatch "{bootmgr}"}
-                } else {
+                } <# else {
                     Write-Warning "Multiple entries returned, returning only first entry`n$($pxeID | Out-String)"
                     $pxeID = $pxeID[0];
-                }
+                } #>
             } else {
                 if ($pxeID -eq "{bootmgr}" -and $notBootMgr){
                     Write-Warning "Pxe id is boot manager but notBootMgr is present, returning null!"
