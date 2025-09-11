@@ -2,6 +2,14 @@
 
 ## 9.x
 
+### 2509.9.24
+
+	Allow pushing multiple pxe boot options to top of boot order (#43)
+
+* Allow pushing multiple pxe boot options to top of boot order rather than only the first one found
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2508.9.23
 
 	Fix #41 and add some other user experience improvements (#42)
@@ -548,6 +556,7 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
