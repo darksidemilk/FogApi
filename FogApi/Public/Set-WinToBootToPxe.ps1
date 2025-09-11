@@ -27,7 +27,10 @@ function Set-WinToBootToPxe {
         } else {
             $pxeID = Get-WinBcdPxeId;
             if ($Null -ne $pxeID) {
-                $addFirst = (bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfirst)
+                $addFirst = "";
+                $pxeID | ForEach-Object {
+                    $addFirst += (bcdedit /set "{fwbootmgr}" displayorder $_ /addfirst)
+                }
                 $fwboot = (bcdedit /enum "{fwbootmgr}")
                 if ($fwboot -match "bootsequence") {
                     $removeRunOnce =  (bcdedit /deletevalue "{fwbootmgr}" bootsequence); #remove any run once boot options
