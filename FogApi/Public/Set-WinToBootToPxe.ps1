@@ -28,7 +28,7 @@ function Set-WinToBootToPxe {
             $pxeID = Get-WinBcdPxeId;
             if ($Null -ne $pxeID) {
                 $addFirst = "";
-                $pxeID | ForEach-Object {
+                $pxeID | Sort-Object -Descending | ForEach-Object {
                     $addFirst += (bcdedit /set "{fwbootmgr}" displayorder $_ /addfirst)
                 }
                 $fwboot = (bcdedit /enum "{fwbootmgr}")
