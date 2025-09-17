@@ -115,13 +115,12 @@ function Invoke-FogApi {
             Write-Verbose "removing body from call as it is null"
             $apiCall.Remove("Body");
         } else {
-            if ($apicall.Method -eq "GET") {
-                Write-Verbose "Body exists for a GET request, switching to a POST request";
-                $apiCall.Method = "POST";
-                $Method = "POST"
+            if ($apiCall.Method -eq "GET") {
+                Write-Warning "Body exists for a GET request, this may need to be a POST request if you're changing things?";
+                # $apiCall.Method = "POST";
+                # $Method = "POST"
             }
         } 
-        
         # } else {
         #     if (!($apiCall.Body.GetType() -eq "string")) {
         #         $apiCall.Body = $apiCall.Body | ConvertTo-Json; 
