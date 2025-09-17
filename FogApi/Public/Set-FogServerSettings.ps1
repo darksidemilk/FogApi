@@ -60,7 +60,7 @@ This will set the current users FogApi/settings.json file to have the given api 
         }
         if (Test-StringNotNullOrEmpty -str $fogServer) {
             if (($fogServer -notlike "http://*") -and ($fogServer -notlike "https://*")) {
-                Write-Warning "raw server name $fogServer does not start with http:// or https://, prepending http:// to the server name, use enable-fogapihttps to enforce https in api calls later if desired";
+                Write-Verbose "raw server name $fogServer does not start with http:// or https://, prepending http:// to the server name, use enable-fogapihttps to enforce https in api calls later if desired";
                 $fogServer = "http://$fogServer";
             }
         }
