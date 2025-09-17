@@ -2,6 +2,15 @@
 
 ## 9.x
 
+### 2509.9.26
+
+	Fix getting active scheduled tasks without accidentally creating empty scheduled tasks. - Merge pull request #47 from darksidemilk:dev
+
+Relates back to #41 enforcing the POST on Get requests with a body could cause a race condition where FOG would create empty tasks. This has been fixed in FOG 1.6 and now prevented here as well by using the /current uri path when getting active/current scheduled tasks.
+Also did some other general cleanup.
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ### 2509.9.25
 
 	Merge pull request #45 from darksidemilk/dev
@@ -564,6 +573,7 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
