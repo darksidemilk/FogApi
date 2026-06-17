@@ -75,7 +75,7 @@ function Get-FogInventory {
             if ($compSys.UUID -notmatch "12345678-9012-3456-7890-abcdefabcdef" ) {
                 $hostObj.inventory.sysuuid       = $compSys.UUID;
             } else {
-                $hostObj.inventory.sysuuid       = ($compSys.Qualifiers | Where-Object Name -match 'UUID' | Select-Object -ExpandProperty Value);
+                $hostObj.inventory.sysuuid       = ($compSys.CimInstanceProperties | Where-Object Name -match 'UUID' | Select-Object -ExpandProperty Value);
             }
             $hostObj.inventory.systype       = $case.chassistype; #device form factor found chassistype member of $case but it references a list that hasn't been updated anywhere I can find. i.e. returns 35 for a minipc but documented list only goes to 24
             $hostObj.inventory.biosversion   = $bios.name;
