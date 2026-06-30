@@ -22,12 +22,12 @@ Sets the inventory of a fog host object to json data gotten from get-foginventor
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Set-FogInventory;
 ```
 
-{{ Add example description here }}
+Will set the inventory of the current hostr running the command to the json data gotten from get-foginventory
 
 ## PARAMETERS
 

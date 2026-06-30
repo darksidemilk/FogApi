@@ -22,12 +22,12 @@ Uses chmod 700 for linux and mac, uses powershell acl commands for windows users
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Set-FogServerSettingsFileSecurity;
 ```
 
-{{ Add example description here }}
+Will set the permissions on the default settings file to full control for owner only, no access for anyone else
 
 ## PARAMETERS
 

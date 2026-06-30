@@ -21,12 +21,12 @@ Prepends http to the fogserver property of fog server settings
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Disable-FogApiHTTPS
 ```
 
-{{ Add example description here }}
+This example will enforce http in the url used in all api calls by prepending http to the fogserver property of fog server settings
 
 ## PARAMETERS
 

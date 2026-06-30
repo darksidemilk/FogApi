@@ -22,12 +22,12 @@ creates a new object such as a host or task
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;
 ```
 
-{{ Add example description here }}
+Would create a new fog object of a start all snapins task.
 
 ## PARAMETERS
 

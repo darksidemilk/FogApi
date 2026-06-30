@@ -31,8 +31,7 @@ This gets the first mac to approve in the list of pending macs and approves it
 
 ### EXAMPLE 2
 ```
-$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
-Deny-FogPendingMac -macObject $pendingMac
+$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Deny-FogPendingMac -macObject $pendingMac
 ```
 
 Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123

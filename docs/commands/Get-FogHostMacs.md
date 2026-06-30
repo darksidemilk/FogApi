@@ -33,7 +33,14 @@ Use Get-FogHost to get the host object
 Get-MacsForHost (Get-FogHost)
 ```
 
-Will return the macs assigned to the computer running the command
+Will return the macs assigned to the computer running the command utilizing the alias Get-MacsForHost for this command
+
+### EXAMPLE 2
+```
+Get-FogHostMacs -hostID 1234
+```
+
+Will return the macs assigned to the host with the id of 1234
 
 ## PARAMETERS
 

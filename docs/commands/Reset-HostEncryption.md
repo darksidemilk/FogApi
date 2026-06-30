@@ -12,8 +12,15 @@ Reset the host encryption data on a given host
 
 ## SYNTAX
 
+### HostObject
 ```
-Reset-HostEncryption [[-fogHost] <Object>] [-restartSvc] [-ProgressAction <ActionPreference>]
+Reset-HostEncryption [-fogHost <Object>] [-restartSvc] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
+### HostID
+```
+Reset-HostEncryption [-fogHostID <Object>] [-restartSvc] [-ProgressAction <ActionPreference>]
  [<CommonParameters>]
 ```
 
@@ -25,12 +32,26 @@ the fogservice to form a new connection.
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Reset-HostEncryption -fogHostID 1234 -restartSvc
 ```
 
-{{ Add example description here }}
+This example resets the encryption data for the host with ID 1234 and restarts the fog service to force a re-encryption.
+
+### EXAMPLE 2
+```
+Reset-HostEncryption -fogHost (Get-FogHost -hostID 1234)
+```
+
+This example resets the encryption data for the host with ID 1234 using the host object returned from Get-FogHost.
+
+### EXAMPLE 3
+```
+Reset-HostEncryption -restartSvc
+```
+
+This example resets the encryption data for the current host running the command and restarts the fog service to force a re-encryption.
 
 ## PARAMETERS
 
@@ -39,13 +60,28 @@ Defaults to getting current host or can pass a host object
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: HostObject
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: (Get-FogHost)
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -fogHostID
+The fogHostID parameter allows you to pass a host ID to reset the encryption data for that host.
+
+```yaml
+Type: Object
+Parameter Sets: HostID
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

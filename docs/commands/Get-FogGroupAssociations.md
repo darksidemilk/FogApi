@@ -23,11 +23,17 @@ Returns the objects in the groupassociations table
 
 ### EXAMPLE 1
 ```
-$groupAssocs = Get-FogGroupAssociations;
-$groupAssocs | ? hostId -eq ((Get-FogHost).id)
+Get-FogGroupAssociations | ? hostId -eq ((Get-FogHost).id)
 ```
 
-Would give you the group associations of the current computer
+Would give you the group associations filtered to the current computer
+
+### EXAMPLE 2
+```
+Get-FogGroupAssociations;
+```
+
+This will return all group association objects in the fog database
 
 ## PARAMETERS
 

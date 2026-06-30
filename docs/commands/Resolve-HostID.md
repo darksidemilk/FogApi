@@ -21,12 +21,12 @@ Tests if the value can be cast as an int, if not then see if it is the hostname,
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Resolve-HostID -hostID 1234
 ```
 
-{{ Add example description here }}
+This will return 1234 if it is a valid hostid and is an int with just numbers, otherwise it will return null
 
 ## PARAMETERS
 

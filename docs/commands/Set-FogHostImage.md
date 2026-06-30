@@ -23,12 +23,12 @@ Will be expanded for better usability in the future
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$foghost = get-foghost -hostid 1234; $imageName = 'MyImage'; $fogImages = Get-FogImages; $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
 ```
 
-{{ Add example description here }}
+Will set the image with the name of MyImage to the host with the id of 1234
 
 ## PARAMETERS
 

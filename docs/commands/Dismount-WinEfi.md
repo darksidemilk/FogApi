@@ -21,12 +21,12 @@ Gets the efi partition mount letter and dismounts it with the mountvol tool
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Dismount-WinEfi
 ```
 
-{{ Add example description here }}
+This example will dismount the efi partition if it is currently mounted
 
 ## PARAMETERS
 

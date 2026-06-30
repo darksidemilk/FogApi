@@ -22,12 +22,12 @@ that states if and where the EFI system partition is mounted
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Get-WinEfiMountLetter
 ```
 
-{{ Add example description here }}
+This will return the current mount letter of the EFI partition if it is mounted, otherwise it will return null
 
 ## PARAMETERS
 
