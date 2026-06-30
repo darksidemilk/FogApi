@@ -5,6 +5,11 @@ function Disable-FogApiHTTPS {
     
     .DESCRIPTION
     Prepends http to the fogserver property of fog server settings
+
+    .EXAMPLE
+    Disable-FogApiHTTPS
+
+    This example will enforce http in the url used in all api calls by prepending http to the fogserver property of fog server settings
     
     #>
     [CmdletBinding()]

@@ -12,16 +12,14 @@ function Repair-FogSnapinAssociations {
     Repair-FogSnapinAssociations
 
     'Example of output when there are associations to remove'
+    ```
     These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed:
-
     id    hostID snapinID
     --    ------ --------
     9289  1809   0
     9985  1866   0
     10000 2091   0
-
     These snapin assoiciations have an invalid hostID of either 0 or -1 or other negative number, or have a hostid that doesn't belong to any host and will be removed:
-
     id   hostID snapinID
     --   ------ --------
     8281 1787   103
@@ -33,9 +31,9 @@ function Repair-FogSnapinAssociations {
     8601 1935   137
     9353 0      681
     9354 0      684
-
     Snapin Association repair complete!
-        
+    ```
+    
     .NOTES
     When running Get-FogHostAssociatedSnapins, if associations with invalid snapin ids are found, 
     #>

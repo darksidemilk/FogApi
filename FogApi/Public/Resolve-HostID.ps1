@@ -9,6 +9,11 @@ function Resolve-HostID {
     .PARAMETER hostID
     the hostid to validate, if none is given, will get the host object of the current host
     
+    .EXAMPLE
+    Resolve-HostID -hostID 1234
+
+    This will return 1234 if it is a valid hostid and is an int with just numbers, otherwise it will return null
+
     #>
     [CmdletBinding()]
     param (

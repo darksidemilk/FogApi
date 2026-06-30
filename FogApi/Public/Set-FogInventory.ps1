@@ -12,6 +12,11 @@ the host object to set on
 .PARAMETER jsonData
 the jsondata with the inventory
 
+.EXAMPLE
+Set-FogInventory;
+
+Will set the inventory of the current hostr running the command to the json data gotten from get-foginventory
+
 
 #>
 

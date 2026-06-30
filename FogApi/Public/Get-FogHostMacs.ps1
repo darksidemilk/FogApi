@@ -13,7 +13,12 @@ function Get-FogHostMacs {
     .EXAMPLE
     Get-MacsForHost (Get-FogHost)
 
-    Will return the macs assigned to the computer running the command
+    Will return the macs assigned to the computer running the command utilizing the alias Get-MacsForHost for this command
+
+    .EXAMPLE
+    Get-FogHostMacs -hostID 1234
+
+    Will return the macs assigned to the host with the id of 1234
     
     #>
     [CmdletBinding()]

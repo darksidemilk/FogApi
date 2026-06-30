@@ -12,23 +12,50 @@ function Reset-HostEncryption {
     .PARAMETER fogHost
     Defaults to getting current host or can pass a host object
 
+    .PARAMETER fogHostID
+    The fogHostID parameter allows you to pass a host ID to reset the encryption data for that host.
+
     .PARAMETER restartSvc
     The restartSvc switch will restart the fog service
     forcing a more immediate re-encryption and connection. This currently only works when used on the local computer
     you are resetting.
+
+    .EXAMPLE
+    Reset-HostEncryption -fogHostID 1234 -restartSvc
+
+    This example resets the encryption data for the host with ID 1234 and restarts the fog service to force a re-encryption.
+
+    .EXAMPLE
+    Reset-HostEncryption -fogHost (Get-FogHost -hostID 1234)
+
+    This example resets the encryption data for the host with ID 1234 using the host object returned from Get-FogHost.
+
+    .EXAMPLE
+    Reset-HostEncryption -restartSvc
+
+    This example resets the encryption data for the current host running the command and restarts the fog service to force a re-encryption.
     
 #>
     
     [CmdletBinding()]
+    [Alias('Reset-FogHostEncryption')]
     param (
-        [parameter(ValueFromPipeline=$true)]
+        [parameter(ValueFromPipeline=$true,ParameterSetName='HostObject')]
         $fogHost = (Get-FogHost),
+        [parameter(ParameterSetName='HostID')]
+        $fogHostID,
+        [parameter(ParameterSetName='HostObject')]
+        [parameter(ParameterSetName='HostID')]
         [switch]$restartSvc
      )
 
     process {
-        if ($null -ne $_) {
-            $fogHost = $_;
+        if ($PSCmdlet.ParameterSetName -eq 'HostID') {
+            $fogHost = Get-FogHost -hostID $fogHostID;
+        } else {
+            if ($null -ne $_) {
+                $fogHost = $_;
+            }
         }
         $fogHost.pub_key = "";
         $fogHost.sec_tok = "";
