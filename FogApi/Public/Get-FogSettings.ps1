@@ -5,6 +5,12 @@ function Get-FogSettings {
     
     .DESCRIPTION
     Returns all settings with their ids, names, values, and descriptions
+
+    .EXAMPLE
+    $settings = Get-FogSettings; $settings
+
+    Will put the list of settings in a variable and then display the list
+    You can then use the $settings object to filter for specific settings and their values, or to find the id of a setting to use in Set-FogSetting
     
     #>
     [CmdletBinding()]

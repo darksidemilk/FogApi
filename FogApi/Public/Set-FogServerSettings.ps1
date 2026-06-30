@@ -33,6 +33,9 @@ This will set the current users FogApi/settings.json file to have the given api 
 "fog" as the server name for the uri in all api calls. These are of course example tokens and the actual tokens are much longer.
 
 .EXAMPLE
+Set-FogServerSettings -interactive
+
+This will prompt you for each setting and allow you to paste in the values for each setting, if you have issues with pasting into the prompts in linux, try again without -interactive and paste into each param. i.e. `Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'`
 
 #>
 

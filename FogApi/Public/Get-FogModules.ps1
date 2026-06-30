@@ -7,8 +7,7 @@ function Get-FogModules {
     Returns the api module object. Can be utilized to find what modules are enabled by default when creating a new host
     
     .EXAMPLE
-    $mods = Get-FogModules
-    $mods
+    $mods = Get-FogModules; $mods
 
     Will put the list of modules in a variable and then display the list
     

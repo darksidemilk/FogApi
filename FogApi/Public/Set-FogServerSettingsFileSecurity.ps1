@@ -8,6 +8,11 @@ function Set-FogServerSettingsFileSecurity {
     
     .PARAMETER settingsFile
     The settings file, defaults to the default path for the settings file tiy
+
+    .EXAMPLE
+    Set-FogServerSettingsFileSecurity;
+
+    Will set the permissions on the default settings file to full control for owner only, no access for anyone else
     
     .NOTES
     Has a try/catch on attempting to use set-acl in case permissions required aren't present on the current user in windows

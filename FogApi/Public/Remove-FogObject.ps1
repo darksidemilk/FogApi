@@ -15,6 +15,11 @@ json data in json string
 .PARAMETER IDofObject
 the id of the object
 
+.EXAMPLE
+$macs = get-fogmacaddresses; Remove-FogObject -type object -coreObject macaddressassociation -IDofObject $macs[-1].id;
+
+Would remove the last added mac address from the fog database
+
 #>
 
     [CmdletBinding()]

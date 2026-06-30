@@ -5,6 +5,11 @@ function Enable-FogApiHTTPS {
     
     .DESCRIPTION
     Prepends https to the fogserver property of fog server settings
+
+    .EXAMPLE
+    Enable-FogApiHTTPS
+
+    This example will enforce https in the url used in all api calls by prepending https to the fogserver property of fog server settings
     
     #>
     [CmdletBinding()]

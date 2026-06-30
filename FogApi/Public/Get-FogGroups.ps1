@@ -8,6 +8,8 @@ function Get-FogGroups {
     
     .EXAMPLE
     $groups = Get-FogGroups
+
+    This will return all the fog groups in the fog database and store them in the $groups variable
     
     .NOTES
     A group object does not contain membership information, you need to filter groupassociations to find membership

@@ -5,6 +5,11 @@ function Dismount-WinEfi {
         
         .DESCRIPTION
         Gets the efi partition mount letter and dismounts it with the mountvol tool
+
+        .EXAMPLE
+        Dismount-WinEfi
+
+        This example will dismount the efi partition if it is currently mounted
         
     #>
         

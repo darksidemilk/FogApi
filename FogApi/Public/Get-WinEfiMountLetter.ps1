@@ -6,6 +6,11 @@ function Get-WinEfiMountLetter {
         .DESCRIPTION
         Runs the mountvol.exe tool and parses out the string at the end of the output
         that states if and where the EFI system partition is mounted
+
+        .EXAMPLE
+        Get-WinEfiMountLetter
+
+        This will return the current mount letter of the EFI partition if it is mounted, otherwise it will return null
         
     #>
         

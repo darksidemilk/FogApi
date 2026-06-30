@@ -12,6 +12,11 @@ function Mount-WinEfi {
         
         .PARAMETER mountLtr
         The mount letter to use in A: format for mounting the EFI system partition
+
+        .EXAMPLE
+        Mount-WinEfi -mountLtr A:
+
+        This will mount the EFI system partition to A: if it is not already mounted there, it will utilize mountvol.exe
     
     #>
         
