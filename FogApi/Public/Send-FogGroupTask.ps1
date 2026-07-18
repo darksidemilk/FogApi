@@ -46,11 +46,14 @@ function Send-FogGroupTask {
     Finds the group named "Lab" and schedules a deploy task for every host in it at 8pm today
 
     .NOTES
-    Immediate group tasks use the "group" coreTaskObject (POST group/{id}/task), which is already a whitelisted call shape in this module.
-    Scheduled group tasks additionally set "isGroupTask":"1" and "groupID" instead of "hostID" in the scheduled task JSON, mirroring the
-    (currently always "0") isGroupTask field already present in Send-FogImage/Receive-FogImage. This scheduled-task path is inferred from
-    those whitelisted values and has not been exercised against a live fog server from within this module - verify it against your fog
-    server before relying on it in production.
+    Verified against the fog server source (FOGProject/fogproject, working-1.6 branch, packages/web/lib/router/route.class.php and
+    packages/web/lib/fog/scheduledtask.class.php):
+    - Immediate group tasks use the "group" coreTaskObject (POST group/{id}/task), routed to Route::task() which calls
+      Group::createImagePackage() when the target class is a Group. Reads taskTypeID, taskName, shutdown, debug, wol, deploySnapins.
+    - Scheduled group tasks go through the generic scheduledtask create() route. The scheduledtask table has no separate groupID column -
+      "isGroupTask":"1" instead repurposes the "hostID" field (db column stGroupHostID) to hold the group id, so this cmdlet sends
+      "hostID":"$groupID" rather than a "groupID" field. The scheduledtask create route only maps JSON keys that literally match its
+      databaseFields, so the task's name field must be sent as "name", not "taskName".
 #>
 
     [CmdletBinding()]
@@ -126,14 +129,14 @@ function Send-FogGroupTask {
             if (Test-FogVerAbove1dot6) {
                 $jsonData = @"
                     {
-                        "taskName":"Group Task",
+                        "name":"Group Task",
                         "description":"Scheduled Group Task for group id $groupID on $($StartAtTime.DateTime.ToString())",
                         "type":"S",
                         "taskTypeID":"$taskTypeID",
                         "runTime":"$runTime",
                         "scheduleTime":"$scheduleTime",
                         "isGroupTask":"1",
-                        "groupID":"$groupID",
+                        "hostID":"$groupID",
                         "shutdown":"$shutdownStr",
                         "debug":"$debugStr",
                         "wol":"$wolStr",
@@ -154,7 +157,7 @@ function Send-FogGroupTask {
                         "runTime":"$runTime",
                         "scheduleTime":"$scheduleTime",
                         "isGroupTask":"1",
-                        "groupID":"$groupID",
+                        "hostID":"$groupID",
                         "shutdown":"$shutdownStr",
                         "other2":"$deploySnapins",
                         "other3":"API",
