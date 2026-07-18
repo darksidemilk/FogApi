@@ -21,12 +21,13 @@ Returns all settings with their ids, names, values, and descriptions
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$settings = Get-FogSettings; $settings
 ```
 
-{{ Add example description here }}
+Will put the list of settings in a variable and then display the list
+You can then use the $settings object to filter for specific settings and their values, or to find the id of a setting to use in Set-FogSetting
 
 ## PARAMETERS
 

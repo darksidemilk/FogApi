@@ -26,6 +26,8 @@ Gets all the fog groups and returns them in an object
 $groups = Get-FogGroups
 ```
 
+This will return all the fog groups in the fog database and store them in the $groups variable
+
 ## PARAMETERS
 
 ### -ProgressAction

@@ -21,12 +21,12 @@ Tests if the version string matches 1.5 string, if it doesn't then it's likely a
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Test-FogVerAbove1dot6
 ```
 
-{{ Add example description here }}
+This will return true if the fog version is above 1.6 and false if it is 1.5 or below
 
 ## PARAMETERS
 

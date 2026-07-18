@@ -22,12 +22,12 @@ Calls a delete function via the api
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+$macs = get-fogmacaddresses; Remove-FogObject -type object -coreObject macaddressassociation -IDofObject $macs[-1].id;
 ```
 
-{{ Add example description here }}
+Would remove the last added mac address from the fog database
 
 ## PARAMETERS
 

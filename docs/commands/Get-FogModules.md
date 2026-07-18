@@ -24,8 +24,7 @@ Can be utilized to find what modules are enabled by default when creating a new 
 
 ### EXAMPLE 1
 ```
-$mods = Get-FogModules
-$mods
+$mods = Get-FogModules; $mods
 ```
 
 Will put the list of modules in a variable and then display the list

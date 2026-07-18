@@ -483,8 +483,7 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
-Approve-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Approve-FogPendingMac -macObject $pendingMac</dev:code>
         <dev:remarks>
           <maml:para>Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
         </dev:remarks>
@@ -582,8 +581,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"
-Deny-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Deny-FogPendingMac -macObject $pendingMac</dev:code>
         <dev:remarks>
           <maml:para>Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
         </dev:remarks>
@@ -648,10 +646,10 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Disable-FogApiHTTPS</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This example will enforce http in the url used in all api calls by prepending http to the fogserver property of fog server settings</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -714,10 +712,10 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Dismount-WinEfi</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This example will dismount the efi partition if it is currently mounted</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -780,10 +778,10 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Enable-FogApiHTTPS</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This example will enforce https in the url used in all api calls by prepending https to the fogserver property of fog server settings</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1041,10 +1039,16 @@ Deny-FogPendingMac -macObject $pendingMac</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$groupAssocs = Get-FogGroupAssociations;
-$groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
+        <dev:code>Get-FogGroupAssociations | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <dev:remarks>
-          <maml:para>Would give you the group associations of the current computer</maml:para>
+          <maml:para>Would give you the group associations filtered to the current computer</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogGroupAssociations;</dev:code>
+        <dev:remarks>
+          <maml:para>This will return all group association objects in the fog database</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1200,7 +1204,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>$groups = Get-FogGroups</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>This will return all the fog groups in the fog database and store them in the $groups variable</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1824,7 +1828,14 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Get-MacsForHost (Get-FogHost)</dev:code>
         <dev:remarks>
-          <maml:para>Will return the macs assigned to the computer running the command</maml:para>
+          <maml:para>Will return the macs assigned to the computer running the command utilizing the alias Get-MacsForHost for this command</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogHostMacs -hostID 1234</dev:code>
+        <dev:remarks>
+          <maml:para>Will return the macs assigned to the host with the id of 1234</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2461,8 +2472,7 @@ $groupAssocs | ? hostId -eq ((Get-FogHost).id)</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$mods = Get-FogModules
-$mods</dev:code>
+        <dev:code>$mods = Get-FogModules; $mods</dev:code>
         <dev:remarks>
           <maml:para>Will put the list of modules in a variable and then display the list</maml:para>
         </dev:remarks>
@@ -2610,6 +2620,13 @@ $mods</dev:code>
         <dev:code>Get-FogObject -type object -coreObject host</dev:code>
         <dev:remarks>
           <maml:para>This will get all hosts from the fog server. This will get all the hosts.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogObject -type objectactivetasktype -coreActiveTaskObject task</dev:code>
+        <dev:remarks>
+          <maml:para>This will get all the active tasks from the fog server which is in the objectactivetasktype type of object.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3087,10 +3104,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$settings = Get-FogSettings; $settings</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Will put the list of settings in a variable and then display the list You can then use the $settings object to filter for specific settings and their values, or to find the id of a setting to use in Set-FogSetting</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3699,10 +3716,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-WinEfiMountLetter</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This will return the current mount letter of the EFI partition if it is mounted, otherwise it will return null</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4024,10 +4041,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Mount-WinEfi -mountLtr A:</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This will mount the EFI system partition to A: if it is not already mounted there, it will utilize mountvol.exe</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4339,10 +4356,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Would create a new fog object of a start all snapins task.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4885,10 +4902,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$macs = get-fogmacaddresses; Remove-FogObject -type object -coreObject macaddressassociation -IDofObject $macs[-1].id;</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Would remove the last added mac address from the fog database</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5119,11 +5136,7 @@ $mods</dev:code>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Repair-FogSnapinAssociations</dev:code>
         <dev:remarks>
-          <maml:para>'Example of output when there are associations to remove' These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed:</maml:para>
-          <maml:para>id    hostID snapinID --    ------ -------- 9289  1809   0 9985  1866   0 10000 2091   0</maml:para>
-          <maml:para>These snapin assoiciations have an invalid hostID of either 0 or -1 or other negative number, or have a hostid that doesn't belong to any host and will be removed:</maml:para>
-          <maml:para>id   hostID snapinID --   ------ -------- 8281 1787   103 8513 1960   103 8597 1935   635 8598 1935   629 8599 1933   639 8600 1935   69 8601 1935   137 9353 0      681 9354 0      684</maml:para>
-          <maml:para>Snapin Association repair complete!</maml:para>
+          <maml:para>'Example of output when there are associations to remove' ``` These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed: id    hostID snapinID --    ------ -------- 9289  1809   0 9985  1866   0 10000 2091   0 These snapin assoiciations have an invalid hostID of either 0 or -1 or other negative number, or have a hostid that doesn't belong to any host and will be removed: id   hostID snapinID --   ------ -------- 8281 1787   103 8513 1960   103 8597 1935   635 8598 1935   629 8599 1933   639 8600 1935   69 8601 1935   137 9353 0      681 9354 0      684 Snapin Association repair complete! ```</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5149,7 +5162,7 @@ $mods</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Reset-HostEncryption</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
           <maml:name>fogHost</maml:name>
           <maml:description>
             <maml:para>Defaults to getting current host or can pass a host object</maml:para>
@@ -5185,9 +5198,47 @@ $mods</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
       </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Reset-HostEncryption</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>fogHostID</maml:name>
+          <maml:description>
+            <maml:para>The fogHostID parameter allows you to pass a host ID to reset the encryption data for that host.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>restartSvc</maml:name>
+          <maml:description>
+            <maml:para>The restartSvc switch will restart the fog service forcing a more immediate re-encryption and connection. This currently only works when used on the local computer you are resetting.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
         <maml:name>fogHost</maml:name>
         <maml:description>
           <maml:para>Defaults to getting current host or can pass a host object</maml:para>
@@ -5198,6 +5249,18 @@ $mods</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>fogHostID</maml:name>
+        <maml:description>
+          <maml:para>The fogHostID parameter allows you to pass a host ID to reset the encryption data for that host.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>restartSvc</maml:name>
@@ -5233,10 +5296,24 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Reset-HostEncryption -fogHostID 1234 -restartSvc</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This example resets the encryption data for the host with ID 1234 and restarts the fog service to force a re-encryption.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Reset-HostEncryption -fogHost (Get-FogHost -hostID 1234)</dev:code>
+        <dev:remarks>
+          <maml:para>This example resets the encryption data for the host with ID 1234 using the host object returned from Get-FogHost.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Reset-HostEncryption -restartSvc</dev:code>
+        <dev:remarks>
+          <maml:para>This example resets the encryption data for the current host running the command and restarts the fog service to force a re-encryption.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5323,10 +5400,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Resolve-HostID -hostID 1234</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This will return 1234 if it is a valid hostid and is an int with just numbers, otherwise it will return null</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6006,10 +6083,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>$foghost = get-foghost -hostid 1234; $imageName = 'MyImage'; $fogImages = Get-FogImages; $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Will set the image with the name of MyImage to the host with the id of 1234</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6120,10 +6197,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Set-FogInventory;</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Will set the inventory of the current hostr running the command to the json data gotten from get-foginventory</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6304,9 +6381,9 @@ $mods</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code></dev:code>
+        <dev:code>Set-FogServerSettings -interactive</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>This will prompt you for each setting and allow you to paste in the values for each setting, if you have issues with pasting into the prompts in linux, try again without -interactive and paste into each param. i.e. `Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'`</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6393,10 +6470,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Set-FogServerSettingsFileSecurity;</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>Will set the permissions on the default settings file to full control for owner only, no access for anyone else</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7422,10 +7499,10 @@ $mods</dev:code>
     </maml:alertSet>
     <command:examples>
       <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Test-FogVerAbove1dot6</dev:code>
         <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
+          <maml:para>This will return true if the fog version is above 1.6 and false if it is 1.5 or below</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

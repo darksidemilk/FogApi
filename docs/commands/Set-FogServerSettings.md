@@ -43,8 +43,12 @@ These are of course example tokens and the actual tokens are much longer.
 
 ### EXAMPLE 2
 ```
-
+Set-FogServerSettings -interactive
 ```
+
+This will prompt you for each setting and allow you to paste in the values for each setting, if you have issues with pasting into the prompts in linux, try again without -interactive and paste into each param.
+i.e.
+\`Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'\`
 
 ## PARAMETERS
 

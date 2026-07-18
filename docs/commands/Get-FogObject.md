@@ -35,6 +35,13 @@ Get-FogObject -type object -coreObject host
 This will get all hosts from the fog server.
 This will get all the hosts.
 
+### EXAMPLE 2
+```
+Get-FogObject -type objectactivetasktype -coreActiveTaskObject task
+```
+
+This will get all the active tasks from the fog server which is in the objectactivetasktype type of object.
+
 ## PARAMETERS
 
 ### -type

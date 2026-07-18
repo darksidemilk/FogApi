@@ -25,12 +25,12 @@ Use get-efimountletter to get where it is currently mounted
 
 ## EXAMPLES
 
-### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+### EXAMPLE 1
+```
+Mount-WinEfi -mountLtr A:
 ```
 
-{{ Add example description here }}
+This will mount the EFI system partition to A: if it is not already mounted there, it will utilize mountvol.exe
 
 ## PARAMETERS
 
