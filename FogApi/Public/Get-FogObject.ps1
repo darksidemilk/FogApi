@@ -24,6 +24,9 @@ function Get-FogObject {
     This will get all hosts from the fog server.
     This will get all the hosts.
 
+    Expected output:
+    { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }
+
     .EXAMPLE
     Get-FogObject -type objectactivetasktype -coreActiveTaskObject task
 

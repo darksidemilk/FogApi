@@ -49,3 +49,7 @@ Config is a local JSON file per OS user, **not** environment variables:
 ## Versioning
 
 Scheme is `{Year}{Month}.{Major}.{Revision}` (e.g. `2208` = August 2022); bumped automatically by `build.ps1`.
+
+## Git Flow
+
+Always branch from `dev`, not `master`. `dev` is merged into `master` via PR, which is what triggers `tag-and-release.yml` (version bump, docs build, PSGallery/Chocolatey publish). Feature/fix branches should target `dev` in their pull requests.

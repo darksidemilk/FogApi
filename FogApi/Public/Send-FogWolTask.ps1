@@ -14,9 +14,12 @@ function Send-FogWolTask {
     The name of the computer to get the fog host of 
     
     .EXAMPLE
-    Send-FogWolTask -computername "some-computer"
+    Send-FogWolTask -computername "MeowMachine"
 
-    Will send a magic computer to the computer some-computer from the fog server;
+    Will send a magic computer to the computer MeowMachine from the fog server;
+
+    Expected output:
+    { "id": 501, "success": true }
 
     .EXAMPLE
     $sleepers = (Get-foghosts | ? name -in ((Get-ADComputer -Filter '*' -SearchBase 'ou=someOU,dc=company,dc=local').name)); $sleepers | % {Send-FogWolTask -hostObj $_}
