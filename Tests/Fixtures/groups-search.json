@@ -1,0 +1,12 @@
+{
+    "count": 1,
+    "groups": [
+        {
+            "id": 7,
+            "name": "TestGroup",
+            "description": "",
+            "kernel": "",
+            "kernelArgs": ""
+        }
+    ]
+}
