@@ -4,3 +4,4 @@ _module_build
 .vscode
 .nupkg
 TestResults
+site

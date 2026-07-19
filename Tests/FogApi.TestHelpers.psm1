@@ -195,6 +195,163 @@ function Test-FogExpectedSubset {
     return $Expected -eq $Actual
 }
 
+function Get-FogParameterSetCoverage {
+    <#
+    .SYNOPSIS
+    Reports, per function and per real parameter set, whether an example exists and is annotated.
+
+    .DESCRIPTION
+    Advisory/best-effort coverage report - not a test assertion, never throws on a gap. For each
+    function, reflects on its actual parameter sets via Get-Command, then for every .EXAMPLE
+    (annotated or not) uses the PowerShell parser to find which named parameters the example's
+    invocation of that function binds, and matches that set against each parameter set's parameter
+    list (a subset match - an example that binds no/few parameters is attributed to every
+    parameter set it's consistent with, since this is informational, not a strict gate).
+
+    .PARAMETER FunctionName
+    One or more function names to report on.
+    #>
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [string[]]$FunctionName
+    )
+
+    $records = New-Object System.Collections.Generic.List[object]
+
+    foreach ($name in $FunctionName) {
+        $command = Get-Command -Name $name -ErrorAction SilentlyContinue
+        if ($null -eq $command -or $null -eq $command.ParameterSets -or $command.ParameterSets.Count -eq 0) {
+            continue
+        }
+
+        $parameterSets = $command.ParameterSets
+        $setParams = @{}
+        if ($parameterSets.Count -eq 1 -and $parameterSets[0].Name -eq '__AllParameterSets') {
+            $setParams['Default'] = @($parameterSets[0].Parameters.Name)
+        } else {
+            foreach ($set in $parameterSets) {
+                $setParams[$set.Name] = @($set.Parameters.Name)
+            }
+        }
+
+        $aliasNames = @(Get-Alias -Definition $name -ErrorAction SilentlyContinue | ForEach-Object Name)
+        $matchNames = @($name) + $aliasNames
+
+        $help = Get-Help -Name $name -Full
+        $examples = @($help.Examples.Example)
+
+        $setHasExample = @{}
+        $setHasAnnotation = @{}
+        foreach ($setName in $setParams.Keys) {
+            $setHasExample[$setName] = $false
+            $setHasAnnotation[$setName] = $false
+        }
+
+        foreach ($example in $examples) {
+            $code = ($example.code -join "`n").Trim()
+            $remarksText = ($example.remarks | ForEach-Object { $_.Text }) -join "`n"
+            $isAnnotated = [bool]([regex]::IsMatch($remarksText, '(?ms)^\s*Expected output:\s*\r?\n'))
+
+            $usedParams = New-Object System.Collections.Generic.List[string]
+            try {
+                $parseErrors = $null
+                $ast = [System.Management.Automation.Language.Parser]::ParseInput($code, [ref]$null, [ref]$parseErrors)
+                $commandAsts = $ast.FindAll({
+                    param($node)
+                    $node -is [System.Management.Automation.Language.CommandAst] -and $node.GetCommandName() -and ($matchNames -contains $node.GetCommandName())
+                }, $true)
+                foreach ($cmdAst in $commandAsts) {
+                    $cmdAst.CommandElements |
+                        Where-Object { $_ -is [System.Management.Automation.Language.CommandParameterAst] } |
+                        ForEach-Object { $usedParams.Add($_.ParameterName) }
+                }
+            } catch {
+                Write-Warning "Get-FogParameterSetCoverage: could not parse an example for '$name': $($_.Exception.Message)"
+            }
+            $uniqueUsedParams = @($usedParams | Select-Object -Unique)
+
+            foreach ($setName in $setParams.Keys) {
+                $isSubset = $true
+                foreach ($p in $uniqueUsedParams) {
+                    if ($setParams[$setName] -notcontains $p) {
+                        $isSubset = $false
+                        break
+                    }
+                }
+                if ($isSubset) {
+                    $setHasExample[$setName] = $true
+                    if ($isAnnotated) {
+                        $setHasAnnotation[$setName] = $true
+                    }
+                }
+            }
+        }
+
+        foreach ($setName in ($setParams.Keys | Sort-Object)) {
+            $records.Add([PSCustomObject]@{
+                FunctionName  = $name
+                ParameterSet  = $setName
+                HasExample    = $setHasExample[$setName]
+                HasAnnotation = $setHasAnnotation[$setName]
+            })
+        }
+    }
+
+    return $records.ToArray()
+}
+
+function ConvertTo-FogCoverageMarkdown {
+    <#
+    .SYNOPSIS
+    Formats Get-FogParameterSetCoverage records as a markdown checklist.
+
+    .DESCRIPTION
+    Groups by function, one checkbox line per parameter set: checked when an example is annotated
+    with Expected output:, unchecked (with a reason) when an example exists but isn't annotated, or
+    when no example targets that set at all. Purely a formatter - has no opinion on whether the
+    result is "good enough"; that judgment is left to whoever reads the report.
+
+    .PARAMETER Coverage
+    Records produced by Get-FogParameterSetCoverage.
+    #>
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [object[]]$Coverage
+    )
+
+    $total = $Coverage.Count
+    $annotated = @($Coverage | Where-Object HasAnnotation).Count
+
+    $lines = New-Object System.Collections.Generic.List[string]
+    $lines.Add('# FogApi Expected output: coverage report')
+    $lines.Add('')
+    $lines.Add("$annotated / $total parameter sets have an annotated ``Expected output:`` example.")
+    $lines.Add('')
+    $lines.Add('This is an informational report, not a pass/fail gate - see docs/Contributing.md.')
+    $lines.Add('')
+
+    $byFunction = $Coverage | Group-Object FunctionName | Sort-Object Name
+
+    foreach ($group in $byFunction) {
+        $lines.Add("## $($group.Name)")
+        $lines.Add('')
+        foreach ($record in ($group.Group | Sort-Object ParameterSet)) {
+            if ($record.HasAnnotation) {
+                $lines.Add("- [x] $($record.ParameterSet)")
+            } elseif ($record.HasExample) {
+                $lines.Add("- [ ] $($record.ParameterSet) - example exists, not annotated with Expected output:")
+            } else {
+                $lines.Add("- [ ] $($record.ParameterSet) - no example")
+            }
+        }
+        $lines.Add('')
+    }
+
+    return ($lines -join "`n")
+}
+
 function Register-FogApiMock {
     <#
     .SYNOPSIS
@@ -222,4 +379,4 @@ function Register-FogApiMock {
     }
 }
 
-Export-ModuleMember -Function Get-FogExampleCase, Get-FogMockResponse, Test-FogExpectedSubset, Register-FogApiMock
+Export-ModuleMember -Function Get-FogExampleCase, Get-FogMockResponse, Test-FogExpectedSubset, Register-FogApiMock, Get-FogParameterSetCoverage, ConvertTo-FogCoverageMarkdown

@@ -59,6 +59,10 @@
  .PARAMETER Function
  Optional list of function names to narrow the example test cases down to, for a targeted local run.
 
+ .PARAMETER CoverageReportPath
+ Where to write the informational parameter-set coverage report (see docs/Contributing.md). Always
+ generated as a side effect of the run - never affects pass/fail. Defaults to .\TestResults\coverage-report.md
+
 #>
 
 [CmdletBinding()]
@@ -66,7 +70,8 @@ Param(
 	[switch]$RealServer,
 	[switch]$CI,
 	[string]$OutputPath = ".\TestResults\pester-results.xml",
-	[string[]]$Function
+	[string[]]$Function,
+	[string]$CoverageReportPath = ".\TestResults\coverage-report.md"
 )
 
 if (-not (Get-Module -ListAvailable -Name Pester | Where-Object Version -ge '5.0.0')) {
@@ -82,7 +87,7 @@ if ($RealServer) {
 	Write-Warning "Running with -RealServer: examples run unmocked against whatever Fog server is configured in this user's api-settings.json. Some examples create/modify/message real objects."
 }
 
-$containerData = @{ RealServer = [bool]$RealServer }
+$containerData = @{ RealServer = [bool]$RealServer; CoverageReportPath = $CoverageReportPath }
 if ($Function) {
 	$containerData.Function = $Function
 }

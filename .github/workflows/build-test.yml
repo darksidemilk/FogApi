@@ -53,3 +53,10 @@ jobs:
           with:
             name: pester-results
             path: TestResults/pester-results.xml
+
+        - name: Upload coverage report
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: parameter-set-coverage-report
+            path: TestResults/coverage-report.md

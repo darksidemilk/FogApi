@@ -10,7 +10,8 @@
 #
 param(
     [switch]$RealServer,
-    [string[]]$Function
+    [string[]]$Function,
+    [string]$CoverageReportPath
 )
 
 BeforeDiscovery {

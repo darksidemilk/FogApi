@@ -10,7 +10,8 @@
 # New-PesterContainer -Data call doesn't fail parameter binding here.
 param(
     [switch]$RealServer,
-    [string[]]$Function
+    [string[]]$Function,
+    [string]$CoverageReportPath
 )
 
 BeforeAll {
