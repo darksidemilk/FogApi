@@ -12,7 +12,7 @@ on:
 jobs:
     build:
         runs-on: windows-latest
-    
+
         steps:
         - uses: actions/checkout@v7
 
@@ -36,3 +36,27 @@ jobs:
                 Write-Error "Manifest threw error"
                 return $false;
             }
+
+    test:
+        runs-on: windows-latest
+
+        steps:
+        - uses: actions/checkout@v7
+
+        - name: Run Pester tests
+          shell: pwsh
+          run: .\Invoke-FogApiTests.ps1 -CI
+
+        - name: Upload test results
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: pester-results
+            path: TestResults/pester-results.xml
+
+        - name: Upload coverage report
+          if: always()
+          uses: actions/upload-artifact@v4
+          with:
+            name: parameter-set-coverage-report
+            path: TestResults/coverage-report.md

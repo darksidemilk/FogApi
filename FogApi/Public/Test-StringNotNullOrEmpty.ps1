@@ -15,17 +15,26 @@ function Test-StringNotNullOrEmpty {
 
     Will return true as it is a valid string with content
 
+    Expected output:
+    true
+
     .EXAMPLE
     $s = ""; Test-StringNotNullOrEmpty $s;
 
     Will return false as this is an empty string.
+
+    Expected output:
+    false
 
     .EXAMPLE
     $str = " "; $str | Test-StringNotNullOrEmpty
 
     Will return false as this string is just whitespace
 
-    
+    Expected output:
+    false
+
+
     .NOTES
     Meant to simplify input validation tests as test-string $param or $value | test-string is easier to type in an if statement than
     doing [string]::isnullorempty($str) along with [string]::isnullorwhitespace($str)
