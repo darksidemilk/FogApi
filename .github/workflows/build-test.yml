@@ -8,8 +8,22 @@ on:
   pull_request:
     branches:
       - master
+      - dev
 
 jobs:
+    enforce-dev-to-master:
+        if: github.event_name == 'pull_request' && github.base_ref == 'master'
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Require PRs into master to come from dev
+          run: |
+            if [ "${{ github.head_ref }}" != "dev" ]; then
+              echo "::error::Pull requests into master must come from dev (see docs/Contributing.md for the git flow). This PR's source branch is '${{ github.head_ref }}'."
+              exit 1
+            fi
+            echo "OK: source branch is dev"
+
     build:
         runs-on: windows-latest
 

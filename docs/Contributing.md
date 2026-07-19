@@ -6,8 +6,8 @@ Thanks for taking an interest in improving FogApi! This page covers how the bran
 
 - Always branch from `dev`, not `master`.
 - Feature/fix branches target `dev` in their pull requests.
-- `dev` gets merged into `master` via PR, and that merge is what triggers [`tag-and-release.yml`](https://github.com/darksidemilk/FogApi/blob/master/.github/workflows/tag-and-release.yml) - it bumps the module version, rebuilds the docs, and publishes to the PowerShell Gallery and Chocolatey.
-- Every pull request (to either branch) runs [`build-test.yml`](https://github.com/darksidemilk/FogApi/blob/master/.github/workflows/build-test.yml), which builds the module as a smoke test and runs the Pester suite described below.
+- `dev` gets merged into `master` via PR, and that merge is what triggers [`tag-and-release.yml`](https://github.com/darksidemilk/FogApi/blob/master/.github/workflows/tag-and-release.yml) - it bumps the module version, rebuilds the docs, and publishes to the PowerShell Gallery and Chocolatey. **Only `dev` is allowed to merge into `master`** - a PR into `master` from anywhere else fails the `enforce-dev-to-master` check in `build-test.yml`.
+- Every pull request into `master` or `dev` runs [`build-test.yml`](https://github.com/darksidemilk/FogApi/blob/master/.github/workflows/build-test.yml), which builds the module as a smoke test and runs the Pester suite described below. This only validates (build succeeds, tests pass) - it has no publish/release side effects, those only happen via `tag-and-release.yml` on a merge to `master`.
 
 ## How the tests work
 
