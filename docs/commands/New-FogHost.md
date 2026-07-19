@@ -41,9 +41,6 @@ New-FogHost -name "test-host" -macs "01:23:45:67:89:00"
 
 Will create a new host in fog with the name "test-host"
 
-Expected output:
-{ "name": "test-host", "id": 42 }
-
 ## PARAMETERS
 
 ### -name

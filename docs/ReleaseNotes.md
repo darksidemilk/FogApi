@@ -2,14 +2,6 @@
 
 ## 9.x
 
-### 2607.9.28
-
-	Merge pull request #53 from darksidemilk/claude/pester-tests-github-action-lfvrri
-
-Add CLAUDE.md with build/architecture guidance
-
-see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
-
 ### 2606.9.27
 
 	Merge pull request #49 from darksidemilk/dev
@@ -589,7 +581,6 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
-
 
 
 

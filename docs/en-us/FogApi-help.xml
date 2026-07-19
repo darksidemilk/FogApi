@@ -1421,7 +1421,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogHost -hostName MeowMachine</dev:code>
         <dev:remarks>
           <maml:para>This would return the fog details of a host named MeowMachine in your fog instance If using pwsh 7+ and your FOG service is 1.6 or above, you can tab complete to search for existing hosts by name</maml:para>
-          <maml:para>Expected output: { "name": "MeowMachine", "id": 42 }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -2039,7 +2038,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogHosts</dev:code>
         <dev:remarks>
           <maml:para>returns an array object with all hosts in the fogserver.</maml:para>
-          <maml:para>Expected output: [ { "name": "MeowMachine", "id": 42 } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2622,7 +2620,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogObject -type object -coreObject host</dev:code>
         <dev:remarks>
           <maml:para>This will get all hosts from the fog server. This will get all the hosts.</maml:para>
-          <maml:para>Expected output: { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -4225,7 +4222,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>New-FogHost -name "test-host" -macs "01:23:45:67:89:00"</dev:code>
         <dev:remarks>
           <maml:para>Will create a new host in fog with the name "test-host"</maml:para>
-          <maml:para>Expected output: { "name": "test-host", "id": 42 }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4364,7 +4360,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;</dev:code>
         <dev:remarks>
           <maml:para>Would create a new fog object of a start all snapins task.</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5968,10 +5963,9 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Send-FogWolTask -computername "MeowMachine"</dev:code>
+        <dev:code>Send-FogWolTask -computername "some-computer"</dev:code>
         <dev:remarks>
-          <maml:para>Will send a magic computer to the computer MeowMachine from the fog server;</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Will send a magic computer to the computer some-computer from the fog server;</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7599,7 +7593,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Test-StringNotNullOrEmpty "An example"</dev:code>
         <dev:remarks>
           <maml:para>Will return true as it is a valid string with content</maml:para>
-          <maml:para>Expected output: true</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7607,7 +7600,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$s = ""; Test-StringNotNullOrEmpty $s;</dev:code>
         <dev:remarks>
           <maml:para>Will return false as this is an empty string.</maml:para>
-          <maml:para>Expected output: false</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7615,7 +7607,6 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$str = " "; $str | Test-StringNotNullOrEmpty</dev:code>
         <dev:remarks>
           <maml:para>Will return false as this string is just whitespace</maml:para>
-          <maml:para>Expected output: false</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7775,10 +7766,9 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$h = Get-FogHost -hostName MeowMachine; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose</dev:code>
+        <dev:code>$h = get-foghost; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose</dev:code>
         <dev:remarks>
-          <maml:para>Will update the ADUser field on the MeowMachine host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name. You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name</maml:para>
-          <maml:para>Expected output: { "ADUser": "ldapBind" }</maml:para>
+          <maml:para>Will update the ADUser field on the current host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name. You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

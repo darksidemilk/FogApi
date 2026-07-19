@@ -31,13 +31,10 @@ mac addresses registered for the given host.
 
 ### EXAMPLE 1
 ```
-Send-FogWolTask -computername "MeowMachine"
+Send-FogWolTask -computername "some-computer"
 ```
 
-Will send a magic computer to the computer MeowMachine from the fog server;
-
-Expected output:
-{ "id": 501, "success": true }
+Will send a magic computer to the computer some-computer from the fog server;
 
 ### EXAMPLE 2
 ```
