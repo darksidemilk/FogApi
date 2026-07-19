@@ -26,10 +26,11 @@ jobs:
 
     build:
         runs-on: windows-latest
+        needs: enforce-dev-to-master
 
         steps:
         - uses: actions/checkout@v7
-
+    
         - name: Run build script
           run: |
             # Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
@@ -53,6 +54,7 @@ jobs:
 
     test:
         runs-on: windows-latest
+        needs: build
 
         steps:
         - uses: actions/checkout@v7
