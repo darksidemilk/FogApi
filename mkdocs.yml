@@ -67,6 +67,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About: about_FogApi.md
+  - Contributing: Contributing.md
   - Release Notes: ReleaseNotes.md
   - Commands: 
     - 'Index': 'commands/index.md'
