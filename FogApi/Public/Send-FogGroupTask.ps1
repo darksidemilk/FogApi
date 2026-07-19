@@ -36,14 +36,22 @@ function Send-FogGroupTask {
     Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.
 
     .EXAMPLE
-    Send-FogGroupTask -groupID 5
+    Send-FogGroupTask -groupID 7 -taskTypeID 14
 
-    Queues an immediate deploy task for every host in the group with id 5
+    Queues an immediate wake-up task for every host in the group with id 7.
+    Use the default taskTypeID of 1 to queue a deploy task instead.
+
+    Expected output:
+    { "id": 501, "success": true }
 
     .EXAMPLE
-    Get-FogGroupByName "Lab" | Send-FogGroupTask -StartAtTime (Get-Date 8pm)
+    Get-FogGroupByName "TestGroup" | Send-FogGroupTask -taskTypeID 14 -StartAtTime ((Get-Date).AddHours(2))
 
-    Finds the group named "Lab" and schedules a deploy task for every host in it at 8pm today
+    Finds the group named "TestGroup" and schedules a wake-up task for every host in it 2 hours from now,
+    returning the created scheduled task marked as a group task.
+
+    Expected output:
+    { "type": "S", "isGroupTask": "1" }
 
     .NOTES
     Verified against the fog server source (FOGProject/fogproject, working-1.6 branch, packages/web/lib/router/route.class.php and

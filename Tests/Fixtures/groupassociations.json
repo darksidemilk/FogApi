@@ -1,0 +1,7 @@
+{
+    "count": 2,
+    "groupassociations": [
+        { "id": 9, "hostID": 42, "groupID": 3 },
+        { "id": 10, "hostID": 42, "groupID": 5 }
+    ]
+}

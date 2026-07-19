@@ -130,6 +130,36 @@ function Get-FogMockResponse {
                 return $created
             }
         }
+        '^groupassociation$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'groupassociations.json' }
+            if ($Method -eq 'POST') {
+                $created = if ([string]::IsNullOrEmpty($jsonData)) { [PSCustomObject]@{} } else { $jsonData | ConvertFrom-Json }
+                $created | Add-Member -MemberType NoteProperty -Name id -Value 77 -Force
+                return $created
+            }
+        }
+        '^groupassociation/\d+/delete$' {
+            if ($Method -eq 'DELETE') { return Get-Fixture 'delete-result.json' }
+        }
+        '^group/search/.+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'groups-search.json' }
+        }
+        '^group/\d+/edit$' {
+            if ($Method -eq 'PUT') {
+                if ([string]::IsNullOrEmpty($jsonData)) { return Get-Fixture 'groups-search.json' }
+                return $jsonData | ConvertFrom-Json
+            }
+        }
+        '^group/\d+/task$' {
+            if ($Method -eq 'POST') { return Get-Fixture 'task-create.json' }
+        }
+        '^scheduledtask$' {
+            if ($Method -eq 'POST') {
+                $created = if ([string]::IsNullOrEmpty($jsonData)) { [PSCustomObject]@{} } else { $jsonData | ConvertFrom-Json }
+                $created | Add-Member -MemberType NoteProperty -Name id -Value 88 -Force
+                return $created
+            }
+        }
     }
 
     throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'"
