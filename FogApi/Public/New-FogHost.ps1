@@ -41,9 +41,6 @@ function New-FogHost {
 
     Will create a new host in fog with the name "test-host"
 
-    Expected output:
-    { "name": "test-host", "id": 42 }
-
     #>
     [CmdletBinding(DefaultParameterSetName='default')]
     [Alias('Add-FogHost')]

@@ -18,10 +18,7 @@ the id of the object
 .EXAMPLE
 $hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;
 
-Would create a new fog object of a start all snapins task.
-
-Expected output:
-{ "id": 501, "success": true }
+Would create a new fog object of a start all snapins task. 
 
 #>
 
