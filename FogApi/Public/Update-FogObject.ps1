@@ -7,10 +7,13 @@ Update/patch/edit api calls
 Runs update calls to the api
 
 .EXAMPLE
-$h = get-foghost; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose
+$h = Get-FogHost -hostName MeowMachine; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose
 
-Will update the ADUser field on the current host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name.
+Will update the ADUser field on the MeowMachine host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name.
 You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name
+
+Expected output:
+{ "ADUser": "ldapBind" }
 
 .PARAMETER type
 the type of fog object

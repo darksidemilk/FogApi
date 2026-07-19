@@ -1,0 +1,10 @@
+{
+    "count": 1,
+    "modules": [
+        {
+            "id": 1,
+            "name": "hostnameChanger",
+            "isDefault": "1"
+        }
+    ]
+}
