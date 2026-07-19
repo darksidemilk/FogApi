@@ -149,6 +149,8 @@ in notepad on windows, nano on linux, or TextEdit on Mac
 You can also open the settings.json file and edit it manually before running your first command, but it's best to use the `Set-FogServerSettings -interactive` function and switch for first time setup.
 The default settings in `settings.json` are explanations of where to find the proper settings since json can't have comments
 
+Note: copy each api token exactly as displayed in the fog web ui. The ui displays the tokens base64-encoded and that encoded form is what the fog api expects in the request headers (the server base64-decodes them before comparing, and has since the api was introduced in fog 1.5). If you pull a token straight from the fog database instead, api calls will fail with a 403 until you base64-encode it.
+
 Once the settings are set you can have a jolly good time utilizing the fog documentation
 found here https://news.fogproject.org/simplified-api-documentation/ that was used to model the parameters
 
