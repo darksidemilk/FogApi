@@ -50,7 +50,6 @@ jobs:
                 Write-Error "Manifest threw error"
                 return $false;
             }
-<<<<<<< HEAD
 
     test:
         runs-on: windows-latest
@@ -76,5 +75,3 @@ jobs:
           with:
             name: parameter-set-coverage-report
             path: TestResults/coverage-report.md
-=======
->>>>>>> origin/master
