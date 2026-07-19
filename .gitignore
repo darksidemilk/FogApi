@@ -3,5 +3,3 @@ _module_build
 .lastprereqrun
 .vscode
 .nupkg
-TestResults
-site

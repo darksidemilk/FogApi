@@ -11,10 +11,7 @@ function Get-FogHosts {
     Get-FogHosts
 
     returns an array object with all hosts in the fogserver.
-
-    Expected output:
-    [ { "name": "MeowMachine", "id": 42 } ]
-
+    
 #>
     
     [CmdletBinding()]
