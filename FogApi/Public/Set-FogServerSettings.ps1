@@ -12,9 +12,12 @@ and keeps the settings from being overwritten when updating the module
 
 .PARAMETER fogApiToken
 fog API token is found at https://fog-server/fog/management/index.php?node=about&sub=settings under API System
+Copy the token exactly as displayed in the web ui; it is shown base64-encoded and that is the form the fog api expects in the request header
+(the server base64-decodes it before comparing). Do not use the raw token value from the fog database, it will fail with a 403.
 
 .PARAMETER fogUserToken
 your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab
+Copy this token exactly as displayed in the web ui too; like the api token it is shown base64-encoded, which is the form the api expects.
 
 .PARAMETER fogServer
 your fog server hostname or ip address to be used for created the url used in api calls default is fog-server or fogServer
