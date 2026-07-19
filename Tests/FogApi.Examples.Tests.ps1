@@ -31,7 +31,11 @@ BeforeDiscovery {
         'Update-FogObject',
         'New-FogObject',
         'Send-FogWolTask',
-        'Test-StringNotNullOrEmpty'
+        'Test-StringNotNullOrEmpty',
+        'Add-FogHostGroup',
+        'Remove-FogHostGroup',
+        'Update-FogGroup',
+        'Send-FogGroupTask'
     )
     if ($Function) {
         $script:FogPilotFunctions = $script:FogPilotFunctions | Where-Object { $_ -in $Function }

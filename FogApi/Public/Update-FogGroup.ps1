@@ -64,15 +64,21 @@ function Update-FogGroup {
     parameters above. Useful for fields not otherwise exposed as a named parameter.
 
     .EXAMPLE
-    Update-FogGroup -groupID 5 -Description "Lab computers"
+    Update-FogGroup -groupID 7 -Description "Lab computers"
 
-    Updates the description field of the group with id 5
+    Updates the description field of the group with id 7
+
+    Expected output:
+    { "description": "Lab computers" }
 
     .EXAMPLE
-    $g = Get-FogGroupByName "Lab"; $g.description = "Lab Computers"; $g | Update-FogGroup
+    $g = Get-FogGroupByName "TestGroup"; $g.description = "Updated via example"; $g | Update-FogGroup
 
-    Gets the group named "Lab", edits its description property directly on the returned object, and sends the
+    Gets the group named "TestGroup", edits its description property directly on the returned object, and sends the
     change back with the modified object piped straight into Update-FogGroup.
+
+    Expected output:
+    { "description": "Updated via example" }
 
     .EXAMPLE
     Get-FogGroupByName "Lab" | Update-FogGroup -ImageID 12

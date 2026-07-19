@@ -17,14 +17,20 @@ function Add-FogHostGroup {
     The id of the group to add the host to
 
     .EXAMPLE
-    Add-FogHostGroup -hostID 1234 -groupID 5
+    Add-FogHostGroup -hostID 42 -groupID 7
 
-    Adds the host with id 1234 to the group with id 5
+    Adds the host with id 42 to the group with id 7, returning the created group association
+
+    Expected output:
+    { "hostID": "42", "groupID": "7" }
 
     .EXAMPLE
-    Get-FogHost -hostname "computerName" | Add-FogHostGroup -groupID 5
+    Get-FogHost -hostName MeowMachine | Add-FogHostGroup -groupID 7
 
-    Finds the host by name and adds it to the group with id 5
+    Finds the host by name and adds it to the group with id 7
+
+    Expected output:
+    { "hostID": "42", "groupID": "7" }
 
 #>
 

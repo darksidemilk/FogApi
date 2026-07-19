@@ -16,14 +16,22 @@ function Remove-FogHostGroup {
     The id of the group to remove the host from
 
     .EXAMPLE
-    Remove-FogHostGroup -hostID 1234 -groupID 5
+    Remove-FogHostGroup -hostID 42 -groupID 3
 
-    Removes the host with id 1234 from the group with id 5
+    Removes the host with id 42 from the group with id 3.
+    A successful delete returns an empty response from the fog server.
+
+    Expected output:
+    ""
 
     .EXAMPLE
-    Get-FogHost -hostname "computerName" | Remove-FogHostGroup -groupID 5
+    Get-FogHost -hostName MeowMachine | Remove-FogHostGroup -groupID 5
 
-    Finds the host by name and removes it from the group with id 5
+    Finds the host by name and removes it from the group with id 5.
+    A successful delete returns an empty response from the fog server.
+
+    Expected output:
+    ""
 
 #>
 
