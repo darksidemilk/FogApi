@@ -11,6 +11,9 @@ function Get-FogActiveTasks {
 
     This will list any active tasks and their properties
 
+    Expected output:
+    []
+
     #>
     
     [CmdletBinding()]

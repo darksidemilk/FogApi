@@ -11,7 +11,10 @@ function Get-FogSettings {
 
     Will put the list of settings in a variable and then display the list
     You can then use the $settings object to filter for specific settings and their values, or to find the id of a setting to use in Set-FogSetting
-    
+
+    Expected output:
+    [ { "id": 1, "name": "FOG_QUICKREG_PENDING_MAC_FILTER" }, { "id": 2, "name": "FOG_MEMORY_LIMIT", "value": "512" }, { "id": 3, "name": "FOG_WEB_HOST", "value": "fog-server" } ]
+
     #>
     [CmdletBinding()]
     param (

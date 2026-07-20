@@ -43,10 +43,13 @@ Starts a capture task to receive a new version of an image in fog
 
 ### EXAMPLE 1
 ```
-Receive-FogImage -hostID "1234"
+Receive-FogImage -hostID "42"
 ```
 
-Will queue a capture task for host 1234 right now
+Will queue a capture task for host 42 right now
+
+Expected output:
+{ "id": 501, "success": true }
 
 ### EXAMPLE 2
 ```

@@ -30,6 +30,9 @@ Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER
 
 Will return the value and info of FOG_QUICKREG_PENDING_MAC_FILTER
 
+Expected output:
+{ "id": 1, "name": "FOG_QUICKREG_PENDING_MAC_FILTER", "value": "00:00:00:00:00:00,FF:FF:FF:FF:FF:FF" }
+
 ### EXAMPLE 2
 ```
 $filteredmacs = (Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER).value.split(",");

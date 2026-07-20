@@ -31,17 +31,23 @@ or denied with deny-fogpendingmac
 
 ### EXAMPLE 1
 ```
-Get-PendingMacsForhost -hostID 123
+Get-PendingMacsForhost -hostID 42
 ```
 
-gets the macs if any for foghost 123
+gets the macs if any for foghost 42
+
+Expected output:
+\[ { "mac": "01:23:45:67:89:99", "pending": "1" } \]
 
 ### EXAMPLE 2
 ```
-Get-PendingMacsForhost -hostID 'ComputerName'
+Get-PendingMacsForhost -hostID 'MeowMachine'
 ```
 
-Returns the pending macs for the host with the name ComputerName
+Returns the pending macs for the host with the name MeowMachine
+
+Expected output:
+\[ { "mac": "01:23:45:67:89:99", "pending": "1" } \]
 
 ## PARAMETERS
 

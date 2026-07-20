@@ -10,15 +10,20 @@ function Deny-FogPendingMac {
     Should be an item from the array return object from `Get-PendingMacsForHost`
 
     .EXAMPLE
-    $macToDeny = (Get-PendingMacsForHost -hostID 123)[0]
-    Deny-FogPendingMac -macObject $macToDeny
+    $macToDeny = (Get-PendingMacsForHost -hostID 42)[0]; Deny-FogPendingMac -macObject $macToDeny
 
     This gets the first mac to approve in the list of pending macs and approves it
 
-    .EXAMPLE
-    $pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Deny-FogPendingMac -macObject $pendingMac
+    Expected output:
+    ""
 
-    Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123    
+    .EXAMPLE
+    $pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Deny-FogPendingMac -macObject $pendingMac
+
+    Deny the specific pending mac of "01:23:45:67:89:99" after finding it pending for a host of the id 42
+
+    Expected output:
+    ""
 
 #>
     

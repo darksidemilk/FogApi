@@ -16,16 +16,22 @@ function Start-FogSnapin {
     The id of the snapin to deploy
     
     .EXAMPLE
-    Start-FogSnapin -hostID 1234 -snapinname 'office365'
+    Start-FogSnapin -hostID 42 -snapinname 'office365'
 
-    This will find the id of the snapin named 'office365' and deploy it on the host o id 1234
+    This will find the id of the snapin named 'office365' and deploy it on the host of id 42
     The name of the host and the snapin will be output to the console before the task is started
-    
+
+    Expected output:
+    { "id": 501, "success": true }
+
     .EXAMPLE
-    Start-FogSnapin -hostID 1234 -snapinid 12
+    Start-FogSnapin -hostID 42 -snapinid 6
 
-    This will deploy a single snapin task for the snapin of id 12 for host 1234
+    This will deploy a single snapin task for the snapin of id 6 for host 42
     The name of the host and the snapin will be output to the console before the task is started
+
+    Expected output:
+    { "id": 501, "success": true }
 
     #>
     [CmdletBinding(DefaultParameterSetName='byId')]

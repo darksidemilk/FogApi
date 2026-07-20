@@ -28,6 +28,9 @@ $images = Get-FogImages; $images | select id,name
 
 Gets all the fog images and then lists them with just the image id and names
 
+Expected output:
+\[ { "id": 3, "name": "Windows 10" } \]
+
 ## PARAMETERS
 
 ### -ProgressAction

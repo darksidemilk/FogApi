@@ -32,11 +32,14 @@ Performs validation on the input before
 
 ### EXAMPLE 1
 ```
-Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
+Set-FogSnapins -hostid (Get-FogHost -hostName MeowMachine).id -pkgList @('chrome')
 ```
 
-This would associate snapins that match the titles of office365, chrome, and slack to the provided host id
-they could then be deployed with start-fogsnapins
+This would associate the snapin that matches the title of chrome to the provided host id
+it could then be deployed with start-fogsnapins
+
+Expected output:
+\[ { "snapinID": "6", "hostID": "42", "id": 55 } \]
 
 ## PARAMETERS
 
@@ -65,7 +68,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: ((Get-FogHost).id)
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

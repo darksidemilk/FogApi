@@ -51,6 +51,11 @@ id   hostID snapinID
 Snapin Association repair complete!
 \`\`\`
 
+With no invalid associations found (the common case), nothing is returned.
+
+Expected output:
+null
+
 ## PARAMETERS
 
 ### -ProgressAction

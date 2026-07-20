@@ -30,6 +30,9 @@ Get-FogSnapinAssociations
 
 Will return a full list of all snapin ids associated to host ids
 
+Expected output:
+\[ { "id": 20, "hostID": 42, "snapinID": 5 } \]
+
 ## PARAMETERS
 
 ### -ProgressAction

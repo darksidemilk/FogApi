@@ -31,10 +31,17 @@ Starts or schedules a deploy task of the currently assigned image on a host
 
 ### EXAMPLE 1
 ```
-Deploy-FogImage -hostID "1234"
+Deploy-FogImage -hostID "42"
 ```
 
-Will queue a deploy task for host 1234 right now
+Will queue a deploy task for host 42 right now
+
+Note: under the mocked test harness this returns null because the active-tasks
+fixture is static and doesn't reflect the task just created moments earlier in
+the same call; against a real Fog server this returns the newly queued task.
+
+Expected output:
+null
 
 ### EXAMPLE 2
 ```

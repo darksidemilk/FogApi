@@ -28,6 +28,9 @@ Test-FogVerAbove1dot6
 
 This will return true if the fog version is above 1.6 and false if it is 1.5 or below
 
+Expected output:
+true
+
 ## PARAMETERS
 
 ### -ProgressAction

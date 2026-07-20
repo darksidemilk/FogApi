@@ -1,0 +1,11 @@
+{
+    "count": 1,
+    "imaginglog": [
+        {
+            "id": 1,
+            "hostid": 42,
+            "start": "2024-01-01 12:00:00",
+            "image": "Windows 10"
+        }
+    ]
+}

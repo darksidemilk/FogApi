@@ -33,7 +33,12 @@ function Repair-FogSnapinAssociations {
     9354 0      684
     Snapin Association repair complete!
     ```
-    
+
+    With no invalid associations found (the common case), nothing is returned.
+
+    Expected output:
+    null
+
     .NOTES
     When running Get-FogHostAssociatedSnapins, if associations with invalid snapin ids are found, 
     #>
@@ -72,7 +77,7 @@ function Repair-FogSnapinAssociations {
                 Remove-FogObject -type object -coreObject snapinassociation -IDofObject $_.id
             }
         } else {
-            "No Invalid hostid's found in snapin associations"
+            "No Invalid hostid's found in snapin associations" | out-host;
         }
         "Snapin Association repair complete!" | out-host;
 

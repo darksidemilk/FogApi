@@ -37,10 +37,13 @@ Will return the macs assigned to the computer running the command utilizing the 
 
 ### EXAMPLE 2
 ```
-Get-FogHostMacs -hostID 1234
+Get-FogHostMacs -hostID 42
 ```
 
-Will return the macs assigned to the host with the id of 1234
+Will return the macs assigned to the host with the id of 42
+
+Expected output:
+\[ { "mac": "00:11:22:33:44:55" }, { "mac": "01:23:45:67:89:99" }, { "mac": "01:23:45:67:89:10" } \]
 
 ## PARAMETERS
 
@@ -54,7 +57,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: (Get-FogHost)
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```

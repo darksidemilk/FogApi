@@ -159,6 +159,80 @@ function Get-FogMockResponse {
                 $created | Add-Member -MemberType NoteProperty -Name id -Value 88 -Force
                 return $created
             }
+            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
+        }
+        '^scheduledtask/current$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
+        }
+        '^task/current$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'tasks-current.json' }
+        }
+        '^macaddressassociation$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'macaddressassociations.json' }
+            if ($Method -eq 'POST') {
+                $created = if ([string]::IsNullOrEmpty($jsonData)) { [PSCustomObject]@{} } else { $jsonData | ConvertFrom-Json }
+                $created | Add-Member -MemberType NoteProperty -Name id -Value 99 -Force
+                return $created
+            }
+        }
+        '^macaddressassociation/\d+/edit$' {
+            if ($Method -eq 'PUT') {
+                if ([string]::IsNullOrEmpty($jsonData)) { return Get-Fixture 'macaddressassociations.json' }
+                return $jsonData | ConvertFrom-Json
+            }
+        }
+        '^macaddressassociation/\d+/delete$' {
+            if ($Method -eq 'DELETE') { return Get-Fixture 'delete-result.json' }
+        }
+        '^group$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'groups.json' }
+        }
+        '^group/\d+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'group.json' }
+        }
+        '^snapin$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'snapins.json' }
+        }
+        '^snapin/\d+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'snapin.json' }
+        }
+        '^snapinassociation$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'snapinassociations.json' }
+            if ($Method -eq 'POST') {
+                $created = if ([string]::IsNullOrEmpty($jsonData)) { [PSCustomObject]@{} } else { $jsonData | ConvertFrom-Json }
+                $created | Add-Member -MemberType NoteProperty -Name id -Value 55 -Force
+                return $created
+            }
+        }
+        '^snapinassociation/\d+/delete$' {
+            if ($Method -eq 'DELETE') { return Get-Fixture 'delete-result.json' }
+        }
+        '^setting$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'settings.json' }
+        }
+        '^setting/\d+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'setting.json' }
+        }
+        '^setting/\d+/edit$' {
+            if ($Method -eq 'PUT') {
+                if ([string]::IsNullOrEmpty($jsonData)) { return Get-Fixture 'setting.json' }
+                return $jsonData | ConvertFrom-Json
+            }
+        }
+        '^image$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'images.json' }
+        }
+        '^imaginglog$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'imaginglog.json' }
+        }
+        '^inventory/new$' {
+            if ($Method -eq 'POST') { return $jsonData | ConvertFrom-Json }
+        }
+        '^host/search/.+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'hosts.json' }
+        }
+        '^unisearch/.+$' {
+            if ($Method -eq 'GET') { return Get-Fixture 'unisearch.json' }
         }
     }
 

@@ -12,14 +12,20 @@ function Get-FogHostPendingMacs {
     the hostid or hostname of the fog host
     
     .EXAMPLE
-    Get-PendingMacsForhost -hostID 123
+    Get-PendingMacsForhost -hostID 42
 
-    gets the macs if any for foghost 123
+    gets the macs if any for foghost 42
+
+    Expected output:
+    [ { "mac": "01:23:45:67:89:99", "pending": "1" } ]
 
     .EXAMPLE
-    Get-PendingMacsForhost -hostID 'ComputerName'
-    
-    Returns the pending macs for the host with the name ComputerName
+    Get-PendingMacsForhost -hostID 'MeowMachine'
+
+    Returns the pending macs for the host with the name MeowMachine
+
+    Expected output:
+    [ { "mac": "01:23:45:67:89:99", "pending": "1" } ]
 
     #>
     

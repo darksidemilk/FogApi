@@ -35,6 +35,9 @@ Get-FogGroupAssociations;
 
 This will return all group association objects in the fog database
 
+Expected output:
+\[ { "hostID": 42, "groupID": 3 }, { "hostID": 42, "groupID": 5 } \]
+
 ## PARAMETERS
 
 ### -ProgressAction

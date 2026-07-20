@@ -34,15 +34,21 @@ function Get-LastImageTime {
     hostname is test-pc, it was last imaged at 2022-08-18 12:19:38 with the image Win-10-21H2
 
     .EXAMPLE
-    Get-LastImageTime -hostID 1234
+    Get-LastImageTime -hostID 42
 
-    Will get the foghost with the id 1234 and return the last entry in its image log
+    Will get the foghost with the id 42 and return the last entry in its image log
+
+    Expected output:
+    { "hostid": 42, "image": "Windows 10" }
 
     .EXAMPLE
-    $log = Get-LastImageTime -fogHost $hostObj;
+    Get-LastImageTime -fogHost (Get-FogHost -hostID 42)
 
-    Will put the last image history log for the given host in the $log variable.
-    That $log's properties can then be used in other operations
+    Will put the last image history log for the given host object.
+    That result's properties can then be used in other operations
+
+    Expected output:
+    { "hostid": 42, "image": "Windows 10" }
     
     .NOTES
     Implemented as part of a feature request found in the forums here https://forums.fogproject.org/post/146276
@@ -71,12 +77,9 @@ function Get-LastImageTime {
             byHostID {
                 Write-Verbose "Getting host by id"
                 $fogHost = Get-FogHost -hostID $hostId;
+                $HostID = $fogHost.id;
             }
             byHost {
-                if ($null -ne $_) {
-                    $fogHost = $_;
-                }
-                
                 if ($currentHost -or ($null -eq $fogHost)) {
                     Write-Verbose "getting host of current machine"
                     $fogHost = (Get-FogHost)
@@ -84,7 +87,7 @@ function Get-LastImageTime {
                 $HostID = $fogHost.id
             }
         }
-        
+
         $imageLog = (get-fogobject -type object -coreObject imaginglog).data # get the image history log
         $hostLogs = $imageLog | where-object hostid -eq $HostID # get the image history logs for the given host
         if (!$hostLogs) {

@@ -25,15 +25,21 @@ function Add-FogHostMac {
     Set this switch param if you need this mac to be force specified to the specified host if the mac is already assigned to another host.
     
     .EXAMPLE
-    Add-FogHostMac -hostid 123 -macaddress "12:34:56:78:90" -primary
+    Add-FogHostMac -hostid 42 -macaddress "12:34:56:78:90" -primary
 
-    Add the macaddress "12:34:56:78:90" of the host with the id 123 and set it as the primary mac
-    
+    Add the macaddress "12:34:56:78:90" of the host with the id 42 and set it as the primary mac
+
+    Expected output:
+    { "hostID": "42", "mac": "12:34:56:78:90", "primary": "1" }
+
     .EXAMPLE
-    Add-FogHostMac -hostID "computerName" -macaddress "12:34:56:78:90"
+    Add-FogHostMac -hostID "MeowMachine" -macaddress "12:34:56:78:90"
 
     Uses the hostname to find the hostid in fog then adds "12:34:56:78:90" as a secondary mac on the host
-    
+
+    Expected output:
+    { "hostID": "42", "mac": "12:34:56:78:90" }
+
 #>
     
     [CmdletBinding(DefaultParameterSetName='byHost')]

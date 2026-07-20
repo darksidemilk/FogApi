@@ -26,9 +26,12 @@ function Reset-HostEncryption {
     This example resets the encryption data for the host with ID 1234 and restarts the fog service to force a re-encryption.
 
     .EXAMPLE
-    Reset-HostEncryption -fogHost (Get-FogHost -hostID 1234)
+    Reset-HostEncryption -fogHost (Get-FogHost -hostID 42)
 
-    This example resets the encryption data for the host with ID 1234 using the host object returned from Get-FogHost.
+    This example resets the encryption data for the host with ID 42 using the host object returned from Get-FogHost.
+
+    Expected output:
+    { "id": 42, "pub_key": "", "sec_tok": "" }
 
     .EXAMPLE
     Reset-HostEncryption -restartSvc

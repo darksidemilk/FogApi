@@ -31,8 +31,13 @@ When a wireless device is imaged with a usb ethernet adapter, it should be remov
 
 ### EXAMPLE 1
 ```
-Remove-UsbMacs -fogServer "foggy" -usbMacs @("01:23:45:67:89:10", "00:00:00:00:00:00")
+Remove-UsbMac -hostName "MeowMachine" -usbMacs @("01:23:45:67:89:10")
 ```
+
+Removes the usb ethernet adapter mac "01:23:45:67:89:10" from the host named MeowMachine
+
+Expected output:
+""
 
 ## PARAMETERS
 

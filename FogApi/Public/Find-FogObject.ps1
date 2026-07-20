@@ -21,19 +21,28 @@ function Find-FogObject {
 
     This will find and return all host objects that have 'computername' in any field.
 
-    .EXAMPLE
-    $result = Find-FogObject -type search -coreObject group -stringToSearch "IT"'; $result.data | Where-Object name -match "IT";
-    
-    This will find all groups with IT in any field. Then filter to where IT is in the name field and display that list
+    Expected output:
+    { "count": 1, "hosts": [ { "id": 42, "name": "MeowMachine" } ] }
 
     .EXAMPLE
-    $result = Find-FogObject -type search -coreObject unisearch -stringToSeach "stable";
+    $result = Find-FogObject -type search -coreObject group -stringToSearch "Test"; $result.data | Where-Object name -match "Test";
+
+    This will find all groups with Test in any field. Then filter to where Test is in the name field and display that list
+
+    Expected output:
+    { "name": "TestGroup" }
+
+    .EXAMPLE
+    Find-FogObject -type search -coreObject unisearch -stringToSearch "stable"
 
     Will output a table of results to the console with the count of results found in each object type.
         This is the value of the return objects ._results property
     For any type with a count higher than one, there is a matching property of that name where you can see the results of that property.
     You can see a high level result with $result | format-list.
     You can access the array of results in each object that has results. i.e. if there are 10 hosts in the result $result.host will display them
+
+    Expected output:
+    { "host": [ { "id": 42, "name": "MeowMachine" } ] }
 #>
 
     [CmdletBinding()]

@@ -29,6 +29,9 @@ Get-FogSnapins
 
 Returns an array of objects with details of each snapin.
 
+Expected output:
+\[ { "id": 5, "name": "office365" }, { "id": 6, "name": "chrome" } \]
+
 ## PARAMETERS
 
 ### -ProgressAction

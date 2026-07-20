@@ -33,11 +33,14 @@ If it finds a snapin association with a snapinID of '0' that one will be skipped
 
 ### EXAMPLE 1
 ```
-$assignedSnapins = Get-FogAssociatedSnapins; $assignedSnapins | Where-Object name -match "office"
+$assignedSnapins = Get-FogHostAssociatedSnapins -hostId 42; $assignedSnapins | Where-Object name -match "office"
 ```
 
-Gets all the assigned snapins of the current host and then filters to any with the name office in them
+Gets all the assigned snapins of the host with id 42 and then filters to any with the name office in them
 thus showing you what version of office you have assigned as a snapin to your host
+
+Expected output:
+{ "id": 5, "name": "office365" }
 
 ## PARAMETERS
 
@@ -51,7 +54,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: (Get-FogHost)
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
@@ -67,7 +70,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: ((Get-FogHost).id)
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

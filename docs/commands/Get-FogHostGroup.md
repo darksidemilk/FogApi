@@ -29,10 +29,13 @@ requires the id of the host you want the groups that aren't the everyone group f
 
 ### EXAMPLE 1
 ```
-Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)
+Get-FogGroup -hostId ((Get-FogHost -hostname "MeowMachine").id)
 ```
 
-Gets the fog group membership(s) of the fog host with the name computerName
+Gets the fog group membership(s) of the fog host with the name MeowMachine
+
+Expected output:
+\[ { "name": "TestGroup" }, { "name": "TestGroup" } \]
 
 ## PARAMETERS
 
