@@ -20,10 +20,13 @@ switch param to indicate matching to exact snapin names instead of matching the 
 Switch param to run Repair-FogSnapinAssociations before attempting to add new snapin associations, useful if you're getting 404 errors
 
 .EXAMPLE
-Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')
+Set-FogSnapins -hostid (Get-FogHost -hostName MeowMachine).id -pkgList @('chrome')
 
-This would associate snapins that match the titles of office365, chrome, and slack to the provided host id
-they could then be deployed with start-fogsnapins
+This would associate the snapin that matches the title of chrome to the provided host id
+it could then be deployed with start-fogsnapins
+
+Expected output:
+[ { "snapinID": "6", "hostID": "42", "id": 55 } ]
 
 #>
 
@@ -33,7 +36,7 @@ they could then be deployed with start-fogsnapins
         [parameter(ValueFromPipeline=$true,ParameterSetName='byObject')]
         $hostObj,
         [parameter(ParameterSetName='byId')]
-        $hostid = ((Get-FogHost).id),
+        $hostid,
         [parameter(ParameterSetName='byId')]
         [parameter(ParameterSetName='byObject')]
         [ArgumentCompleter({
@@ -64,6 +67,8 @@ they could then be deployed with start-fogsnapins
         }
         if ($null -ne $hostObj) {
             $hostid = $hostObj.id;
+        } elseif ($null -eq $hostid) {
+            $hostid = (Get-FogHost).id;
         }
         Write-Verbose "Association snapins from package list with host";
         if ($repairBeforeAdd) {

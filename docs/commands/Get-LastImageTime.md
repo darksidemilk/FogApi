@@ -55,18 +55,24 @@ hostname is test-pc, it was last imaged at 2022-08-18 12:19:38 with the image Wi
 
 ### EXAMPLE 3
 ```
-Get-LastImageTime -hostID 1234
+Get-LastImageTime -hostID 42
 ```
 
-Will get the foghost with the id 1234 and return the last entry in its image log
+Will get the foghost with the id 42 and return the last entry in its image log
+
+Expected output:
+{ "hostid": 42, "image": "Windows 10" }
 
 ### EXAMPLE 4
 ```
-$log = Get-LastImageTime -fogHost $hostObj;
+Get-LastImageTime -fogHost (Get-FogHost -hostID 42)
 ```
 
-Will put the last image history log for the given host in the $log variable.
-That $log's properties can then be used in other operations
+Will put the last image history log for the given host object.
+That result's properties can then be used in other operations
+
+Expected output:
+{ "hostid": 42, "image": "Windows 10" }
 
 ## PARAMETERS
 

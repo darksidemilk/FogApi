@@ -25,9 +25,12 @@ function Receive-FogImage {
     Switch param to indicate the host should shutdown at the end of the task instead of restarting.
     
     .EXAMPLE
-    Receive-FogImage -hostID "1234"
+    Receive-FogImage -hostID "42"
 
-    Will queue a capture task for host 1234 right now
+    Will queue a capture task for host 42 right now
+
+    Expected output:
+    { "id": 501, "success": true }
 
     .EXAMPLE
     Capture-FogImage -hostID "1234" -StartAtTime (Get-date 8pm)

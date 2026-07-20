@@ -28,6 +28,9 @@ Get-FogVersion;
 
 Will return the full version string
 
+Expected output:
+"1.6.0"
+
 ## PARAMETERS
 
 ### -noWarning

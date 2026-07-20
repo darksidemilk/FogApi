@@ -1,0 +1,11 @@
+{
+    "_results": {
+        "host": 1
+    },
+    "host": [
+        {
+            "id": 42,
+            "name": "MeowMachine"
+        }
+    ]
+}

@@ -7,10 +7,13 @@ function Get-FogGroups {
     Gets all the fog groups and returns them in an object
     
     .EXAMPLE
-    $groups = Get-FogGroups
+    Get-FogGroups
 
-    This will return all the fog groups in the fog database and store them in the $groups variable
-    
+    This will return all the fog groups in the fog database
+
+    Expected output:
+    [ { "id": 7, "name": "TestGroup" } ]
+
     .NOTES
     A group object does not contain membership information, you need to filter groupassociations to find membership
     but this will give you the id of the group to search for within that object, you'll also need the host id to find all associations of a host

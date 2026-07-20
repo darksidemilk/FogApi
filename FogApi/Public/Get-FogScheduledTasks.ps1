@@ -14,6 +14,9 @@ function Get-FogScheduledTasks {
 
     This will list any scheduled tasks and their properties
 
+    Expected output:
+    []
+
     .EXAMPLE
     Get-FogScheduledTasks | Where-Object hostid -eq (Get-Foghost -hostname "comp-name").id
 

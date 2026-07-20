@@ -1,0 +1,10 @@
+{
+    "count": 1,
+    "groups": [
+        {
+            "id": 7,
+            "name": "TestGroup",
+            "hostcount": 1
+        }
+    ]
+}

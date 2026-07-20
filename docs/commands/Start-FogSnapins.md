@@ -38,17 +38,23 @@ will get the current host's id and start all snapins on it
 
 ### EXAMPLE 2
 ```
-Start-FogSnapins -hostid 1234
+Start-FogSnapins -hostid 42
 ```
 
-will start all snapins on the host with the id 1234
+will start all snapins on the host with the id 42
+
+Expected output:
+{ "id": 501, "success": true }
 
 ### EXAMPLE 3
 ```
-Get-foghost -hostname 'somehost' | Start-FogSnapins
+Get-foghost -hostname 'MeowMachine' | Start-FogSnapins
 ```
 
-will get the host object for the host named 'somehost' and start all snapins on it
+will get the host object for the host named 'MeowMachine' and start all snapins on it
+
+Expected output:
+{ "id": 501, "success": true }
 
 ## PARAMETERS
 
@@ -78,7 +84,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: ((Get-FogHost).id)
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

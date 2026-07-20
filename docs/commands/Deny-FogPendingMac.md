@@ -23,18 +23,23 @@ Deny the approval of a pending mac address to delete its entry from the mac addr
 
 ### EXAMPLE 1
 ```
-$macToDeny = (Get-PendingMacsForHost -hostID 123)[0]
-Deny-FogPendingMac -macObject $macToDeny
+$macToDeny = (Get-PendingMacsForHost -hostID 42)[0]; Deny-FogPendingMac -macObject $macToDeny
 ```
 
 This gets the first mac to approve in the list of pending macs and approves it
 
+Expected output:
+""
+
 ### EXAMPLE 2
 ```
-$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Deny-FogPendingMac -macObject $pendingMac
+$pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Deny-FogPendingMac -macObject $pendingMac
 ```
 
-Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123
+Deny the specific pending mac of "01:23:45:67:89:99" after finding it pending for a host of the id 42
+
+Expected output:
+""
 
 ## PARAMETERS
 

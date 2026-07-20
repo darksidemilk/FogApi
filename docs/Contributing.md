@@ -31,7 +31,19 @@ At test time, each annotated example is actually run, with the module's one HTTP
 
 The target this suite is working towards is **one annotated example for every parameter set of every function** - not just one example per function. A function like `Get-FogHost` has three parameter sets (`searchTerm`, `byID`, `serialNumber`); ideally each of those has its own example demonstrating it, with an `Expected output:` block. This is a standing, evolving goal - as functions or parameter sets are added, coverage should grow to match.
 
-To help track it, every test run produces an informational coverage report (`TestResults/coverage-report.md` locally, uploaded as the `parameter-set-coverage-report` artifact in CI) that reflects on each function's real parameter sets and cross-references them against the examples that exist, flagging which sets have no example at all versus which have an example that just isn't annotated yet. **This report is purely informational - it never fails a build or blocks a PR.** Outside contributors aren't expected to add `.EXAMPLE`/`Expected output:` annotations themselves; maintainers use the report to find and backfill gaps after the fact.
+To help track it, every test run produces an informational coverage report (`TestResults/coverage-report.md` locally, uploaded as the `parameter-set-coverage-report` artifact in CI) that reflects on each function's real parameter sets and cross-references them against the examples that exist, flagging which sets have no example at all versus which have an example that just isn't annotated yet. **This report is purely informational - it never fails a build or blocks a PR.** Outside contributors aren't expected to add `.EXAMPLE`/`Expected output:` annotations themselves; maintainers use the report to find and backfill gaps after the fact. A recent snapshot of both the test results and this coverage report is published on the [Testing Validation](TestValidation.md) page.
+
+### Intentional gaps in the coverage report
+
+A handful of functions will always show up in the coverage report as missing an annotated example, and that's expected rather than backlog:
+
+- **Windows-local system operations that don't call the Fog API at all**, so mocking `Invoke-FogApi` gives them nothing to verify: `Mount-WinEfi`, `Dismount-WinEfi`, `Get-WinEfiMountLetter`, `Get-WinBcdPxeID`, `Set-WinToBootToPxe`, `Install-FogService`, `Get-FogSecsSinceEpoch` (time/timezone-dependent).
+- **Local config/file/registry helpers**, also with no HTTP call to mock: `Get-FogServerSettingsFile`, `Get-FogServerSettings`, `Set-FogServerSettings`, `Set-FogServerSettingsFileSecurity`, `Disable-FogApiHTTPS`, `Enable-FogApiHTTPS`, `Get-FogLog`, `Resolve-HostID`.
+- **Examples that depend on the identity of the machine actually running the test** (the current computer's hostname/UUID/MAC via `Get-CimInstance`/`Get-NetAdapter`), which can't be pinned to a fixture: `Get-FogHost`'s parameterless example, and any other function's example that relies on it (e.g. `Get-FogHostMacs`'s `byHostObject` set, `Reset-HostEncryption`'s `-restartSvc` example, `Send-FogWolTask`'s AD-lookup example, `Get-LastImageTime`'s `bySN`/interactive example).
+- **`Invoke-FogApi` itself** - it's the thing being mocked for every other function, so it's covered by its own dedicated seam test (`Tests/Invoke-FogApi.Tests.ps1`) instead of an `Expected output:` annotation.
+- **The generic CRUD wrappers' own bare invocation** (`Get-FogObject`, `New-FogObject`, `Update-FogObject`, `Remove-FogObject`, `Find-FogObject`) - their `-type`/`-coreObject` dynamic parameters mean real coverage comes from the dozens of business-logic functions that call through them (`Add-FogHostMac`, `Get-FogGroups`, etc.), not from an example on the wrapper itself.
+
+If you're evaluating the report and a gap doesn't match one of these categories, it's a real gap worth backfilling.
 
 ### Running the tests locally
 

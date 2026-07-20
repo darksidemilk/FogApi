@@ -15,25 +15,30 @@ function Get-FogHostAssociatedSnapins {
     Defaults to getting the current hosts id with ((Get-FogHost).id)
 
     .EXAMPLE
-    $assignedSnapins = Get-FogAssociatedSnapins; $assignedSnapins | Where-Object name -match "office"
+    $assignedSnapins = Get-FogHostAssociatedSnapins -hostId 42; $assignedSnapins | Where-Object name -match "office"
 
-    Gets all the assigned snapins of the current host and then filters to any with the name office in them
+    Gets all the assigned snapins of the host with id 42 and then filters to any with the name office in them
     thus showing you what version of office you have assigned as a snapin to your host
+
+    Expected output:
+    { "id": 5, "name": "office365" }
 #>
     
     [CmdletBinding()]
     [Alias('Get-FogAssociatedSnapins','Get-FogHostSnapins','Get-FogHostSnapinAssociations')]
     param (
         [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
-        $fogHost = (Get-FogHost),
+        $fogHost,
         [parameter(ParameterSetName='byId')]
-        $hostId=((Get-FogHost).id)
+        $hostId
     )
-    
+
     process {
         if ($null -ne $_) {
             $fogHost = $_;
             $hostId = $fogHost.id;
+        } elseif ($null -eq $hostId) {
+            $hostId = (Get-FogHost).id;
         }
         # $AllAssocs = (Invoke-FogApi -Method GET -uriPath snapinassociation).snapinassociations;
         $AllAssocs = Get-FogSnapinAssociations

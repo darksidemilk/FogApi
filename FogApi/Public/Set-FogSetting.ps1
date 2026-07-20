@@ -34,6 +34,9 @@ function Set-FogSetting {
     Would set the FOG_WEB_HOST to a new ip value and will return the resulting
     object of that setting
 
+    Expected output:
+    { "id": 3, "value": "192.168.0.1" }
+
     #>
     [CmdletBinding(DefaultParameterSetName='byname')]
     param (

@@ -12,10 +12,13 @@ function Add-FogResultData {
     Should be the output of a invoke-fogapi that has properties from the api result
 
     .EXAMPLE
-    $result = Invoke-FogApi @apiInvoke;$result = Add-FogResultData $result;
-    
-    If using fog 1.5.x will add $results.data with the value of the results property, $result.tasks if fog 1.6 will do nothing as $result.data already exists
-    
+    $raw = [PSCustomObject]@{ count = 1; tasks = @([PSCustomObject]@{ id = 1 }) }; Add-FogResultData $raw
+
+    If using fog 1.5.x will add $result.data with the value of the results property, $result.tasks if fog 1.6 will do nothing as $result.data already exists
+
+    Expected output:
+    { "data": [ { "id": 1 } ] }
+
     #>
     [CmdletBinding()]
     param ( 

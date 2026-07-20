@@ -29,12 +29,18 @@ $mods = Get-FogModules; $mods
 
 Will put the list of modules in a variable and then display the list
 
+Expected output:
+\[ { "id": 1, "name": "hostnameChanger" } \]
+
 ### EXAMPLE 2
 ```
 Get-FogModules | Where-Object isDefault -eq '1'
 ```
 
 Will display the modules that are set to be enabled by default in your fog server settings
+
+Expected output:
+{ "id": 1, "name": "hostnameChanger" }
 
 ## PARAMETERS
 

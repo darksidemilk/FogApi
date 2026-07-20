@@ -26,18 +26,23 @@ This function simply changes Pending from 0 to 1 and then updates it via the api
 
 ### EXAMPLE 1
 ```
-$macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
-Approve-FogPendingMac -macObject $macToApprove
+$macToApprove = (Get-PendingMacsForHost -hostID 42)[0]; Approve-FogPendingMac -macObject $macToApprove
 ```
 
 This gets the first mac to approve in the list of pending macs and approves it
 
+Expected output:
+{ "id": 11, "pending": "0" }
+
 ### EXAMPLE 2
 ```
-$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Approve-FogPendingMac -macObject $pendingMac
+$pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Approve-FogPendingMac -macObject $pendingMac
 ```
 
-Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123
+Approve the specific pending mac address of "01:23:45:67:89:99" after finding it pending for a host of the id 42
+
+Expected output:
+{ "id": 11, "pending": "0" }
 
 ## PARAMETERS
 

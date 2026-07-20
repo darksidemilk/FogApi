@@ -23,10 +23,13 @@ Gets all the fog groups and returns them in an object
 
 ### EXAMPLE 1
 ```
-$groups = Get-FogGroups
+Get-FogGroups
 ```
 
-This will return all the fog groups in the fog database and store them in the $groups variable
+This will return all the fog groups in the fog database
+
+Expected output:
+\[ { "id": 7, "name": "TestGroup" } \]
 
 ## PARAMETERS
 

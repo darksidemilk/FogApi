@@ -8,5 +8,8 @@
         "sysuuid": "12345678-9012-3456-7890-abcdefabcdef"
     },
     "ADOU": "",
-    "ADUser": ""
+    "ADUser": "",
+    "pub_key": "",
+    "sec_tok": "",
+    "sec_time": "0000-00-00 00:00:00"
 }

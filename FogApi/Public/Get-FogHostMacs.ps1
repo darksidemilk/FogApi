@@ -16,16 +16,19 @@ function Get-FogHostMacs {
     Will return the macs assigned to the computer running the command utilizing the alias Get-MacsForHost for this command
 
     .EXAMPLE
-    Get-FogHostMacs -hostID 1234
+    Get-FogHostMacs -hostID 42
 
-    Will return the macs assigned to the host with the id of 1234
-    
+    Will return the macs assigned to the host with the id of 42
+
+    Expected output:
+    [ { "mac": "00:11:22:33:44:55" }, { "mac": "01:23:45:67:89:99" }, { "mac": "01:23:45:67:89:10" } ]
+
     #>
     [CmdletBinding()]
     [Alias('Get-MacsForHost')]
     param (
         [Parameter(ParameterSetName='byHostObject',ValueFromPipeline=$true)]
-        $hostObject = (Get-FogHost),
+        $hostObject,
         [Parameter(ParameterSetName='byHostID')]
         $hostID
     )

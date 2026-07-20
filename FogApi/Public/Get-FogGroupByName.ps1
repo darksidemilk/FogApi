@@ -10,10 +10,13 @@ function Get-FogGroupByName {
     The name of the group to search for
     
     .EXAMPLE
-    $ITGroup = Get-FogGroupByName -groupName "IT"
+    Get-FogGroupByName -groupName "Test"
 
-    Will return the group object with a name that matches "IT";
-    
+    Will return the group object with a name that matches "Test"
+
+    Expected output:
+    { "id": 7, "name": "TestGroup" }
+
     .NOTES
     Chose not to name this just get-foggroup as get-foggroup used to be a different function that got the group of a host
     Made that an alias of Get-FogHostGroup to avoid breaking anyones code

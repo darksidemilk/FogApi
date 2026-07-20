@@ -29,6 +29,9 @@ $macs = get-fogmacaddresses; Remove-FogObject -type object -coreObject macaddres
 
 Would remove the last added mac address from the fog database
 
+Expected output:
+""
+
 ## PARAMETERS
 
 ### -type

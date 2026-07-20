@@ -10,7 +10,10 @@ function Test-FogVerAbove1dot6 {
     Test-FogVerAbove1dot6
 
     This will return true if the fog version is above 1.6 and false if it is 1.5 or below
-    
+
+    Expected output:
+    true
+
     .NOTES
     Could also make this a script scoped variable, but getting the version requires at least the fog server name
     which has to be set in intial setup and would throw errors on first install.

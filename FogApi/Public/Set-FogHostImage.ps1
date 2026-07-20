@@ -14,11 +14,14 @@ function Set-FogHostImage {
     the image object gotten from get-fogimages
 
     .EXAMPLE
-    $foghost = get-foghost -hostid 1234; $imageName = 'MyImage'; $fogImages = Get-FogImages; $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
+    $foghost = get-foghost -hostid 42; $imageName = 'Windows 10'; $fogImages = Get-FogImages; Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)
 
-    Will set the image with the name of MyImage to the host with the id of 1234
+    Will set the image with the name of "Windows 10" to the host with the id of 42
 
-    
+    Expected output:
+    { "imageID": 3 }
+
+
     #>
     [CmdletBinding()]
     param (

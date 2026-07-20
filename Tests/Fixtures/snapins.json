@@ -1,0 +1,13 @@
+{
+    "count": 2,
+    "snapins": [
+        {
+            "id": 5,
+            "name": "office365"
+        },
+        {
+            "id": 6,
+            "name": "chrome"
+        }
+    ]
+}

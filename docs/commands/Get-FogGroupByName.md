@@ -23,10 +23,13 @@ Searches the group objects for one that has a matching name of the given name
 
 ### EXAMPLE 1
 ```
-$ITGroup = Get-FogGroupByName -groupName "IT"
+Get-FogGroupByName -groupName "Test"
 ```
 
-Will return the group object with a name that matches "IT";
+Will return the group object with a name that matches "Test"
+
+Expected output:
+{ "id": 7, "name": "TestGroup" }
 
 ## PARAMETERS
 

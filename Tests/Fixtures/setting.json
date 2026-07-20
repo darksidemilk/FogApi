@@ -1,0 +1,6 @@
+{
+    "id": 2,
+    "name": "FOG_MEMORY_LIMIT",
+    "value": "512",
+    "description": "Memory limit"
+}

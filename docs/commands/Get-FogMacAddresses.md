@@ -24,10 +24,13 @@ the mac address, the hostID connected to, if it's a primary, and if it's a pendi
 
 ### EXAMPLE 1
 ```
-$macs = Get-FogMacs
+Get-FogMacs
 ```
 
-Gets all the mac addresses in fog and puts them in the $macs object
+Gets all the mac addresses in fog
+
+Expected output:
+\[ { "mac": "00:11:22:33:44:55" }, { "mac": "01:23:45:67:89:99" }, { "mac": "01:23:45:67:89:10" } \]
 
 ## PARAMETERS
 

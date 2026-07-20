@@ -13,7 +13,12 @@ function Remove-UsbMac {
         the hostname to remove the usb macs from, defaults to current hostname
 
     .EXAMPLE
-        Remove-UsbMacs -fogServer "foggy" -usbMacs @("01:23:45:67:89:10", "00:00:00:00:00:00")
+        Remove-UsbMac -hostName "MeowMachine" -usbMacs @("01:23:45:67:89:10")
+
+        Removes the usb ethernet adapter mac "01:23:45:67:89:10" from the host named MeowMachine
+
+        Expected output:
+        ""
 
     .NOTES
         online version of help goes to fog forum post where the idea was conceived
@@ -76,7 +81,7 @@ function Remove-UsbMac {
         $usbMacs | ForEach-Object { #loop through list of usbMacs
             if ( $macList.contains($_) ) { # check if the usbMac is contained in the mac list of the host
                 # Remove from the list so a new primary can be picked if needed
-                $macList.Remove($_);
+                [void]$macList.Remove($_);
 
                 Write-Verbose "$_ is a $usbMac connected to $hostname, checking if it is the primary...";
                 $macItem = ($macs | Where-Object mac -eq $_ );

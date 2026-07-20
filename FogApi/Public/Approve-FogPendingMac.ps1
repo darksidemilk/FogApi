@@ -13,15 +13,20 @@ function Approve-FogPendingMac {
     Should be an item from the array return object from `Get-PendingMacsForHost`
 
     .EXAMPLE
-    $macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
-    Approve-FogPendingMac -macObject $macToApprove
+    $macToApprove = (Get-PendingMacsForHost -hostID 42)[0]; Approve-FogPendingMac -macObject $macToApprove
 
     This gets the first mac to approve in the list of pending macs and approves it
-    
-    .EXAMPLE
-    $pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Approve-FogPendingMac -macObject $pendingMac
 
-    Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123
+    Expected output:
+    { "id": 11, "pending": "0" }
+
+    .EXAMPLE
+    $pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Approve-FogPendingMac -macObject $pendingMac
+
+    Approve the specific pending mac address of "01:23:45:67:89:99" after finding it pending for a host of the id 42
+
+    Expected output:
+    { "id": 11, "pending": "0" }
 
 #>
     
