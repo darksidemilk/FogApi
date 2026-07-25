@@ -54,6 +54,9 @@ i.e.
 
 ### -fogApiToken
 fog API token is found at https://fog-server/fog/management/index.php?node=about&sub=settings under API System
+Copy the token exactly as displayed in the web ui; it is shown base64-encoded and that is the form the fog api expects in the request header
+(the server base64-decodes it before comparing).
+Do not use the raw token value from the fog database, it will fail with a 403.
 
 ```yaml
 Type: String
@@ -69,6 +72,7 @@ Accept wildcard characters: False
 
 ### -fogUserToken
 your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab
+Copy this token exactly as displayed in the web ui too; like the api token it is shown base64-encoded, which is the form the api expects.
 
 ```yaml
 Type: String

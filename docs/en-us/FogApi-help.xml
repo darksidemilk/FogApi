@@ -2,6 +2,180 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Add-FogHostGroup</command:name>
+      <command:verb>Add</command:verb>
+      <command:noun>FogHostGroup</command:noun>
+      <maml:description>
+        <maml:para>Adds a host to a fog group</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Creates a group association entry linking a host to a group, adding the host as a member of that group. Checks for an existing association first and skips creating a duplicate if the host is already a member of the group.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Add-FogHostGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>fogHost</maml:name>
+          <maml:description>
+            <maml:para>A fog host object (e.g. from Get-FogHost) to add to the group. Supports pipeline input.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to add the host to</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Add-FogHostGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostID</maml:name>
+          <maml:description>
+            <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to add the host to</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>fogHost</maml:name>
+        <maml:description>
+          <maml:para>A fog host object (e.g. from Get-FogHost) to add to the group. Supports pipeline input.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostID</maml:name>
+        <maml:description>
+          <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>groupID</maml:name>
+        <maml:description>
+          <maml:para>The id of the group to add the host to</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Add-FogHostGroup -hostID 42 -groupID 7</dev:code>
+        <dev:remarks>
+          <maml:para>Adds the host with id 42 to the group with id 7, returning the created group association</maml:para>
+          <maml:para>Expected output: { "hostID": "42", "groupID": "7" }</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogHost -hostName MeowMachine | Add-FogHostGroup -groupID 7</dev:code>
+        <dev:remarks>
+          <maml:para>Finds the host by name and adds it to the group with id 7</maml:para>
+          <maml:para>Expected output: { "hostID": "42", "groupID": "7" }</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Add-FogHostGroup</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Add-FogHostMac</command:name>
       <command:verb>Add</command:verb>
       <command:noun>FogHostMac</command:noun>
@@ -288,16 +462,18 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Add-FogHostMac -hostid 123 -macaddress "12:34:56:78:90" -primary</dev:code>
+        <dev:code>Add-FogHostMac -hostid 42 -macaddress "12:34:56:78:90" -primary</dev:code>
         <dev:remarks>
-          <maml:para>Add the macaddress "12:34:56:78:90" of the host with the id 123 and set it as the primary mac</maml:para>
+          <maml:para>Add the macaddress "12:34:56:78:90" of the host with the id 42 and set it as the primary mac</maml:para>
+          <maml:para>Expected output: { "hostID": "42", "mac": "12:34:56:78:90", "primary": "1" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Add-FogHostMac -hostID "computerName" -macaddress "12:34:56:78:90"</dev:code>
+        <dev:code>Add-FogHostMac -hostID "MeowMachine" -macaddress "12:34:56:78:90"</dev:code>
         <dev:remarks>
           <maml:para>Uses the hostname to find the hostid in fog then adds "12:34:56:78:90" as a secondary mac on the host</maml:para>
+          <maml:para>Expected output: { "hostID": "42", "mac": "12:34:56:78:90" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -385,9 +561,10 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$result = Invoke-FogApi @apiInvoke;$result = Add-FogResultData $result;</dev:code>
+        <dev:code>$raw = [PSCustomObject]@{ count = 1; tasks = @([PSCustomObject]@{ id = 1 }) }; Add-FogResultData $raw</dev:code>
         <dev:remarks>
-          <maml:para>If using fog 1.5.x will add $results.data with the value of the results property, $result.tasks if fog 1.6 will do nothing as $result.data already exists</maml:para>
+          <maml:para>If using fog 1.5.x will add $result.data with the value of the results property, $result.tasks if fog 1.6 will do nothing as $result.data already exists</maml:para>
+          <maml:para>Expected output: { "data": [ { "id": 1 } ] }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -475,17 +652,18 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$macToApprove = (Get-PendingMacsForHost -hostID 123)[0]
-Approve-FogPendingMac -macObject $macToApprove</dev:code>
+        <dev:code>$macToApprove = (Get-PendingMacsForHost -hostID 42)[0]; Approve-FogPendingMac -macObject $macToApprove</dev:code>
         <dev:remarks>
           <maml:para>This gets the first mac to approve in the list of pending macs and approves it</maml:para>
+          <maml:para>Expected output: { "id": 11, "pending": "0" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Approve-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Approve-FogPendingMac -macObject $pendingMac</dev:code>
         <dev:remarks>
-          <maml:para>Approve the specific pending mac address of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
+          <maml:para>Approve the specific pending mac address of "01:23:45:67:89:99" after finding it pending for a host of the id 42</maml:para>
+          <maml:para>Expected output: { "id": 11, "pending": "0" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -573,17 +751,18 @@ Approve-FogPendingMac -macObject $macToApprove</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$macToDeny = (Get-PendingMacsForHost -hostID 123)[0]
-Deny-FogPendingMac -macObject $macToDeny</dev:code>
+        <dev:code>$macToDeny = (Get-PendingMacsForHost -hostID 42)[0]; Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:remarks>
           <maml:para>This gets the first mac to approve in the list of pending macs and approves it</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 123) | Where-object mac -eq "01:23:45:67:89"; Deny-FogPendingMac -macObject $pendingMac</dev:code>
+        <dev:code>$pendingMac = (Get-PendingMacsForHost -hostID 42) | Where-object mac -eq "01:23:45:67:89:99"; Deny-FogPendingMac -macObject $pendingMac</dev:code>
         <dev:remarks>
-          <maml:para>Deny the specific pending mac of "01:23:45:67:89" after finding it pending for a host of the id 123</maml:para>
+          <maml:para>Deny the specific pending mac of "01:23:45:67:89:99" after finding it pending for a host of the id 42</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -896,20 +1075,23 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Find-FogObject -type search -coreObject host -stringToSearch "computerName"</dev:code>
         <dev:remarks>
           <maml:para>This will find and return all host objects that have 'computername' in any field.</maml:para>
+          <maml:para>Expected output: { "count": 1, "hosts": [ { "id": 42, "name": "MeowMachine" } ] }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>$result = Find-FogObject -type search -coreObject group -stringToSearch "IT"'; $result.data | Where-Object name -match "IT";</dev:code>
+        <dev:code>$result = Find-FogObject -type search -coreObject group -stringToSearch "Test"; $result.data | Where-Object name -match "Test";</dev:code>
         <dev:remarks>
-          <maml:para>This will find all groups with IT in any field. Then filter to where IT is in the name field and display that list</maml:para>
+          <maml:para>This will find all groups with Test in any field. Then filter to where Test is in the name field and display that list</maml:para>
+          <maml:para>Expected output: { "name": "TestGroup" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>$result = Find-FogObject -type search -coreObject unisearch -stringToSeach "stable";</dev:code>
+        <dev:code>Find-FogObject -type search -coreObject unisearch -stringToSearch "stable"</dev:code>
         <dev:remarks>
           <maml:para>Will output a table of results to the console with the count of results found in each object type.     This is the value of the return objects ._results property For any type with a count higher than one, there is a matching property of that name where you can see the results of that property. You can see a high level result with $result | format-list. You can access the array of results in each object that has results. i.e. if there are 10 hosts in the result $result.host will display them</maml:para>
+          <maml:para>Expected output: { "host": [ { "id": 42, "name": "MeowMachine" } ] }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -976,6 +1158,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogActiveTasks</dev:code>
         <dev:remarks>
           <maml:para>This will list any active tasks and their properties</maml:para>
+          <maml:para>Expected output: []</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1049,6 +1232,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogGroupAssociations;</dev:code>
         <dev:remarks>
           <maml:para>This will return all group association objects in the fog database</maml:para>
+          <maml:para>Expected output: [ { "hostID": 42, "groupID": 3 }, { "hostID": 42, "groupID": 5 } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1136,9 +1320,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$ITGroup = Get-FogGroupByName -groupName "IT"</dev:code>
+        <dev:code>Get-FogGroupByName -groupName "Test"</dev:code>
         <dev:remarks>
-          <maml:para>Will return the group object with a name that matches "IT";</maml:para>
+          <maml:para>Will return the group object with a name that matches "Test"</maml:para>
+          <maml:para>Expected output: { "id": 7, "name": "TestGroup" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1202,9 +1387,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$groups = Get-FogGroups</dev:code>
+        <dev:code>Get-FogGroups</dev:code>
         <dev:remarks>
-          <maml:para>This will return all the fog groups in the fog database and store them in the $groups variable</maml:para>
+          <maml:para>This will return all the fog groups in the fog database</maml:para>
+          <maml:para>Expected output: [ { "id": 7, "name": "TestGroup" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1421,6 +1607,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogHost -hostName MeowMachine</dev:code>
         <dev:remarks>
           <maml:para>This would return the fog details of a host named MeowMachine in your fog instance If using pwsh 7+ and your FOG service is 1.6 or above, you can tab complete to search for existing hosts by name</maml:para>
+          <maml:para>Expected output: { "name": "MeowMachine", "id": 42 }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -1477,7 +1664,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
             <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
@@ -1504,7 +1691,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
             <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
@@ -1531,7 +1718,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
           <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostId</maml:name>
@@ -1543,7 +1730,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
           <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
@@ -1568,9 +1755,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$assignedSnapins = Get-FogAssociatedSnapins; $assignedSnapins | Where-Object name -match "office"</dev:code>
+        <dev:code>$assignedSnapins = Get-FogHostAssociatedSnapins -hostId 42; $assignedSnapins | Where-Object name -match "office"</dev:code>
         <dev:remarks>
-          <maml:para>Gets all the assigned snapins of the current host and then filters to any with the name office in them thus showing you what version of office you have assigned as a snapin to your host</maml:para>
+          <maml:para>Gets all the assigned snapins of the host with id 42 and then filters to any with the name office in them thus showing you what version of office you have assigned as a snapin to your host</maml:para>
+          <maml:para>Expected output: { "id": 5, "name": "office365" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1697,9 +1885,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-FogGroup -hostId ((Get-FogHost -hostname "computerName").id)</dev:code>
+        <dev:code>Get-FogGroup -hostId ((Get-FogHost -hostname "MeowMachine").id)</dev:code>
         <dev:remarks>
-          <maml:para>Gets the fog group membership(s) of the fog host with the name computerName</maml:para>
+          <maml:para>Gets the fog group membership(s) of the fog host with the name MeowMachine</maml:para>
+          <maml:para>Expected output: [ { "name": "TestGroup" }, { "name": "TestGroup" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1735,7 +1924,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
             <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
           <maml:name>ProgressAction</maml:name>
@@ -1789,7 +1978,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
           <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>(Get-FogHost)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>hostID</maml:name>
@@ -1833,9 +2022,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-FogHostMacs -hostID 1234</dev:code>
+        <dev:code>Get-FogHostMacs -hostID 42</dev:code>
         <dev:remarks>
-          <maml:para>Will return the macs assigned to the host with the id of 1234</maml:para>
+          <maml:para>Will return the macs assigned to the host with the id of 42</maml:para>
+          <maml:para>Expected output: [ { "mac": "00:11:22:33:44:55" }, { "mac": "01:23:45:67:89:99" }, { "mac": "01:23:45:67:89:10" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -1962,16 +2152,18 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-PendingMacsForhost -hostID 123</dev:code>
+        <dev:code>Get-PendingMacsForhost -hostID 42</dev:code>
         <dev:remarks>
-          <maml:para>gets the macs if any for foghost 123</maml:para>
+          <maml:para>gets the macs if any for foghost 42</maml:para>
+          <maml:para>Expected output: [ { "mac": "01:23:45:67:89:99", "pending": "1" } ]</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-PendingMacsForhost -hostID 'ComputerName'</dev:code>
+        <dev:code>Get-PendingMacsForhost -hostID 'MeowMachine'</dev:code>
         <dev:remarks>
-          <maml:para>Returns the pending macs for the host with the name ComputerName</maml:para>
+          <maml:para>Returns the pending macs for the host with the name MeowMachine</maml:para>
+          <maml:para>Expected output: [ { "mac": "01:23:45:67:89:99", "pending": "1" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2038,6 +2230,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogHosts</dev:code>
         <dev:remarks>
           <maml:para>returns an array object with all hosts in the fogserver.</maml:para>
+          <maml:para>Expected output: [ { "name": "MeowMachine", "id": 42 } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2104,6 +2297,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$images = Get-FogImages; $images | select id,name</dev:code>
         <dev:remarks>
           <maml:para>Gets all the fog images and then lists them with just the image id and names</maml:para>
+          <maml:para>Expected output: [ { "id": 3, "name": "Windows 10" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2406,9 +2600,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$macs = Get-FogMacs</dev:code>
+        <dev:code>Get-FogMacs</dev:code>
         <dev:remarks>
-          <maml:para>Gets all the mac addresses in fog and puts them in the $macs object</maml:para>
+          <maml:para>Gets all the mac addresses in fog</maml:para>
+          <maml:para>Expected output: [ { "mac": "00:11:22:33:44:55" }, { "mac": "01:23:45:67:89:99" }, { "mac": "01:23:45:67:89:10" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2475,6 +2670,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$mods = Get-FogModules; $mods</dev:code>
         <dev:remarks>
           <maml:para>Will put the list of modules in a variable and then display the list</maml:para>
+          <maml:para>Expected output: [ { "id": 1, "name": "hostnameChanger" } ]</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -2482,6 +2678,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogModules | Where-Object isDefault -eq '1'</dev:code>
         <dev:remarks>
           <maml:para>Will display the modules that are set to be enabled by default in your fog server settings</maml:para>
+          <maml:para>Expected output: { "id": 1, "name": "hostnameChanger" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -2620,6 +2817,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogObject -type object -coreObject host</dev:code>
         <dev:remarks>
           <maml:para>This will get all hosts from the fog server. This will get all the hosts.</maml:para>
+          <maml:para>Expected output: { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -2716,6 +2914,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogScheduledTasks</dev:code>
         <dev:remarks>
           <maml:para>This will list any scheduled tasks and their properties</maml:para>
+          <maml:para>Expected output: []</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -3035,6 +3234,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogSetting -settingName FOG_QUICKREG_PENDING_MAC_FILTER</dev:code>
         <dev:remarks>
           <maml:para>Will return the value and info of FOG_QUICKREG_PENDING_MAC_FILTER</maml:para>
+          <maml:para>Expected output: { "id": 1, "name": "FOG_QUICKREG_PENDING_MAC_FILTER", "value": "00:00:00:00:00:00,FF:FF:FF:FF:FF:FF" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -3108,6 +3308,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$settings = Get-FogSettings; $settings</dev:code>
         <dev:remarks>
           <maml:para>Will put the list of settings in a variable and then display the list You can then use the $settings object to filter for specific settings and their values, or to find the id of a setting to use in Set-FogSetting</maml:para>
+          <maml:para>Expected output: [ { "id": 1, "name": "FOG_QUICKREG_PENDING_MAC_FILTER" }, { "id": 2, "name": "FOG_MEMORY_LIMIT", "value": "512" }, { "id": 3, "name": "FOG_WEB_HOST", "value": "fog-server" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3174,6 +3375,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogSnapinAssociations</dev:code>
         <dev:remarks>
           <maml:para>Will return a full list of all snapin ids associated to host ids</maml:para>
+          <maml:para>Expected output: [ { "id": 20, "hostID": 42, "snapinID": 5 } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3240,6 +3442,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogSnapins</dev:code>
         <dev:remarks>
           <maml:para>Returns an array of objects with details of each snapin.</maml:para>
+          <maml:para>Expected output: [ { "id": 5, "name": "office365" }, { "id": 6, "name": "chrome" } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3329,6 +3532,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Get-FogVersion;</dev:code>
         <dev:remarks>
           <maml:para>Will return the full version string</maml:para>
+          <maml:para>Expected output: "1.6.0"</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -3531,16 +3735,18 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-LastImageTime -hostID 1234</dev:code>
+        <dev:code>Get-LastImageTime -hostID 42</dev:code>
         <dev:remarks>
-          <maml:para>Will get the foghost with the id 1234 and return the last entry in its image log</maml:para>
+          <maml:para>Will get the foghost with the id 42 and return the last entry in its image log</maml:para>
+          <maml:para>Expected output: { "hostid": 42, "image": "Windows 10" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 4 --------------------------</maml:title>
-        <dev:code>$log = Get-LastImageTime -fogHost $hostObj;</dev:code>
+        <dev:code>Get-LastImageTime -fogHost (Get-FogHost -hostID 42)</dev:code>
         <dev:remarks>
-          <maml:para>Will put the last image history log for the given host in the $log variable. That $log's properties can then be used in other operations</maml:para>
+          <maml:para>Will put the last image history log for the given host object. That result's properties can then be used in other operations</maml:para>
+          <maml:para>Expected output: { "hostid": 42, "image": "Windows 10" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4222,6 +4428,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>New-FogHost -name "test-host" -macs "01:23:45:67:89:00"</dev:code>
         <dev:remarks>
           <maml:para>Will create a new host in fog with the name "test-host"</maml:para>
+          <maml:para>Expected output: { "name": "test-host", "id": 42 }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4360,6 +4567,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;</dev:code>
         <dev:remarks>
           <maml:para>Would create a new fog object of a start all snapins task.</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -4367,6 +4575,453 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/New-FogObject</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>New-FogSnapin</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>FogSnapin</command:noun>
+      <maml:description>
+        <maml:para>Creates a new snapin in fog</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Creates a snapin object in fog with all but the upload of a file. Expects file to already exist.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-FogSnapin</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>name</maml:name>
+          <maml:description>
+            <maml:para>Name of the snapin</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>hide</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill hide Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>timeout</maml:name>
+          <maml:description>
+            <maml:para>Timeout for the snapin execution</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>packtype</maml:name>
+          <maml:description>
+            <maml:para>Pack type of the snapin</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+          <maml:name>storagegroupID</maml:name>
+          <maml:description>
+            <maml:para>Storage group ID for the snapin</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>1</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>description</maml:name>
+          <maml:description>
+            <maml:para>Description of the snapin</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>existingFileName</maml:name>
+          <maml:description>
+            <maml:para>Existing file name ot us</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>newFilePath</maml:name>
+          <maml:description>
+            <maml:para>Local path to the file to get the hash from</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>fileArgs</maml:name>
+          <maml:description>
+            <maml:para>Args to use in the snapin</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>runWith</maml:name>
+          <maml:description>
+            <maml:para>What to run the snapin with i.e. powershell.exe</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Powershell.exe</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>runWithArgs</maml:name>
+          <maml:description>
+            <maml:para>Args for the runwith program</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+          <maml:name>enabled</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill enabled Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>True</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>replicate</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill replicate Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>True</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>reboot</maml:name>
+          <maml:description>
+            <maml:para>Switch to say snapin causes reboot after done</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>shutdown</maml:name>
+          <maml:description>
+            <maml:para>Switch to say snapin causes shutdown after done</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>protected</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill protected Description }}</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>name</maml:name>
+        <maml:description>
+          <maml:para>Name of the snapin</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>description</maml:name>
+        <maml:description>
+          <maml:para>Description of the snapin</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>existingFileName</maml:name>
+        <maml:description>
+          <maml:para>Existing file name ot us</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>newFilePath</maml:name>
+        <maml:description>
+          <maml:para>Local path to the file to get the hash from</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>fileArgs</maml:name>
+        <maml:description>
+          <maml:para>Args to use in the snapin</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>reboot</maml:name>
+        <maml:description>
+          <maml:para>Switch to say snapin causes reboot after done</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>shutdown</maml:name>
+        <maml:description>
+          <maml:para>Switch to say snapin causes shutdown after done</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+        <maml:name>runWith</maml:name>
+        <maml:description>
+          <maml:para>What to run the snapin with i.e. powershell.exe</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Powershell.exe</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>runWithArgs</maml:name>
+        <maml:description>
+          <maml:para>Args for the runwith program</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>protected</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill protected Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>enabled</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill enabled Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>True</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>replicate</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill replicate Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>True</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>hide</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill hide Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>timeout</maml:name>
+        <maml:description>
+          <maml:para>Timeout for the snapin execution</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>packtype</maml:name>
+        <maml:description>
+          <maml:para>Pack type of the snapin</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+        <maml:name>storagegroupID</maml:name>
+        <maml:description>
+          <maml:para>Storage group ID for the snapin</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>1</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>This function may be flushed out more down the road.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:remarks>
+          <maml:para>{{ Add example description here }}</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/New-FogSnapin</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4744,9 +5399,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Receive-FogImage -hostID "1234"</dev:code>
+        <dev:code>Receive-FogImage -hostID "42"</dev:code>
         <dev:remarks>
-          <maml:para>Will queue a capture task for host 1234 right now</maml:para>
+          <maml:para>Will queue a capture task for host 42 right now</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -4775,6 +5431,180 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Receive-FogImage</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Remove-FogHostGroup</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>FogHostGroup</command:noun>
+      <maml:description>
+        <maml:para>Removes a host from a fog group</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Finds the group association entry linking a host to a group and deletes it, removing the host from that group's membership.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-FogHostGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>fogHost</maml:name>
+          <maml:description>
+            <maml:para>A fog host object (e.g. from Get-FogHost) to remove from the group. Supports pipeline input.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to remove the host from</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Remove-FogHostGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>hostID</maml:name>
+          <maml:description>
+            <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to remove the host from</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>fogHost</maml:name>
+        <maml:description>
+          <maml:para>A fog host object (e.g. from Get-FogHost) to remove from the group. Supports pipeline input.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>hostID</maml:name>
+        <maml:description>
+          <maml:para>Can either be the id number of the host object or the name of the host in a string</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>groupID</maml:name>
+        <maml:description>
+          <maml:para>The id of the group to remove the host from</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Remove-FogHostGroup -hostID 42 -groupID 3</dev:code>
+        <dev:remarks>
+          <maml:para>Removes the host with id 42 from the group with id 3. A successful delete returns an empty response from the fog server.</maml:para>
+          <maml:para>Expected output: ""</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogHost -hostName MeowMachine | Remove-FogHostGroup -groupID 5</dev:code>
+        <dev:remarks>
+          <maml:para>Finds the host by name and removes it from the group with id 5. A successful delete returns an empty response from the fog server.</maml:para>
+          <maml:para>Expected output: ""</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Remove-FogHostGroup</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -4906,6 +5736,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$macs = get-fogmacaddresses; Remove-FogObject -type object -coreObject macaddressassociation -IDofObject $macs[-1].id;</dev:code>
         <dev:remarks>
           <maml:para>Would remove the last added mac address from the fog database</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5068,9 +5899,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Remove-UsbMacs -fogServer "foggy" -usbMacs @("01:23:45:67:89:10", "00:00:00:00:00:00")</dev:code>
+        <dev:code>Remove-UsbMac -hostName "MeowMachine" -usbMacs @("01:23:45:67:89:10")</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>Removes the usb ethernet adapter mac "01:23:45:67:89:10" from the host named MeowMachine</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5137,6 +5969,8 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Repair-FogSnapinAssociations</dev:code>
         <dev:remarks>
           <maml:para>'Example of output when there are associations to remove' ``` These snapin assoiciations have an invalid snapinID either of 0 or -1 or an id that doesn't belong to any snapins in the server and will be removed: id    hostID snapinID --    ------ -------- 9289  1809   0 9985  1866   0 10000 2091   0 These snapin assoiciations have an invalid hostID of either 0 or -1 or other negative number, or have a hostid that doesn't belong to any host and will be removed: id   hostID snapinID --   ------ -------- 8281 1787   103 8513 1960   103 8597 1935   635 8598 1935   629 8599 1933   639 8600 1935   69 8601 1935   137 9353 0      681 9354 0      684 Snapin Association repair complete! ```</maml:para>
+          <maml:para>With no invalid associations found (the common case), nothing is returned.</maml:para>
+          <maml:para>Expected output: null</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5304,9 +6138,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Reset-HostEncryption -fogHost (Get-FogHost -hostID 1234)</dev:code>
+        <dev:code>Reset-HostEncryption -fogHost (Get-FogHost -hostID 42)</dev:code>
         <dev:remarks>
-          <maml:para>This example resets the encryption data for the host with ID 1234 using the host object returned from Get-FogHost.</maml:para>
+          <maml:para>This example resets the encryption data for the host with ID 42 using the host object returned from Get-FogHost.</maml:para>
+          <maml:para>Expected output: { "id": 42, "pub_key": "", "sec_tok": "" }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -5411,6 +6246,386 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Resolve-HostID</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Send-FogGroupTask</command:name>
+      <command:verb>Send</command:verb>
+      <command:noun>FogGroupTask</command:noun>
+      <maml:description>
+        <maml:para>Queues a task against every host in a fog group at once</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Creates an immediate task (or, if -StartAtTime is given, a scheduled task) against a whole group of hosts in one call, instead of looping New-FogObject/Send-FogImage per host. Uses taskTypeID 1 (deploy) by default, the same default fog uses for a normal image deploy task.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Send-FogGroupTask</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>groupObj</maml:name>
+          <maml:description>
+            <maml:para>A fog group object (e.g. from Get-FogGroups) to queue the task for. Supports pipeline input.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>taskTypeID</maml:name>
+          <maml:description>
+            <maml:para>The fog task type id to queue, defaults to 1 (deploy). See your fog server's task type list for other values (e.g. capture, memtest, etc.)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>1</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StartAtTime</maml:name>
+          <maml:description>
+            <maml:para>The time to start the task, use Get-date to create the required datetime object. If omitted the task is queued to start immediately.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>debugMode</maml:name>
+          <maml:description>
+            <maml:para>Switch param to mark the task as a debug task. Only applies to immediate tasks.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NoWol</maml:name>
+          <maml:description>
+            <maml:para>Switch param to not use wake on lan in the task, default is to use wake on lan</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>shutdown</maml:name>
+          <maml:description>
+            <maml:para>Switch param to indicate hosts should shutdown at the end of the task instead of restarting.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NoSnapins</maml:name>
+          <maml:description>
+            <maml:para>Switch param for scheduled tasks, sets deploysnapins to false so assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>bypassbitlocker</maml:name>
+          <maml:description>
+            <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Send-FogGroupTask</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to queue the task for</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>taskTypeID</maml:name>
+          <maml:description>
+            <maml:para>The fog task type id to queue, defaults to 1 (deploy). See your fog server's task type list for other values (e.g. capture, memtest, etc.)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>1</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>StartAtTime</maml:name>
+          <maml:description>
+            <maml:para>The time to start the task, use Get-date to create the required datetime object. If omitted the task is queued to start immediately.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+          <dev:type>
+            <maml:name>DateTime</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>debugMode</maml:name>
+          <maml:description>
+            <maml:para>Switch param to mark the task as a debug task. Only applies to immediate tasks.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NoWol</maml:name>
+          <maml:description>
+            <maml:para>Switch param to not use wake on lan in the task, default is to use wake on lan</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>shutdown</maml:name>
+          <maml:description>
+            <maml:para>Switch param to indicate hosts should shutdown at the end of the task instead of restarting.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>NoSnapins</maml:name>
+          <maml:description>
+            <maml:para>Switch param for scheduled tasks, sets deploysnapins to false so assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>bypassbitlocker</maml:name>
+          <maml:description>
+            <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>groupObj</maml:name>
+        <maml:description>
+          <maml:para>A fog group object (e.g. from Get-FogGroups) to queue the task for. Supports pipeline input.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>groupID</maml:name>
+        <maml:description>
+          <maml:para>The id of the group to queue the task for</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>taskTypeID</maml:name>
+        <maml:description>
+          <maml:para>The fog task type id to queue, defaults to 1 (deploy). See your fog server's task type list for other values (e.g. capture, memtest, etc.)</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>1</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>StartAtTime</maml:name>
+        <maml:description>
+          <maml:para>The time to start the task, use Get-date to create the required datetime object. If omitted the task is queued to start immediately.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">DateTime</command:parameterValue>
+        <dev:type>
+          <maml:name>DateTime</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>debugMode</maml:name>
+        <maml:description>
+          <maml:para>Switch param to mark the task as a debug task. Only applies to immediate tasks.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NoWol</maml:name>
+        <maml:description>
+          <maml:para>Switch param to not use wake on lan in the task, default is to use wake on lan</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>shutdown</maml:name>
+        <maml:description>
+          <maml:para>Switch param to indicate hosts should shutdown at the end of the task instead of restarting.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>NoSnapins</maml:name>
+        <maml:description>
+          <maml:para>Switch param for scheduled tasks, sets deploysnapins to false so assigned snapins aren't auto scheduled too. Only works in FOG 1.6+ and only with scheduled tasks.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>bypassbitlocker</maml:name>
+        <maml:description>
+          <maml:para>Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Verified against the fog server source (FOGProject/fogproject, working-1.6 branch, packages/web/lib/router/route.class.php and packages/web/lib/fog/scheduledtask.class.php): - Immediate group tasks use the "group" coreTaskObject (POST group/{id}/task), routed to Route::task() which calls   Group::createImagePackage() when the target class is a Group. Reads taskTypeID, taskName, shutdown, debug, wol, deploySnapins. - Scheduled group tasks go through the generic scheduledtask create() route. The scheduledtask table has no separate groupID column -   "isGroupTask":"1" instead repurposes the "hostID" field (db column stGroupHostID) to hold the group id, so this cmdlet sends   "hostID":"$groupID" rather than a "groupID" field. The scheduledtask create route only maps JSON keys that literally match its   databaseFields, so the task's name field must be sent as "name", not "taskName".</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Send-FogGroupTask -groupID 7 -taskTypeID 14</dev:code>
+        <dev:remarks>
+          <maml:para>Queues an immediate wake-up task for every host in the group with id 7. Use the default taskTypeID of 1 to queue a deploy task instead.</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-FogGroupByName "TestGroup" | Send-FogGroupTask -taskTypeID 14 -StartAtTime ((Get-Date).AddHours(2))</dev:code>
+        <dev:remarks>
+          <maml:para>Finds the group named "TestGroup" and schedules a wake-up task for every host in it 2 hours from now, returning the created scheduled task marked as a group task.</maml:para>
+          <maml:para>Expected output: { "type": "S", "isGroupTask": "1" }</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Send-FogGroupTask</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -5806,9 +7021,11 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Deploy-FogImage -hostID "1234"</dev:code>
+        <dev:code>Deploy-FogImage -hostID "42"</dev:code>
         <dev:remarks>
-          <maml:para>Will queue a deploy task for host 1234 right now</maml:para>
+          <maml:para>Will queue a deploy task for host 42 right now</maml:para>
+          <maml:para>Note: under the mocked test harness this returns null because the active-tasks fixture is static and doesn't reflect the task just created moments earlier in the same call; against a real Fog server this returns the newly queued task.</maml:para>
+          <maml:para>Expected output: null</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -5963,9 +7180,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Send-FogWolTask -computername "some-computer"</dev:code>
+        <dev:code>Send-FogWolTask -computername "MeowMachine"</dev:code>
         <dev:remarks>
-          <maml:para>Will send a magic computer to the computer some-computer from the fog server;</maml:para>
+          <maml:para>Will send a magic computer to the computer MeowMachine from the fog server;</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -6084,9 +7302,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$foghost = get-foghost -hostid 1234; $imageName = 'MyImage'; $fogImages = Get-FogImages; $fogHost = Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)</dev:code>
+        <dev:code>$foghost = get-foghost -hostid 42; $imageName = 'Windows 10'; $fogImages = Get-FogImages; Set-FogHostImage -hostId $fogHost.id -fogImage ($fogImages | Where-Object name -eq $imageName)</dev:code>
         <dev:remarks>
-          <maml:para>Will set the image with the name of MyImage to the host with the id of 1234</maml:para>
+          <maml:para>Will set the image with the name of "Windows 10" to the host with the id of 42</maml:para>
+          <maml:para>Expected output: { "imageID": 3 }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6229,7 +7448,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>fogApiToken</maml:name>
           <maml:description>
-            <maml:para>fog API token is found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
+            <maml:para>fog API token is found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System Copy the token exactly as displayed in the web ui; it is shown base64-encoded and that is the form the fog api expects in the request header (the server base64-decodes it before comparing). Do not use the raw token value from the fog database, it will fail with a 403.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -6241,7 +7460,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>fogUserToken</maml:name>
           <maml:description>
-            <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
+            <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab Copy this token exactly as displayed in the web ui too; like the api token it is shown base64-encoded, which is the form the api expects.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -6306,7 +7525,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>fogApiToken</maml:name>
         <maml:description>
-          <maml:para>fog API token is found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System</maml:para>
+          <maml:para>fog API token is found at https://fog-server/fog/management/index.php?node=about&amp;sub=settings under API System Copy the token exactly as displayed in the web ui; it is shown base64-encoded and that is the form the fog api expects in the request header (the server base64-decodes it before comparing). Do not use the raw token value from the fog database, it will fail with a 403.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -6318,7 +7537,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>fogUserToken</maml:name>
         <maml:description>
-          <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab</maml:para>
+          <maml:para>your fog user api token found in the user settings https://fog-server/fog/management/index.php?node=user&amp;sub=list select your api enabled used and view the api tab Copy this token exactly as displayed in the web ui too; like the api token it is shown base64-encoded, which is the form the api expects.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -6697,6 +7916,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Set-FogSetting -settingName FOG_WEB_HOST -value '192.168.0.1'</dev:code>
         <dev:remarks>
           <maml:para>Would set the FOG_WEB_HOST to a new ip value and will return the resulting object of that setting</maml:para>
+          <maml:para>Expected output: { "id": 3, "value": "192.168.0.1" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -6793,7 +8013,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
             <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>pkgList</maml:name>
@@ -6866,7 +8086,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
           <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>pkgList</maml:name>
@@ -6927,9 +8147,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Set-FogSnapins -hostid (Get-FogHost).id -pkgList @('Office365','chrome','slack')</dev:code>
+        <dev:code>Set-FogSnapins -hostid (Get-FogHost -hostName MeowMachine).id -pkgList @('chrome')</dev:code>
         <dev:remarks>
-          <maml:para>This would associate snapins that match the titles of office365, chrome, and slack to the provided host id they could then be deployed with start-fogsnapins</maml:para>
+          <maml:para>This would associate the snapin that matches the title of chrome to the provided host id it could then be deployed with start-fogsnapins</maml:para>
+          <maml:para>Expected output: [ { "snapinID": "6", "hostID": "42", "id": 55 } ]</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7248,16 +8469,18 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Start-FogSnapin -hostID 1234 -snapinname 'office365'</dev:code>
+        <dev:code>Start-FogSnapin -hostID 42 -snapinname 'office365'</dev:code>
         <dev:remarks>
-          <maml:para>This will find the id of the snapin named 'office365' and deploy it on the host o id 1234 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+          <maml:para>This will find the id of the snapin named 'office365' and deploy it on the host of id 42 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Start-FogSnapin -hostID 1234 -snapinid 12</dev:code>
+        <dev:code>Start-FogSnapin -hostID 42 -snapinid 6</dev:code>
         <dev:remarks>
-          <maml:para>This will deploy a single snapin task for the snapin of id 12 for host 1234 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+          <maml:para>This will deploy a single snapin task for the snapin of id 6 for host 42 The name of the host and the snapin will be output to the console before the task is started</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7332,7 +8555,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
             <maml:name>Object</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>taskTypeid</maml:name>
@@ -7383,7 +8606,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
           <maml:name>Object</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>((Get-FogHost).id)</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>taskTypeid</maml:name>
@@ -7427,16 +8650,18 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Start-FogSnapins -hostid 1234</dev:code>
+        <dev:code>Start-FogSnapins -hostid 42</dev:code>
         <dev:remarks>
-          <maml:para>will start all snapins on the host with the id 1234</maml:para>
+          <maml:para>will start all snapins on the host with the id 42</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
-        <dev:code>Get-foghost -hostname 'somehost' | Start-FogSnapins</dev:code>
+        <dev:code>Get-foghost -hostname 'MeowMachine' | Start-FogSnapins</dev:code>
         <dev:remarks>
-          <maml:para>will get the host object for the host named 'somehost' and start all snapins on it</maml:para>
+          <maml:para>will get the host object for the host named 'MeowMachine' and start all snapins on it</maml:para>
+          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7503,6 +8728,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Test-FogVerAbove1dot6</dev:code>
         <dev:remarks>
           <maml:para>This will return true if the fog version is above 1.6 and false if it is 1.5 or below</maml:para>
+          <maml:para>Expected output: true</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7593,6 +8819,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>Test-StringNotNullOrEmpty "An example"</dev:code>
         <dev:remarks>
           <maml:para>Will return true as it is a valid string with content</maml:para>
+          <maml:para>Expected output: true</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7600,6 +8827,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$s = ""; Test-StringNotNullOrEmpty $s;</dev:code>
         <dev:remarks>
           <maml:para>Will return false as this is an empty string.</maml:para>
+          <maml:para>Expected output: false</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7607,6 +8835,7 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
         <dev:code>$str = " "; $str | Test-StringNotNullOrEmpty</dev:code>
         <dev:remarks>
           <maml:para>Will return false as this string is just whitespace</maml:para>
+          <maml:para>Expected output: false</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -7614,6 +8843,620 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
       <maml:navigationLink>
         <maml:linkText>Online Version:</maml:linkText>
         <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Test-StringNotNullOrEmpty</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Update-FogGroup</command:name>
+      <command:verb>Update</command:verb>
+      <command:noun>FogGroup</command:noun>
+      <maml:description>
+        <maml:para>Updates a fog group's own fields</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Edits the group object itself (name, description, kernel options, etc.) rather than its host membership. Use Add-FogHostGroup/Remove-FogHostGroup to add or remove a single host at a time.</maml:para>
+      <maml:para>You can either: - Pipe in a group object (e.g. from Get-FogGroups/Get-FogGroupByName), change its properties directly, and   pipe the modified object back in - the changed scalar fields (name, description, building, kernel,   kernelArgs, kernelDevice, init) are sent automatically. - Use the named parameters below directly against -groupID or a piped group object. Named parameters always   take precedence over whatever is present on a piped object.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Update-FogGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>groupObj</maml:name>
+          <maml:description>
+            <maml:para>A fog group object (e.g. from Get-FogGroups) to update. Supports pipeline input. Its own name/description/ building/kernel/kernelArgs/kernelDevice/init properties are sent as-is unless overridden by a named parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>The group's name</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Description</maml:name>
+          <maml:description>
+            <maml:para>The group's description</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Building</maml:name>
+          <maml:description>
+            <maml:para>The building associated with the group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Kernel</maml:name>
+          <maml:description>
+            <maml:para>The kernel file name to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KernelArgs</maml:name>
+          <maml:description>
+            <maml:para>The kernel arguments to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KernelDevice</maml:name>
+          <maml:description>
+            <maml:para>The primary disk/device to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Init</maml:name>
+          <maml:description>
+            <maml:para>The init/initrd setting for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Hosts</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of host ids that should be members of this group. Fog diffs this against the group's current membership and adds/removes hosts accordingly. For adding/removing a single host, prefer Add-FogHostGroup/Remove-FogHostGroup instead.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Snapins</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of snapin ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Printers</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of printer ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Modules</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of module ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ImageID</maml:name>
+          <maml:description>
+            <maml:para>Assigns this image id to every host currently in this group. Fails if any member host is currently mid-task.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>settings</maml:name>
+          <maml:description>
+            <maml:para>Escape hatch: a hashtable of any additional group fields to change, sent alongside/underneath the named parameters above. Useful for fields not otherwise exposed as a named parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Update-FogGroup</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>groupID</maml:name>
+          <maml:description>
+            <maml:para>The id of the group to update</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Name</maml:name>
+          <maml:description>
+            <maml:para>The group's name</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Description</maml:name>
+          <maml:description>
+            <maml:para>The group's description</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Building</maml:name>
+          <maml:description>
+            <maml:para>The building associated with the group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Kernel</maml:name>
+          <maml:description>
+            <maml:para>The kernel file name to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KernelArgs</maml:name>
+          <maml:description>
+            <maml:para>The kernel arguments to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>KernelDevice</maml:name>
+          <maml:description>
+            <maml:para>The primary disk/device to use for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Init</maml:name>
+          <maml:description>
+            <maml:para>The init/initrd setting for hosts in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Hosts</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of host ids that should be members of this group. Fog diffs this against the group's current membership and adds/removes hosts accordingly. For adding/removing a single host, prefer Add-FogHostGroup/Remove-FogHostGroup instead.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Snapins</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of snapin ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Printers</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of printer ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Modules</maml:name>
+          <maml:description>
+            <maml:para>Full replacement list of module ids to associate with every host currently in this group</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ImageID</maml:name>
+          <maml:description>
+            <maml:para>Assigns this image id to every host currently in this group. Fails if any member host is currently mid-task.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>settings</maml:name>
+          <maml:description>
+            <maml:para>Escape hatch: a hashtable of any additional group fields to change, sent alongside/underneath the named parameters above. Useful for fields not otherwise exposed as a named parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+          <maml:name>ProgressAction</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+          <dev:type>
+            <maml:name>ActionPreference</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>groupObj</maml:name>
+        <maml:description>
+          <maml:para>A fog group object (e.g. from Get-FogGroups) to update. Supports pipeline input. Its own name/description/ building/kernel/kernelArgs/kernelDevice/init properties are sent as-is unless overridden by a named parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>groupID</maml:name>
+        <maml:description>
+          <maml:para>The id of the group to update</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>The group's name</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Description</maml:name>
+        <maml:description>
+          <maml:para>The group's description</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Building</maml:name>
+        <maml:description>
+          <maml:para>The building associated with the group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Kernel</maml:name>
+        <maml:description>
+          <maml:para>The kernel file name to use for hosts in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KernelArgs</maml:name>
+        <maml:description>
+          <maml:para>The kernel arguments to use for hosts in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>KernelDevice</maml:name>
+        <maml:description>
+          <maml:para>The primary disk/device to use for hosts in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Init</maml:name>
+        <maml:description>
+          <maml:para>The init/initrd setting for hosts in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Hosts</maml:name>
+        <maml:description>
+          <maml:para>Full replacement list of host ids that should be members of this group. Fog diffs this against the group's current membership and adds/removes hosts accordingly. For adding/removing a single host, prefer Add-FogHostGroup/Remove-FogHostGroup instead.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Snapins</maml:name>
+        <maml:description>
+          <maml:para>Full replacement list of snapin ids to associate with every host currently in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Printers</maml:name>
+        <maml:description>
+          <maml:para>Full replacement list of printer ids to associate with every host currently in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Modules</maml:name>
+        <maml:description>
+          <maml:para>Full replacement list of module ids to associate with every host currently in this group</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ImageID</maml:name>
+        <maml:description>
+          <maml:para>Assigns this image id to every host currently in this group. Fails if any member host is currently mid-task.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>settings</maml:name>
+        <maml:description>
+          <maml:para>Escape hatch: a hashtable of any additional group fields to change, sent alongside/underneath the named parameters above. Useful for fields not otherwise exposed as a named parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Hashtable</command:parameterValue>
+        <dev:type>
+          <maml:name>Hashtable</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
+        <maml:name>ProgressAction</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ProgressAction Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ActionPreference</command:parameterValue>
+        <dev:type>
+          <maml:name>ActionPreference</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues />
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Verified against the fog server source (FOGProject/fogproject, working-1.6 and dev-branch, identical on both): Group's databaseFields are name/description/createdBy/createdTime/building/kernel/kernelArgs/ kernelDevice/init (only "name" is required), and the group edit route additionally special-cases hosts/snapins/printers/modules/imageID to cascade the change to every member host.</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Update-FogGroup -groupID 7 -Description "Lab computers"</dev:code>
+        <dev:remarks>
+          <maml:para>Updates the description field of the group with id 7</maml:para>
+          <maml:para>Expected output: { "description": "Lab computers" }</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>$g = Get-FogGroupByName "TestGroup"; $g.description = "Updated via example"; $g | Update-FogGroup</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the group named "TestGroup", edits its description property directly on the returned object, and sends the change back with the modified object piped straight into Update-FogGroup.</maml:para>
+          <maml:para>Expected output: { "description": "Updated via example" }</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-FogGroupByName "Lab" | Update-FogGroup -ImageID 12</dev:code>
+        <dev:remarks>
+          <maml:para>Finds the group named "Lab" and assigns image id 12 to every host currently in that group.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://fogapi.readthedocs.io/en/latest/commands/Update-FogGroup</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -7766,9 +9609,10 @@ Deny-FogPendingMac -macObject $macToDeny</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>$h = get-foghost; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose</dev:code>
+        <dev:code>$h = Get-FogHost -hostName MeowMachine; $h.ADUser = 'ldapBind'; Update-FogObject -type object -coreObject host -jsonData ($h | select-object aduser | ConvertTo-Json -Compress) -IDofObject $h.id -Verbose</dev:code>
         <dev:remarks>
-          <maml:para>Will update the ADUser field on the current host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name. You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name</maml:para>
+          <maml:para>Will update the ADUser field on the MeowMachine host to be 'ldapbind' Note that when you update a host, you should not include the name field in the json if you are not changing the name. You can also set other fields on the local $h object and update all changed fields excluding an unchanged name by using $h | select-object -excludeproperty name</maml:para>
+          <maml:para>Expected output: { "ADUser": "ldapBind" }</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>

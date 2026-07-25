@@ -1,5 +1,7 @@
 # FogAPI
 
+## [Add-FogHostGroup](Add-FogHostGroup.md)
+
 ## [Add-FogHostMac](Add-FogHostMac.md)
 
 ## [Add-FogResultData](Add-FogResultData.md)
@@ -82,7 +84,11 @@
 
 ## [New-FogObject](New-FogObject.md)
 
+## [New-FogSnapin](New-FogSnapin.md)
+
 ## [Receive-FogImage](Receive-FogImage.md)
+
+## [Remove-FogHostGroup](Remove-FogHostGroup.md)
 
 ## [Remove-FogObject](Remove-FogObject.md)
 
@@ -93,6 +99,8 @@
 ## [Reset-HostEncryption](Reset-HostEncryption.md)
 
 ## [Resolve-HostID](Resolve-HostID.md)
+
+## [Send-FogGroupTask](Send-FogGroupTask.md)
 
 ## [Send-FogImage](Send-FogImage.md)
 
@@ -119,6 +127,8 @@
 ## [Test-FogVerAbove1dot6](Test-FogVerAbove1dot6.md)
 
 ## [Test-StringNotNullOrEmpty](Test-StringNotNullOrEmpty.md)
+
+## [Update-FogGroup](Update-FogGroup.md)
 
 ## [Update-FogObject](Update-FogObject.md)
 
