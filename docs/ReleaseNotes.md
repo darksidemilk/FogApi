@@ -1,5 +1,136 @@
 # Release Notes
 
+## 10.x
+
+### 2607.10.1
+
+	Restore Pester work lost during the #55/#56/#57 merge-conflict resolution (#58)
+
+ (#59)
+
+* Add group membership CRUD and group task/settings cmdlets
+
+Adds Add-FogHostGroup/Remove-FogHostGroup to manage group membership,
+Update-FogGroup to edit a group's own fields, and Send-FogGroupTask to
+queue a task against every host in a group at once, closing the gap
+called out in #28 where only read/get group functions existed.
+
+Closes #28
+
+* Fix Send-FogGroupTask scheduled-task JSON against verified FOG API
+
+Cross-checked against FOGProject/fogproject (working-1.6 and dev-branch,
+identical on both): the scheduledtask table has no groupID column, so a
+group scheduled task must set isGroupTask=1 and reuse hostID to hold the
+group id, and the generic create route only maps JSON keys that match
+its databaseFields exactly, so the task name must be sent as "name" not
+"taskName". Add-FogHostGroup/Remove-FogHostGroup/Update-FogGroup were
+verified correct as originally written.
+
+* Add named parameters for every Update-FogGroup field
+
+Replaces the hashtable-only interface with explicit named parameters
+(Name, Description, Building, Kernel, KernelArgs, KernelDevice, Init,
+Hosts, Snapins, Printers, Modules, ImageID) for tab-completable
+discoverability, matched to Group's actual databaseFields/edit-route
+handling verified against the fog server source. Also supports piping
+in a group object (e.g. from Get-FogGroups), editing its scalar
+properties directly, and passing it straight back in - those fields
+are picked up automatically, with named parameters always taking
+precedence. The hashtable -settings param remains as an escape hatch.
+
+* Document that FOG GUI-displayed API tokens are base64-encoded
+
+The fog server has base64-decoded the fog-api-token/fog-user-token
+headers since the REST API was introduced (April 2017, identical in
+1.5.x stable and working-1.6). The web ui displays both tokens
+base64-encoded, so copying them verbatim from the ui - as this module
+instructs - has always yielded the correct wire form. Note this in the
+Set-FogServerSettings help and README so anyone sourcing a token from
+the database directly (raw hex) understands why that fails with a 403.
+No transport changes; Invoke-FogApi is correct as-is.
+
+* Run CI on PRs into dev too, and enforce master only merges from dev
+
+build-test.yml's build+test jobs now also run on pull requests targeting
+dev, not just master - pure validation (module builds, Pester passes), no
+publish/release side effects since tag-and-release.yml is unchanged and
+still only fires on a merge to master.
+
+Adds an enforce-dev-to-master job that fails a PR into master whose head
+branch isn't dev, addressing exactly the mistake that led to the
+accidental master merge/premature release documented in issue #52. This
+makes the violation visible as a failing check; making it a hard block
+still requires a one-time branch protection rule (require this check to
+pass) since no tool here can set that GitHub setting directly.
+
+* Add example tests for the group membership cmdlets
+
+Annotates one example per parameter set (8 total) on Add-FogHostGroup,
+Remove-FogHostGroup, Update-FogGroup, and Send-FogGroupTask with the
+Expected output: convention, adds the four to the examples pilot list,
+and extends the mock with group, groupassociation, and scheduledtask
+routes plus matching fixtures. Coverage report goes from 5 to 13
+annotated parameter sets. All examples also verified unmocked with
+-RealServer against a live fog server seeded to match the fixtures;
+7 of 8 pass there - the immediate-task example documents the mocked
+task-create fixture shape, same as the existing Send-FogWolTask
+convention (a real server returns an empty body for task creation).
+
+* Add dependencies and enforce build order in workflow
+
+* Remove dependency on enforce-dev-to-master
+
+* Fix merge conflict in build-test.yml: keep test job from dev branch
+
+* Update FogApi.psd1
+
+Major change
+
+* Restore Pester work lost during the #55/#56/#57 merge-conflict resolution (#58)
+
+* Restore the Contributing nav entry dropped during merge conflict resolution
+
+docs/Contributing.md has been present on dev and master since PR #54, but
+mkdocs.yml's nav entry pointing to it got dropped somewhere in the PR
+#55/#56/#57 merge conflict resolutions that followed - the page existed
+but wasn't reachable from the site nav. Verified with a real mkdocs build
+that it renders and links correctly again.
+
+* Restore files lost during the PR #55/#56/#57 merge-conflict resolution
+
+An automated merge-conflict resolution while merging PR #57 into dev
+(commits a60dc61/75957b6, "accepting incoming (dev branch) changes") ended
+up doing the opposite of what its own message says for a large chunk of
+files: it silently reverted most of PR #54's pilot Pester work on dev
+(and, since PR #56 later merged dev into master, on master too), while
+PR #55's separately-added files survived since they never touched the
+same conflict.
+
+Lost and now restored to their PR #54 state: CLAUDE.md, Invoke-FogApiTests.ps1,
+five Tests/Fixtures/*.json fixtures, Tests/FogApi.Coverage.Tests.ps1,
+Tests/Invoke-FogApi.Tests.ps1, the Expected output: annotations on all 8
+original pilot functions' .EXAMPLE blocks, and the TestResults/site entries
+in .gitignore. Tests/placeholder.md, which the resolution resurrected, is
+deleted again. Confirmed the current tree now diffs at zero against the
+last known-good commit (eb54b20, the PR #55 merge) except for two later,
+legitimate changes that are kept as-is: build-test.yml's `test: needs:
+build` and FogApi.psd1's version bump to 2606.10.0.
+
+Verified: full Pester suite passes locally (24/24, up from the CI-breaking
+0 caused by Invoke-FogApiTests.ps1 being missing entirely), and
+`mkdocs build --strict` renders docs/Contributing.md in the nav again.
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
+### 2607.9.28
+
+	Merge pull request #53 from darksidemilk/claude/pester-tests-github-action-lfvrri
+
+Add CLAUDE.md with build/architecture guidance
+
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
+
 ## 9.x
 
 ### 2606.9.27
@@ -580,6 +711,7 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
+
 
 
 
