@@ -125,7 +125,6 @@ markdown fixes and spell checking
 
 ---------
 
-Co-authored-by: geotsot <geotsot@gmail.com>
 
 see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
 
