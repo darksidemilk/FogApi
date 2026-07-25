@@ -58,9 +58,12 @@ jobs:
         ChocoKey: ${{ secrets.CHOCOLATEY }}
       steps:
         - uses: actions/checkout@v4
+          with:
+            ref: master
         - uses: fregante/setup-git-user@v2.0.2
         - name: Build and publish module
           run: |
+            $ErrorActionPreference = "Stop"
             "Building and publishing module and committing changes" | out-host;
             Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
             $releaseNote = (git log -1 --pretty=%B)
@@ -72,6 +75,7 @@ jobs:
             git add -A
             git commit -m "$($releaseNote | out-string) - publish build for $version"
             git push
+            if ($LASTEXITCODE -ne 0) { throw "git push failed - version bump and release notes were not committed to master. Aborting before publishing to avoid a mismatch between what's published and what's in the repo." }
             "Publishing module to gallery..." | out-host;
             Publish-PSResource -apikey $env:GalKey -Path .\_module_build\FogApi -Repository PSGallery;
             "Creating Github Release..." | out-host;
