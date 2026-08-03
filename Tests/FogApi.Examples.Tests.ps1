@@ -3,13 +3,16 @@
 # the module's own comment-based help .EXAMPLE blocks (see
 # Tests/FogApi.TestHelpers.psm1 for the parsing/mocking convention).
 #
-# By default Invoke-FogApi is mocked with fixture data (Tests/Fixtures/) so
-# this runs fast and deterministically with no external dependency. Pass
-# -Data @{ RealServer = $true } via New-PesterContainer to instead run
-# these same examples, unmocked, against a real configured Fog server.
+# Always runs against fixture data (Tests/Fixtures/) via a mocked Invoke-FogApi, fast and
+# deterministic with no external dependency - this is the primary CI gate. It is intentionally
+# NOT run against a real Fog server: the "Expected output:" annotations are illustrative, fixed
+# values authored to match the fixtures, and would almost never match a real server's actual
+# version/settings/inventory even when a call succeeds. Real-server validation instead lives in
+# Tests/FogApi.RealServer.Tests.ps1, a hand-written suite that asserts real behavior/contracts
+# (round-trips, structural shape) rather than specific illustrative values - see
+# docs/Contributing.md for why.
 #
 param(
-    [switch]$RealServer,
     [string[]]$Function,
     [string]$CoverageReportPath
 )
@@ -85,7 +88,7 @@ Describe 'FogApi documented examples' {
     }
 
     It '<FunctionName>: <Code>' -ForEach $script:FogExampleCases {
-        Register-FogApiMock -RealServer:$RealServer
+        Register-FogApiMock
 
         $actual = Invoke-Expression -Command $Code
         $expected = $ExpectedJson | ConvertFrom-Json

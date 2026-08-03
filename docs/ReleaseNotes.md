@@ -2,6 +2,11 @@
 
 ## 10.x
 
+### 2607.10.2
+
+	Backfill Expected output: examples for the remaining public functions (#60)  * Publish a Testing Validation page with the latest test/coverage snapshot  Adds docs/TestValidation.md as a new top-level nav entry - a published, readable snapshot of the most recent Invoke-FogApiTests.ps1 run (24/24 tests, grouped by file) and the full parameter-set coverage checklist (13/94 annotated), rendered as real checkboxes via the site's existing pymdownx.tasklist extension rather than requiring anyone to open the raw NUnit XML or CI artifacts. Cross-linked from Contributing.md.  This is a manually-refreshed snapshot, not a live/auto-regenerated dashboard - verified with mkdocs build --strict.  Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com> Claude-Session: https://claude.ai/code/session_01AJuKR3A2Vy9mPbKNrRLVED  * Backfill Expected output: examples for the remaining public functions  Extends the mocked example-test framework (Tests/FogApi.TestHelpers.psm1) with fixtures/routes for groups, snapins, settings, tasks, images, and mac address associations, and annotates ~35 previously-unannotated functions across those areas plus the generic CRUD/search wrappers.  Along the way, testing against the mocks surfaced several real bugs that are fixed here: - Get-LastImageTime's `byHost` parameter set: `$_` inside a `switch   ($PSCmdlet.ParameterSetName)` block refers to the switch subject, not   pipeline input, so `if ($null -ne $_) { $fogHost = $_ }` was silently   clobbering the bound $fogHost parameter with the parameter-set-name   string. Also fixed the sibling `byHostID` branch never setting $HostID. - Get-FogHostMacs/Get-FogHostAssociatedSnapins/Set-FogSnapins/Start-FogSnapins   each defaulted a parameter to an eager `(Get-FogHost)`/`((Get-FogHost).id)`   call that PowerShell evaluates regardless of which parameter set is   actually selected. Made these lazy (only resolved when truly needed)   instead of unconditional. - Remove-UsbMac: `$macList.Remove($_)` (List<T>.Remove returns bool)   was leaking its return value into the function's output. - Repair-FogSnapinAssociations: one branch's status string wasn't piped   to Out-Host like its sibling, so it leaked into the return value. - Remove-UsbMac's own example referenced a nonexistent alias/parameter;   Find-FogObject's third example had a `-stringToSeach` typo and a stray   quote; Add-FogResultData's and Get-LastImageTime's examples referenced   undefined variables. - FogApi.psd1 was missing `Get-PendingMacsForHost` from AliasesToExport   even though the function declares it.  Also documents the intentional coverage-report gaps (Windows-only and local-file-only functions, current-host-dependent examples, the CRUD wrappers' own bare invocation) in docs/Contributing.md, and refreshes docs/TestValidation.md and docs/commands/*.md from the full suite run (69/69 passing locally, 50/94 parameter sets now annotated).  ---------  Co-authored-by: Claude <noreply@anthropic.com>
+see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log#
+
 ### 2607.10.1
 
 	Restore Pester work lost during the #55/#56/#57 merge-conflict resolution (#58)
@@ -123,6 +128,8 @@ Verified: full Pester suite passes locally (24/24, up from the CI-breaking
 
 see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
 
+## 9.x
+
 ### 2607.9.28
 
 	Merge pull request #53 from darksidemilk/claude/pester-tests-github-action-lfvrri
@@ -130,8 +137,6 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
 Add CLAUDE.md with build/architecture guidance
 
 see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical change log
-
-## 9.x
 
 ### 2606.9.27
 
@@ -711,50 +716,3 @@ see https://fogapi.readthedocs.io/en/latest/ReleaseNotes/ for full historical ch
     - Fixed Approve-FogPendingMac so it makes a given mac not pending instead of keeping it pending
     - Fixed Get-PendingMacsForHost so it uses less pipeline and more separate commands that was causing it to return all pending macs in some cases, rather than just for a given host
     - Added hostID param to get-foghost so you can get a host from the internal hostID if you already have that
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
