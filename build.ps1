@@ -87,6 +87,13 @@ $modulePath = "$PSScriptRoot\$moduleName";
 if([string]::IsNullOrEmpty($releaseNote)) {
 	$releaseNote = (git log -1 --pretty=%B)
 }
+# Strip co-author/session trailers (and redact any stray email) - these break Chocolatey moderation
+# and have no place in a public-facing release note or nuspec.
+$releaseNote = ($releaseNote -split "`r?`n" | Where-Object {
+	$_ -notmatch '^\s*Co-authored-by:' -and $_ -notmatch '^\s*Claude-Session:' -and $_.Trim() -ne '---------'
+}) -join "`n"
+$releaseNote = $releaseNote -replace '[\w\.\-\+]+@[\w\.\-]+\.\w+', '' -replace '(\r?\n){3,}', "`n`n"
+$releaseNote = $releaseNote.Trim()
 if([string]::IsNullOrEmpty($buildPth)) {
 	$buildPth = ".\_module_build\$moduleName";
 }

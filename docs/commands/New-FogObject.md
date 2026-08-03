@@ -29,6 +29,9 @@ $hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-
 
 Would create a new fog object of a start all snapins task.
 
+Expected output:
+{ "id": 501, "success": true }
+
 ## PARAMETERS
 
 ### -type

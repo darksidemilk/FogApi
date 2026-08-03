@@ -29,6 +29,9 @@ Test-StringNotNullOrEmpty "An example"
 
 Will return true as it is a valid string with content
 
+Expected output:
+true
+
 ### EXAMPLE 2
 ```
 $s = ""; Test-StringNotNullOrEmpty $s;
@@ -36,12 +39,18 @@ $s = ""; Test-StringNotNullOrEmpty $s;
 
 Will return false as this is an empty string.
 
+Expected output:
+false
+
 ### EXAMPLE 3
 ```
 $str = " "; $str | Test-StringNotNullOrEmpty
 ```
 
 Will return false as this string is just whitespace
+
+Expected output:
+false
 
 ## PARAMETERS
 
