@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-FogSnapin
 
 ## SYNOPSIS
-Creates a new snapin in fog
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
@@ -21,8 +21,7 @@ New-FogSnapin [[-name] <Object>] [[-description] <Object>] [[-existingFileName] 
 ```
 
 ## DESCRIPTION
-Creates a snapin object in fog with all but the upload of a file.
-Expects file to already exist.
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
@@ -35,8 +34,8 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -name
-Name of the snapin
+### -description
+{{ Fill description Description }}
 
 ```yaml
 Type: Object
@@ -50,8 +49,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -description
-Description of the snapin
+### -enabled
+{{ Fill enabled Description }}
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -existingFileName
+{{ Fill existingFileName Description }}
 
 ```yaml
 Type: Object
@@ -65,23 +79,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -existingFileName
-Existing file name ot us
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -newFilePath
-Local path to the file to get the hash from
+### -fileArgs
+{{ Fill fileArgs Description }}
 
 ```yaml
 Type: Object
@@ -95,54 +94,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -fileArgs
-Args to use in the snapin
+### -hide
+{{ Fill hide Description }}
 
 ```yaml
-Type: Object
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -reboot
-Switch to say snapin causes reboot after done
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -shutdown
-Switch to say snapin causes shutdown after done
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -runWith
-What to run the snapin with i.e.
-powershell.exe
+### -name
+{{ Fill name Description }}
 
 ```yaml
 Type: Object
@@ -150,14 +118,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
-Default value: Powershell.exe
+Position: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -runWithArgs
-Args for the runwith program
+### -newFilePath
+{{ Fill newFilePath Description }}
 
 ```yaml
 Type: Object
@@ -165,7 +133,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -packtype
+{{ Fill packtype Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -181,22 +164,22 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: False
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -enabled
-{{ Fill enabled Description }}
+### -reboot
+{{ Fill reboot Description }}
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
-Default value: True
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -210,29 +193,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
-Default value: True
+Position: 8
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -hide
-{{ Fill hide Description }}
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 10
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -timeout
-Timeout for the snapin execution
+### -runWith
+{{ Fill runWith Description }}
 
 ```yaml
 Type: Object
@@ -240,14 +208,44 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
-Default value: 0
+Position: 5
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -packtype
-Pack type of the snapin
+### -runWithArgs
+{{ Fill runWithArgs Description }}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -shutdown
+{{ Fill shutdown Description }}
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -storagegroupID
+{{ Fill storagegroupID Description }}
 
 ```yaml
 Type: Object
@@ -256,13 +254,13 @@ Aliases:
 
 Required: False
 Position: 12
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -storagegroupID
-Storage group ID for the snapin
+### -timeout
+{{ Fill timeout Description }}
 
 ```yaml
 Type: Object
@@ -270,8 +268,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
-Default value: 1
+Position: 10
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -296,9 +294,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
+### None
+
 ## OUTPUTS
 
+### System.Object
 ## NOTES
-This function may be flushed out more down the road.
 
 ## RELATED LINKS
