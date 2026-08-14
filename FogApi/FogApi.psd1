@@ -147,8 +147,9 @@ VariablesToExport = @()
 AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject', 'Add-FogSnapins', 
                'Capture-FogImage', 'Deploy-FogImage', 'Get-FogAssociatedSnapins', 
                'Get-FogGroup', 'Get-FogHostInventory', 
-               'Get-FogHostSnapinAssociations', 'Get-FogHostSnapins', 'Get-FogMacs', 
-               'Get-MacsForHost', 'Get-WinInventoryForFog', 'Invoke-FogImageCapture', 
+               'Get-FogHostSnapinAssociations', 'Get-FogHostSnapins', 'Get-FogMacs',
+               'Get-MacsForHost', 'Get-PendingMacsForHost', 'Get-WinInventoryForFog',
+               'Invoke-FogImageCapture',
                'Pull-FogImage', 'Push-FogImage', 'Remove-FogGroupHost', 
                'Remove-FogMac', 'Reset-FogHostEncryption', 'Save-FogImage', 
                'Set-FogGroup', 'Set-FogObject'

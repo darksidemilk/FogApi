@@ -18,6 +18,18 @@ function Get-FogObject {
     .PARAMETER IDofObject
     the specific id of the object to get
 
+    .PARAMETER First
+    only return the first n objects. Stops requesting further pages once satisfied
+
+    .PARAMETER Skip
+    skip the first n objects, i.e. start paging at this offset
+
+    .PARAMETER PageSize
+    how many rows to request per api call when auto paging. Defaults to 1000
+
+    .PARAMETER NoAutoPage
+    make a single request and return the raw api envelope untouched instead of auto paging
+
     .EXAMPLE
     Get-FogObject -type object -coreObject host
 
@@ -32,7 +44,21 @@ function Get-FogObject {
 
     This will get all the active tasks from the fog server which is in the objectactivetasktype type of object.
 
-    
+    .EXAMPLE
+    Get-FogObject -type object -coreObject host -First 5
+
+    This will get only the first 5 hosts, stopping once it has them instead of paging through every host.
+
+    Expected output:
+    { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }
+
+    .NOTES
+    FOG 1.6 caps any unbounded list request at 10000 rows (MAX_ROWS), so a plain list call silently
+    returned a partial result. This function now always sends explicit start/length paging params and
+    follows the servers nextUrl until it is null, so every object is returned.
+    FOG 1.5 has no paging and ignores the params, returning its whole list in one response, in which
+    case First/Skip are applied client side instead.
+
 #>
 
     [CmdletBinding()]
@@ -46,7 +72,19 @@ function Get-FogObject {
         [Object]$jsonData,
         # The id of the object to get
         [Parameter(Position=3)]
-        [string]$IDofObject
+        [string]$IDofObject,
+        # Only return the first n objects
+        [Parameter()]
+        [int]$First,
+        # Start paging at this offset
+        [Parameter()]
+        [int]$Skip,
+        # Rows to request per api call while auto paging
+        [Parameter()]
+        [int]$PageSize = 1000,
+        # Return a single raw response instead of auto paging
+        [Parameter()]
+        [switch]$NoAutoPage
     )
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
@@ -84,12 +122,20 @@ function Get-FogObject {
         if ($null -eq $apiInvoke.jsonData -OR $apiInvoke.jsonData -eq "") {
             $apiInvoke.Remove("jsonData");
         }
-        $result = Invoke-FogApi @apiInvoke;
-        #if the api call wasn't for a specific object, convert the output to use the data property added in fog 1.6
-        if (!$IDofObject) {
-            $result = Add-FogResultData $result;
+
+        #only a plain list call can be paged, a call for one specific object cannot
+        [bool]$isListCall = ($type -eq 'object') -AND (!$IDofObject);
+
+        if (!$isListCall -OR $NoAutoPage) {
+            $result = Invoke-FogApi @apiInvoke;
+            #if the api call wasn't for a specific object, convert the output to use the data property added in fog 1.6
+            if (!$IDofObject) {
+                $result = Add-FogResultData $result;
+            }
+            return $result;
         }
-        return $result;
+
+        return (Get-FogPagedResult -apiInvoke $apiInvoke -First $First -Skip $Skip -PageSize $PageSize);
     }
     
 

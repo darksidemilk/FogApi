@@ -32,6 +32,12 @@ function Add-FogResultData {
             if ($null -eq ($result | Get-Member -Name data -ea 0)) {
                 #result doesn't have data property
                 $property = ($result | get-member -MemberType NoteProperty | Where-Object name -notmatch 'count').name
+                if ($property -is [array]) {
+                    #more than one candidate property, prefer the one holding a collection as that is the row set
+                    $arrayProp = $property | Where-Object { $result.$_ -is [array] } | Select-Object -First 1;
+                    $property = if ($null -ne $arrayProp) { $arrayProp } else { $property[0] };
+                    Write-Verbose "multiple non count properties found, using $property as the data property";
+                }
                 $newResult = [PSCustomObject]@{
                     count = $result.count;
                     data = $result.$property;

@@ -82,8 +82,15 @@ function Get-FogMockResponse {
     coverage fails loudly instead of producing a confusing downstream test
     failure.
 
+    Any query string is stripped before the lookup. Get-FogObject now always
+    sends explicit ?start=N&length=N paging params (see Get-FogPagedResult -
+    FOG 1.6 silently caps an unpaged list at MAX_ROWS), and those params
+    select a page rather than a fixture. The fixtures are single-page
+    responses carrying no nextUrl, so the pager treats each as a complete
+    result and stops after one request.
+
     .PARAMETER uriPath
-    The uriPath Invoke-FogApi was called with.
+    The uriPath Invoke-FogApi was called with, including any query string.
 
     .PARAMETER Method
     The HTTP method Invoke-FogApi was called with.
@@ -101,6 +108,13 @@ function Get-FogMockResponse {
 
     function Get-Fixture([string]$name) {
         Get-Content (Join-Path $script:FixturesPath $name) -Raw | ConvertFrom-Json
+    }
+
+    # Paging params select a page, not a fixture - match on the path alone.
+    $queryString = ''
+    if ($uriPath -match '^(?<path>[^?]*)\?(?<query>.*)$') {
+        $uriPath = $Matches['path']
+        $queryString = $Matches['query']
     }
 
     switch -regex ($uriPath) {
@@ -236,7 +250,8 @@ function Get-FogMockResponse {
         }
     }
 
-    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'"
+    $qsNote = if ($queryString) { " (query string '$queryString' was stripped before lookup)" } else { '' }
+    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'$qsNote"
 }
 
 function Test-FogIdLikeValue {
