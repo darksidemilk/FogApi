@@ -49,14 +49,17 @@ $moduleName = 'FogApi'
 $modulePath = Join-Path $PSScriptRoot $moduleName;
 $docsPth = Join-Path $PSScriptRoot 'docs';
 
-mkdir $modulePath -EA 0;
-# mkdir (Join-Path $modulePath 'tools') -EA 0;
-# mkdir (Join-Path $modulePath 'docs') -EA 0;
-mkdir (Join-Path $modulePath 'lib') -EA 0;
-mkdir (Join-Path $modulePath 'bin') -EA 0;
-mkdir (Join-Path $modulePath 'Public') -EA 0;
-mkdir (Join-Path $modulePath 'Private') -EA 0;
-mkdir (Join-Path $modulePath 'Classes') -EA 0;
+# New-Item, not mkdir. Powershell only defines mkdir as a function on windows; on linux
+# and mac it resolves to /usr/bin/mkdir, so '-EA 0' is handed to the native binary as
+# '-E -A 0' and the whole build fails with "mkdir: invalid option -- 'E'"
+New-Item -ItemType Directory -Force -Path $modulePath -EA 0 | Out-Null;
+# New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'tools') -EA 0 | Out-Null;
+# New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'docs') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'lib') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'bin') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Public') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Private') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Classes') -EA 0 | Out-Null;
 
 
 $PublicFunctions = Get-ChildItem (Join-Path $modulePath 'Public') -Recurse -Filter '*.ps1' -EA 0;
@@ -70,7 +73,7 @@ $moduleFile = Join-Path $buildPth "$moduleName.psm1";
 if (Test-Path $buildPth) {
 	Remove-Item $buildPth -force -recurse;
 }
-mkdir $buildPth | Out-Null;
+New-Item -ItemType Directory -Force -Path $buildPth | Out-Null;
 
 New-Item $moduleFile -Force | Out-Null;
 # $docsPth was never defined here, so this resolved to '\en-us' and silently failed,

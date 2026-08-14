@@ -98,15 +98,17 @@ if([string]::IsNullOrEmpty($buildPth)) {
 	$buildPth = ".\_module_build\$moduleName";
 }
 
-mkdir $modulePath -EA 0;
+# New-Item, not mkdir - powershell only defines mkdir as a function on windows; on linux
+# and mac it is /usr/bin/mkdir and '-EA 0' is passed through as '-E -A 0'
+New-Item -ItemType Directory -Force -Path $modulePath -EA 0 | Out-Null;
 # mkdir "$modulePath\tools" -EA 0;
 # mkdir "$modulePath\docs" -EA 0;
-mkdir "$modulePath\lib" -EA 0;
-mkdir "$modulePath\bin" -EA 0;
-mkdir "$modulePath\Public" -EA 0;
-mkdir "$modulePath\Private" -EA 0;
-mkdir "$modulePath\Classes" -EA 0;
-mkdir "$modulePath\icons" -EA 0;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'lib') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'bin') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Public') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Private') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Classes') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'icons') -EA 0 | Out-Null;
 
 
 #update documentation
@@ -123,7 +125,7 @@ $docsPth = "$PSScriptRoot\docs"
 	# $moduleName = $Using:moduleName 
 	# $modulePath = $Using:modulePath
 	# $docsPth = $Using:docsPth 
-mkdir $docsPth -EA 0;
+New-Item -ItemType Directory -Force -Path $docsPth -EA 0 | Out-Null;
 Remove-Module $moduleName -force -EA 0;
 Import-Module "$modulePath\$moduleName.psm1" -force;
 #import any classes so they are recognized and do it twice to resolve classes with dependencies
@@ -192,7 +194,7 @@ try {
 } catch {
 	Write-Warning "There was an error creating the external help from the markdown. $($error) Removing current external help and trying again"
 	Remove-Item -Force -Recurse "$docsPth\en-us";
-	mkdir "$docsPth\en-us"
+	New-Item -ItemType Directory -Force -Path (Join-Path $docsPth 'en-us') | Out-Null;
 	New-ExternalHelp -Path $docsPth -OutputPath "$docsPth\en-us" -EA 0 -Force;
 	New-ExternalHelp -Path "$docsPth\commands" -OutputPath "$docsPth\en-us" -Force;
 }
@@ -210,7 +212,7 @@ $aliases = Get-AliasesToExport -psm1Path "$modulePath\$moduleName.psm1" -moduleP
 if (Test-Path $buildPth) {
 	Remove-Item $buildPth -force -recurse;
 }
-mkdir $buildPth | Out-Null;
+New-Item -ItemType Directory -Force -Path $buildPth | Out-Null;
 
 "Copying xml docs to build path" | out-host;
 Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';

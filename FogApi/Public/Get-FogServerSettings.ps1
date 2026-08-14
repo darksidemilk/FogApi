@@ -36,9 +36,11 @@ and returns the api key and server name values
         if (!(Test-path $settingsFile)) {
             Write-Warning "Api Settings file not yet created, creating default version now!"
             try {
-                #create just the parent path with built-in mkdir
+                #New-Item, not mkdir - powershell only defines mkdir as a function on windows,
+                #on linux and mac it is /usr/bin/mkdir, which has no -Force and will not create
+                #intermediate directories without -p
                 if (!(test-path (split-path $settingsFile -Parent))) {
-                    mkdir (split-path $settingsFile -Parent)
+                    New-Item -ItemType Directory -Force -Path (split-path $settingsFile -Parent) -ea Stop | Out-Null;
                 }
             } catch {
                 #error creating parent path(s), build the path up a segment at a time.

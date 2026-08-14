@@ -30,7 +30,9 @@ function Export-FogImageDefinitions {
             "Assuming you want to create a /images/imageDefinitions folder for migrating your fog server images to another server" | out-host;
             $exportPath = "/images/imageDefinitions"
             if (!(Test-Path $exportPath)) {
-                mkdir $exportPath;
+                #New-Item, not mkdir - this branch only ever runs on a linux fog server, where
+                #mkdir is the native binary rather than the powershell function
+                New-Item -ItemType Directory -Force -Path $exportPath | Out-Null;
             }
         }
         #get current image definitions from fog server

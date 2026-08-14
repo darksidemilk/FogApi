@@ -308,7 +308,8 @@ function Start-MkDocsBuild {
     process {
         Set-Location $SOURCEDIR
         if (!(Test-Path $BUILDDIR)) {
-            mkdir $BUILDDIR;
+            #New-Item, not mkdir - mkdir is only a powershell function on windows
+            New-Item -ItemType Directory -Force -Path $BUILDDIR | Out-Null;
         }
 
 
