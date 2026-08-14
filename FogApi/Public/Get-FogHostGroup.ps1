@@ -10,7 +10,7 @@ function Get-FogHostGroup {
     The hostid to get the group memberships of
 
     .EXAMPLE
-    Get-FogGroup -hostId ((Get-FogHost -hostname "MeowMachine").id)
+    Get-FogHostGroup -hostId ((Get-FogHost -hostname "MeowMachine").id)
 
     Gets the fog group membership(s) of the fog host with the name MeowMachine
 
@@ -19,7 +19,7 @@ function Get-FogHostGroup {
 
 #>
     [CmdletBinding(DefaultParameterSetName='byId')]
-    [Alias('Get-FogGroup')]
+    [Alias('Get-FogHostGroups')]
     param (
         [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
         $fogHost,
