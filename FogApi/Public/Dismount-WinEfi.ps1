@@ -17,6 +17,10 @@ function Dismount-WinEfi {
         param ()
             
         process {
+            if ($script:IsPosix) {
+                Write-Warning "This is currently only implemented for windows";
+                return $null;
+            }
             $mountLtr=(Get-EfiMountLetter)
             if ($null -eq $mountLtr) {
                 Write-Debug "EFI Partition is not mounted";

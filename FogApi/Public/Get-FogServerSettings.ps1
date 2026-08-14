@@ -41,13 +41,16 @@ and returns the api key and server name values
                     mkdir (split-path $settingsFile -Parent)
                 }
             } catch {
-                #error creating parent path(s), looping through full path and using pwsh methods to create each part of the full path
-                set-location "/"
-                (split-path $settingsFile -Parent) -split "/" | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | ForEach-Object {
-                    if (!(Test-Path $_)) {
-                        new-item -path $_ -ItemType Directory -ea 0
+                #error creating parent path(s), build the path up a segment at a time.
+                #this used to Set-Location its way down the tree, which left the caller
+                #sitting in a different working directory than they started in
+                $parent = (split-path $settingsFile -Parent);
+                $built = if ($parent.StartsWith('/')) { '/' } else { '' };
+                $parent -split '[\\/]' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) } | ForEach-Object {
+                    $built = if ([string]::IsNullOrEmpty($built) -or $built -eq '/') { "$built$_" } else { Join-Path $built $_ };
+                    if (!(Test-Path $built)) {
+                        new-item -path $built -ItemType Directory -ea 0 | Out-Null;
                     }
-                    Set-Location $_;
                 }
             }
             if ($move) {
@@ -67,7 +70,7 @@ and returns the api key and server name values
                 }
                 Set-FogServerSettingsFileSecurity -settingsFile $settingsFile;
             } else {
-                Copy-Item -path "$script:lib\settings.json" -Destination $settingsFile -Force
+                Copy-Item -path (Join-Path $script:lib 'settings.json') -Destination $settingsFile -Force
                 Set-FogServerSettingsFileSecurity -settingsFile $settingsFile;
             }
         }       

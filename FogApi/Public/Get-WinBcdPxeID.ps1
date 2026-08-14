@@ -26,8 +26,9 @@ function Get-WinBcdPxeId {
     )
     
     process {
-        if ($IsLinux -or $IsMacOS) {
+        if ($script:IsPosix) {
             Write-Warning "This is currently only implemented for windows"
+            return $null;
         } else {
             if (!(Test-StringNotNullOrEmpty $searchString)) {
                 [object]$searchString = (Get-NetAdapter -ea 0 | Where-Object status -eq up | Where-Object name -match 'Ethernet')[0]

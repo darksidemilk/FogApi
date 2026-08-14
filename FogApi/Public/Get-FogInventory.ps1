@@ -42,9 +42,10 @@ function Get-FogInventory {
         if ($null -ne $_) {
             $hostObj = $_;
         }
-        if ($IsLinux -OR $fromFog) {
-            if ($IsLinux) {
-                "Not yet implemented for getting the host inventory from linux inline, returning the hosts currently set inventory object" | out-host;
+        #$script:IsPosix rather than $IsLinux alone, or mac falls through to the CIM branch and errors
+        if ($script:IsPosix -OR $fromFog) {
+            if ($script:IsPosix) {
+                "Not yet implemented for getting the host inventory from linux or mac inline, returning the hosts currently set inventory object" | out-host;
             }
             if ($null -eq $hostObj.inventory) {
                 return (Get-FogHost -hostID $hostObj.ID).inventory

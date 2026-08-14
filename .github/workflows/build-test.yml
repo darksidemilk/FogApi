@@ -25,20 +25,28 @@ jobs:
             echo "OK: source branch is dev"
 
     build:
-        runs-on: windows-latest
-    
+        # The module advertises CompatiblePSEditions Core and describes itself as a crossplatform
+        # cli for fog, so linux is a supported target and needs to be built and tested like one.
+        # Everything here is mocked, so the linux leg costs a runner and nothing else.
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [windows-latest, ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+
         steps:
         - uses: actions/checkout@v7
-    
+
         - name: Run build script
+          shell: pwsh
           run: |
             # Install-PSResource -Name  PlatyPS -TrustRepository -Version 0.14.2 -Scope CurrentUser -AcceptLicense
             $moduleName="FogApi";
-            .\invoke-modulebuild.ps1
-            $builtPath = ".\_module_build\$moduleName"
+            ./invoke-modulebuild.ps1
+            $builtPath = Join-Path '.' '_module_build' $moduleName
             ls -recurse $builtPath;
-            if (Test-Modulemanifest -path "$builtPath\$moduleName.psd1") {
-                import-module "$builtPath\" -ea 0
+            if (Test-Modulemanifest -path (Join-Path $builtPath "$moduleName.psd1")) {
+                import-module $builtPath -ea 0
                 if ($null -ne (Get-module $modulename -ea 0)) {
                     "Built module imported successfully!`n$((Get-module $modulename) | out-string)" | out-host
                     return $true;
@@ -52,7 +60,11 @@ jobs:
             }
 
     test:
-        runs-on: windows-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                os: [windows-latest, ubuntu-latest]
+        runs-on: ${{ matrix.os }}
         needs: build
 
         steps:
@@ -60,18 +72,34 @@ jobs:
 
         - name: Run Pester tests
           shell: pwsh
-          run: .\Invoke-FogApiTests.ps1 -CI
+          run: ./Invoke-FogApiTests.ps1 -CI
+
+        # A clean profile has no settings file, which is the state that used to fail on linux -
+        # the bootstrap copied from a path built with a hardcoded backslash and never resolved.
+        # No existing test covers it, because the fixtures assume the file is already there.
+        - name: Verify settings file bootstraps from a clean profile
+          shell: pwsh
+          run: |
+            Import-Module ./FogApi/FogApi.psd1 -Force
+            $settingsFile = Get-FogServerSettingsFile
+            if (Test-Path $settingsFile) { Remove-Item $settingsFile -Force }
+            $null = Get-FogServerSettings -wa 0
+            if (!(Test-Path $settingsFile)) {
+                Write-Error "Settings file was not bootstrapped at $settingsFile"
+                exit 1
+            }
+            "OK: bootstrapped $settingsFile" | Out-Host
 
         - name: Upload test results
           if: always()
           uses: actions/upload-artifact@v4
           with:
-            name: pester-results
+            name: pester-results-${{ matrix.os }}
             path: TestResults/pester-results.xml
 
         - name: Upload coverage report
           if: always()
           uses: actions/upload-artifact@v4
           with:
-            name: parameter-set-coverage-report
+            name: parameter-set-coverage-report-${{ matrix.os }}
             path: TestResults/coverage-report.md

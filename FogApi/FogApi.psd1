@@ -145,7 +145,8 @@ VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject', 'Add-FogSnapins', 
-               'Capture-FogImage', 'Deploy-FogImage', 'Get-FogAssociatedSnapins', 
+               'Capture-FogImage', 'Deploy-FogImage', 'Get-EfiMountLetter',
+               'Get-FogAssociatedSnapins',
                'Get-FogGroup', 'Get-FogHostInventory', 
                'Get-FogHostSnapinAssociations', 'Get-FogHostSnapins', 'Get-FogMacs', 
                'Get-MacsForHost', 'Get-WinInventoryForFog', 'Invoke-FogImageCapture', 

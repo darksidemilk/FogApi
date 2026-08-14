@@ -22,7 +22,10 @@ function Export-FogImageDefinitions {
     
     
     process {
-        if ($IsLinux -AND ($env:HOSTNAME -match (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
+        #$env:HOSTNAME is a bash convenience variable that is not exported to child processes, so it
+        #is routinely empty under systemd, cron or 'pwsh -c' - resolve the hostname properly instead
+        $localHostName = try { [System.Net.Dns]::GetHostName() } catch { $env:HOSTNAME }
+        if ($script:IsPosix -AND ($localHostName -match (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
             "This is linux, is the fogserver set in the api settings and no export path was given" | Out-Host;
             "Assuming you want to create a /images/imageDefinitions folder for migrating your fog server images to another server" | out-host;
             $exportPath = "/images/imageDefinitions"
@@ -33,7 +36,11 @@ function Export-FogImageDefinitions {
         #get current image definitions from fog server
         $images = Get-FogImages;
         #Get any files currently in the export path
-        $curExportFiles = (Get-ChildItem $exportPath\*.json);
+        #Join-Path, not "$exportPath\*.json" - this function's whole reason to exist is running on a
+        #linux fog server, where a backslash is a literal filename character. It was writing files
+        #named 'imageDefinitions\Win10.json' into the parent directory and this scan never matched
+        #them, so every run re-exported everything
+        $curExportFiles = (Get-ChildItem (Join-Path $exportPath '*.json'));
         $curExports = New-Object System.Collections.Generic.list[system.object];
         $curExportFiles | ForEach-Object {
             $curExports.add((Get-content $_.FullName | ConvertFrom-Json))
@@ -47,12 +54,12 @@ function Export-FogImageDefinitions {
                 $newImageDate = Get-Date $_.deployed
                 if ($newImageDate -gt $curExportDate) {
                     Write-Verbose "The image has been captured more recently than the export"
-                    $_ | ConvertTo-Json | Out-File -Encoding oem -FilePath "$exportPath\$($_.name).json" -force
+                    $_ | ConvertTo-Json | Out-File -Encoding oem -FilePath (Join-Path $exportPath "$($_.name).json") -force
                 } else {
                     Write-Verbose "no need to export $($_.name) the exported definition is up to date"
                 }
             } else {
-                $_ | ConvertTo-Json | Out-File -Encoding oem -FilePath "$exportPath\$($_.name).json"
+                $_ | ConvertTo-Json | Out-File -Encoding oem -FilePath (Join-Path $exportPath "$($_.name).json")
             }
         }
 
