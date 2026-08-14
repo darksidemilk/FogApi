@@ -1,8 +1,8 @@
-# Context: Complete API Coverage & Python Port Groundwork
+# Context: Complete API Coverage & Multi-Language Port Groundwork
 
 Working document for the multi-phase effort to give FogApi a helper function for every FOG API
-operation, driven by a machine-readable spec so a future Python port is a second emitter rather than
-a second implementation.
+operation, driven by a machine-readable spec so the Python and bash ports are additional *emitters*
+rather than additional *implementations*.
 
 Tracking issue: **[#61](https://github.com/darksidemilk/FogApi/issues/61)**
 
@@ -23,9 +23,14 @@ Get/Update/Remove-Fog<Noun>  ->  Get/New/Update/Remove/Find-FogObject  ->  Invok
    (typed, new)                     (generic L1)                            (transport)
 ```
 
-Secondary driver: a synced Python port for Linux users who won't install PowerShell Core. One spec
-generates both, keeping them in sync by construction, and doubles as built-in API documentation for
-anyone building a FOG tool in any language.
+Secondary driver: synced **Python and bash** ports for Linux users who won't install PowerShell Core.
+One spec generates all three, keeping them in sync by construction, and doubles as built-in API
+documentation for anyone building a FOG tool in any language.
+
+The bash target is not redundant with Python. **FOS ships no Python and no PHP** —
+`BR2_PACKAGE_PYTHON3 is not set` across all three arch configs — but does ship bash, curl, jq and
+openssl. Inside the imaging environment, where FOG's own automation runs, bash is the only one of the
+three that can execute at all.
 
 ---
 
@@ -40,7 +45,7 @@ anyone building a FOG tool in any language.
 | 2-5 — Generate Tiers 1-3, hand-write fixed routes | Not started | one branch per tier |
 | 6 — Test rebuild around language-neutral corpus | Not started | |
 | 7 — Real-server CI + fog-workflows release gate | Blocked on FOGProject org move | |
-| 8 — Python port | Not started | |
+| 8 — Python + bash ports | Not started | Python first within the phase |
 
 **Branching rule:** every phase branches from `dev` and PRs back into `dev`. Never branch from or PR
 into `master` — `dev`->`master` is the separate PR that triggers `tag-and-release.yml`.
@@ -164,8 +169,17 @@ out to assert on real requests. Fixing this is Phase 0.5 and is now load-bearing
   deliberate exception.
 - **No breaking changes.** Better name becomes the function, old name becomes an alias, both go in
   `FunctionsToExport` *and* `AliasesToExport`.
-- **Python names are mechanically derived, not byte-identical.** PEP 8 wins:
-  `Get-FogHost` -> `get_fog_host()`. Spec stores `verb`/`noun` separately so both emitters derive.
+- **Port names are mechanically derived, not byte-identical.** Each target follows its own
+  community's convention; the spec stores `verb` and `noun` separately so every emitter derives from
+  the same source rather than munging another emitter's output. One rule, four renderings:
+
+  | Spec | PowerShell | Python | Bash function | Bash CLI |
+  |---|---|---|---|---|
+  | `{Get, FogHost}` | `Get-FogHost` | `get_fog_host()` | `getFogHost` | `fogapi get-fog-host` |
+
+  Bash uses camelCase because that is FOG's own bash house style — `working-1.6`'s
+  `lib/common/functions.sh` and `bin/*.sh` define 88 camelCase functions (`installPackages`,
+  `backupDB`, `_requestNodeCert`) against 25 all-lowercase.
 - **Dynamic params: additive only.** Never remove a ValidateSet entry. Own PR, own regression test.
 - **`Find-FogObject` and the unisearch path are not modified.** New capability arrives as
   `Find-FogAll` alongside it.
@@ -173,7 +187,58 @@ out to assert on real requests. Fixing this is Phase 0.5 and is now load-bearing
   directly, because those endpoints have no L1 representation.
 - **Pipeline contract:** every cmdlet's primary object param accepts an id, an object, or a
   collection of either, via a shared `Resolve-FogObjectId`. The polymorphic-input half ports to
-  Python; the `|` syntax half does not and should not be emulated there.
+  Python and bash; the `|` syntax half does not and should not be emulated in either.
+- **Bash requires `jq`,** detected explicitly with a clear error naming the package. No sed/grep
+  JSON fallback. See the bash section below.
+
+---
+
+## Bash port facts (Phase 8)
+
+Researched from `fos`, `fogproject` and `working-1.6`. Recorded so the emitter doesn't have to
+re-derive them.
+
+**No prior art.** Zero shell code in any FOG repo calls the REST API. FOS talks only to the legacy
+non-REST `service/*.php` endpoints — form-POST in, plain-text out — parsed by literal string compare
+(`[[ $res != "##@GO" ]]`, `[[ $servercaps != *mclvm* ]]`). FOG ships no host/image management CLI at
+all; `bin/` is installer and maintenance only.
+
+**Dependency matrix:**
+
+| Environment | bash | curl | jq | php-cli | python3 |
+|---|---|---|---|---|---|
+| FOS | yes | yes | yes | no | **no** |
+| FOG 1.6 server | yes | yes | yes (installer adds it) | yes | varies |
+| FOG 1.5 server | yes | yes | **no** | yes | varies |
+
+- 1.6 installs jq unconditionally: `working-1.6/lib/common/functions.sh:1981`, `packages="$packages jq"`.
+- 1.5 never does; its own updater ships a private static `jq32` (`utils/FOGUpdater/fogupdater.sh:15`),
+  which shows the gap is known upstream.
+- FOS buildroot: `BR2_PACKAGE_BASH`, `BR2_PACKAGE_LIBCURL_CURL`, `BR2_PACKAGE_JQ`,
+  `BR2_PACKAGE_OPENSSL` all set; `BR2_PACKAGE_PYTHON3` **not** set.
+
+**Gate style to copy** — `_requestNodeCert()` at `working-1.6/lib/common/functions.sh:3455` is the
+closest existing thing to an API client and the right template: `command -v` guards, `jq -e` for
+presence checks, `// empty` for optional fields.
+
+**Traps:**
+
+- **Do not base64-encode the tokens.** The router does `base64_decode(HTTP_FOG_API_TOKEN)`, which
+  reads as though the client must encode — it must not. The token the FOG UI issues is *already*
+  base64 and `Invoke-FogApi` sends it verbatim. Re-encoding would double-encode and 401 every call.
+- **`jq` exits 0 on empty input**, so exit status alone is not a success test. FOG's own code works
+  around this at `functions.sh:559-565` (checks `PIPESTATUS`, file size, *and* literal `null`).
+- **Detect 1.5 by absence of the `nextUrl` key**, not by truthiness — a present-but-null `nextUrl`
+  still means 1.6. In jq: `has("nextUrl")`.
+- **Prefer `openssl base64 -A` over `base64 -w0`** anywhere encoding is needed — busybox base64 (FOS)
+  has no `-w`. Precedent at `functions.sh:3479`.
+
+**Bash-only nicety:** when running on a FOG server, source `${fogprogramdir:-/opt/fog}/.fogsettings`
+for `$webroot`/`$httpproto`/`$ipaddress` to derive the base URL, as every shipped FOG script does.
+Zero-config on the box itself — something the PowerShell module structurally cannot offer.
+
+**Style model:** `working-1.6/bin/fog-plugin-uploads.sh` (`set -u`, heredoc `usage()`, `case`
+dispatch), not `installfog.sh`'s heavier GNU `getopt`.
 
 ---
 
