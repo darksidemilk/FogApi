@@ -271,34 +271,39 @@ dispatch), not `installfog.sh`'s heavier GNU `getopt`.
      and `Remove-FogObject -type objecttasktype -coreTaskObject task -IDofObject $id`
    - `Remove-UsbMac.ps1:100,125` -> `Update-FogObject` / `Remove-FogObject` on `macaddressassociation`
    - Extract `Get-FogSystemInfo`; `Get-FogVersion` calls it (stays direct — fixed route, not CRUD)
-   - **The inventory pair: rename and refactor only, no semantic change.**
+   - **The inventory pair: layer refactor and local fixes only. No rename, no behavior change.**
 
      > `POST inventory/new` does **not** create a duplicate row per call — it sets the host's
      > inventory. If it ever does duplicate, that is a new bug on the FOG side, not here. **This path
-     > is hot:** PXE runs it at task time, so every imaging task exercises it. Do not "fix" the
+     > is hot:** PXE runs it at task time, so every imaging task exercises it. Do not touch the
      > create-vs-update behavior.
 
-     Rename both to say what they operate on — a *host's* inventory. The module already half-admits
-     this: `Get-FogInventory` declares `[Alias('Get-FogHostInventory','Get-WinInventoryForFog')]`.
+     Do in 0.3, and nothing more:
+     - `Set-FogInventory`'s hand-built `POST inventory/new` becomes
+       `New-FogObject -type object -coreObject inventory`. Wire-faithful, since `POST /{class}`,
+       `/{class}/create` and `/{class}/new` all resolve to the same `create` route. This removes the
+       last non-fixed-route direct `Invoke-FogApi` caller.
+     - Four local defects, none touching server behavior: line 43 is dead code (recomputes
+       `$jsonData` then discards it), line 42 hardcodes `-verbose`, lines 31-33 let `$_` clobber a
+       bound `-hostObj` (guard on `$PSBoundParameters`), and it returns nothing.
+     - Leave names, aliases and behavior alone.
 
-     | Now | Becomes | Aliases kept |
-     |---|---|---|
-     | `Get-FogInventory` | `Get-FogHostInventory` | `Get-FogInventory`, `Get-WinInventoryForFog` |
-     | `Set-FogInventory` | `Set-FogHostInventory` | `Set-FogInventory` |
+     **Why the rename waits.** `Get-FogInventory` does two unrelated jobs behind one name, and the
+     right fix is a three-way split in Phase 5.5, not a swap now:
 
-     `Get-` is a pure name/alias swap, so zero-breaking. Nothing else in the module or tests calls
-     either, so there are no internal call sites to update.
+     | Branch | Job | Nature | Becomes |
+     |---|---|---|---|
+     | `else`, ~8 CIM classes | collect hardware from **this machine** | OS-specific client tooling | `Get-FogLocalInventory` |
+     | `-fromFog` / posix | read inventory **stored on the FOG host** | cross-platform API read | `Get-FogHostInventory` |
+     | `Set-FogInventory` | write inventory to the FOG host | cross-platform API write | `Set-FogHostInventory` |
 
-     The layer refactor is wire-faithful: `POST /{class}`, `/{class}/create` and `/{class}/new` are
-     all the same `create` route, so `New-FogObject -type object -coreObject inventory` sends exactly
-     what the hand-built call sends today.
-
-     Genuine local defects to fix while renaming: line 43 is dead code (recomputes `$jsonData` then
-     discards it), line 42 hardcodes `-verbose`, lines 31-33 let `$_` clobber a bound `-hostObj`
-     (guard on `$PSBoundParameters`), and it returns nothing. Returning the resulting inventory is
-     additive.
-
-     The `"Not yet implemented"` POSIX stub in `Get-FogHostInventory` stays for now — a real POSIX
-     implementation is `Get-FogLocalInventory` in Phase 5.5.
+     Both accurate names already exist as aliases today
+     (`[Alias('Get-FogHostInventory','Get-WinInventoryForFog')]`), which is the module signalling the
+     split it wants. The local-collection half is worth keeping as a first-class thing rather than
+     folding away - it is a useful failsafe for pulling a host's inventory from client-side tooling
+     when the fog client is not doing it - and it belongs with the other OS-specific tooling
+     (`Mount-FogEfi`, `Set-FogBootToPxe`). The `"Not yet implemented"` posix stub is what
+     `Get-FogLocalInventory` finally fills in, reusing what FOS already does with `lshw -json` and
+     `dmidecode`. Old names survive as aliases onto whichever function inherits their behavior.
    - Delete the dead commented-out `Invoke-FogApi` lines in `Get-FogHostAssociatedSnapins.ps1` and
      `Set-FogSnapins.ps1`
