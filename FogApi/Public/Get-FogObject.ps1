@@ -73,16 +73,12 @@ function Get-FogObject {
         # The id of the object to get
         [Parameter(Position=3)]
         [string]$IDofObject,
-        # Only return the first n objects
         [Parameter()]
         [int]$First,
-        # Start paging at this offset
         [Parameter()]
         [int]$Skip,
-        # Rows to request per api call while auto paging
         [Parameter()]
         [int]$PageSize = 1000,
-        # Return a single raw response instead of auto paging
         [Parameter()]
         [switch]$NoAutoPage
     )
@@ -135,7 +131,15 @@ function Get-FogObject {
             return $result;
         }
 
-        return (Get-FogPagedResult -apiInvoke $apiInvoke -First $First -Skip $Skip -PageSize $PageSize);
+        $pagedArgs = @{
+            uriPath = $uri;
+            Method = 'GET';
+            First = $First;
+            Skip = $Skip;
+            PageSize = $PageSize;
+        }
+        if (-not [string]::IsNullOrEmpty($jsonData)) { $pagedArgs.jsonData = $jsonData; }
+        return (Get-FogPagedResult @pagedArgs);
     }
     
 

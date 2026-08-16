@@ -18,8 +18,14 @@ function Get-FogPagedResult {
     with no nextUrl property. In that case the loop exits after one pass and First/Skip are applied
     client side so behaviour is identical across versions from the callers point of view.
 
-    .PARAMETER apiInvoke
-    the splat hashtable of uriPath/Method/jsonData that would have been passed to Invoke-FogApi
+    .PARAMETER uriPath
+    the api path to page through, without a query string, e.g. host or imaginglog
+
+    .PARAMETER Method
+    the http method, defaults to GET. Only list shaped routes page
+
+    .PARAMETER jsonData
+    a request body, if the route needs one
 
     .PARAMETER First
     only return the first n objects, stops requesting pages once satisfied
@@ -31,30 +37,40 @@ function Get-FogPagedResult {
     rows to request per api call, defaults to 1000
 
     .EXAMPLE
-    Get-FogPagedResult -apiInvoke @{ uriPath = 'host'; Method = 'GET' }
+    Get-FogPagedResult -uriPath host
 
     This will request host?start=0&length=1000 and keep following nextUrl until every host is collected.
 
     Expected output:
     { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }
 
+    .EXAMPLE
+    (Get-FogPagedResult -uriPath imaginglog -First 50).data
+
+    Gets the 50 most recent imaging log entries without walking the whole table, which on a server
+    with any history is the difference between one request and dozens.
+
     .NOTES
     The page is advanced by the number of rows actually returned rather than by the requested length,
     because the expand path forces length to EXPAND_MAX_ITEMS (2500) server side and so can hand back a
     smaller page than was asked for.
+
+    Public because it is useful on its own: Get-FogObject covers the core objects, but a route it does
+    not model, or one reached with a filter or expand segment, still needs paging, and hand rolling the
+    nextUrl walk per caller is how partial results creep back in.
     #>
     [CmdletBinding()]
     param (
-        # The splat that would have gone to Invoke-FogApi
-        [Parameter(Mandatory=$true)]
-        [hashtable]$apiInvoke,
-        # Only return the first n objects
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
+        [string]$uriPath,
+        [Parameter(Position=1)]
+        [string]$Method = 'GET',
+        [Parameter()]
+        [string]$jsonData,
         [Parameter()]
         [int]$First,
-        # Start paging at this offset
         [Parameter()]
         [int]$Skip,
-        # Rows per request
         [Parameter()]
         [int]$PageSize = 1000
     )
@@ -62,7 +78,14 @@ function Get-FogPagedResult {
     process {
         if ($PageSize -le 0) { $PageSize = 1000; }
         [int]$start = [Math]::Max(0, $Skip);
-        $basePath = $apiInvoke.uriPath;
+        $basePath = $uriPath;
+        $apiInvoke = @{
+            uriPath = $uriPath;
+            Method = $Method;
+        }
+        if (-not [string]::IsNullOrEmpty($jsonData)) {
+            $apiInvoke.jsonData = $jsonData;
+        }
         $all = [System.Collections.Generic.List[object]]::new();
         $lastPage = $null;
         [bool]$serverPaged = $false;
