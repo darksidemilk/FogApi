@@ -288,12 +288,28 @@ function Get-FogMockResponse {
         return $echo
     }
 
+    function Get-FixtureRows([string]$name) {
+        # The rows out of a list fixture, whichever property holds them. A 1.5
+        # style fixture keys them by class name ({count, printers[]}), a 1.6 one
+        # by 'data'. Same rule Add-FogResultData uses: take the property holding
+        # a collection.
+        $fixture = Get-Fixture $name
+        $rowProp = @($fixture.PSObject.Properties |
+            Where-Object { $_.Name -ne 'count' -and $_.Value -is [System.Collections.IEnumerable] -and $_.Value -isnot [string] } |
+            Select-Object -First 1)
+        if ($rowProp.Count -eq 0) { return @() }
+        return @($rowProp[0].Value)
+    }
+
     $class = $null
     $shape = $null
     $objectId = $null
     switch -regex ($uriPath) {
         '^(?<class>[a-z]+)$'                          { $class = $Matches['class']; $shape = 'collection' }
         '^(?<class>[a-z]+)/search/.+$'                { $class = $Matches['class']; $shape = 'search' }
+        '^(?<class>[a-z]+)/count$'                    { $class = $Matches['class']; $shape = 'count' }
+        '^(?<class>[a-z]+)/names$'                    { $class = $Matches['class']; $shape = 'names' }
+        '^(?<class>[a-z]+)/ids$'                      { $class = $Matches['class']; $shape = 'ids' }
         '^(?<class>[a-z]+)/(?<id>\d+)$'               { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'single' }
         '^(?<class>[a-z]+)/(?<id>\d+)/edit$'          { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'edit' }
         '^(?<class>[a-z]+)/(?<id>\d+)/delete$'        { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'delete' }
@@ -306,6 +322,28 @@ function Get-FogMockResponse {
             'GET/search'     {
                 if (Test-Fixture "$($class)s-search.json") { return Get-Fixture "$($class)s-search.json" }
                 if (Test-Fixture "$($class)s.json")        { return Get-Fixture "$($class)s.json" }
+            }
+            # count, names and ids are DERIVED from the list fixture rather than
+            # each getting a fixture of their own. A real server computes them
+            # from the same rows, so deriving is the only way the four cannot
+            # contradict each other, and a class opts into all four by adding
+            # one file. Shapes match the server exactly: {"total":N}, a bare
+            # array of id/name pairs, and a bare array of ids.
+            'GET/count' {
+                if (Test-Fixture "$($class)s.json") {
+                    return [pscustomobject]@{ total = @(Get-FixtureRows "$($class)s.json").Count }
+                }
+            }
+            'GET/names' {
+                if (Test-Fixture "$($class)s.json") {
+                    return @(Get-FixtureRows "$($class)s.json" |
+                        ForEach-Object { [pscustomobject]@{ id = $_.id; name = $_.name } })
+                }
+            }
+            'GET/ids' {
+                if (Test-Fixture "$($class)s.json") {
+                    return @(Get-FixtureRows "$($class)s.json" | ForEach-Object { $_.id })
+                }
             }
             'POST/collection' { return New-EchoedObject -body $jsonData -id 1 }
             'PUT/edit'        { return New-EchoedObject -body $jsonData -id $objectId }

@@ -1,0 +1,104 @@
+[
+  {
+    "Group": "FogApi real-server integration > Connectivity",
+    "Name": "Get-FogVersion returns a non-empty version string",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Connectivity",
+    "Name": "Test-FogVerAbove1dot6 returns a boolean",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Group lifecycle",
+    "Name": "Add-FogHostGroup associates the host and Get-FogHostGroup reflects it",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Group lifecycle",
+    "Name": "created a real group with a real id",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Group lifecycle",
+    "Name": "Remove-FogHostGroup removes the association",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Group lifecycle",
+    "Name": "Update-FogGroup changes the description",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Host lifecycle",
+    "Name": "created a real host with a real id",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Host lifecycle",
+    "Name": "Get-FogHost finds the created host by name",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Host lifecycle",
+    "Name": "Get-FogHosts includes the created host",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Host lifecycle",
+    "Name": "Update-FogObject changes a field and Get-FogHost reflects it back",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Host mac lifecycle",
+    "Name": "Add-FogHostMac adds a second mac and Get-FogHostMacs reflects it",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogImages does not throw",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogModules returns an array of id/name-shaped modules",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogSetting resolves a known setting by name",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogSettings returns an array of id/name-shaped settings",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogSnapins does not throw",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  },
+  {
+    "Group": "FogApi real-server integration > Read-only structural contracts",
+    "Name": "Get-FogVersion is at least major version 1",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-22"
+  }
+]

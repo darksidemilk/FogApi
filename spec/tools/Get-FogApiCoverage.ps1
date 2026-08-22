@@ -9,17 +9,25 @@ The point of this report is the denominator. "66 public functions" says nothing
 about coverage; "FOG 1.6 serves 554 operations across 52 classes" turns coverage
 into a number that can go up.
 
-Four states per operation, and the distinction between the last two is the one
-that matters:
+Five states per operation, and the distinction between the last three is the
+one that matters:
 
   covered       a typed cmdlet exists today (hand-written or a thin wrapper)
   planned       the spec says a cmdlet will be generated for it
   folded        deliberately a parameter on another cmdlet rather than its own
-                cmdlet -- count, names, ids and join
+                cmdlet -- count, names and ids on the list cmdlet
+  deferred      understood, deliberately not modelled yet, and the overlay says
+                why. 'join' is here: it was folded onto a create -Upsert switch
+                until a live server showed the document had it wrong.
   L1-only       reachable only as Get-FogObject -type object -coreObject <x>.
                 Not a bug and not necessarily a gap: nobody wants a typed
                 cmdlet for every write verb on every lookup table. It is the
                 honest residual, and it is what the tiers are chosen against.
+
+Deferred is kept separate from folded on purpose. Folded means "handled, just
+not as its own cmdlet"; deferred means "not handled". Collapsing the two would
+let the report claim coverage that does not exist, which is the one thing it
+must never do.
 
 Reads spec/fog-api-spec.json, so it reports what the spec actually resolved to
 rather than what anyone intended.
@@ -54,7 +62,21 @@ if (-not (Test-Path -LiteralPath $SpecFile)) {
 }
 $spec = Get-Content -LiteralPath $SpecFile -Raw | ConvertFrom-Json
 
-$foldedRoutes = @($spec.folded.PSObject.Properties.Name | Where-Object { $_ -notlike '$*' })
+# Only an entry that actually folds somewhere counts as folded. An entry with a
+# null foldsInto is one the overlay deliberately deferred -- 'join' is there
+# because the document's description of it turned out to be wrong -- and
+# reporting a deferred operation as folded would claim coverage that does not
+# exist, which is the one thing this report must not do.
+$foldedRoutes = @(
+    $spec.folded.PSObject.Properties |
+        Where-Object { $_.Name -notlike '$*' -and $_.Value.foldsInto } |
+        ForEach-Object { $_.Name }
+)
+$deferredRoutes = @(
+    $spec.folded.PSObject.Properties |
+        Where-Object { $_.Name -notlike '$*' -and -not $_.Value.foldsInto } |
+        ForEach-Object { $_.Name }
+)
 
 # operationId -> the function that answers for it
 $answeredBy = @{}
@@ -84,7 +106,7 @@ $tierOf = @{}
 foreach ($fn in $spec.functions) { $tierOf[$fn.class] = $fn.tier }
 
 $rows = [System.Collections.Generic.List[object]]::new()
-$totals = @{ covered = 0; planned = 0; folded = 0; l1 = 0 }
+$totals = @{ covered = 0; planned = 0; folded = 0; l1 = 0; deferred = 0 }
 
 foreach ($class in $classes) {
     $classFns = @($spec.functions | Where-Object { $_.class -eq $class })
@@ -97,7 +119,7 @@ foreach ($class in $classes) {
         # Only score routes the server actually serves for this class.
         $served = $false
         if ($known.ContainsKey($route)) { $served = $true }
-        elseif ($foldedRoutes -contains $route) { $served = $true }
+        elseif ($foldedRoutes -contains $route -or $deferredRoutes -contains $route) { $served = $true }
         elseif ($route -in @('task','cancel','active')) { $served = $false }
         else { $served = $true }
 
@@ -110,6 +132,9 @@ foreach ($class in $classes) {
         } elseif ($foldedRoutes -contains $route) {
             $cells[$route] = 'f'
             $totals.folded += 1
+        } elseif ($deferredRoutes -contains $route) {
+            $cells[$route] = 'd'
+            $totals.deferred += 1
         } else {
             $cells[$route] = '-'
             $totals.l1 += 1
@@ -133,11 +158,12 @@ $null = $sb.AppendLine('|---|---|')
 $null = $sb.AppendLine('| `x` | A typed cmdlet exists today. |')
 $null = $sb.AppendLine('| `o` | A typed cmdlet is specified and will be generated. |')
 $null = $sb.AppendLine('| `f` | Folded: a parameter on another cmdlet rather than a cmdlet of its own. |')
+$null = $sb.AppendLine('| `d` | Deferred: the operation is understood but deliberately not modelled yet. See `folded` in the spec for why. |')
 $null = $sb.AppendLine('| `-` | Reachable only through the generic L1 wrappers. |')
 $null = $sb.AppendLine('| (blank) | The server does not serve this operation for this class. |')
 $null = $sb.AppendLine()
-$null = $sb.AppendLine(('**Totals:** {0} covered, {1} specified, {2} folded, {3} L1-only.' -f `
-    $totals.covered, $totals.planned, $totals.folded, $totals.l1))
+$null = $sb.AppendLine(('**Totals:** {0} covered, {1} specified, {2} folded, {3} deferred, {4} L1-only.' -f `
+    $totals.covered, $totals.planned, $totals.folded, $totals.deferred, $totals.l1))
 $null = $sb.AppendLine()
 $null = $sb.AppendLine('## Per-class operations')
 $null = $sb.AppendLine()
@@ -192,4 +218,4 @@ if (-not (Test-Path -LiteralPath $dir)) { $null = New-Item -ItemType Directory -
 Set-Content -LiteralPath $OutFile -Value $sb.ToString() -Encoding utf8
 
 Write-Host "wrote $OutFile"
-Write-Host ("  {0} covered, {1} specified, {2} folded, {3} L1-only" -f $totals.covered, $totals.planned, $totals.folded, $totals.l1)
+Write-Host ("  {0} covered, {1} specified, {2} folded, {3} deferred, {4} L1-only" -f $totals.covered, $totals.planned, $totals.folded, $totals.deferred, $totals.l1)

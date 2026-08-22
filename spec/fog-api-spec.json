@@ -87,7 +87,7 @@
   },
   "stats": {
     "snapshotClasses": 52,
-    "snapshotOperations": 554,
+    "snapshotOperations": 555,
     "tieredClasses": 52,
     "candidateOps": 240,
     "toGenerate": 233,
@@ -5885,6 +5885,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5895,6 +5896,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -5905,6 +5907,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -5915,6 +5918,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5925,6 +5929,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5935,6 +5940,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -5951,6 +5957,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5961,6 +5968,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -5971,6 +5979,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5981,6 +5990,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -5991,6 +6001,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6001,6 +6012,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6011,6 +6023,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6021,6 +6034,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6037,6 +6051,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6047,6 +6062,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6057,6 +6073,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -6073,6 +6090,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6083,6 +6101,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6093,6 +6112,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6109,6 +6129,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6119,6 +6140,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -6135,6 +6157,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6144,7 +6167,8 @@
           "column": "hostName",
           "nullable": false,
           "readOnly": false,
-          "maxLength": 16,
+          "maxLength": 15,
+          "pattern": "^[A-Za-z0-9_!@#$%^()\\-'{}.~]{1,15}$",
           "enum": null,
           "required": true
         },
@@ -6155,6 +6179,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6165,6 +6190,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 25,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6175,6 +6201,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6185,6 +6212,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6195,6 +6223,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6205,6 +6234,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6215,6 +6245,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6225,6 +6256,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6235,6 +6267,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6245,6 +6278,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6255,6 +6289,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6265,6 +6300,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6275,6 +6311,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6285,6 +6322,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6295,6 +6333,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6305,6 +6344,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6315,6 +6355,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6325,6 +6366,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -6338,6 +6380,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6348,6 +6391,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6358,6 +6402,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6368,6 +6413,7 @@
           "nullable": true,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6378,6 +6424,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 20,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6388,6 +6435,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6398,6 +6446,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6408,6 +6457,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -6421,6 +6471,7 @@
           "nullable": true,
           "readOnly": true,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6431,6 +6482,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6447,6 +6499,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6457,6 +6510,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6467,6 +6521,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -6483,6 +6538,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6493,6 +6549,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6503,6 +6560,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6513,6 +6571,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6523,6 +6582,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6533,6 +6593,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6543,6 +6604,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6553,6 +6615,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6569,6 +6632,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6579,6 +6643,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 40,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6589,6 +6654,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6599,6 +6665,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6609,6 +6676,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6619,6 +6687,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6629,6 +6698,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6639,6 +6709,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6649,6 +6720,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6659,6 +6731,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6669,6 +6742,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6679,6 +6753,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6689,6 +6764,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6699,6 +6775,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6709,6 +6786,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -6722,6 +6800,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -6735,6 +6814,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6751,6 +6831,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6761,6 +6842,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6771,6 +6853,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6781,6 +6864,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -6800,6 +6884,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6810,6 +6895,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6820,6 +6906,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -6836,6 +6923,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6846,6 +6934,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6856,6 +6945,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -6872,6 +6962,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6882,6 +6973,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6892,6 +6984,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6902,6 +6995,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6912,6 +7006,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 64,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6922,6 +7017,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 64,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -6938,6 +7034,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6948,6 +7045,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -6958,6 +7056,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6968,6 +7067,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6978,6 +7078,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6988,6 +7089,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -6998,6 +7100,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7008,6 +7111,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7018,6 +7122,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7028,6 +7133,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7038,6 +7144,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7048,6 +7155,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7058,6 +7166,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7068,6 +7177,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7078,6 +7188,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7088,6 +7199,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7098,6 +7210,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7108,6 +7221,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7118,6 +7232,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7128,6 +7243,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7138,6 +7254,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7148,6 +7265,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7158,6 +7276,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7168,6 +7287,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7178,6 +7298,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7188,6 +7309,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7198,6 +7320,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7208,6 +7331,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7218,6 +7342,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7228,6 +7353,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7238,6 +7364,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7248,6 +7375,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7258,6 +7386,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7268,6 +7397,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7284,6 +7414,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7294,6 +7425,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7304,6 +7436,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7314,6 +7447,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 17,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7324,6 +7458,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7334,6 +7469,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7344,6 +7480,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7354,6 +7491,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7370,6 +7508,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7380,6 +7519,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 25,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7390,6 +7530,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 25,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -7406,6 +7547,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7416,6 +7558,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7426,6 +7569,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 59,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7436,6 +7580,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7446,6 +7591,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -7459,6 +7605,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -7472,6 +7619,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -7485,6 +7633,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -7504,6 +7653,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7514,6 +7664,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7524,6 +7675,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7534,6 +7686,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7544,6 +7697,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7560,6 +7714,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7570,6 +7725,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7580,6 +7736,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7590,6 +7747,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7606,6 +7764,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7616,6 +7775,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7626,6 +7786,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7636,6 +7797,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7646,6 +7808,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7656,6 +7819,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7666,6 +7830,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7676,6 +7841,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7686,6 +7852,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7696,6 +7863,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7706,6 +7874,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7716,6 +7885,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7726,6 +7896,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7736,6 +7907,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7746,6 +7918,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -7759,6 +7932,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7769,6 +7943,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7779,6 +7954,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7789,6 +7965,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7799,6 +7976,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7815,6 +7993,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7825,6 +8004,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7835,6 +8015,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -7851,6 +8032,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7861,6 +8043,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7871,6 +8054,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7881,6 +8065,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7891,6 +8076,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7901,6 +8087,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -7917,6 +8104,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7927,6 +8115,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -7943,6 +8132,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7953,6 +8143,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7963,6 +8154,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -7979,6 +8171,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -7989,6 +8182,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 8,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -7999,6 +8193,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 254,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -8015,6 +8210,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8025,6 +8221,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8035,6 +8232,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8045,6 +8243,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8055,6 +8254,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8065,6 +8265,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8075,6 +8276,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8085,6 +8287,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8095,6 +8298,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8105,6 +8309,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8115,6 +8320,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8131,6 +8337,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8141,6 +8348,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8151,6 +8359,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8161,6 +8370,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8171,6 +8381,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8181,6 +8392,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8191,6 +8403,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8201,6 +8414,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -8214,6 +8428,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "shutdown",
             "reboot",
@@ -8234,6 +8449,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8244,6 +8460,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8254,6 +8471,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8264,6 +8482,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8274,6 +8493,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8284,6 +8504,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8294,6 +8515,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8304,6 +8526,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8314,6 +8537,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8324,6 +8548,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8334,6 +8559,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8344,6 +8570,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8354,6 +8581,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 10,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8370,6 +8598,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8380,6 +8609,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8390,6 +8620,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8400,6 +8631,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8410,6 +8642,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8420,6 +8653,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8430,6 +8664,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8440,6 +8675,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8450,6 +8686,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8466,6 +8703,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8476,6 +8714,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8486,6 +8725,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8496,6 +8736,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8506,6 +8747,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8516,6 +8758,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8526,6 +8769,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8536,6 +8780,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -8549,6 +8794,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8565,6 +8811,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8575,6 +8822,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8585,6 +8833,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8601,6 +8850,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8611,6 +8861,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8621,6 +8872,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 64,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -8637,6 +8889,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8647,6 +8900,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 60,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8657,6 +8911,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8667,6 +8922,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -8683,6 +8939,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8693,6 +8950,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 60,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8703,6 +8961,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8713,6 +8972,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -8729,6 +8989,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8739,6 +9000,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8749,6 +9011,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8759,6 +9022,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 24,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8769,6 +9033,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8779,6 +9044,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8789,6 +9055,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8799,6 +9066,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8809,6 +9077,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8819,6 +9088,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8829,6 +9099,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8839,6 +9110,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8849,6 +9121,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8859,6 +9132,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8869,6 +9143,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8879,6 +9154,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8889,6 +9165,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8899,6 +9176,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 240,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8909,6 +9187,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8919,6 +9198,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8929,6 +9209,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -8945,6 +9226,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8955,6 +9237,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -8965,6 +9248,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8975,6 +9259,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -8985,6 +9270,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9001,6 +9287,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9011,6 +9298,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9021,6 +9309,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9037,6 +9326,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9047,6 +9337,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 200,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9057,6 +9348,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9067,6 +9359,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9077,6 +9370,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9087,6 +9381,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9097,6 +9392,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9110,6 +9406,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 245,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9120,6 +9417,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 200,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9130,6 +9428,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9140,6 +9439,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9153,6 +9453,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9166,6 +9467,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9179,6 +9481,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9189,6 +9492,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9202,6 +9506,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9212,6 +9517,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9222,6 +9528,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 45,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9238,6 +9545,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9248,6 +9556,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9258,6 +9567,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9268,6 +9578,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9284,6 +9595,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9294,6 +9606,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9304,6 +9617,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9314,6 +9628,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9333,6 +9648,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9343,6 +9659,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9353,6 +9670,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9363,6 +9681,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9382,6 +9701,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9392,6 +9712,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9402,6 +9723,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9412,6 +9734,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9422,6 +9745,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9432,6 +9756,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9442,6 +9767,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9452,6 +9778,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9462,6 +9789,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9478,6 +9806,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9488,6 +9817,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9498,6 +9828,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9508,6 +9839,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2048,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9524,6 +9856,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9534,6 +9867,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9544,6 +9878,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9554,6 +9889,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9564,6 +9900,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9574,6 +9911,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9584,6 +9922,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9597,6 +9936,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9607,6 +9947,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9617,6 +9958,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 25,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9627,6 +9969,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 8,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9637,6 +9980,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9647,6 +9991,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9657,6 +10002,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9667,6 +10013,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9677,6 +10024,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9687,6 +10035,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9697,6 +10046,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9707,6 +10057,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 25,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9717,6 +10068,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9727,6 +10079,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9737,6 +10090,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 6,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -9753,6 +10107,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9763,6 +10118,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9773,6 +10129,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9783,6 +10140,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9793,6 +10151,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9803,6 +10162,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9813,6 +10173,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9823,6 +10184,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -9833,6 +10195,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9843,6 +10206,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9853,6 +10217,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9863,6 +10228,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9873,6 +10239,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9883,6 +10250,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9893,6 +10261,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9903,6 +10272,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9913,6 +10283,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9923,6 +10294,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9933,6 +10305,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9943,6 +10316,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 1,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9953,6 +10327,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9963,6 +10338,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9973,6 +10349,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -9983,6 +10360,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -9996,6 +10374,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -10009,6 +10388,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10025,6 +10405,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10035,6 +10416,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10045,6 +10427,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10055,6 +10438,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 15,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10065,6 +10449,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 16,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10075,6 +10460,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10085,6 +10471,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10095,6 +10482,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 16,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10105,6 +10493,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10121,6 +10510,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10131,6 +10521,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10141,6 +10532,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10151,6 +10543,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10161,6 +10554,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10177,6 +10571,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10187,6 +10582,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10197,6 +10593,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10207,6 +10604,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10217,6 +10615,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 100,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10227,6 +10626,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10237,6 +10637,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "fog",
             "user"
@@ -10250,6 +10651,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -10263,6 +10665,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "both",
             "host",
@@ -10277,6 +10680,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10293,6 +10697,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10303,6 +10708,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10313,6 +10719,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10323,6 +10730,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10333,6 +10741,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10343,6 +10752,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": [
             "0",
             "1"
@@ -10356,6 +10766,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10366,6 +10777,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 32,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10382,6 +10794,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10392,6 +10805,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 255,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10402,6 +10816,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10418,6 +10833,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10428,6 +10844,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 60,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10438,6 +10855,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10448,6 +10866,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         }
@@ -10464,6 +10883,7 @@
           "nullable": false,
           "readOnly": true,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10474,6 +10894,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10484,6 +10905,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 50,
+          "pattern": null,
           "enum": null,
           "required": true
         },
@@ -10494,6 +10916,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10504,6 +10927,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 250,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10514,6 +10938,7 @@
           "nullable": true,
           "readOnly": false,
           "maxLength": null,
+          "pattern": null,
           "enum": null,
           "required": false
         },
@@ -10524,6 +10949,7 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 2,
+          "pattern": null,
           "enum": null,
           "required": false
         }
@@ -10534,14 +10960,21 @@
     "$comment": [
       "Operations that become a parameter on another cmdlet rather than a cmdlet of",
       "their own. Emitting all 554 operations would produce a module nobody can",
-      "tab-complete through, and these four are all modifiers on 'list' or 'create'",
-      "rather than distinct things an admin wants to do.",
+      "tab-complete through, and count/names/ids are modifiers on 'list' rather than",
+      "distinct things an admin wants to do.",
       "",
-      "join is the interesting one: PUT /{class}/join upserts against the natural",
-      "key rather than an id. PowerShell's Set- is the verb for create-or-modify,",
-      "but Set-FogGroup and Set-FogHostImage already exist as aliases for other",
-      "things, so claiming Set-Fog{Noun} module-wide would break callers. Folding it",
-      "onto New-Fog{Noun} -Upsert avoids the collision entirely and reads correctly."
+      "join was folded onto New-Fog{Noun} -Upsert here, on the strength of the",
+      "document calling it an upsert against the natural key. That was wrong, and it",
+      "was caught by trying it against a real server: PUT /{class}/join is a BULK",
+      "EDIT over an explicit ids array, and sending it a body with no ids answers 202",
+      "and changes nothing. The upsert-by-name is the POST variant, and it exists on",
+      "group alone -- every other class answers 400.",
+      "",
+      "Both are now described correctly upstream (fogproject openapi.class.php), so",
+      "the snapshot no longer misleads. Modelling them in FogApi is deferred rather",
+      "than guessed at, because neither fits the shape it was folded into: a bulk",
+      "edit is a plural cmdlet taking many ids, and a group-only get-or-create is a",
+      "hand-written group helper, not a generic per-class shape."
     ],
     "count": {
       "foldsInto": "list",
@@ -10556,8 +10989,11 @@
       "as": "-IdsOnly switch"
     },
     "join": {
-      "foldsInto": "create",
-      "as": "-Upsert switch"
+      "foldsInto": null,
+      "as": "deferred",
+      "reason": "PUT is a bulk edit over an ids array; POST is a group-only get-or-create. Neither is a modifier on an existing cmdlet, and both want their own design. Reachable meanwhile through Update-FogObject -uri.",
+      "putSemantics": "PUT /{class}/join with {ids:[...], <fields>} applies those field values to every listed object, leaving omitted fields alone. 202, no body. No ids means no effect.",
+      "postSemantics": "POST /group/join with {names:[...]} returns an id per name, creating any that do not exist. 201. Group only; all other classes answer 400."
     }
   }
 }

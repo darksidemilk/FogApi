@@ -163,8 +163,9 @@ document:
   `update`, `delete`, `search`, **`count`**, **`names`**, **`ids`**, **`join`** — all
   ten on all 52 classes bar `history`, which is read-only. Plus `task`/`cancel` on 8
   tasking classes and `active` (`{class}/current`) on 7.
-- **`join` is `PUT /{class}/join`, an upsert against the natural key** rather than an
-  id. It was not in the plan at all.
+- **`join` is `PUT /{class}/join`** and was not in the plan at all. The document
+  described it as an upsert against the natural key; it is not, and that is covered
+  under Phase 1.5 below.
 - **`/search/{item}/{limit}` is not a second route.** It is an alias spelling of
   `/unisearch/{item}/{limit}`; the router registers `/[search|unisearch]/...` once.
 - **`system/status` is not a separate route either** — `/system/[status|info]` is one
@@ -179,22 +180,23 @@ document:
 
 ### Scope, now that the denominator is real
 
-554 operations is not 554 cmdlets. Four shapes fold into parameters on another
-cmdlet rather than becoming cmdlets of their own — `count`, `names` and `ids` onto
-the list cmdlet, and `join` onto `New-Fog{Noun} -Upsert`. That folding is 208 of the
-554 by itself.
+555 operations is not 555 cmdlets. Three shapes fold into parameters on another
+cmdlet rather than becoming cmdlets of their own — `count`, `names` and `ids` onto the
+list cmdlet, as `-Count`, `-NamesOnly` and `-IdsOnly`. That is 156 of the 555.
 
-`join` folding is worth recording: PowerShell's `Set-` is the verb for
-create-or-modify, but `Set-FogGroup` and `Set-FogHostImage` already exist as aliases
-for other things, so claiming `Set-Fog{Noun}` module-wide would break callers.
-`New-Fog{Noun} -Upsert` avoids the collision and reads correctly.
+`join` was going to be a fourth, folded onto `New-Fog{Noun} -Upsert`. It is not: the
+document's description of it was wrong, and the live server said so. See Phase 1.5. It
+is now **deferred** — understood, deliberately unmodelled, with both semantics written
+down in the overlay — and the coverage matrix has a distinct `d` state so a deferred
+operation can never be miscounted as handled.
 
 What the resolved spec says today:
 
 | | count |
 |---|---|
-| Operations the server serves | 554 |
-| Folded into a parameter on another cmdlet | 208 |
+| Operations the server serves | 555 |
+| Folded onto another cmdlet (`count`, `names`, `ids`) | 156 |
+| Deferred, with the reason recorded (`join`) | 52 |
 | Cmdlets specified for generation | 233 |
 | Skipped because a hand-written function owns the name | 7 |
 | Replacing an existing thin wrapper (old name kept as an alias) | 11 |
@@ -231,6 +233,61 @@ real FogApi bug:
   a genuine pre-existing FogApi bug: `Find-FogObject -coreObject host -stringToSearch x`
   has never worked, and nothing in the signature explains why, because `-type` looks
   optional and is. Belongs in Phase 0.5 with the rest of the dynamic-param work.
+
+### Phase 1.5 — what the live server then found
+
+Everything above was verified against mocks *and* a FOG 1.6 server built from
+`working-1.6`. Running the real-server suite against it, rather than only the fixtures,
+found four things the mocks structurally could not.
+
+**`Find-FogObject -coreObject` never bound without an explicit `-type`.** Fixed: both
+`Find-FogObject` and `Update-FogObject` declare a `ValidateSet` of exactly one value, so
+their `DynamicParam` blocks now pass that literal instead of `$type`. `Get`/`New`/
+`Remove-FogObject` take a genuine multi-value `-type` and still require it — asserted in
+`Tests/DynamicParam.Tests.ps1` so the difference is deliberate rather than drift.
+
+**`Invoke-FogApi` was discarding the server's explanation.** Its `catch` retried every
+failure through `Invoke-WebRequest`, which got the identical refusal — so the caller saw
+the *second* exception, whose message is a bare status line. A failing `New-FogHost`
+reported `Response status code does not indicate success: 406 (Not Acceptable)` when the
+server had said `Invalid hostname; must be 1-15 of these characters`. The retry also
+doubled every failing request. It now surfaces the body (`ErrorDetails.Message`) and falls
+back only for non-HTTP failures, which is what the fallback was for: FOG answers some
+successful writes with an empty body that `Invoke-RestMethod` cannot parse.
+
+**`join` is not what the document said.** It was folded onto `New-Fog{Noun} -Upsert` on
+the strength of the summary *"upserts against the natural key"*. Against a real server,
+PUT `/{class}/join` turned out to be a **bulk edit** over an explicit `ids` array — a body
+without ids answers 202 and changes nothing — and the real upsert-by-name is the **POST**
+variant, which is **group-only** (every other class answers 400) and was undocumented
+entirely. Corrected upstream in `openapi.class.php`.
+
+**The document overstated `host.name`.** `hostName` is `varchar(16)`, but
+`Host::isHostnameSafe()` enforces 15 characters and a restricted charset. That is a model
+rule, not a column property, so nothing derived from `schema-expected.php` could know it.
+Added upstream via a small hand-kept `_applyModelConstraint()` map, verified against the
+running server across eight names. The emitter turns `pattern` into `[ValidatePattern()]`,
+so a generated cmdlet refuses a bad hostname at bind time rather than sending it and
+getting a 406 that names no field.
+
+The real-server suite itself was generating 22-character hostnames, so every Context that
+created a host had been failing in its `BeforeAll` — which Pester reports as a spurious
+*"'break' or 'continue' statement … escaped from your code"*, pointing nowhere near the
+cause. Worth knowing before chasing one. Names are capped at 15 now.
+
+**Also landed here:** `Get-FogObject -subPath` (`count`/`names`/`ids`) — the L1 addition
+the folded switches needed. `Get-Fog{Noun}s -Count/-NamesOnly/-IdsOnly` are real, as
+parameter sets so the binder rejects combining them, and all three return exactly what the
+server sent because none carries a list envelope. The emitter gained `-Route` for
+incremental work.
+
+**Both these upstream fixes argue the same thing:** the document is worth treating as the
+source of truth precisely *because* it can be wrong in a way a hand-written client cannot
+notice. A wrong description that a generator consumes produces a wrong client silently. The
+answer is to fix the description, not to work around it downstream — which is what
+`fogproject` commits `31932e73e` and `a1e12d49b` do.
+
+Suite: **111 mocked** (0 failing) and **128 against the live server** (0 failing).
 
 ### Phase 1 also closed four listed traps
 

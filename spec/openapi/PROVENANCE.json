@@ -8,7 +8,11 @@
     "commitShort": "e83049586",
     "commitDate": "2026-08-21T22:04:26+00:00",
     "fogVersion": "1.6.0-beta.3789",
-    "openapiClassLastChanged": "e874cd3cd"
+    "openapiClassLastChanged": "a1e12d49b",
+    "localCorrections": [
+      "31932e73e - Describe /{class}/join as what Route::joining() actually does",
+      "a1e12d49b - Describe the hostname rule the column type cannot express"
+    ]
   },
   "generatedBy": "spec/tools/dump-openapi.php",
   "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3789 --out spec/openapi/fog-1.6.json",
@@ -18,7 +22,7 @@
   ],
   "counts": {
     "paths": 401,
-    "operations": 554,
+    "operations": 555,
     "schemas": 54,
     "routeClasses": 52
   },
@@ -30,7 +34,7 @@
   "verifiedAgainstLiveServer": {
     "date": "2026-08-22",
     "method": "Installed FOG 1.6 from this commit (bin/installfog.sh), deployed the schema, then fetched GET /system/openapi and diffed it against this snapshot key by key.",
-    "result": "Identical except servers[0].url, which is a deliberate placeholder here. 401 paths, 54 schemas, 53 tags, x-fog-paging {maxRows: 10000, expandMaxItems: 2500} on both.",
+    "result": "Identical except servers[0].url, which is a deliberate placeholder here. 401 paths, 54 schemas, 53 tags, x-fog-paging {maxRows: 10000, expandMaxItems: 2500} on both. Re-verified after each of the two local corrections above.",
     "note": "This is what makes the offline generator trustworthy: it calls OpenAPI::document() rather than reimplementing it, and the diff confirms the four things it stubs (FOG_VERSION, the host, the hook manager, the FOGBase statics) are the only things that differ."
   }
 }

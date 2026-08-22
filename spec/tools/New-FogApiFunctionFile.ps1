@@ -56,6 +56,11 @@ Lists every file the emitter would write, with the operation each comes from.
 [CmdletBinding()]
 param (
     [string[]]$Class,
+    # Emit only these route shapes. Useful while templates are still being
+    # added: a tier-1 class asks for task/cancel/active, and without this the
+    # whole class fails on the first shape that has no template yet.
+    [ValidateSet('list', 'indiv', 'create', 'update', 'delete', 'search', 'task', 'cancel', 'active')]
+    [string[]]$Route,
     [string]$SpecFile,
     [string]$OutDir,
     [switch]$WhatIfOnly
@@ -76,6 +81,7 @@ $spec = Get-Content -LiteralPath $SpecFile -Raw | ConvertFrom-Json
 
 $targets = @($spec.functions | Where-Object { $_.status -in @('generate', 'replaces-thin-wrapper') })
 if ($Class) { $targets = @($targets | Where-Object { $_.class -in $Class }) }
+if ($Route) { $targets = @($targets | Where-Object { $_.routeName -in $Route }) }
 if (-not $targets) { throw 'no operations matched' }
 
 function Get-FieldList {
@@ -128,6 +134,13 @@ function New-FieldParamBlock {
         if ($f.enum) {
             $set = (@($f.enum) | ForEach-Object { "'$_'" }) -join ','
             $attrs.Add("        [ValidateSet($set)]")
+        } elseif ($f.pattern) {
+            # A pattern implies its own length bound, so it replaces
+            # ValidateLength rather than joining it -- two attributes saying
+            # overlapping things produce two different error messages for the
+            # same mistake.
+            $escaped = $f.pattern -replace "'", "''"
+            $attrs.Add("        [ValidatePattern('$escaped')]")
         } elseif ($f.maxLength) {
             $attrs.Add("        [ValidateLength(0,$($f.maxLength))]")
         }
@@ -194,6 +207,7 @@ function New-FunctionFile {
 
     switch ($Fn.routeName) {
         'list' {
+            $titleNoun = (Get-Culture).TextInfo.ToTitleCase($noun)
             $help.Add('    .SYNOPSIS')
             $help.Add(('    Gets every {0} on the fog server.' -f $noun))
             $help.Add('')
@@ -202,28 +216,81 @@ function New-FunctionFile {
             $help.Add('    every page is followed, so the result is complete rather than capped at the')
             $help.Add(('    server''s row limit ({0} rows). Filter the result with Where-Object.' -f $spec.paging.maxRows))
             $help.Add('')
+            $help.Add('    Three cheaper questions the server can answer without sending the rows are')
+            $help.Add('    switches rather than separate cmdlets: -Count, -NamesOnly and -IdsOnly.')
+            $help.Add('    -NamesOnly and -IdsOnly have no server side row limit at all, which makes')
+            $help.Add('    them the cheap way to enumerate a large table. All three are FOG 1.6 only.')
+            $help.Add('')
             $help.AddRange([string[]]@(Format-HelpParam 'First' 'Return at most this many objects.'))
             $help.AddRange([string[]]@(Format-HelpParam 'Skip' 'Skip this many objects before returning any.'))
             $help.AddRange([string[]]@(Format-HelpParam 'PageSize' 'Rows to request per page. Ignored on FOG 1.5, which does not page.'))
             $help.AddRange([string[]]@(Format-HelpParam 'NoAutoPage' 'Return only the first page instead of following nextUrl.'))
+            $help.AddRange([string[]]@(Format-HelpParam 'Count' ('Return only how many {0} objects there are, as a total. Ignores paging and reports the true total.' -f $noun)))
+            $help.AddRange([string[]]@(Format-HelpParam 'NamesOnly' 'Return only id and name pairs. Unpaged and uncapped server side.'))
+            $help.AddRange([string[]]@(Format-HelpParam 'IdsOnly' 'Return only the ids, as a bare array. Unpaged and uncapped server side.'))
             $help.Add('    .EXAMPLE')
             $help.Add(('    {0}' -f $Fn.functionName))
             $help.Add('')
             $help.Add(('    Returns an array of every {0}.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f (Get-Culture).TextInfo.ToTitleCase($noun)))
+            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f $titleNoun))
             $help.Add('')
-            $params.Add('        [Parameter()]')
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0} -Count' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Asks how many {0} objects exist without transferring any of them.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    { "total": 1 }')
+            $help.Add('')
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0} -NamesOnly' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add('    Returns id and name pairs only.')
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f $titleNoun))
+            $help.Add('')
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0} -IdsOnly' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Returns just the ids, which is the cheapest way to enumerate {0}.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    [ 1 ]')
+            $help.Add('')
+            # Parameter sets rather than three loose switches, so the binder
+            # rejects -Count -NamesOnly for us and keeps the paging parameters
+            # off the sub-route sets, where they would mean nothing.
+            $params.Add('        [Parameter(ParameterSetName=''page'')]')
             $params.Add('        [int]$First,')
-            $params.Add('        [Parameter()]')
+            $params.Add('        [Parameter(ParameterSetName=''page'')]')
             $params.Add('        [int]$Skip,')
-            $params.Add('        [Parameter()]')
+            $params.Add('        [Parameter(ParameterSetName=''page'')]')
             $params.Add('        [int]$PageSize = 1000,')
-            $params.Add('        [Parameter()]')
-            $params.Add('        [switch]$NoAutoPage')
+            $params.Add('        [Parameter(ParameterSetName=''page'')]')
+            $params.Add('        [switch]$NoAutoPage,')
+            $params.Add('        [Parameter(Mandatory=$true,ParameterSetName=''count'')]')
+            $params.Add('        [switch]$Count,')
+            $params.Add('        [Parameter(Mandatory=$true,ParameterSetName=''names'')]')
+            $params.Add('        [switch]$NamesOnly,')
+            $params.Add('        [Parameter(Mandatory=$true,ParameterSetName=''ids'')]')
+            $params.Add('        [switch]$IdsOnly')
+            $body.Add('        $subPath = switch ($PSCmdlet.ParameterSetName) {')
+            $body.Add('            ''count'' { ''count'' }')
+            $body.Add('            ''names'' { ''names'' }')
+            $body.Add('            ''ids''   { ''ids'' }')
+            $body.Add('            default  { $null }')
+            $body.Add('        }')
+            $body.Add('        if ($subPath) {')
+            $body.Add(('            Write-Verbose "getting fog {0} $subPath";' -f $noun))
+            $body.Add('            # Returned exactly as the server sent it. None of these three carries')
+            $body.Add('            # a list envelope, so there is no .data to unwrap.')
+            $body.Add(('            return Get-FogObject -type object -coreObject {0} -subPath $subPath;' -f $noun))
+            $body.Add('        }')
             $body.Add(('        Write-Verbose "getting all fog {0} objects";' -f $noun))
-            $body.Add('        $splat = @{ type = ''object''; coreObject = ''' + $noun + ''' };')
+            $body.Add(('        $splat = @{{ type = ''object''; coreObject = ''{0}'' }};' -f $noun))
             $body.Add('        foreach ($p in @(''First'',''Skip'',''PageSize'',''NoAutoPage'')) {')
             $body.Add('            if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }')
             $body.Add('        }')
@@ -278,11 +345,7 @@ function New-FunctionFile {
             $params.Add('        [Parameter(Mandatory=$true,Position=0)]')
             $params.Add('        [string]$stringToSearch')
             $body.Add(('        Write-Verbose "searching fog {0} for $stringToSearch";' -f $noun))
-            $body.Add('        # -type search is passed explicitly even though it is that parameter''s')
-            $body.Add('        # default. A DynamicParam block sees only bound parameters, so with -type')
-            $body.Add('        # left off, Set-DynamicParams is handed $null, adds no -coreObject, and the')
-            $body.Add('        # call fails to bind.')
-            $body.Add(('        return (Find-FogObject -type search -coreObject {0} -stringToSearch $stringToSearch).data;' -f $noun))
+            $body.Add(('        return (Find-FogObject -coreObject {0} -stringToSearch $stringToSearch).data;' -f $noun))
         }
         'create' {
             $help.Add('    .SYNOPSIS')

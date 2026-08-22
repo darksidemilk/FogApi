@@ -130,6 +130,35 @@ function Invoke-FogApi {
         try {
             $result = Invoke-RestMethod @apiCall -ea Stop;
         } catch {
+            $failure = $_;
+            $response = $failure.Exception.Response;
+            $status = if ($null -ne $response) { [int]$response.StatusCode } else { 0 };
+
+            if ($status -ge 400) {
+                # An HTTP error status is the server's considered answer, not a
+                # transport or parsing problem. Retrying it through
+                # Invoke-WebRequest gets the identical refusal, doubles every
+                # failing request, and -- because the caller then sees the
+                # SECOND exception -- replaces the reason with a bare status
+                # line. "Response status code does not indicate success: 406"
+                # is what a caller used to get for what the server actually
+                # said, which was "Invalid hostname; must be 1-15 of these
+                # characters".
+                #
+                # FOG puts that reason in the response body, and PowerShell
+                # hands the body over as ErrorDetails.Message.
+                $detail = $failure.ErrorDetails.Message;
+                if ([string]::IsNullOrWhiteSpace($detail)) { throw; }
+                throw [System.Exception]::new(
+                    ("FOG API {0} {1} failed with HTTP {2}: {3}" -f $Method, $uri, $status, $detail.Trim()),
+                    $failure.Exception
+                );
+            }
+
+            # Everything else falls back, which is what this catch was for:
+            # FOG answers some successful writes with an empty body, and
+            # Invoke-RestMethod cannot parse that as JSON.
+            Write-Verbose "Invoke-RestMethod failed without an HTTP error status, retrying with Invoke-WebRequest";
             $result = Invoke-WebRequest @apiCall;
         }
         Write-Verbose "finished api call";

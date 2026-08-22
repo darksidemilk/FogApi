@@ -48,7 +48,10 @@ i.e. if your fog host name is 'computer1' and you pass in a json string link {"n
         [string]$uri
     )
 
-    DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict; }
+    # 'object' rather than $type: same reason as Find-FogObject. A DynamicParam
+    # block sees only BOUND parameters, and -type here is ValidateSet('object'),
+    # a set of one, so the literal is the only value it could ever hold.
+    DynamicParam { $paramDict = Set-DynamicParams 'object'; return $paramDict; }
 
     process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}

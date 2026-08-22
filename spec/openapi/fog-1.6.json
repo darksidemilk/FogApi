@@ -657,17 +657,10 @@
                     "filedeletequeue"
                 ],
                 "operationId": "joinFiledeletequeue",
-                "summary": "Create or update a filedeletequeue by natural key",
+                "summary": "Bulk edit filedeletequeue",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Filedeletequeue"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -689,13 +682,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Filedeletequeue"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Filedeletequeue"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1395,14 +1407,79 @@
                     "group"
                 ],
                 "operationId": "joinGroup",
-                "summary": "Create or update a group by natural key",
+                "summary": "Bulk edit group",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
+                    "202": {
+                        "description": "Applied. No body is returned."
+                    },
+                    "400": {
+                        "description": "Bad request.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Group"
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication missing or invalid."
+                    },
+                    "403": {
+                        "description": "Authenticated but not permitted."
+                    },
+                    "404": {
+                        "description": "No such object."
+                    }
+                },
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Group"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "x-fog-permission": "group.create"
+            },
+            "post": {
+                "tags": [
+                    "group"
+                ],
+                "operationId": "joinByNameGroup",
+                "summary": "Get or create group by name",
+                "responses": {
+                    "201": {
+                        "description": "One id per name, in the order given.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
                                 }
                             }
                         }
@@ -1427,13 +1504,25 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Takes a list of names and returns an id for each: the existing object where the name is already taken, a newly created one otherwise. This is the upsert against a natural key, and it exists only on group -- every other class answers 400.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Group"
+                                "type": "object",
+                                "required": [
+                                    "names"
+                                ],
+                                "properties": {
+                                    "names": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "description": "Names to resolve. Each is created if no object already has it."
+                                    }
+                                }
                             }
                         }
                     }
@@ -2133,17 +2222,10 @@
                     "groupassociation"
                 ],
                 "operationId": "joinGroupassociation",
-                "summary": "Create or update a groupassociation by natural key",
+                "summary": "Bulk edit groupassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Groupassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -2165,13 +2247,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Groupassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Groupassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2666,17 +2767,10 @@
                     "history"
                 ],
                 "operationId": "joinHistory",
-                "summary": "Create or update a history by natural key",
+                "summary": "Bulk edit history",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/History"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -2698,13 +2792,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/History"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/History"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3199,17 +3312,10 @@
                     "hookevent"
                 ],
                 "operationId": "joinHookevent",
-                "summary": "Create or update a hookevent by natural key",
+                "summary": "Bulk edit hookevent",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Hookevent"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -3231,13 +3337,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Hookevent"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Hookevent"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3732,17 +3857,10 @@
                     "host"
                 ],
                 "operationId": "joinHost",
-                "summary": "Create or update a host by natural key",
+                "summary": "Bulk edit host",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Host"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -3764,13 +3882,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Host"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Host"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4470,17 +4607,10 @@
                     "hostautologout"
                 ],
                 "operationId": "joinHostautologout",
-                "summary": "Create or update a hostautologout by natural key",
+                "summary": "Bulk edit hostautologout",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Hostautologout"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -4502,13 +4632,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Hostautologout"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Hostautologout"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5003,17 +5152,10 @@
                     "hostscreensetting"
                 ],
                 "operationId": "joinHostscreensetting",
-                "summary": "Create or update a hostscreensetting by natural key",
+                "summary": "Bulk edit hostscreensetting",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Hostscreensetting"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -5035,13 +5177,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Hostscreensetting"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Hostscreensetting"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5536,17 +5697,10 @@
                     "image"
                 ],
                 "operationId": "joinImage",
-                "summary": "Create or update a image by natural key",
+                "summary": "Bulk edit image",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Image"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -5568,13 +5722,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Image"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Image"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6069,17 +6242,10 @@
                     "imageassociation"
                 ],
                 "operationId": "joinImageassociation",
-                "summary": "Create or update a imageassociation by natural key",
+                "summary": "Bulk edit imageassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imageassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -6101,13 +6267,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Imageassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Imageassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6602,17 +6787,10 @@
                     "imagepartitiontype"
                 ],
                 "operationId": "joinImagepartitiontype",
-                "summary": "Create or update a imagepartitiontype by natural key",
+                "summary": "Bulk edit imagepartitiontype",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imagepartitiontype"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -6634,13 +6812,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Imagepartitiontype"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Imagepartitiontype"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7135,17 +7332,10 @@
                     "imagetype"
                 ],
                 "operationId": "joinImagetype",
-                "summary": "Create or update a imagetype by natural key",
+                "summary": "Bulk edit imagetype",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imagetype"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -7167,13 +7357,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Imagetype"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Imagetype"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7668,17 +7877,10 @@
                     "imaginglog"
                 ],
                 "operationId": "joinImaginglog",
-                "summary": "Create or update a imaginglog by natural key",
+                "summary": "Bulk edit imaginglog",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imaginglog"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -7700,13 +7902,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Imaginglog"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Imaginglog"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8201,17 +8422,10 @@
                     "inventory"
                 ],
                 "operationId": "joinInventory",
-                "summary": "Create or update a inventory by natural key",
+                "summary": "Bulk edit inventory",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Inventory"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -8233,13 +8447,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Inventory"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Inventory"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8734,17 +8967,10 @@
                     "ipxe"
                 ],
                 "operationId": "joinIpxe",
-                "summary": "Create or update a ipxe by natural key",
+                "summary": "Bulk edit ipxe",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Ipxe"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -8766,13 +8992,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Ipxe"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Ipxe"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9267,17 +9512,10 @@
                     "keysequence"
                 ],
                 "operationId": "joinKeysequence",
-                "summary": "Create or update a keysequence by natural key",
+                "summary": "Bulk edit keysequence",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Keysequence"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -9299,13 +9537,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Keysequence"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Keysequence"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9851,17 +10108,10 @@
                     "macaddressassociation"
                 ],
                 "operationId": "joinMacaddressassociation",
-                "summary": "Create or update a macaddressassociation by natural key",
+                "summary": "Bulk edit macaddressassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Macaddressassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -9883,13 +10133,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Macaddressassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Macaddressassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10384,17 +10653,10 @@
                     "module"
                 ],
                 "operationId": "joinModule",
-                "summary": "Create or update a module by natural key",
+                "summary": "Bulk edit module",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Module"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -10416,13 +10678,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Module"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Module"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10917,17 +11198,10 @@
                     "moduleassociation"
                 ],
                 "operationId": "joinModuleassociation",
-                "summary": "Create or update a moduleassociation by natural key",
+                "summary": "Bulk edit moduleassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Moduleassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -10949,13 +11223,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Moduleassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Moduleassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -11507,17 +11800,10 @@
                     "multicastsession"
                 ],
                 "operationId": "joinMulticastsession",
-                "summary": "Create or update a multicastsession by natural key",
+                "summary": "Bulk edit multicastsession",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Multicastsession"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -11539,13 +11825,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Multicastsession"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Multicastsession"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12245,17 +12550,10 @@
                     "multicastsessionassociation"
                 ],
                 "operationId": "joinMulticastsessionassociation",
-                "summary": "Create or update a multicastsessionassociation by natural key",
+                "summary": "Bulk edit multicastsessionassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Multicastsessionassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -12277,13 +12575,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Multicastsessionassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Multicastsessionassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12778,17 +13095,10 @@
                     "nodefailure"
                 ],
                 "operationId": "joinNodefailure",
-                "summary": "Create or update a nodefailure by natural key",
+                "summary": "Bulk edit nodefailure",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Nodefailure"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -12810,13 +13120,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Nodefailure"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Nodefailure"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -13311,17 +13640,10 @@
                     "notifyevent"
                 ],
                 "operationId": "joinNotifyevent",
-                "summary": "Create or update a notifyevent by natural key",
+                "summary": "Bulk edit notifyevent",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Notifyevent"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -13343,13 +13665,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Notifyevent"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Notifyevent"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -13844,17 +14185,10 @@
                     "os"
                 ],
                 "operationId": "joinOs",
-                "summary": "Create or update a os by natural key",
+                "summary": "Bulk edit os",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Os"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -13876,13 +14210,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Os"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Os"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -14377,17 +14730,10 @@
                     "oui"
                 ],
                 "operationId": "joinOui",
-                "summary": "Create or update a oui by natural key",
+                "summary": "Bulk edit oui",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Oui"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -14409,13 +14755,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Oui"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Oui"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -14954,17 +15319,10 @@
                     "plugin"
                 ],
                 "operationId": "joinPlugin",
-                "summary": "Create or update a plugin by natural key",
+                "summary": "Bulk edit plugin",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Plugin"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -14986,13 +15344,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Plugin"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Plugin"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -15544,17 +15921,10 @@
                     "powermanagement"
                 ],
                 "operationId": "joinPowermanagement",
-                "summary": "Create or update a powermanagement by natural key",
+                "summary": "Bulk edit powermanagement",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Powermanagement"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -15576,13 +15946,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Powermanagement"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Powermanagement"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -16077,17 +16466,10 @@
                     "printer"
                 ],
                 "operationId": "joinPrinter",
-                "summary": "Create or update a printer by natural key",
+                "summary": "Bulk edit printer",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Printer"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -16109,13 +16491,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Printer"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Printer"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -16610,17 +17011,10 @@
                     "printerassociation"
                 ],
                 "operationId": "joinPrinterassociation",
-                "summary": "Create or update a printerassociation by natural key",
+                "summary": "Bulk edit printerassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Printerassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -16642,13 +17036,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Printerassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Printerassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -17143,17 +17556,10 @@
                     "pxemenuoptions"
                 ],
                 "operationId": "joinPxemenuoptions",
-                "summary": "Create or update a pxemenuoptions by natural key",
+                "summary": "Bulk edit pxemenuoptions",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Pxemenuoptions"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -17175,13 +17581,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Pxemenuoptions"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Pxemenuoptions"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -17676,17 +18101,10 @@
                     "role"
                 ],
                 "operationId": "joinRole",
-                "summary": "Create or update a role by natural key",
+                "summary": "Bulk edit role",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Role"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -17708,13 +18126,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Role"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Role"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -18209,17 +18646,10 @@
                     "rolepermission"
                 ],
                 "operationId": "joinRolepermission",
-                "summary": "Create or update a rolepermission by natural key",
+                "summary": "Bulk edit rolepermission",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Rolepermission"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -18241,13 +18671,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Rolepermission"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Rolepermission"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -18742,17 +19191,10 @@
                     "roleuserassociation"
                 ],
                 "operationId": "joinRoleuserassociation",
-                "summary": "Create or update a roleuserassociation by natural key",
+                "summary": "Bulk edit roleuserassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Roleuserassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -18774,13 +19216,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Roleuserassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Roleuserassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -19275,17 +19736,10 @@
                     "roleusergroupassociation"
                 ],
                 "operationId": "joinRoleusergroupassociation",
-                "summary": "Create or update a roleusergroupassociation by natural key",
+                "summary": "Bulk edit roleusergroupassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Roleusergroupassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -19307,13 +19761,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Roleusergroupassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Roleusergroupassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -19865,17 +20338,10 @@
                     "scheduledtask"
                 ],
                 "operationId": "joinScheduledtask",
-                "summary": "Create or update a scheduledtask by natural key",
+                "summary": "Bulk edit scheduledtask",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Scheduledtask"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -19897,13 +20363,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Scheduledtask"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Scheduledtask"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -20603,17 +21088,10 @@
                     "setting"
                 ],
                 "operationId": "joinSetting",
-                "summary": "Create or update a setting by natural key",
+                "summary": "Bulk edit setting",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Setting"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -20635,13 +21113,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Setting"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Setting"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -21269,17 +21766,10 @@
                     "site"
                 ],
                 "operationId": "joinSite",
-                "summary": "Create or update a site by natural key",
+                "summary": "Bulk edit site",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Site"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -21301,13 +21791,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Site"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Site"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -21924,17 +22433,10 @@
                     "snapin"
                 ],
                 "operationId": "joinSnapin",
-                "summary": "Create or update a snapin by natural key",
+                "summary": "Bulk edit snapin",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Snapin"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -21956,13 +22458,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Snapin"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Snapin"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -22457,17 +22978,10 @@
                     "snapinassociation"
                 ],
                 "operationId": "joinSnapinassociation",
-                "summary": "Create or update a snapinassociation by natural key",
+                "summary": "Bulk edit snapinassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Snapinassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -22489,13 +23003,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Snapinassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Snapinassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -22990,17 +23523,10 @@
                     "snapingroupassociation"
                 ],
                 "operationId": "joinSnapingroupassociation",
-                "summary": "Create or update a snapingroupassociation by natural key",
+                "summary": "Bulk edit snapingroupassociation",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Snapingroupassociation"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -23022,13 +23548,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Snapingroupassociation"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Snapingroupassociation"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -23580,17 +24125,10 @@
                     "snapinjob"
                 ],
                 "operationId": "joinSnapinjob",
-                "summary": "Create or update a snapinjob by natural key",
+                "summary": "Bulk edit snapinjob",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Snapinjob"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -23612,13 +24150,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Snapinjob"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Snapinjob"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -24375,17 +24932,10 @@
                     "snapintask"
                 ],
                 "operationId": "joinSnapintask",
-                "summary": "Create or update a snapintask by natural key",
+                "summary": "Bulk edit snapintask",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Snapintask"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -24407,13 +24957,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Snapintask"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Snapintask"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -25113,17 +25682,10 @@
                     "storagegroup"
                 ],
                 "operationId": "joinStoragegroup",
-                "summary": "Create or update a storagegroup by natural key",
+                "summary": "Bulk edit storagegroup",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Storagegroup"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -25145,13 +25707,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Storagegroup"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Storagegroup"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -25724,17 +26305,10 @@
                     "storagenode"
                 ],
                 "operationId": "joinStoragenode",
-                "summary": "Create or update a storagenode by natural key",
+                "summary": "Bulk edit storagenode",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Storagenode"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -25756,13 +26330,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Storagenode"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Storagenode"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -26467,17 +27060,10 @@
                     "task"
                 ],
                 "operationId": "joinTask",
-                "summary": "Create or update a task by natural key",
+                "summary": "Bulk edit task",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Task"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -26499,13 +27085,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Task"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Task"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -27205,17 +27810,10 @@
                     "tasklog"
                 ],
                 "operationId": "joinTasklog",
-                "summary": "Create or update a tasklog by natural key",
+                "summary": "Bulk edit tasklog",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Tasklog"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -27237,13 +27835,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Tasklog"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Tasklog"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -27738,17 +28355,10 @@
                     "taskstate"
                 ],
                 "operationId": "joinTaskstate",
-                "summary": "Create or update a taskstate by natural key",
+                "summary": "Bulk edit taskstate",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Taskstate"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -27770,13 +28380,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Taskstate"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Taskstate"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -28271,17 +28900,10 @@
                     "tasktype"
                 ],
                 "operationId": "joinTasktype",
-                "summary": "Create or update a tasktype by natural key",
+                "summary": "Bulk edit tasktype",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Tasktype"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -28303,13 +28925,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Tasktype"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Tasktype"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -28855,17 +29496,10 @@
                     "user"
                 ],
                 "operationId": "joinUser",
-                "summary": "Create or update a user by natural key",
+                "summary": "Bulk edit user",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -28887,13 +29521,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/User"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -29388,17 +30041,10 @@
                     "usergroup"
                 ],
                 "operationId": "joinUsergroup",
-                "summary": "Create or update a usergroup by natural key",
+                "summary": "Bulk edit usergroup",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Usergroup"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -29420,13 +30066,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Usergroup"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Usergroup"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -29921,17 +30586,10 @@
                     "usergroupmember"
                 ],
                 "operationId": "joinUsergroupmember",
-                "summary": "Create or update a usergroupmember by natural key",
+                "summary": "Bulk edit usergroupmember",
                 "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Usergroupmember"
-                                }
-                            }
-                        }
+                    "202": {
+                        "description": "Applied. No body is returned."
                     },
                     "400": {
                         "description": "Bad request.",
@@ -29953,13 +30611,32 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Upserts against the association keys rather than an id.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Usergroupmember"
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/Usergroupmember"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "required": [
+                                            "ids"
+                                        ],
+                                        "properties": {
+                                            "ids": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                },
+                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
+                                            }
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -30886,8 +31563,10 @@
                     },
                     "name": {
                         "type": "string",
-                        "maxLength": 16,
-                        "x-fog-column": "hostName"
+                        "maxLength": 15,
+                        "x-fog-column": "hostName",
+                        "pattern": "^[A-Za-z0-9_!@#$%^()\\-'{}.~]{1,15}$",
+                        "description": "Enforced by Host::isHostnameSafe(), which is stricter than the column: at most 15 characters, and only letters, digits, underscore and ! @ # $ % ^ ( ) - ' { } . ~ A name that fails this is refused by Host::save() with a 406."
                     },
                     "description": {
                         "type": "string",

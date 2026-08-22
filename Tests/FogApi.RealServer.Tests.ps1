@@ -38,7 +38,26 @@ Describe 'FogApi real-server integration' -Skip:(-not $RealServer) {
             param([string]$Prefix)
             # A unique suffix per call - never reuses a name, so this can never collide with (or
             # accidentally delete) anything genuinely part of the server's real inventory.
-            "$Prefix-$(Get-Random -Minimum 100000 -Maximum 999999)"
+            #
+            # Capped at 15 characters because Host::isHostnameSafe() rejects anything longer:
+            #
+            #     $pattern = "/^[\w!@#$%^()\-'{}\.~]{1,15}$/";
+            #
+            # That is stricter than the column, which is varchar(16), and it is an application
+            # rule rather than a schema one - so nothing in the API description implies it and a
+            # generated client will not know. Host::save() throws, Route catches it, and the
+            # caller gets a 406.
+            #
+            # The old 'FogApiTest-Host-954634' shape was 22 characters, so every Context that
+            # created a host failed in its BeforeAll, on every run. Pester reports a BeforeAll
+            # failure as a spurious "'break' or 'continue' statement ... escaped from your code",
+            # which points nowhere near the cause - worth knowing before chasing one of those.
+            #
+            # 15 is applied to every name, not just hosts, so one rule covers the file.
+            $suffix = "$(Get-Random -Minimum 100000 -Maximum 999999)"
+            $room = 15 - ($suffix.Length + 1)
+            $short = if ($Prefix.Length -gt $room) { $Prefix.Substring(0, $room) } else { $Prefix }
+            "$short-$suffix"
         }
 
         function script:New-FogRealServerTestMac {
@@ -75,7 +94,7 @@ Describe 'FogApi real-server integration' -Skip:(-not $RealServer) {
     Context 'Host lifecycle' {
         BeforeAll {
             $script:runSuffix = Get-Random -Minimum 100000 -Maximum 999999
-            $script:testHostName = New-FogRealServerTestName -Prefix 'FogApiTest'
+            $script:testHostName = New-FogRealServerTestName -Prefix 'FAHost'
             $script:testHostMac = New-FogRealServerTestMac
             Write-Host "`n--- Host lifecycle: creating '$($script:testHostName)' / $($script:testHostMac) ---" -ForegroundColor Cyan
             $script:testHost = New-FogHost -name $script:testHostName -macs $script:testHostMac
@@ -107,7 +126,7 @@ Describe 'FogApi real-server integration' -Skip:(-not $RealServer) {
 
     Context 'Host mac lifecycle' {
         BeforeAll {
-            $script:macHostName = New-FogRealServerTestName -Prefix 'FogApiTest-Mac'
+            $script:macHostName = New-FogRealServerTestName -Prefix 'FAMac'
             $script:macHostMac = New-FogRealServerTestMac
             $script:secondMac = New-FogRealServerTestMac
             Write-Host "`n--- Host mac lifecycle: creating '$($script:macHostName)' / $($script:macHostMac) ---" -ForegroundColor Cyan
@@ -124,9 +143,9 @@ Describe 'FogApi real-server integration' -Skip:(-not $RealServer) {
     Context 'Group lifecycle' {
         BeforeAll {
             $script:groupRunSuffix = Get-Random -Minimum 100000 -Maximum 999999
-            $script:groupHostName = New-FogRealServerTestName -Prefix 'FogApiTest-GroupHost'
+            $script:groupHostName = New-FogRealServerTestName -Prefix 'FAGrpHst'
             $script:groupHostMac = New-FogRealServerTestMac
-            $script:testGroupName = New-FogRealServerTestName -Prefix 'FogApiTest-Group'
+            $script:testGroupName = New-FogRealServerTestName -Prefix 'FAGrp'
             Write-Host "`n--- Group lifecycle: creating '$($script:groupHostName)' and group '$($script:testGroupName)' ---" -ForegroundColor Cyan
             $script:groupHost = New-FogHost -name $script:groupHostName -macs $script:groupHostMac
             $script:testGroup = New-FogObject -type object -coreObject group -jsonData (@{ name = $script:testGroupName; description = 'FogApi -RealServer integration test group' } | ConvertTo-Json -Compress)

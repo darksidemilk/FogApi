@@ -32,11 +32,7 @@ function Find-FogPrinter {
 
     process {
         Write-Verbose "searching fog printer for $stringToSearch";
-        # -type search is passed explicitly even though it is that parameter's
-        # default. A DynamicParam block sees only bound parameters, so with -type
-        # left off, Set-DynamicParams is handed $null, adds no -coreObject, and the
-        # call fails to bind.
-        return (Find-FogObject -type search -coreObject printer -stringToSearch $stringToSearch).data;
+        return (Find-FogObject -coreObject printer -stringToSearch $stringToSearch).data;
     }
 
 }

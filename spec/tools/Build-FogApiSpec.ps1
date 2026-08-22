@@ -243,6 +243,11 @@ foreach ($class in $snapshotClasses) {
             nullable = [bool]($f.PSObject.Properties.Name -contains 'nullable' -and $f.nullable)
             readOnly = [bool]($f.PSObject.Properties.Name -contains 'readOnly' -and $f.readOnly)
             maxLength = $(if ($f.PSObject.Properties.Name -contains 'maxLength') { $f.maxLength } else { $null })
+            # A model constraint the column type does not carry -- host.name is
+            # varchar(16) but Host::isHostnameSafe() allows 15 and a charset.
+            # The emitter turns it into ValidatePattern, so a caller is told
+            # before the request rather than by a 406 that names no field.
+            pattern  = $(if ($f.PSObject.Properties.Name -contains 'pattern') { $f.pattern } else { $null })
             enum     = $(if ($f.PSObject.Properties.Name -contains 'enum') { @($f.enum) } else { $null })
             required = ($required -contains $prop.Name)
         }
