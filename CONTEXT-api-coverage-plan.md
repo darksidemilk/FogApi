@@ -493,13 +493,44 @@ PowerShell classes. Corrected after re-measuring:
     so derived state computed there sees empty values. `ProvisioningMgmt` works around it by
     re-calling `SetStepName()`/`SetSynopsis()` in `Invoke-ProvisioningStep`. Better: do not
     compute derived state in a default constructor at all.
-  - **The C#-from-source pattern is already in use in this codebase's neighbours**, and even
-    more cheaply than JiraPS does it: `ProvisioningMgmt.psm1:2471` and `AutoLogon.psm1:171` do
-    `Add-Type -TypeDefinition (Get-Content "$script:lib\X.cs" -Raw)` **inside the function that
-    needs the type**, not at import — so nothing is compiled unless it is used. Neither module
-    sets `RequiredAssemblies`, `TypesToProcess` or `FormatsToProcess`; every one of those keys
-    is still commented out in their manifests. Precedent for shipping `.cs` exists; precedent
-    for manifest-driven type/format data does not.
+  - **The `.cs` files in those modules are not model precedent.** `ProvisioningMgmt/lib/background.cs`
+    and `AutoLogon/lib/LSAutil.cs` are pure P/Invoke — `DllImport("user32.dll")` +
+    `SetDesktopWallpaper`, and LSA policy structs for the autologon secret. They exist because
+    PowerShell cannot call those APIs, not to model anything. They do show a cheap loading
+    pattern worth copying *if* C# is ever used for models — `Add-Type -TypeDefinition
+    (Get-Content "$script:lib\X.cs" -Raw)` inside the function that needs the type, so nothing
+    compiles unless used — but there is no in-house precedent for C# domain models. Nor for
+    manifest-driven type/format data: `RequiredAssemblies`, `TypesToProcess` and
+    `FormatsToProcess` are commented out in every one of the five shipped manifests, and there
+    is not a single `.ps1xml` or `.dll` among them.
+
+### The lesson that does transfer: classes for inputs, type data for outputs
+
+`ProvisioningMgmt`'s classes are **parameter DTOs**, and say so — `SubStep`'s docblock reads
+"since the params are all the same, use a custom object type simplifies things a bit."
+`Invoke-ProvisioningSubStep` takes one `[SubStep]` instead of six parameters. That is a
+different problem from modelling an API response:
+
+| | ProvisioningMgmt's classes | a FOG response object |
+|---|---|---|
+| Who decides the shape | the module | the FOG server |
+| Undeclared fields possible | no | yes — 9 of `host`'s 39 |
+| Properties per type | 2–7 | 30–39 |
+| Number of types | 3 | 54 |
+| Consumed by | one function each | every cmdlet |
+
+So the pattern does not transfer to FogApi's **responses** — which is the case for type data
+there — but it transfers well to FogApi's **inputs**, where FogApi does own the shape and the
+undeclared-field problem cannot arise. Concrete candidates, all currently ad-hoc hashtables:
+
+- the imaging/task request bodies built by hand in `Send-FogImage` and friends
+- `Get-FogObject`'s `$pagedArgs` splat (`uriPath`/`Method`/`First`/`Skip`/`PageSize`)
+- the id-or-object-or-name parameter contract — a class plus a **static factory**, never an
+  `[object]` constructor, per the retraction above
+
+That split is the real synthesis: a class where FogApi authors the shape, type data where the
+server does. It also explains why the production module hits none of the problems measured
+here — it owns both ends of every object it types.
 
 ### Scoreboard
 
