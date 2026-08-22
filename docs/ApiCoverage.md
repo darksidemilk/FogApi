@@ -15,30 +15,30 @@ Generated from `spec/fog-api-spec.json`, which is itself built from FOG's own Op
 | `-` | Reachable only through the generic L1 wrappers. |
 | (blank) | The server does not serve this operation for this class. |
 
-**Totals:** 18 covered, 222 specified, 156 folded, 52 deferred, 86 L1-only.
+**Totals:** 25 covered, 215 specified, 156 folded, 52 deferred, 86 L1-only.
 
 ## Per-class operations
 
 | Class | Tier | `list` | `indiv` | `create` | `update` | `delete` | `search` | `count` | `names` | `ids` | `join` | `task` | `cancel` | `active` |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `filedeletequeue` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
-| `group` | 1 | x | o | o | x | o | o | f | f | f | d | o | o |  |
-| `groupassociation` | 2 | x | o | o | - | o | o | f | f | f | d |  |  |  |
+| `group` | 1 | x | x | o | x | o | o | f | f | f | d | o | o |  |
+| `groupassociation` | 2 | x | x | o | - | o | o | f | f | f | d |  |  |  |
 | `history` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `hookevent` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `host` | 1 | x | x | x | o | o | o | f | f | f | d | o | o |  |
 | `hostautologout` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `hostscreensetting` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
-| `image` | 1 | x | o | o | o | o | o | f | f | f | d |  |  |  |
+| `image` | 1 | x | x | o | o | o | o | f | f | f | d |  |  |  |
 | `imageassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
 | `imagepartitiontype` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `imagetype` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `imaginglog` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
-| `inventory` | 3 | o | x | - | - | - | o | f | f | f | d |  |  |  |
+| `inventory` | 3 | x | x | - | - | - | o | f | f | f | d |  |  |  |
 | `ipxe` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `keysequence` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
-| `macaddressassociation` | 2 | x | o | o | - | o | o | f | f | f | d |  |  |  |
-| `module` | 1 | x | o | o | o | o | o | f | f | f | d |  |  |  |
+| `macaddressassociation` | 2 | x | x | o | - | o | o | f | f | f | d |  |  |  |
+| `module` | 1 | x | x | o | o | o | o | f | f | f | d |  |  |  |
 | `moduleassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
 | `multicastsession` | 1 | o | o | o | o | o | o | f | f | f | d | o | o | o |
 | `multicastsessionassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
@@ -55,11 +55,11 @@ Generated from `spec/fog-api-spec.json`, which is itself built from FOG's own Op
 | `rolepermission` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `roleuserassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
 | `roleusergroupassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
-| `scheduledtask` | 1 | x | o | o | o | o | o | f | f | f | d | o | o | o |
+| `scheduledtask` | 1 | o | o | o | o | o | o | f | f | f | d | o | o | o |
 | `setting` | 1 | x | x | o | x | o | x | f | f | f | d |  |  |  |
 | `site` | 1 | o | o | o | o | o | o | f | f | f | d |  |  |  |
-| `snapin` | 1 | x | o | x | o | o | o | f | f | f | d |  |  |  |
-| `snapinassociation` | 2 | x | o | o | - | o | o | f | f | f | d |  |  |  |
+| `snapin` | 1 | x | x | x | o | o | o | f | f | f | d |  |  |  |
+| `snapinassociation` | 2 | x | x | o | - | o | o | f | f | f | d |  |  |  |
 | `snapingroupassociation` | 2 | o | o | o | - | o | o | f | f | f | d |  |  |  |
 | `snapinjob` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |
 | `snapintask` | 3 | o | o | - | - | - | o | f | f | f | d |  |  |  |

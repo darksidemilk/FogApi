@@ -287,9 +287,30 @@ foreach ($class in $snapshotClasses) {
 
 $publicDir = Join-Path $ModuleRoot 'Public'
 $existingFunctions = @{}
+$existingAliases = @{}
 if (Test-Path -LiteralPath $publicDir) {
-    Get-ChildItem -LiteralPath $publicDir -Filter '*.ps1' |
-        ForEach-Object { $existingFunctions[$_.BaseName] = $true }
+    foreach ($file in (Get-ChildItem -LiteralPath $publicDir -Filter '*.ps1')) {
+        $existingFunctions[$file.BaseName] = $true
+        # Aliases count as claimed names too. A generated cmdlet cannot take a
+        # name an alias already occupies -- Get-FogGroup is an alias for
+        # Get-FogHostGroup today, and emitting a function by that name would
+        # collide at import. Read from the AST rather than by line position, so
+        # this sees an alias wherever it is legally declared.
+        $parseErrors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile(
+            $file.FullName, [ref]$null, [ref]$parseErrors)
+        if ($parseErrors -and $parseErrors.Count -gt 0) { continue }
+        foreach ($attr in $ast.FindAll({
+                param($node) $node -is [System.Management.Automation.Language.AttributeAst] -and
+                    $node.TypeName.Name -eq 'Alias' }, $true)) {
+            if ($attr.Parent -isnot [System.Management.Automation.Language.ParamBlockAst]) { continue }
+            foreach ($arg in $attr.PositionalArguments) {
+                if ($arg -is [System.Management.Automation.Language.StringConstantExpressionAst]) {
+                    $existingAliases[$arg.Value] = $file.BaseName
+                }
+            }
+        }
+    }
 } else {
     Add-Problem "module Public directory not found at $publicDir"
 }
@@ -354,6 +375,10 @@ $generated = [System.Collections.Generic.List[object]]::new()
 $claimedNames = @{}
 foreach ($name in $handWritten.Keys) { $claimedNames[$name] = 'hand-written' }
 foreach ($name in $thinWrappers.Keys) { $claimedNames[$name] = 'thin-wrapper' }
+# An alias occupies a name as surely as a function does.
+foreach ($name in $existingAliases.Keys) {
+    if (-not $claimedNames.ContainsKey($name)) { $claimedNames[$name] = 'alias' }
+}
 
 $thinWrapperOps = @{}
 foreach ($name in $thinWrappers.Keys) { $thinWrapperOps[$thinWrappers[$name].operation] = $name }
@@ -366,6 +391,13 @@ foreach ($class in $snapshotClasses) {
         if (-not $classOperations[$class].ContainsKey($routeName)) {
             # Not an error: tier 1 asks for task/cancel/active, and only the
             # eight tasking classes have them.
+            continue
+        }
+        # An operation that merges into another names no function of its own.
+        # 'list' merges into 'indiv' because Get-Fog{Noun} answers both -- no
+        # arguments returns everything, -id or -name narrows to one -- so the
+        # list operation is recorded on that function rather than beside it.
+        if ($opNaming[$routeName].PSObject.Properties.Name -contains 'mergesInto') {
             continue
         }
         $opId = $classOperations[$class][$routeName]
@@ -383,14 +415,59 @@ foreach ($class in $snapshotClasses) {
         $suffix = if ($naming.PSObject.Properties.Name -contains 'suffix') { $naming.suffix } else { '' }
         $fn = New-FunctionName -Verb $naming.verb -Noun $noun -Infix $infix -Suffix $suffix
 
+        # Operations that merge into this one, so the emitter knows which
+        # parameter sets to build and the coverage matrix can score them as
+        # covered rather than missing.
+        $mergedOps = @()
+        foreach ($otherRoute in $opNaming.Keys) {
+            $otherNaming = $opNaming[$otherRoute]
+            if ($otherNaming.PSObject.Properties.Name -notcontains 'mergesInto') { continue }
+            if ($otherNaming.mergesInto -ne $routeName) { continue }
+            if (-not $classOperations[$class].ContainsKey($otherRoute)) { continue }
+            $mergedOps += $classOperations[$class][$otherRoute]
+        }
+
         $status = 'generate'
         $aliases = @()
         $replaces = $null
-        if ($thinWrapperOps.ContainsKey($opId)) {
+        $blockedBy = $null
+        # The plural spelling this function replaces. Kept as an alias so
+        # Get-FogHosts and its siblings keep working; it is not the function
+        # name any more.
+        if ($naming.PSObject.Properties.Name -contains 'pluralAlias' -and $naming.pluralAlias) {
+            $pluralName = New-FunctionName -Verb $naming.verb -Noun (Resolve-PluralNoun $class) -Infix $infix -Suffix $suffix
+            if ($pluralName -ne $fn) { $aliases += $pluralName }
+        }
+        $wrapperOpId = $opId
+        if (-not $thinWrapperOps.ContainsKey($wrapperOpId)) {
+            # A merged operation can be the one an existing wrapper covers:
+            # Get-FogHosts stands in for listHost, which now belongs to
+            # Get-FogHost rather than to a function of its own.
+            foreach ($m in $mergedOps) {
+                if ($thinWrapperOps.ContainsKey($m)) { $wrapperOpId = $m; break }
+            }
+        }
+        if ($claimedNames[$fn] -eq 'alias') {
+            # Skipped rather than emitted: the name belongs to an alias of some
+            # other function, so emitting it would collide at import. Freeing
+            # the name is a decision for whoever owns that alias.
+            $status = 'skipped-name-taken'
+            $blockedBy = $existingAliases[$fn]
+        } elseif ($claimedNames[$fn] -eq 'hand-written') {
+            # A hand-written function owns this name, so it wins outright --
+            # checked BEFORE the thin-wrapper branch, because a merged operation
+            # can match a wrapper while the merged NAME belongs to something
+            # hand-written. Get-FogHost is the case: it identifies the local
+            # machine when given nothing, Get-FogHosts is a thin wrapper for
+            # listHost, and without this order the generated Get-FogHost would
+            # claim to replace the wrapper and quietly displace the hand-written
+            # local-machine behaviour.
+            $status = 'skipped-name-taken'
+        } elseif ($thinWrapperOps.ContainsKey($wrapperOpId)) {
             # An existing wrapper already covers this operation. The generated
             # name wins where they differ and the old name becomes an alias;
             # nothing is deleted, so no caller breaks.
-            $replaces = $thinWrapperOps[$opId]
+            $replaces = $thinWrapperOps[$wrapperOpId]
             if ($replaces -ne $fn) { $aliases = @($replaces) }
             $status = 'replaces-thin-wrapper'
         } elseif ($claimedNames.ContainsKey($fn)) {
@@ -410,12 +487,14 @@ foreach ($class in $snapshotClasses) {
         $generated.Add([pscustomobject]@{
             functionName  = $fn
             status        = $status
+            blockedBy     = $blockedBy
             replaces      = $replaces
             aliases       = $aliases
             verb          = $naming.verb
             noun          = "$infix$($overlay.naming.prefix)$noun$suffix"
             operationId   = $opId
             routeName     = $routeName
+            mergedOperations = @($mergedOps)
             class         = $class
             tier          = $tierKey
             method        = $op.method

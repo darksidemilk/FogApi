@@ -81,6 +81,14 @@ $deferredRoutes = @(
 # operationId -> the function that answers for it
 $answeredBy = @{}
 foreach ($fn in $spec.functions) {
+    # An operation this function absorbed is answered by it, so it is covered by
+    # whatever this function's own state is. Get-FogPrinter takes both indiv and
+    # list; scoring list as L1-only because it has no record of its own would
+    # under-report by one row per class.
+    foreach ($merged in @($fn.mergedOperations)) {
+        $mergedState = if ($fn.status -eq 'generate') { 'planned' } else { 'covered' }
+        $answeredBy[$merged] = [pscustomobject]@{ name = $fn.functionName; state = $mergedState }
+    }
     if ($fn.status -eq 'skipped-name-taken') {
         # A hand-written function owns the name, which means it also owns the
         # operation -- Get-FogHost over host/indiv, for instance.

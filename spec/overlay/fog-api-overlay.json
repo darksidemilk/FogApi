@@ -29,8 +29,20 @@
     ],
     "prefix": "Fog",
     "operations": {
-      "list":   { "verb": "Get",    "nounForm": "plural"   },
-      "indiv":  { "verb": "Get",    "nounForm": "singular" },
+      "$comment": [
+        "list and indiv are ONE cmdlet, not two. Get-Fog{Noun} answers both, the",
+        "way Get-Process and Get-Service do: no arguments returns everything, -All",
+        "says so explicitly, -id or -name narrows to one.",
+        "",
+        "This replaced Get-Fog{Noun}s / Get-Fog{Noun}. Plural nouns tripped",
+        "PSUseSingularNouns, needed a pluralisation rule with a table of irregulars,",
+        "and split one question -- 'get me printers' -- across two names the caller",
+        "has to choose between. -All is the standard spelling for the same thing.",
+        "",
+        "Every existing plural name survives as an alias, so nothing breaks."
+      ],
+      "list":   { "verb": "Get",    "nounForm": "singular", "mergesInto": "indiv" },
+      "indiv":  { "verb": "Get",    "nounForm": "singular", "pluralAlias": true },
       "create": { "verb": "New",    "nounForm": "singular" },
       "update": { "verb": "Update", "nounForm": "singular" },
       "delete": { "verb": "Remove", "nounForm": "singular" },
@@ -59,9 +71,9 @@
         "edit is a plural cmdlet taking many ids, and a group-only get-or-create is a",
         "hand-written group helper, not a generic per-class shape."
       ],
-      "count": { "foldsInto": "list", "as": "-Count switch"     },
-      "names": { "foldsInto": "list", "as": "-NamesOnly switch" },
-      "ids":   { "foldsInto": "list", "as": "-IdsOnly switch"   },
+      "count": { "foldsInto": "indiv", "as": "-Count switch"     },
+      "names": { "foldsInto": "indiv", "as": "-NamesOnly switch" },
+      "ids":   { "foldsInto": "indiv", "as": "-IdsOnly switch"   },
       "join":  {
         "foldsInto": null,
         "as": "deferred",
@@ -113,6 +125,30 @@
       "usergroup": "UserGroup",
       "usergroupmember": "UserGroupMember",
       "usertracking": "UserTracking"
+    },
+    "nameLookup": {
+      "$comment": [
+        "The server has no get-by-name route. AltoRouter constrains the id segment",
+        "to [i:id], so /{class}/{name} does not route at all. Getting one object by",
+        "name is therefore a client-side convenience, and FogApi has always offered",
+        "it -- Get-FogHost -hostName and Get-FogGroupByName both do it, each a",
+        "different way.",
+        "",
+        "The generated -name parameter resolves through /{class}/names: an unpaged,",
+        "uncapped list of id and name pairs, matched exactly, then one GET by id.",
+        "Two requests, both small.",
+        "",
+        "Not /{class}/search/{item}, which is one request but matches the term",
+        "across every field -- so searching a printer named 'Alpha' also hits any",
+        "printer whose description mentions Alpha, and the result still needs",
+        "filtering. Not a full list either, which is what Get-FogHost does and which",
+        "now pages the entire table since the 1.6 paging fix.",
+        "",
+        "names is 1.6 only, so on 1.5 the emitted cmdlet falls back to search."
+      ],
+      "via": "names",
+      "fallbackOnFifteen": "search",
+      "matchField": "name"
     },
     "irregularPlurals": {
       "os": "OSes",
