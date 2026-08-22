@@ -433,49 +433,82 @@ so nothing moves.
 `storagenode` is the mirror image: `key` and `pass` are *declared* and not returned, so a class
 would present two always-empty typed properties as though they were real.
 
-### Second finding: a class validates worse than a type name
+### What did *not* decide it — three claims retracted
 
-Measured, and the opposite of what was expected:
+Three findings from the first pass were artifacts of my own test code, not properties of
+PowerShell classes. Corrected after re-measuring:
 
-| Parameter | Given a `[pscustomobject]@{nope=1}` |
-|---|---|
-| `[FogHost]$x` | **accepted** — PowerShell coerces any PSObject into a class by property-matching |
-| `[PSTypeName('FogApi.Host')]$x` | **rejected**, `MismatchedPSTypeName` |
+- **"A class validates worse than a type name."** Wrong. `[FogHost]$x` accepted a junk
+  `[pscustomobject]@{nope=1}` only because my class declared a permissive
+  `FogHost([object]$fromApi)` constructor, and PowerShell's conversion found it. A class with
+  no single-argument `[object]` constructor **rejects** junk and still accepts a
+  correctly-shaped `PSCustomObject`. Measured both ways:
 
-So the class arm loses the "typed parameters / validation" goal it was supposed to win.
+  | Class | Given `[pscustomobject]@{nope=1}` |
+  |---|---|
+  | no `[object]` ctor | rejected |
+  | with `[object]` ctor | **bound** |
 
-### What did *not* decide it
+  Lesson for any generated class: do not emit a catch-all `[object]` constructor on the type
+  used as a parameter type. Put the from-API conversion on a static factory instead.
 
-Two things looked disqualifying and were not, both corrected after measuring:
+- **"The opaque type name."** A class in a *dynamic* module (`New-Module -ScriptBlock`) reports
+  as `<hash>.FogHost`. A real file-based module does not — both arms reported clean names.
 
-- **The opaque type name.** A class in a dynamic module (`New-Module -ScriptBlock`) reports as
-  `<hash>.FogHost`. A real file-based module does not — both arms reported clean names, and
-  `(Get-Command …).OutputType.Name` was `FogHost` / `FogApi.Host` respectively.
-- **The source layout.** A dot-sourced class is invisible to a dot-sourced function at
-  invocation time, so `Get-Help` on `[OutputType([FogHost])]` throws and the cmdlet cannot
-  construct its own return type. But `build.ps1:129-132` already fixes this — it
-  `Import-Module`s each `Classes/*.ps1` **twice** ("do it twice to resolve classes with
-  dependencies"), which puts the type in the session table and makes `Get-Help`, caller type
-  naming, and construction all work. Verified. Repeated `Import-Module` of the *module* does
-  not substitute; it has to be the class files.
+- **"Dot-sourcing is why the class arm failed."** Wrong, and the distinction is scope, not the
+  cmdlet. Loading class files from **inside** the `.psm1` fails identically whether you
+  dot-source them or `Import-Module` them, twice or not. What works is importing the class
+  files from the **caller's** scope after the module, which is what `build.ps1:129-132` does
+  before running PlatyPS:
+
+  | Class files loaded… | cmdlet | `Get-Help` | caller can name the type |
+  |---|---|---|---|
+  | inside the psm1, dot-source ×2 | FAIL | FAIL | FAIL |
+  | inside the psm1, `Import-Module` ×2 | FAIL | FAIL | FAIL |
+  | from the caller's scope, `Import-Module` ×2 | OK | OK | OK |
+
+  A `param()` block naming a class resolves the type at **invocation**, against the session's
+  type table; a class loaded in module scope never reaches it.
+
+  **Open, and not testable here:** `ProvisioningMgmt.psm1` (a production Arrowhead module) does
+  the class `Import-Module` loop *inside* its psm1 and works. That contradicts the table above,
+  so the behaviour likely differs on Windows PowerShell 5.1, which this Linux container cannot
+  run. Worth confirming before relying on either result.
 
 ### Scoreboard
 
-| | class | type data |
-|---|---|---|
-| Field paths preserved | ✗ 9 of 39 relocate | ✓ untouched |
-| Rejects a wrong-shaped object | ✗ silently coerces | ✓ |
-| Methods on the object | ✓ | ✓ (`ScriptMethod`) |
-| Readable default table | ✗ needs type data anyway | ✓ `DefaultDisplayPropertySet` |
-| Caller can name the type | ✓ after the class-import step | ✓ always |
-| Declared scalar types | ✓ `Int32` | ✗ `Int64` from `ConvertFrom-Json` |
-| Editor IntelliSense on `$h.` | ✓ | ✗ |
-| Artifact size, 54 types extrapolated | ~40.5 KB | ~5.1 KB |
-| Import cost, measured at 52×35 props | 92 ms parse / 129 ms | 56 ms |
-| Plumbing needed | psm1 loader + class-import step everywhere | one call, re-emitted by the build |
+A third option, **compiled C# via `Add-Type` on shipped source**, was evaluated later and is
+included here because it changes the ranking. Prior art: `AtlassianPS/JiraPS` does exactly this
+— `JiraPS.psm1:14-33` compiles `JiraPS/Types/*.cs` at import behind a type-presence guard, with
+no csproj and no shipped binary.
 
-The class arm's two real wins are declared scalar types and editor IntelliSense. Neither
-outweighs breaking property paths on data the schema does not fully describe.
+| | `.ps1` class | compiled C# | type data |
+|---|---|---|---|
+| Field paths preserved | ✗ 9 of 39 relocate | **✓ via `DynamicObject`** | ✓ untouched |
+| …and those fields visible to `Get-Member` | ✗ | ✗ | ✓ |
+| Rejects a wrong-shaped object | ✓ (no `[object]` ctor) | ✓ | ✓ |
+| Methods on the object | ✓ | ✓ | ✓ (`ScriptMethod`) |
+| Readable default table | ✗ needs a format file anyway | ✗ same | ✓ |
+| Caller can name the type | ✓ after the caller-scope class import | ✓ always, no ceremony | ✓ always |
+| Declared scalar types | ✓ `Int32` | ✓ + real `DateTime?` | ✗ `Int64` from `ConvertFrom-Json` |
+| Editor IntelliSense on `$h.` | ✓ | ✓ | ✗ |
+| Load cost, 54 types / ~418 props | 129 ms | 561 ms cold, ~0 warm | 56 ms |
+| Unloads with the module | ✓ | ✗ assemblies never unload | ✗ leaks session-globally |
+
+`System.Dynamic.DynamicObject` is the one real discriminator between the two typed options:
+overriding `TryGetMember` in **C#** makes `$h.macs` and `$h.inventory.sysuuid` resolve for
+fields the model never declared. The same inheritance from a **PowerShell** class does **not**
+work — PowerShell's own member lookup does not route through `TryGetMember`; `$h.macs` came back
+empty. So only the compiled option can be both typed and non-relocating.
+
+Ranking on that evidence: compiled C# is the strongest long-term shape, type data is a close and
+much cheaper second, and `.ps1` classes are dominated by both — not because they fail
+mechanically, but because they carry the relocation cost of a typed model without the natural-path
+escape that makes it palatable.
+
+Type data is what shipped, and remains right for now: the deciding factor is that a typed model
+must be regenerated once `_entitySchema()` is fixed, and the spec fix is deferred. A format file
+(`FormatsToProcess`) is wanted under all three and is the obvious next increment.
 
 ### What landed
 
