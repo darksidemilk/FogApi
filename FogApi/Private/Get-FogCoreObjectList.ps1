@@ -40,13 +40,13 @@ Returns the 1.6 class names.
             return @(
             'filedeletequeue', 'group', 'groupassociation', 'history', 'hookevent', 'host',
             'hostautologout', 'hostscreensetting', 'image', 'imageassociation', 'imagepartitiontype', 'imagetype',
-            'imaginglog', 'inventory', 'ipxe', 'keysequence', 'macaddressassociation', 'module',
-            'moduleassociation', 'multicastsession', 'multicastsessionassociation', 'nodefailure', 'notifyevent', 'os',
-            'oui', 'plugin', 'powermanagement', 'printer', 'printerassociation', 'pxemenuoptions',
-            'role', 'rolepermission', 'roleuserassociation', 'roleusergroupassociation', 'scheduledtask', 'setting',
-            'site', 'siteassociation', 'snapin', 'snapinassociation', 'snapingroupassociation', 'snapinjob',
-            'snapintask', 'storagegroup', 'storagenode', 'task', 'tasklog', 'taskstate',
-            'tasktype', 'unisearch', 'user', 'usergroup', 'usergroupmember', 'usertracking'
+            'inventory', 'ipxe', 'keysequence', 'macaddressassociation', 'module', 'moduleassociation',
+            'multicastsession', 'multicastsessionassociation', 'nodefailure', 'notifyevent', 'os', 'oui',
+            'plugin', 'powermanagement', 'printer', 'printerassociation', 'pxemenuoptions', 'role',
+            'rolepermission', 'roleuserassociation', 'roleusergroupassociation', 'scheduledtask', 'setting', 'site',
+            'siteassociation', 'snapin', 'snapinassociation', 'snapingroupassociation', 'snapinjob', 'snapintask',
+            'storagegroup', 'storagenode', 'task', 'tasklog', 'taskstate', 'tasktype',
+            'unisearch', 'user', 'usergroup', 'usergroupmember', 'usertracking'
             )
         }
         return @(

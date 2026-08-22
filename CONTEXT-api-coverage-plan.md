@@ -341,6 +341,39 @@ diff against `spec/openapi/fog-1.6.json`, and fail with the delta.
 
 ---
 
+## Upstream bug: 20 classes advertise a search route that cannot work
+
+Found while repointing `Get-LastImageTime` at `taskLog`, and confirmed against a live 1.6 server
+with rows that plainly matched the search term.
+
+`Route::search($class, $item)` (`route.class.php:3168`) does not query the class. It calls
+`unisearch($item)`, reads `$items->{$classname}` out of the result, collects those ids and then
+lists them. And `unisearch` **deliberately skips any entity with no `name` column** — the code
+says so, with the ntfy plugin as the worked example.
+
+So for a class with no `name`, `/{class}/search/{item}` always answers `recordsFiltered: 0`,
+whatever is asked for. Measured on `tasklog` with `42`, `probe`, `Win-11-23H2` and `Deploy`, every
+one of which matched a real row: all four returned zero, against `recordsTotal: 4`.
+
+`OpenAPI::_paths()` emits the generic ten operations for every route class, so the document
+advertises the route for all of them. **Twenty entities have no `name` column and every one of
+them is documented with a `/search/{item}` it cannot honour:**
+
+`filedeletequeue`, `groupassociation`, `history`, `hostautologout`, `hostscreensetting`,
+`imageassociation`, `inventory`, `ipxe`, `macaddressassociation`, `moduleassociation`,
+`multicastsessionassociation`, `nodefailure`, `powermanagement`, `printerassociation`,
+`snapinassociation`, `snapingroupassociation`, `snapinjob`, `snapintask`, `tasklog`, `usertracking`
+
+The fix belongs upstream, in `_paths()`: emit the `search` operation only where the model has a
+`name` field, the same condition `unisearch` already applies. That is a spec change, so it is a
+hand-edit to `openapi.class.php` under the project's own rule — the document is only partly
+generated from the router. Until it lands, generated `Find-Fog<Noun>` cmdlets for those twenty
+classes are dead on arrival, and `Get-LastImageTime` pages the list instead.
+
+Worth pairing with the other thing this exposed: the list routes take only `start`, `length` and
+`expand`, so there is no server-side column filter at all. Reading one host's imaging history means
+pulling every `taskLog` row, and nothing prunes that table.
+
 ## Verified server facts
 
 Researched from `fogproject` (1.5, `dev-branch`) and `working-1.6`. Recorded so a future session
@@ -617,7 +650,17 @@ generating them before it would bake today's gap into 54 display sets.
   Bash uses camelCase because that is FOG's own bash house style — `working-1.6`'s
   `lib/common/functions.sh` and `bin/*.sh` define 88 camelCase functions (`installPackages`,
   `backupDB`, `_requestNodeCert`) against 25 all-lowercase.
-- **Dynamic params: additive only.** Never remove a ValidateSet entry. Own PR, own regression test.
+- **Dynamic params: additive by default, but a retired route class is removed.** *(Amended
+  2026-08-22.)* The original rule was "never remove a ValidateSet entry", on the grounds that
+  removing one breaks callers and adding one never does. That still holds for anything the server
+  can still serve. It does not hold when the server has **retired the class**: leaving the name in
+  place only lets it tab-complete into a 404, which is a worse experience than a clear binding
+  error naming the removed value. FogApi targets the latest 1.6 — that is the version intended to
+  become stable, and giving people a reason to move to it is the point.
+  `imaginglog` is the first such removal (upstream ADR 0022; `taskLog.imageName` replaces it) and
+  belongs in the release notes as a breaking change. The **1.5 list keeps it**, because 1.5 still
+  serves it — the list is version-aware, and a removal applies only to the line that dropped the
+  route. Additions remain free. Own PR, own regression test.
 - **`Find-FogObject` and the unisearch path are not modified.** New capability arrives as
   `Find-FogAll` alongside it.
 - **Every cmdlet routes through L1.** Only Tier 5 fixed-route cmdlets may call `Invoke-FogApi`

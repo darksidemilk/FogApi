@@ -13,11 +13,20 @@ not work at all.
 
 The spec knows the real list, so the list is generated from it.
 
-Two entries are kept that are NOT route classes, because removing a ValidateSet
-entry breaks callers and adding one never does:
+Two entries are kept that are NOT route classes:
 
   unisearch        Find-FogObject's sentinel for a universal search, not a class
   siteassociation  a name older callers may already pass
+
+Entries CAN now leave the 1.6 list. That reverses the original rule here, which
+was "removing a ValidateSet entry breaks callers and adding one never does", and
+the reversal is deliberate: FogApi targets the latest 1.6, so a name the server
+no longer routes should not tab-complete into a 404. imaginglog was the first,
+retired upstream by ADR 0022 with taskLog.imageName replacing it. See
+CONTEXT-api-coverage-plan.md, "Locked decisions".
+
+The two kept entries above are not an exception to that -- neither was ever a
+route class, so neither can be retired by the server.
 
 The 1.5 list stays hand-maintained. That line ships no schema manifest, so
 nothing describes it, and inventing a generated list for it would be a guess

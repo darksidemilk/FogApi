@@ -93,7 +93,6 @@
       "imageassociation": "ImageAssociation",
       "imagepartitiontype": "ImagePartitionType",
       "imagetype": "ImageType",
-      "imaginglog": "ImagingLog",
       "filedeletequeue": "FileDeleteQueue",
       "groupassociation": "GroupAssociation",
       "hookevent": "HookEvent",
@@ -231,7 +230,7 @@
       "label": "Read-only lookups and logs",
       "operations": ["list", "indiv", "search"],
       "classes": [
-        "history", "hookevent", "imaginglog", "imagepartitiontype", "imagetype",
+        "history", "hookevent", "imagepartitiontype", "imagetype",
         "inventory", "ipxe", "keysequence", "nodefailure", "notifyevent", "oui",
         "plugin", "pxemenuoptions", "snapinjob", "snapintask", "tasklog",
         "taskstate", "tasktype", "usertracking", "hostautologout",

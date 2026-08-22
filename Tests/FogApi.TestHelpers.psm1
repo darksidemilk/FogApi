@@ -240,13 +240,6 @@ function Get-FogMockResponse {
         '^image$' {
             if ($Method -eq 'GET') { return Get-Fixture 'images.json' }
         }
-        '^imaginglog$' {
-            # imaginglogs.json, not imaginglog.json: this is the LIST route, and
-            # returning the single-object fixture handed callers one object
-            # where the envelope belongs. Nothing noticed until a generated
-            # list cmdlet asked for it.
-            if ($Method -eq 'GET') { return Get-Fixture 'imaginglogs.json' }
-        }
         '^inventory/new$' {
             if ($Method -eq 'POST') { return $jsonData | ConvertFrom-Json }
         }

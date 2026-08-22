@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "FOG Project API",
-        "version": "1.6.0-beta.3789",
+        "version": "1.6.0-beta.3820",
         "description": "Generated from this server's own routing and model metadata,\nso it describes the classes and routes THIS server exposes,\nincluding any a plugin has added.\n\nEnable under FOG Configuration > FOG Settings > API System.\nAuthenticate with the `fog-api-token` (server-wide) and\n`fog-user-token` (per user) headers, or with HTTP basic auth.\n\nField names: every property is also addressable by its raw\ndatabase column name, because the model layer flips\n$databaseFields into $databaseFieldsFlipped and accepts\neither spelling. Only the property name is documented here.",
         "license": {
             "name": "GPL-3.0",
@@ -81,10 +81,6 @@
         {
             "name": "imagetype",
             "description": "Operations on imagetype, stored in the imageTypes table."
-        },
-        {
-            "name": "imaginglog",
-            "description": "Operations on imaginglog, stored in the imagingLog table."
         },
         {
             "name": "inventory",
@@ -7659,551 +7655,6 @@
                 },
                 "description": "Also reachable as /delete and /remove.",
                 "x-fog-permission": "image.delete"
-            }
-        },
-        "/imaginglog": {
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "listImaginglog",
-                "summary": "List imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Imaginglog"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "report.view"
-            },
-            "post": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "createImaginglog",
-                "summary": "Create a imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "The created object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imaginglog"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /create and /new.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Imaginglog"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.create"
-            }
-        },
-        "/imaginglog/count": {
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "countImaginglog",
-                "summary": "Count imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "The count.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "total": {
-                                            "type": "integer"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
-                "x-fog-permission": "report.view"
-            }
-        },
-        "/imaginglog/ids": {
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "idsImaginglog",
-                "summary": "Ids for imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "An unpaged array.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
-                "x-fog-permission": "report.view"
-            }
-        },
-        "/imaginglog/join": {
-            "put": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "joinImaginglog",
-                "summary": "Bulk edit imaginglog",
-                "responses": {
-                    "202": {
-                        "description": "Applied. No body is returned."
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Imaginglog"
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "ids"
-                                        ],
-                                        "properties": {
-                                            "ids": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "integer"
-                                                },
-                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.create"
-            }
-        },
-        "/imaginglog/names": {
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "namesImaginglog",
-                "summary": "Id and name pairs for imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "An unpaged array.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "report.view"
-            }
-        },
-        "/imaginglog/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "searchImaginglog",
-                "summary": "Search imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Imaginglog"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "report.view"
-            }
-        },
-        "/imaginglog/{id}": {
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "integer"
-                    }
-                }
-            ],
-            "get": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "indivImaginglog",
-                "summary": "Get one imaginglog by id",
-                "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imaginglog"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Fields withheld from list responses are returned here.",
-                "x-fog-permission": "report.view"
-            },
-            "put": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "updateImaginglog",
-                "summary": "Update a imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Imaginglog"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /update and /edit. Send only the fields being changed.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Imaginglog"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.edit"
-            },
-            "delete": {
-                "tags": [
-                    "imaginglog"
-                ],
-                "operationId": "deleteImaginglog",
-                "summary": "Delete a imaginglog",
-                "responses": {
-                    "200": {
-                        "description": "Success.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "msg": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /delete and /remove.",
-                "x-fog-permission": "report.delete"
             }
         },
         "/inventory": {
@@ -31428,6 +30879,7 @@
                     },
                     "stateID": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "fdqState"
                     },
                     "pathtype": {
@@ -31462,6 +30914,7 @@
                     },
                     "building": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "groupBuilding"
                     },
                     "kernel": {
@@ -31579,10 +31032,12 @@
                     },
                     "imageID": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hostImage"
                     },
                     "building": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hostBuilding"
                     },
                     "deployed": {
@@ -31661,6 +31116,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "hostPending"
                     },
                     "pub_key": {
@@ -31783,26 +31239,32 @@
                     },
                     "width": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssWidth"
                     },
                     "height": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssHeight"
                     },
                     "refresh": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssRefresh"
                     },
                     "orientation": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssOrientation"
                     },
                     "other1": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssOther1"
                     },
                     "other2": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "hssOther2"
                     }
                 },
@@ -31834,6 +31296,7 @@
                     },
                     "building": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "imageBuilding"
                     },
                     "size": {
@@ -31871,6 +31334,7 @@
                     },
                     "protected": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "imageProtect"
                     },
                     "compress": {
@@ -31933,6 +31397,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "igaPrimary"
                     }
                 },
@@ -31991,48 +31456,6 @@
                     "name",
                     "type"
                 ]
-            },
-            "Imaginglog": {
-                "type": "object",
-                "x-fog-table": "imagingLog",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "x-fog-column": "ilID",
-                        "readOnly": true
-                    },
-                    "hostID": {
-                        "type": "integer",
-                        "x-fog-column": "ilHostID"
-                    },
-                    "start": {
-                        "type": "string",
-                        "format": "date-time",
-                        "x-fog-column": "ilStartTime"
-                    },
-                    "finish": {
-                        "type": "string",
-                        "format": "date-time",
-                        "nullable": true,
-                        "x-fog-column": "ilFinishTime"
-                    },
-                    "image": {
-                        "type": "string",
-                        "maxLength": 64,
-                        "x-fog-column": "ilImageName"
-                    },
-                    "type": {
-                        "type": "string",
-                        "maxLength": 64,
-                        "x-fog-column": "ilType"
-                    }
-                },
-                "required": [
-                    "hostID",
-                    "start",
-                    "image"
-                ],
-                "description": "Responses may carry computed fields that are not columns and are not settable through the generic create/edit path: host, images."
             },
             "Inventory": {
                 "type": "object",
@@ -32309,6 +31732,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "hmPending"
                     },
                     "primary": {
@@ -32317,6 +31741,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "hmPrimary"
                     },
                     "clientIgnore": {
@@ -32325,6 +31750,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "hmIgnoreClient"
                     },
                     "imageIgnore": {
@@ -32333,6 +31759,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "hmIgnoreImaging"
                     }
                 },
@@ -32421,6 +31848,7 @@
                     },
                     "port": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msBasePort"
                     },
                     "logpath": {
@@ -32433,10 +31861,12 @@
                     },
                     "clients": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msClients"
                     },
                     "sessclients": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msSessClients"
                     },
                     "interface": {
@@ -32452,10 +31882,12 @@
                     },
                     "percent": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msPercent"
                     },
                     "stateID": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msState"
                     },
                     "completetime": {
@@ -32466,6 +31898,7 @@
                     },
                     "isDD": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msIsDD"
                     },
                     "storagegroupID": {
@@ -32483,6 +31916,7 @@
                     },
                     "maxwait": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "msMaxwait"
                     },
                     "senderpid": {
@@ -32745,6 +32179,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "pmOndemand"
                     },
                     "action": {
@@ -32933,6 +32368,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "pxeHotKeyEnable"
                     },
                     "keysequence": {
@@ -33270,6 +32706,7 @@
                     },
                     "protected": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "snapinProtect"
                     },
                     "isEnabled": {
@@ -33386,6 +32823,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "sgaPrimary"
                     }
                 },
@@ -33443,6 +32881,7 @@
                     },
                     "stateID": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "stState"
                     },
                     "checkin": {
@@ -33468,6 +32907,7 @@
                     },
                     "return": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "stReturnCode"
                     },
                     "details": {
@@ -33587,6 +33027,7 @@
                     },
                     "maxClients": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "ngmMaxClients"
                     },
                     "user": {
@@ -33617,6 +33058,7 @@
                     },
                     "bandwidth": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "ngmBandwidthLimit"
                     },
                     "webroot": {
@@ -33684,6 +33126,7 @@
                     },
                     "pct": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "taskPCT",
                         "x-fog-server-owned": true,
                         "readOnly": true,
@@ -33766,6 +33209,7 @@
                     },
                     "isDebug": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "taskIsDebug"
                     },
                     "imageID": {
@@ -33778,6 +33222,7 @@
                             "0",
                             "1"
                         ],
+                        "default": "0",
                         "x-fog-column": "taskWOL"
                     },
                     "bypassbitlocker": {
@@ -33850,6 +33295,11 @@
                         "type": "string",
                         "maxLength": 30,
                         "x-fog-column": "logTaskTypeName"
+                    },
+                    "imageName": {
+                        "type": "string",
+                        "maxLength": 40,
+                        "x-fog-column": "logImageName"
                     }
                 }
             },
@@ -33979,6 +33429,7 @@
                     },
                     "type": {
                         "type": "integer",
+                        "default": 0,
                         "x-fog-column": "uType"
                     },
                     "display": {

@@ -9,7 +9,7 @@
   "specVersion": 1,
   "source": {
     "openapi": "spec/openapi/fog-1.6.json",
-    "fogVersion": "1.6.0-beta.3789",
+    "fogVersion": "1.6.0-beta.3820",
     "overlay": "spec/overlay/fog-api-overlay.json",
     "oasVersion": "3.0.3"
   },
@@ -86,11 +86,11 @@
     }
   },
   "stats": {
-    "snapshotClasses": 52,
-    "snapshotOperations": 555,
-    "tieredClasses": 52,
-    "candidateOps": 188,
-    "toGenerate": 182,
+    "snapshotClasses": 51,
+    "snapshotOperations": 545,
+    "tieredClasses": 51,
+    "candidateOps": 186,
+    "toGenerate": 180,
     "skippedNameTaken": 6,
     "replacesThinWrapper": 9,
     "fixedRoutes": 15,
@@ -1126,58 +1126,6 @@
       "l1Function": "Find-FogObject",
       "coreObject": "imagetype",
       "schema": "Imagetype",
-      "onFogFifteen": true,
-      "fifteenPath": null
-    },
-    {
-      "functionName": "Get-FogImagingLog",
-      "status": "generate",
-      "blockedBy": null,
-      "replaces": null,
-      "aliases": [
-        "Get-FogImagingLogs"
-      ],
-      "suppressedAliases": [],
-      "verb": "Get",
-      "noun": "FogImagingLog",
-      "operationId": "indivImaginglog",
-      "routeName": "indiv",
-      "mergedOperations": [
-        "listImaginglog"
-      ],
-      "class": "imaginglog",
-      "tier": "3",
-      "method": "GET",
-      "path": "/imaginglog/{id}",
-      "permission": "report.view",
-      "summary": "Get one imaginglog by id",
-      "l1Function": "Get-FogObject",
-      "coreObject": "imaginglog",
-      "schema": "Imaginglog",
-      "onFogFifteen": true,
-      "fifteenPath": null
-    },
-    {
-      "functionName": "Find-FogImagingLog",
-      "status": "generate",
-      "blockedBy": null,
-      "replaces": null,
-      "aliases": [],
-      "suppressedAliases": [],
-      "verb": "Find",
-      "noun": "FogImagingLog",
-      "operationId": "searchImaginglog",
-      "routeName": "search",
-      "mergedOperations": [],
-      "class": "imaginglog",
-      "tier": "3",
-      "method": "GET",
-      "path": "/imaginglog/search/{item}",
-      "permission": "report.view",
-      "summary": "Search imaginglog",
-      "l1Function": "Find-FogObject",
-      "coreObject": "imaginglog",
-      "schema": "Imaginglog",
       "onFogFifteen": true,
       "fifteenPath": null
     },
@@ -6747,86 +6695,6 @@
         }
       ]
     },
-    "imaginglog": {
-      "schemaName": "Imaginglog",
-      "table": "imagingLog",
-      "fields": [
-        {
-          "name": "id",
-          "type": "integer",
-          "column": "ilID",
-          "nullable": false,
-          "readOnly": true,
-          "maxLength": null,
-          "pattern": null,
-          "enum": null,
-          "required": false,
-          "aliases": [
-            "IDofObject"
-          ]
-        },
-        {
-          "name": "hostID",
-          "type": "integer",
-          "column": "ilHostID",
-          "nullable": false,
-          "readOnly": false,
-          "maxLength": null,
-          "pattern": null,
-          "enum": null,
-          "required": true,
-          "aliases": []
-        },
-        {
-          "name": "start",
-          "type": "string",
-          "column": "ilStartTime",
-          "nullable": false,
-          "readOnly": false,
-          "maxLength": null,
-          "pattern": null,
-          "enum": null,
-          "required": true,
-          "aliases": []
-        },
-        {
-          "name": "finish",
-          "type": "string",
-          "column": "ilFinishTime",
-          "nullable": true,
-          "readOnly": false,
-          "maxLength": null,
-          "pattern": null,
-          "enum": null,
-          "required": false,
-          "aliases": []
-        },
-        {
-          "name": "image",
-          "type": "string",
-          "column": "ilImageName",
-          "nullable": false,
-          "readOnly": false,
-          "maxLength": 64,
-          "pattern": null,
-          "enum": null,
-          "required": true,
-          "aliases": []
-        },
-        {
-          "name": "type",
-          "type": "string",
-          "column": "ilType",
-          "nullable": false,
-          "readOnly": false,
-          "maxLength": 64,
-          "pattern": null,
-          "enum": null,
-          "required": false,
-          "aliases": []
-        }
-      ]
-    },
     "inventory": {
       "schemaName": "Inventory",
       "table": "inventory",
@@ -10657,6 +10525,18 @@
           "nullable": false,
           "readOnly": false,
           "maxLength": 30,
+          "pattern": null,
+          "enum": null,
+          "required": false,
+          "aliases": []
+        },
+        {
+          "name": "imageName",
+          "type": "string",
+          "column": "logImageName",
+          "nullable": false,
+          "readOnly": false,
+          "maxLength": 40,
           "pattern": null,
           "enum": null,
           "required": false,
