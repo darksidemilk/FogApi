@@ -60,7 +60,7 @@ if([string]::IsNullOrEmpty($buildPth)) {
 }
 
 if ($useLocal) {
-    mkdir "$env:temp\modules" -ea 0 | out-null;
+    New-Item -ItemType Directory -Force -Path (Join-Path $env:temp 'modules') -ea 0 | out-null;
     Register-PSResourceRepository -Name temp -Trusted -Uri "$env:temp\modules" -ea 0
     $repo = "temp"
     publish-PSResource -Repository temp -Path $buildPth
@@ -77,7 +77,7 @@ $chocoPth = "$buildPth\choco";
 if (Test-Path $chocoPth) {
     Remove-Item $chocoPth -force -Recurse -ea 0;
 }
-mkdir $chocoPth -ea 0 | out-null;
+New-Item -ItemType Directory -Force -Path $chocoPth -ea 0 | out-null;
 $manifest = "$buildPth\$moduleName.psd1"
 $cur = test-ModuleManifest -Path $manifest;
 
@@ -103,8 +103,8 @@ try {
 
 #create the tools and files folders for choco pkg
 "Creating choco package folders" | out-host;
-mkdir "$chocoPth\$moduleName\$version\tools" -ea 0 | out-null;
-mkdir "$chocoPth\$moduleName\$version\tools\files" -ea 0 | out-null;
+New-Item -ItemType Directory -Force -Path (Join-Path $chocoPth $moduleName $version 'tools') -ea 0 | out-null;
+New-Item -ItemType Directory -Force -Path (Join-Path $chocoPth $moduleName $version 'tools' 'files') -ea 0 | out-null;
 # if (!(Test-Path "$chocoPth\$moduleName\$version\icons")) {
 #     mkdir "$chocoPth\$moduleName\$version\icons" -ea 0 | out-null;
 #     Copy-Item "$PSScriptRoot\$modulename\icons\favicon.png" "$chocoPth\$moduleName\$version\icons\favicon.png"

@@ -90,9 +90,9 @@
     "snapshotOperations": 545,
     "tieredClasses": 51,
     "candidateOps": 186,
-    "toGenerate": 180,
-    "skippedNameTaken": 6,
-    "replacesThinWrapper": 9,
+    "toGenerate": 181,
+    "skippedNameTaken": 5,
+    "replacesThinWrapper": 10,
     "fixedRoutes": 15,
     "handWritten": 56
   },
@@ -151,9 +151,9 @@
     },
     {
       "functionName": "Get-FogGroup",
-      "status": "skipped-name-taken",
-      "blockedBy": "Get-FogHostGroup",
-      "replaces": null,
+      "status": "replaces-thin-wrapper",
+      "blockedBy": null,
+      "replaces": "Get-FogGroups",
       "aliases": [
         "Get-FogGroups"
       ],

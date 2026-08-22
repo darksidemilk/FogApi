@@ -132,7 +132,9 @@ $config.Output.Verbosity = 'Detailed'
 if ($CI) {
 	$outputDir = Split-Path $OutputPath -Parent
 	if ($outputDir -and !(Test-Path $outputDir)) {
-		mkdir $outputDir -Force | Out-Null
+		# New-Item, not mkdir - powershell only defines mkdir as a function on windows, so on
+		# linux this hands -Force to /usr/bin/mkdir, which rejects it
+		New-Item -ItemType Directory -Force -Path $outputDir | Out-Null
 	}
 	$config.TestResult.Enabled = $true
 	$config.TestResult.OutputFormat = 'NUnitXml'
@@ -147,7 +149,7 @@ $result = Invoke-Pester -Configuration $config
 $generatedAt = (Get-Date).ToString('yyyy-MM-dd HH:mm')
 $reportDir = Split-Path $TestResultsReportPath -Parent
 if ($reportDir -and !(Test-Path $reportDir)) {
-	mkdir $reportDir -Force | Out-Null
+	New-Item -ItemType Directory -Force -Path $reportDir | Out-Null
 }
 ConvertTo-FogTestResultsMarkdown -Tests $result.Tests -RealServer:$RealServer -GeneratedAt $generatedAt | Set-Content -Path $TestResultsReportPath
 "Test results report written to $TestResultsReportPath" | Out-Host

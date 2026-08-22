@@ -15,6 +15,7 @@ function Get-WinEfiMountLetter {
     #>
         
         [CmdletBinding()]
+        [Alias('Get-EfiMountLetter')]
         param (   
         )
         

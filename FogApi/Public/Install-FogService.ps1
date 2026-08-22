@@ -24,6 +24,12 @@ install of the smart installer if that fails
     )
 
     process {
+        if ($IsLinux -or $IsMacOS) {
+            #the linux fog client is a different artifact installed through the distro's package
+            #manager, so there is nothing meaningful for this to do here
+            Write-Warning "This installs the windows fog client and is only implemented for windows. On linux install the fog client through your package manager.";
+            return $null;
+        }
         if ($fogServer -like "http*") {
             $fileUrl = "$fogServer/fog/client/download.php?newclient";
             $fileUrl2 = "$fogServer/fog/client/download.php?smartinstaller";
@@ -32,7 +38,7 @@ install of the smart installer if that fails
             $fileUrl2 = "http://$fogServer/fog/client/download.php?smartinstaller";
         }
         Write-Host "Making temp download dir";
-        mkdir C:\fogtemp;
+        New-Item -ItemType Directory -Force -Path 'C:\fogtemp' | Out-Null;
         Write-Host "downloading installer";
         Invoke-WebRequest -URI $fileUrl -UseBasicParsing -OutFile 'C:\fogtemp\fog.msi';
         Invoke-WebRequest -URI $fileUrl2 -UseBasicParsing -OutFile 'C:\fogtemp\fog.exe';

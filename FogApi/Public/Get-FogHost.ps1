@@ -82,32 +82,10 @@ function Get-FogHost {
             $hostID = $inventorys | Where-Object { $_.sysserial -eq $serialNumber -OR $_.mbserial -eq $serialNumber -OR $_.caseserial -eq $serialNumber } | Select-Object -ExpandProperty HostID #find the inventory where the serial number matches one of the serial numbers in a hosts inventory and select the host id from that
         } elseif (!$uuid -and !$hostName -and !$macAddr -and !$hostID) {
             Write-Verbose 'no params given, getting current computer variables';
-            try {
-                $compSys = Get-CimInstance -ClassName win32_computersystemproduct
-            } catch {
-                $compSys = (Get-WmiObject Win32_ComputerSystemProduct);
-            }
-            if ($compSys.UUID -notmatch "12345678-9012-3456-7890-abcdefabcdef" ) {
-                $uuid = $compSys.UUID;
-            } else {
-                $uuid = ($compSys.Qualifiers | Where-Object Name -match 'UUID' | Select-Object -ExpandProperty Value);
-            }
-            # $macAddr = ((Get-NetAdapter | Select-Object MacAddress)[0].MacAddress).Replace('-',':');
-            $make = Get-CimInstance -classname win32_computersystem | Select-Object -ExpandProperty manufacturer
-            if (($Make) -notmatch "vmware" ) { 
-                $macAddr = (
-                    Get-NetAdapter | Where-Object { 
-                        $_.Status -eq 'up' -And $_.Name -notmatch 'VMware'
-                    } | Select-Object -first 1 | Select-Object -expand MacAddress
-                ).Replace("-",":");
-            } else {
-                $macAddr = (
-                    Get-NetAdapter | Where-Object { 
-                        $_.Status -eq 'up'
-                    } | Select-Object -first 1 | Select-Object -expand MacAddress
-                ).Replace("-",":");
-            }
-            $hostName = $(hostname);
+            $identity = Get-FogLocalIdentity;
+            $uuid = $identity.uuid;
+            $macAddr = $identity.macAddress;
+            $hostName = $identity.hostName;
         } else {
             if ($hostID) {
                 Write-Verbose "getting host from ID $hostID directly..."
@@ -127,21 +105,35 @@ function Get-FogHost {
             }
         } else {
             $hosts = (Get-FogHosts)
-            $hostObj = $hosts | Where-Object {
-                ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) -OR `
-                ($hostName -ne "" -AND $_.name -eq $hostName) -OR `
-                ($macAddr -ne "" -AND $_.macs -contains $macAddr);
-                if  ($uuid -ne "" -AND $_.inventory.sysuuid -eq $uuid) {
-                    $found = $true;
-                    Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found is $found";
-                }
-                if ($macAddr -ne "" -AND $_.macs -contains $macAddr) {
-                    Write-Verbose "$($_.macs) matches the macaddress $macAddr`! host found";
-                    $found = $true;
-                }
-                if  ($hostName -ne "" -AND $_.name -eq $hostName) {
-                    Write-Verbose "$($_.name) matches the hostname $hostName`! host found";
-                    $found = $true;
+            #these guards used to be '$uuid -ne ""', but $null -ne "" is true, so a null
+            #search term degenerated into 'sysuuid -eq $null' and matched every host that
+            #has no inventory uuid. Callers feed this straight into Update-FogObject, so a
+            #wrong match here writes to the wrong host record on the server
+            [bool]$haveUuid = -not [string]::IsNullOrWhiteSpace($uuid);
+            [bool]$haveName = -not [string]::IsNullOrWhiteSpace($hostName);
+            [bool]$haveMac  = -not [string]::IsNullOrWhiteSpace($macAddr);
+            if (!$haveUuid -and !$haveName -and !$haveMac) {
+                #no 'return' here - returning from process() does not skip end(), so it would
+                #emit a value and then let end() emit $found as well
+                Write-Error "No usable search terms for this host. The local machine identity could not be determined, which is expected under pwsh on linux and mac. Pass -hostName, -macAddr, -uuid, -hostID or -serialNumber explicitly.";
+                $hostObj = $null;
+            } else {
+                $hostObj = $hosts | Where-Object {
+                    ($haveUuid -AND $_.inventory.sysuuid -eq $uuid) -OR `
+                    ($haveName -AND $_.name -eq $hostName) -OR `
+                    ($haveMac -AND $_.macs -contains $macAddr);
+                    if  ($haveUuid -AND $_.inventory.sysuuid -eq $uuid) {
+                        $found = $true;
+                        Write-Verbose "$($_.inventory.sysuuid) matches the uuid $uuid`! host found is $found";
+                    }
+                    if ($haveMac -AND $_.macs -contains $macAddr) {
+                        Write-Verbose "$($_.macs) matches the macaddress $macAddr`! host found";
+                        $found = $true;
+                    }
+                    if  ($haveName -AND $_.name -eq $hostName) {
+                        Write-Verbose "$($_.name) matches the hostname $hostName`! host found";
+                        $found = $true;
+                    }
                 }
             }
         }

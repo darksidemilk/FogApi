@@ -58,7 +58,7 @@ This will prompt you for each setting and allow you to paste in the values for e
         $settingsFile = Get-FogServerSettingsFile;
         $ServerSettings = Get-FogServerSettings;
         Write-Verbose "Current/old Settings are $($ServerSettings)";
-        $initialSettings = Get-content -raw "$script:lib\settings.json" | ConvertFrom-Json
+        $initialSettings = Get-content -raw (Join-Path $script:lib 'settings.json') | ConvertFrom-Json
         $helpTxt = @{
             fogApiToken = $initialSettings.fogApiToken; # "fog API token found at http://fog-server/fog/management/index.php?node=about&sub=settings under API System";
             fogUserToken = $initialSettings.fogUserToken; # "your fog user api token found in the user settings http://fog-server/fog/management/index.php?node=user&sub=list select your api enabled used and view the api tab";
@@ -71,7 +71,7 @@ This will prompt you for each setting and allow you to paste in the values for e
             }
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
-            if ($IsLinux) {
+            if ($IsLinux -or $IsMacOS) {
                 Write-Warning "If you have issues with pasting your apikeys into these prompts (issue with read-host in some linux instances of pwsh), try again without -interactive and paste into each param. i.e. `Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'"
             }
             ($serverSettings.psobject.properties).Name | ForEach-Object {
@@ -148,7 +148,7 @@ This will prompt you for each setting and allow you to paste in the values for e
                     $editor = 'notepad.exe';
                 }
             }
-            if ($IsLinux) {
+            if ($IsLinux -or $IsMacOS) {
                 #wait to open the editor until the user has a chance to read the warning
                 "Editor $editor will open in 5 seconds, please read the warning above before editing the settings file" | out-host;
                 "Tip: use the insert key to enter insert mode if using vi then 'esc' then ':wq' to save and exit in vi, or 'ctrl+x' then 'y' to save and exit in nano" | out-host;
