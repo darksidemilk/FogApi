@@ -1,0 +1,10 @@
+{
+  "count": 1,
+  "roles": [
+    {
+      "id": 1,
+      "name": "ExampleRole",
+      "description": ""
+    }
+  ]
+}

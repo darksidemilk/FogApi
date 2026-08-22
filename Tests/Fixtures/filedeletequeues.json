@@ -1,0 +1,13 @@
+{
+  "count": 1,
+  "filedeletequeues": [
+    {
+      "id": 1,
+      "path": "",
+      "storagegroupID": 1,
+      "completedTime": "",
+      "stateID": 1,
+      "pathtype": ""
+    }
+  ]
+}

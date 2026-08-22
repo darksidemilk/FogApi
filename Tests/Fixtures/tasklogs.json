@@ -1,0 +1,47 @@
+{
+  "count": 3,
+  "tasklogs": [
+    {
+      "id": 0,
+      "taskID": 1,
+      "stateID": 1,
+      "ip": "10.0.0.42",
+      "type": "",
+      "text": "",
+      "hostID": 42,
+      "hostName": "MeowMachine",
+      "taskTypeName": "Deploy",
+      "imageName": "Win-10-20H2",
+      "createdTime": "2026-01-02 08:00:00",
+      "createdBy": "fog"
+    },
+    {
+      "id": 1,
+      "taskID": 1,
+      "stateID": 1,
+      "ip": "10.0.0.42",
+      "type": "",
+      "text": "",
+      "hostID": 42,
+      "hostName": "MeowMachine",
+      "taskTypeName": "Deploy",
+      "imageName": "Win-10-21H2",
+      "createdTime": "2026-08-18 12:19:38",
+      "createdBy": "fog"
+    },
+    {
+      "id": 2,
+      "taskID": 1,
+      "stateID": 1,
+      "ip": "10.0.0.42",
+      "type": "",
+      "text": "",
+      "hostID": 42,
+      "hostName": "MeowMachine",
+      "taskTypeName": "Wake Up",
+      "imageName": "",
+      "createdTime": "2026-09-01 09:00:00",
+      "createdBy": "fog"
+    }
+  ]
+}

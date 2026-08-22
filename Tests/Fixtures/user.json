@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "name": "ExampleUser",
+  "password": "",
+  "type": 1,
+  "display": "",
+  "api": "0",
+  "token": "",
+  "authsource": ""
+}

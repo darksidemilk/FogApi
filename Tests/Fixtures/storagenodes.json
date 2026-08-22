@@ -1,0 +1,29 @@
+{
+  "count": 1,
+  "storagenodes": [
+    {
+      "id": 1,
+      "name": "ExampleStoragenode",
+      "description": "",
+      "isMaster": "",
+      "storagegroupID": 1,
+      "isEnabled": "",
+      "isGraphEnabled": "0",
+      "path": "",
+      "ftppath": "",
+      "bitrate": "",
+      "helloInterval": "",
+      "snapinpath": "",
+      "sslpath": "",
+      "ip": "",
+      "maxClients": 1,
+      "user": "",
+      "pass": "",
+      "key": "",
+      "interface": "",
+      "bandwidth": 1,
+      "webroot": "",
+      "graphcolor": ""
+    }
+  ]
+}
