@@ -30,6 +30,15 @@ function Get-FogObject {
     .PARAMETER NoAutoPage
     make a single request and return the raw api envelope untouched instead of auto paging
 
+    .PARAMETER subPath
+    one of the cheap per-class sub-routes: count, names or ids. FOG 1.6 only.
+    These are unpaged and are returned exactly as the server sends them, because none of them
+    carries a list envelope: count answers {"total":N}, names a bare array of id/name pairs,
+    and ids a bare array of integers. names and ids have no LIMIT applied server side at all,
+    which makes them the cheap way to enumerate a large table when you only need identifiers.
+    Cannot be combined with IDofObject - these are routes on the class, not on one object.
+    FOG 1.5 does not serve any of them and will answer with an error.
+
     .EXAMPLE
     Get-FogObject -type object -coreObject host
 
@@ -51,6 +60,24 @@ function Get-FogObject {
 
     Expected output:
     { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }
+
+    .EXAMPLE
+    Get-FogObject -type object -coreObject host -subPath count
+
+    Asks the server how many hosts there are without transferring any of them.
+    Reports the true filtered total and ignores paging.
+
+    Expected output:
+    { "total": 1 }
+
+    .EXAMPLE
+    Get-FogObject -type object -coreObject host -subPath names
+
+    Returns id and name pairs only. Unpaged and uncapped server side, so this is the cheap
+    way to enumerate a large table when the other fields are not needed.
+
+    Expected output:
+    [ { "id": 42, "name": "MeowMachine" } ]
 
     .NOTES
     FOG 1.6 caps any unbounded list request at 10000 rows (MAX_ROWS), so a plain list call silently
@@ -80,7 +107,14 @@ function Get-FogObject {
         [Parameter()]
         [int]$PageSize = 1000,
         [Parameter()]
-        [switch]$NoAutoPage
+        [switch]$NoAutoPage,
+        # The cheap per-class sub-routes. A ValidateSet rather than a free
+        # string on purpose: this is not a general escape hatch for arbitrary
+        # paths -- Get-FogPagedResult -uriPath is that -- it is the three
+        # sub-routes that belong to a class alongside its list.
+        [Parameter()]
+        [ValidateSet('count','names','ids')]
+        [string]$subPath
     )
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
@@ -94,7 +128,13 @@ function Get-FogObject {
                 $uri = "$coreActiveTaskObject/current";
             }
             object {
-                if ($null -eq $IDofObject -OR $IDofObject -eq "") {
+                if (-not [string]::IsNullOrEmpty($subPath)) {
+                    if (-not [string]::IsNullOrEmpty($IDofObject)) {
+                        throw "Get-FogObject: -subPath and -IDofObject are mutually exclusive. '$subPath' is a route on the class, not on one object.";
+                    }
+                    $uri = "$coreObject/$subPath";
+                }
+                elseif ($null -eq $IDofObject -OR $IDofObject -eq "") {
                     $uri = "$coreObject";
                 }
                 else {
@@ -120,12 +160,20 @@ function Get-FogObject {
         }
 
         #only a plain list call can be paged, a call for one specific object cannot
-        [bool]$isListCall = ($type -eq 'object') -AND (!$IDofObject);
+        #the count/names/ids sub-routes are not paged either - see below
+        [bool]$isListCall = ($type -eq 'object') -AND (!$IDofObject) -AND ([string]::IsNullOrEmpty($subPath));
 
         if (!$isListCall -OR $NoAutoPage) {
             $result = Invoke-FogApi @apiInvoke;
-            #if the api call wasn't for a specific object, convert the output to use the data property added in fog 1.6
-            if (!$IDofObject) {
+            # The sub-routes are returned exactly as the server sent them.
+            # None of them carries a list envelope to normalise: count answers
+            # {"total":N}, names a bare array of {id,name}, ids a bare array of
+            # integers. Add-FogResultData exists to paper over the 1.5-vs-1.6
+            # LIST envelope difference, and these three do not exist on 1.5 at
+            # all, so there is nothing for it to reconcile and running it would
+            # only wrap a plain array in a shape the caller did not ask for.
+            if (!$IDofObject -AND [string]::IsNullOrEmpty($subPath)) {
+                #if the api call wasn't for a specific object, convert the output to use the data property added in fog 1.6
                 $result = Add-FogResultData $result;
             }
             return $result;

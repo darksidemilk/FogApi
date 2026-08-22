@@ -117,8 +117,16 @@ Add-Content -Path $moduleFile -Value $heading
 #Add Private Functions
 if ($null -ne $PrivateFunctions) {
 	$PrivateFunctions | ForEach-Object {
-		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);            
+		Add-Content -Path $moduleFile -Value (Get-Content $_.FullName);
 	}
+}
+
+# Import-time calls. The built psm1 is generated from the Classes/Public/Private
+# files and does NOT inherit the source FogApi.psm1's body, so anything the source
+# psm1 runs at import has to be re-emitted here or it silently does not happen in
+# the shipped module. Emitted last, after every function it may call exists.
+if (Test-Path "$modulePath\Private\Register-FogTypeData.ps1") {
+	Add-Content -Path $moduleFile -Value "`nRegister-FogTypeData";
 }
 
 $manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"

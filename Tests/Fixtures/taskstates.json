@@ -1,0 +1,12 @@
+{
+  "count": 1,
+  "taskstates": [
+    {
+      "id": 1,
+      "name": "ExampleTaskstate",
+      "description": "",
+      "order": 1,
+      "icon": ""
+    }
+  ]
+}

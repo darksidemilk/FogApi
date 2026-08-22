@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "usergroupmembers": [
+    {
+      "id": 1,
+      "name": "ExampleUsergroupmember",
+      "usergroupID": 1,
+      "userID": 1
+    }
+  ]
+}

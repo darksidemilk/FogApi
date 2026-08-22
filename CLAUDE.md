@@ -14,7 +14,7 @@ FogApi is a PowerShell module (client SDK) that wraps the REST API of the [FOG P
 - **Docs site:** MkDocs (`mkdocs.yml`, Python deps in `docs/requirements.txt`), built locally via `build.ps1 -buildMkdocs` or on Read the Docs (`.readthedocs.yml`).
 - **CI:** `.github/workflows/build-test.yml` runs `.\invoke-modulebuild.ps1` then `Test-ModuleManifest` + `Import-Module` as a smoke test on `windows-latest` for PRs to master. `.github/workflows/tag-and-release.yml` re-runs that build, then `build.ps1`, and publishes to PSGallery + Chocolatey on merge to master.
 - **Linting:** none configured (no PSScriptAnalyzer settings file exists).
-- **Tests:** none implemented yet — `Tests/placeholder.md` notes Pester tests are planned but don't exist. The only current validation is the CI build-test workflow (module manifest + import smoke test); there is no single-test invocation pattern to follow yet.
+- **Tests:** Pester, run with `./Invoke-FogApiTests.ps1` (`-CI` for the CI shape, `-Function <name>` to scope a run). Mocked against `Tests/Fixtures/` by default — that is the CI gate. `-RealServer` additionally runs `Tests/FogApi.RealServer.Tests.ps1` against whatever server `api-settings.json` points at, journaling every mutating call and reverting it afterwards.
 
 ## Architecture
 
@@ -49,6 +49,46 @@ Config is a local JSON file per OS user, **not** environment variables:
 ## Versioning
 
 Scheme is `{Year}{Month}.{Major}.{Revision}` (e.g. `2208` = August 2022); bumped automatically by `build.ps1`.
+
+## Commit authorship
+
+Commits are **authored by the human running the session and co-authored by the
+agent**, never the other way round. A fresh cloud session starts with no git
+identity, so this has to be set per clone, every time:
+
+```bash
+git config user.name  "<the human's name>"
+git config user.email "<the human's git email>"
+```
+
+Resolving who that is, in order:
+
+1. An existing `git config user.email` in the clone or a global config — use it.
+2. The account that owns the session. Its GitHub noreply address
+   (`<id>+<login>@users.noreply.github.com`) is what this history already uses;
+   `git log --format='%an <%ae>'` shows the form for a given contributor.
+3. Otherwise ask. Do not guess a variant of a name seen elsewhere.
+
+Never fall back to `Claude <noreply@anthropic.com>` as the **author**. It goes
+in the trailer instead:
+
+```
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+No model name in the trailer, and no model identifier anywhere in a commit
+message, PR title or body, or code comment.
+
+If commits were already made under the wrong author, reauthor rather than
+leaving it — on an unmerged branch belonging to the same author:
+
+```bash
+git rebase <base> --exec "git commit --amend --no-edit --author='<name> <email>' --quiet"
+git push --force-with-lease origin <branch>
+```
+
+Only reauthor commits the agent made in this session. Never rewrite another
+contributor's commits, and never force-push a branch that has already merged.
 
 ## Git Flow
 

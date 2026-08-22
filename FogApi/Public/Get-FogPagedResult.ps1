@@ -19,7 +19,7 @@ function Get-FogPagedResult {
     client side so behaviour is identical across versions from the callers point of view.
 
     .PARAMETER uriPath
-    the api path to page through, without a query string, e.g. host or imaginglog
+    the api path to page through, without a query string, e.g. host or tasklog
 
     .PARAMETER Method
     the http method, defaults to GET. Only list shaped routes page
@@ -45,7 +45,7 @@ function Get-FogPagedResult {
     { "count": 1, "data": [ { "name": "MeowMachine", "id": 42 } ] }
 
     .EXAMPLE
-    (Get-FogPagedResult -uriPath imaginglog -First 50).data
+    (Get-FogPagedResult -uriPath tasklog -First 50).data
 
     Gets the 50 most recent imaging log entries without walking the whole table, which on a server
     with any history is the difference between one request and dozens.

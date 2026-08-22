@@ -1,6 +1,6 @@
 {
-    "id": 2,
-    "name": "FOG_MEMORY_LIMIT",
-    "value": "512",
-    "description": "Memory limit"
+  "id": 1,
+  "name": "FOG_QUICKREG_PENDING_MAC_FILTER",
+  "value": "00:00:00:00:00:00,FF:FF:FF:FF:FF:FF",
+  "description": "Mac address filter for quick registration"
 }

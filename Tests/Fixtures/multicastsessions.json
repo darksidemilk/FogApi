@@ -1,0 +1,27 @@
+{
+  "count": 1,
+  "multicastsessions": [
+    {
+      "id": 1,
+      "name": "ExampleMulticastsession",
+      "port": 1,
+      "logpath": "",
+      "image": "",
+      "clients": 1,
+      "sessclients": 1,
+      "interface": "",
+      "starttime": "",
+      "percent": 1,
+      "stateID": 1,
+      "completetime": "",
+      "isDD": 1,
+      "storagegroupID": 1,
+      "shutdown": "0",
+      "maxwait": 1,
+      "senderpid": 1,
+      "sendernode": 1,
+      "senderstart": "",
+      "anon5": ""
+    }
+  ]
+}

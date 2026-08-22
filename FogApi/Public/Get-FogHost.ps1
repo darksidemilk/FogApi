@@ -166,6 +166,19 @@ function Get-FogHost {
                 $hostID = $hostObj.id;
                 $hostObj = (Get-Fogobject -type object -coreObject host -IDofObject "$hostID");
             }
+            # Stamp the ETS type name so Register-FogTypeData's display set and
+            # methods apply. Additive on purpose: nothing is reshaped, converted or
+            # dropped, so every field the server sent stays where callers expect it.
+            # That matters more than it sounds -- a stock 1.6 host response carries
+            # 39 fields and components.schemas.Host declares 30, because the schema
+            # reflects the model's own columns while the route returns the entity
+            # joined to its relations. Two of the nine undeclared ones (macs,
+            # inventory) are read by this very function.
+            foreach ($h in @($hostObj)) {
+                if ($null -ne $h -and $h.PSObject.TypeNames[0] -ne 'FogApi.Host') {
+                    $h.PSObject.TypeNames.Insert(0, 'FogApi.Host');
+                }
+            }
             return $hostObj;
         }
         return $found; #return false if host not found

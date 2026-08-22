@@ -173,7 +173,11 @@ function Get-FogMockResponse {
                 $created | Add-Member -MemberType NoteProperty -Name id -Value 88 -Force
                 return $created
             }
-            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
+            # scheduledtasks.json, not scheduledtasks-current.json: a plain list
+            # of scheduled tasks is not the active-task list, and -current is
+            # empty. The two were conflated here, so the list route answered
+            # with nothing -- invisible until a generated list cmdlet asked.
+            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks.json' }
         }
         '^scheduledtask/current$' {
             if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
@@ -236,9 +240,6 @@ function Get-FogMockResponse {
         '^image$' {
             if ($Method -eq 'GET') { return Get-Fixture 'images.json' }
         }
-        '^imaginglog$' {
-            if ($Method -eq 'GET') { return Get-Fixture 'imaginglog.json' }
-        }
         '^inventory/new$' {
             if ($Method -eq 'POST') { return $jsonData | ConvertFrom-Json }
         }
@@ -250,8 +251,112 @@ function Get-FogMockResponse {
         }
     }
 
+    # Convention-based fallback.
+    #
+    # The table above is hand-maintained, which was fine for a demand-driven
+    # module and does not survive generated cmdlets: the spec resolves to over
+    # two hundred of them across fifty-two classes, and four hand-written switch
+    # arms each is eight hundred arms nobody will keep correct.
+    #
+    # Generated cmdlets all hit the same shapes, so the shapes are matched
+    # instead. A class opts in purely by having a fixture file with the
+    # conventional name -- there is nothing to register. The explicit table
+    # still wins, so nothing above changes behaviour.
+    #
+    # A conventional list fixture holds exactly ONE row. The generated examples
+    # assert a single-element array, because an emitter has no way to know how
+    # many rows a server would return; multi-row behaviour is asserted on the
+    # request sequence in Get-FogPagedResult.Tests.ps1 instead, which is where
+    # it belongs.
+    #
+    #   GET    {class}                 -> {class}s.json
+    #   GET    {class}/{id}            -> {class}.json
+    #   GET    {class}/search/{item}   -> {class}s-search.json, else {class}s.json
+    #   POST   {class}                 -> the body echoed back with an id
+    #   PUT    {class}/{id}/edit       -> the body echoed back with that id
+    #   DELETE {class}/{id}/delete     -> delete-result.json
+    function Test-Fixture([string]$name) {
+        Test-Path -LiteralPath (Join-Path $script:FixturesPath $name)
+    }
+    function New-EchoedObject([string]$body, $id) {
+        # A real server answers a create or an edit with the stored object, so
+        # the mock echoes the request back rather than inventing a shape. An id
+        # is added when the caller did not send one, which is what a create does.
+        $echo = if ([string]::IsNullOrEmpty($body)) { [pscustomobject]@{} } else { $body | ConvertFrom-Json }
+        if ($null -ne $id -and -not ($echo.PSObject.Properties.Name -contains 'id')) {
+            $echo | Add-Member -NotePropertyName 'id' -NotePropertyValue $id
+        }
+        return $echo
+    }
+
+    function Get-FixtureRows([string]$name) {
+        # The rows out of a list fixture, whichever property holds them. A 1.5
+        # style fixture keys them by class name ({count, printers[]}), a 1.6 one
+        # by 'data'. Same rule Add-FogResultData uses: take the property holding
+        # a collection.
+        $fixture = Get-Fixture $name
+        $rowProp = @($fixture.PSObject.Properties |
+            Where-Object { $_.Name -ne 'count' -and $_.Value -is [System.Collections.IEnumerable] -and $_.Value -isnot [string] } |
+            Select-Object -First 1)
+        if ($rowProp.Count -eq 0) { return @() }
+        return @($rowProp[0].Value)
+    }
+
+    $class = $null
+    $shape = $null
+    $objectId = $null
+    switch -regex ($uriPath) {
+        '^(?<class>[a-z]+)$'                          { $class = $Matches['class']; $shape = 'collection' }
+        '^(?<class>[a-z]+)/search/.+$'                { $class = $Matches['class']; $shape = 'search' }
+        '^(?<class>[a-z]+)/count$'                    { $class = $Matches['class']; $shape = 'count' }
+        '^(?<class>[a-z]+)/names$'                    { $class = $Matches['class']; $shape = 'names' }
+        '^(?<class>[a-z]+)/ids$'                      { $class = $Matches['class']; $shape = 'ids' }
+        '^(?<class>[a-z]+)/(?<id>\d+)$'               { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'single' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/edit$'          { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'edit' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/delete$'        { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'delete' }
+    }
+
+    if ($class) {
+        switch ("$Method/$shape") {
+            'GET/collection' { if (Test-Fixture "$($class)s.json") { return Get-Fixture "$($class)s.json" } }
+            'GET/single'     { if (Test-Fixture "$class.json")     { return Get-Fixture "$class.json" } }
+            'GET/search'     {
+                if (Test-Fixture "$($class)s-search.json") { return Get-Fixture "$($class)s-search.json" }
+                if (Test-Fixture "$($class)s.json")        { return Get-Fixture "$($class)s.json" }
+            }
+            # count, names and ids are DERIVED from the list fixture rather than
+            # each getting a fixture of their own. A real server computes them
+            # from the same rows, so deriving is the only way the four cannot
+            # contradict each other, and a class opts into all four by adding
+            # one file. Shapes match the server exactly: {"total":N}, a bare
+            # array of id/name pairs, and a bare array of ids.
+            'GET/count' {
+                if (Test-Fixture "$($class)s.json") {
+                    return [pscustomobject]@{ total = @(Get-FixtureRows "$($class)s.json").Count }
+                }
+            }
+            'GET/names' {
+                if (Test-Fixture "$($class)s.json") {
+                    return @(Get-FixtureRows "$($class)s.json" |
+                        ForEach-Object { [pscustomobject]@{ id = $_.id; name = $_.name } })
+                }
+            }
+            'GET/ids' {
+                if (Test-Fixture "$($class)s.json") {
+                    return @(Get-FixtureRows "$($class)s.json" | ForEach-Object { $_.id })
+                }
+            }
+            'POST/collection' { return New-EchoedObject -body $jsonData -id 1 }
+            'PUT/edit'        { return New-EchoedObject -body $jsonData -id $objectId }
+            'DELETE/delete'   { if (Test-Fixture 'delete-result.json') { return Get-Fixture 'delete-result.json' } }
+        }
+    }
+
     $qsNote = if ($queryString) { " (query string '$queryString' was stripped before lookup)" } else { '' }
-    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'$qsNote"
+    $hint = if ($class) {
+        " The path matched the '$shape' shape for class '$class', so adding Tests/Fixtures/$($class)s.json (or $class.json for a single object) is enough - no change to this file is needed."
+    } else { '' }
+    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'$qsNote.$hint"
 }
 
 function Test-FogIdLikeValue {

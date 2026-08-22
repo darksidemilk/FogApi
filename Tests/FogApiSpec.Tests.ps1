@@ -1,0 +1,165 @@
+#
+# The spec pipeline's own tests.
+#
+# Generated code is only trustworthy if it provably came from the spec. Three
+# things can silently break that, and each gets a test:
+#
+#   1. The resolved spec is stale -- someone changed an input and did not
+#      rebuild, so the coverage matrix and the emitters disagree with the
+#      snapshot.
+#   2. A generated file was hand-edited. The edit survives until the next
+#      emitter run, then vanishes without trace, and the reason it vanished is
+#      not obvious to whoever lost the change.
+#   3. The manifest drifted from the files on disk. This has already happened
+#      twice in this repo.
+#
+# All three are cheap to check by regenerating into a temp directory and
+# comparing. Nothing here touches the network.
+#
+BeforeDiscovery {
+    $script:RepoRoot = Split-Path -Parent $PSScriptRoot
+    $script:SpecRoot = Join-Path $script:RepoRoot 'spec'
+    $script:SpecFile = Join-Path $script:SpecRoot 'fog-api-spec.json'
+    $script:HasSpec = Test-Path -LiteralPath $script:SpecFile
+}
+
+Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
+
+    BeforeAll {
+        $script:RepoRoot = Split-Path -Parent $PSScriptRoot
+        $script:SpecRoot = Join-Path $script:RepoRoot 'spec'
+        $script:SpecFile = Join-Path $script:SpecRoot 'fog-api-spec.json'
+        $script:Spec = Get-Content -LiteralPath $script:SpecFile -Raw | ConvertFrom-Json
+        $script:Snapshot = Get-Content -LiteralPath (Join-Path $script:SpecRoot 'openapi/fog-1.6.json') -Raw | ConvertFrom-Json
+        $script:Scratch = Join-Path ([System.IO.Path]::GetTempPath()) ("fogapi-spec-" + [guid]::NewGuid().ToString('N'))
+        $null = New-Item -ItemType Directory -Path $script:Scratch -Force
+    }
+
+    AfterAll {
+        if ($script:Scratch -and (Test-Path -LiteralPath $script:Scratch)) {
+            Remove-Item -LiteralPath $script:Scratch -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    Context 'the snapshot' {
+        It 'is the document FOG 1.6 serves, not a hand-written approximation' {
+            # These are the shapes every emitter reads. If the generator upstream
+            # stops emitting them, generated cmdlets lose their typed parameters
+            # and nobody would otherwise notice until the output looked thin.
+            $script:Snapshot.openapi | Should -Be '3.0.3'
+            $script:Snapshot.'x-fog-paging'.maxRows | Should -BeGreaterThan 0
+            $script:Snapshot.components.schemas.Printer.properties.name.'x-fog-column' | Should -Be 'pAlias'
+            $script:Snapshot.paths.'/printer'.get.operationId | Should -Be 'listPrinter'
+        }
+
+        It 'has a provenance record naming the commit it came from' {
+            $provenance = Get-Content -LiteralPath (Join-Path $script:SpecRoot 'openapi/PROVENANCE.json') -Raw | ConvertFrom-Json
+            $provenance.source.commit | Should -Match '^[0-9a-f]{40}$'
+            $provenance.source.fogVersion | Should -Be $script:Snapshot.info.version
+        }
+    }
+
+    Context 'the resolved spec' {
+        It 'is up to date with its inputs' {
+            $rebuilt = Join-Path $script:Scratch 'fog-api-spec.json'
+            & (Join-Path $script:SpecRoot 'tools/Build-FogApiSpec.ps1') -OutFile $rebuilt | Out-Null
+            $expected = (Get-Content -LiteralPath $rebuilt -Raw).Trim()
+            $actual = (Get-Content -LiteralPath $script:SpecFile -Raw).Trim()
+            $actual | Should -Be $expected -Because 'spec/fog-api-spec.json is stale. Run spec/tools/Build-FogApiSpec.ps1.'
+        }
+
+        It 'uses only approved PowerShell verbs' {
+            $approved = @(Get-Verb | ForEach-Object { $_.Verb })
+            $names = @($script:Spec.functions | ForEach-Object { $_.functionName }) +
+                     @($script:Spec.fixedRoutes | ForEach-Object { $_.functionName })
+            foreach ($name in $names) {
+                $verb = $name.Split('-')[0]
+                $approved | Should -Contain $verb -Because "$name would fail PSUseApprovedVerbs"
+            }
+        }
+
+        It 'routes every generated cmdlet through the L1 layer' {
+            # Only the tier-5 fixed routes may call Invoke-FogApi directly, and
+            # only because those endpoints have no L1 representation at all.
+            foreach ($fn in $script:Spec.functions) {
+                $fn.l1Function | Should -Not -BeNullOrEmpty -Because "$($fn.functionName) has no L1 function"
+            }
+        }
+    }
+
+    Context 'the emitted files' {
+        It 'match what the emitter produces right now' {
+            & (Join-Path $script:SpecRoot 'tools/New-FogApiFunctionFile.ps1') -Class printer -OutDir $script:Scratch | Out-Null
+            $emitted = @(Get-ChildItem -LiteralPath $script:Scratch -Filter '*.ps1')
+            $emitted.Count | Should -BeGreaterThan 0
+            foreach ($file in $emitted) {
+                $onDisk = Join-Path (Join-Path $script:RepoRoot 'FogApi') "Public/$($file.Name)"
+                Test-Path -LiteralPath $onDisk | Should -BeTrue -Because "$($file.Name) is in the spec but not in Public"
+                (Get-Content -LiteralPath $onDisk -Raw) | Should -Be (Get-Content -LiteralPath $file.FullName -Raw) -Because "$($file.Name) has been hand-edited. Change the spec or the emitter; an edit here is lost on the next run."
+            }
+        }
+
+        It 'carries exactly one comment-based help block, first' {
+            # Both build scripts locate the block by first-occurrence string
+            # search, so a second block truncates the file at build time while
+            # the source still looks fine.
+            foreach ($fn in @($script:Spec.functions | Where-Object { $_.class -eq 'printer' })) {
+                $path = Join-Path (Join-Path $script:RepoRoot 'FogApi') "Public/$($fn.functionName).ps1"
+                $content = Get-Content -LiteralPath $path -Raw
+                ([regex]::Matches($content, [regex]::Escape('<' + '#'))).Count | Should -Be 1
+            }
+        }
+    }
+
+    Context 'parameter aliases' {
+        It 'renders every declared alias onto the parameter it names' {
+            # Declared in the overlay rather than in the emitted file, because
+            # the emitter overwrites what it emits -- an alias added to a
+            # generated cmdlet by hand lasts until the next run and then
+            # disappears with no error. This asserts the declaration actually
+            # reaches the parameter.
+            Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
+            $checked = 0
+            foreach ($fn in $script:Spec.functions) {
+                if ($fn.status -eq 'skipped-name-taken') { continue }
+                $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue
+                if (-not $cmd) { continue }
+                $classSchema = $script:Spec.schemas.($fn.class)
+                if (-not $classSchema) { continue }
+                foreach ($field in $classSchema.fields) {
+                    if (-not $field.aliases -or $field.aliases.Count -eq 0) { continue }
+                    if (-not $cmd.Parameters.ContainsKey($field.name)) { continue }
+                    foreach ($alias in $field.aliases) {
+                        $cmd.Parameters[$field.name].Aliases |
+                            Should -Contain $alias -Because "$($fn.functionName) -$($field.name) declares the alias -$alias"
+                        $checked++
+                    }
+                }
+            }
+            $checked | Should -BeGreaterThan 0 -Because 'the assertion above is worthless if it examined nothing'
+        }
+
+        It 'never aliases a parameter to the name of another parameter' {
+            # An alias colliding with a real parameter name fails at import,
+            # which is a late and confusing place to find out.
+            Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
+            foreach ($fn in $script:Spec.functions) {
+                $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue
+                if (-not $cmd) { continue }
+                $real = @($cmd.Parameters.Keys)
+                foreach ($p in $cmd.Parameters.Values) {
+                    foreach ($alias in @($p.Aliases)) {
+                        $real | Should -Not -Contain $alias -Because "$($fn.functionName) aliases -$($p.Name) to -$alias, which is already a parameter"
+                    }
+                }
+            }
+        }
+    }
+
+    Context 'the manifest' {
+        It 'lists every file in Public and every alias declared in one' {
+            { & (Join-Path $script:RepoRoot 'update-sourcemanifest.ps1') -Check } |
+                Should -Not -Throw -Because 'run ./update-sourcemanifest.ps1 to resync'
+        }
+    }
+}

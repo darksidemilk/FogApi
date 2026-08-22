@@ -1,0 +1,55 @@
+{
+  "$comment": "Where spec/openapi/fog-1.6.json came from. Regenerate both together; a snapshot with a stale provenance record is worse than no snapshot, because the diff it produces cannot be traced back to a server change.",
+  "document": "fog-1.6.json",
+  "source": {
+    "repo": "https://github.com/FOGProject/fogproject",
+    "branch": "working-1.6",
+    "commit": "2dc470fed9fa34dd25b19f9b97d40ce92144d230",
+    "commitShort": "2dc470fed",
+    "commitDate": "2026-08-22T19:27:39+00:00",
+    "fogVersion": "1.6.0-beta.3820",
+    "openapiClassLastChanged": "a1e12d49b",
+    "localCorrections": [
+      "31932e73e - Describe /{class}/join as what Route::joining() actually does",
+      "a1e12d49b - Describe the hostname rule the column type cannot express",
+      "d9865c845 - Define \"upsert\" where the join description uses it"
+    ],
+    "$note": "2dc470fed is a merge of origin/working-1.6 (5c289e960) into the branch carrying the three local corrections above. Dump from the MERGED tree, not from origin/working-1.6, or those corrections are lost."
+  },
+  "generatedBy": "spec/tools/dump-openapi.php",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3820 --out spec/openapi/fog-1.6.json",
+  "servedLiveAt": [
+    "GET {webroot}/system/openapi",
+    "GET {webroot}/swagger.json"
+  ],
+  "counts": {
+    "paths": 394,
+    "operations": 545,
+    "schemas": 53,
+    "routeClasses": 51
+  },
+  "notes": [
+    "Both live routes sit in the router's unauthenticated allowlist, so discovery needs no tokens.",
+    "The live document is built per request and includes classes contributed by plugin hooks. This snapshot fires no hooks, so it describes stock FOG. That is the intended baseline for generated cmdlets; plugin classes are a runtime concern, handled by reading the live document.",
+    "1.6 only. The 1.5 line has no commons/schema-expected.php, so there is no type source to generate against there."
+  ],
+  "verifiedAgainstLiveServer": {
+    "date": "2026-08-22",
+    "method": "Deployed the merged tree (2dc470fed) to the container's web root, ran the schema update, then fetched GET /system/openapi and compared it to this snapshot key by key.",
+    "result": "Identical except servers[0].url, which is a deliberate placeholder here. 394 paths, 53 schemas on both; Tasklog.imageName present live; GET /imaginglog now answers 501, confirming the class really is retired and not merely undocumented.",
+    "note": "This is what makes the offline generator trustworthy: it calls OpenAPI::document() rather than reimplementing it, and the diff confirms the four things it stubs (FOG_VERSION, the host, the hook manager, the FOGBase statics) are the only things that differ."
+  },
+  "changeLog": [
+    {
+      "from": "e83049586 (1.6.0-beta.3789, 401 paths / 54 schemas)",
+      "to": "2dc470fed (1.6.0-beta.3820, 394 paths / 53 schemas)",
+      "summary": "imagingLog retired upstream; taskLog carries the image name.",
+      "detail": [
+        "065b3fe3a feat(logs): retire imagingLog; taskLog carries the image name (ADR 0022) drops 'imaginglog' from Route::$validClasses.",
+        "Removed: the Imaginglog schema and its 7 paths - /imaginglog, /count, /ids, /join, /names, /search/{item}, /{id}.",
+        "Changed: Tasklog gained imageName (9 -> 10 properties). No other schema changed shape and nothing was added.",
+        "That commit did not touch openapi.class.php, correctly: _paths() generates from $validClasses, so the document self-updates."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "count": 1,
+  "powermanagements": [
+    {
+      "id": 1,
+      "hostID": 1,
+      "min": "",
+      "hour": "",
+      "dom": "",
+      "month": "",
+      "dow": "",
+      "onDemand": "0",
+      "action": "shutdown"
+    }
+  ]
+}

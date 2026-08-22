@@ -1,0 +1,23 @@
+{
+  "id": 1,
+  "name": "ExampleScheduledtask",
+  "description": "",
+  "type": "",
+  "taskTypeID": 1,
+  "minute": "",
+  "hour": "",
+  "dayOfMonth": "",
+  "month": "",
+  "dayOfWeek": "",
+  "isGroupTask": "",
+  "hostID": 1,
+  "shutdown": "",
+  "other1": "",
+  "other2": "",
+  "other3": "",
+  "other4": "",
+  "other5": "",
+  "scheduleTime": 1,
+  "isActive": "",
+  "imageID": 1
+}

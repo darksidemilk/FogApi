@@ -56,7 +56,14 @@ function Find-FogObject {
         [string]$stringToSearch
     )
 
-    DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
+    # 'search' rather than $type, because $type is not readable from here. A
+    # DynamicParam block sees only BOUND parameters, so a caller who relies on
+    # -type's default leaves it $null, Set-DynamicParams matches nothing, and
+    # -coreObject is never added -- which surfaces as "a parameter cannot be
+    # found that matches parameter name 'coreObject'", naming the wrong
+    # parameter. Nothing is lost by the literal: -type is ValidateSet('search'),
+    # so reading it could only ever yield 'search' or the $null that is the bug.
+    DynamicParam { $paramDict = Set-DynamicParams 'search'; return $paramDict;}
 
     process {
         $paramDict | ForEach-Object { New-Variable -Name $_.Keys -Value $($_.Values.Value);}

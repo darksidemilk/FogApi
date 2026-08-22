@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "ExamplePrinter",
+  "description": "A test printer",
+  "port": "LPT1",
+  "file": "",
+  "model": "Generic",
+  "config": "Local",
+  "configFile": "",
+  "ip": "10.0.0.5"
+}
