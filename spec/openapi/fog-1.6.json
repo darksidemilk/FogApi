@@ -682,7 +682,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1432,7 +1432,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1504,7 +1504,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Takes a list of names and returns an id for each: the existing object where the name is already taken, a newly created one otherwise. This is the upsert against a natural key, and it exists only on group -- every other class answers 400.",
+                "description": "Takes a list of names and returns an id for each: the existing object where the name is already taken, a newly created one otherwise. That pattern is often called an upsert -- update or insert -- and because the object may not exist yet it matches on the name rather than on an id. Safe to send repeatedly: the same names give the same ids back and no duplicates are made. Group only; every other class answers 400.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2247,7 +2247,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2792,7 +2792,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3337,7 +3337,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3882,7 +3882,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4632,7 +4632,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5177,7 +5177,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -5722,7 +5722,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6267,7 +6267,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -6812,7 +6812,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -7357,7 +7357,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -7902,7 +7902,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -8447,7 +8447,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -8992,7 +8992,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -9537,7 +9537,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -10133,7 +10133,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -10678,7 +10678,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -11223,7 +11223,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -11825,7 +11825,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -12575,7 +12575,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -13120,7 +13120,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -13665,7 +13665,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -14210,7 +14210,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -14755,7 +14755,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15344,7 +15344,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -15946,7 +15946,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -16491,7 +16491,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -17036,7 +17036,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -17581,7 +17581,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -18126,7 +18126,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -18671,7 +18671,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -19216,7 +19216,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -19761,7 +19761,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -20363,7 +20363,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -21113,7 +21113,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -21791,7 +21791,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -22458,7 +22458,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -23003,7 +23003,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -23548,7 +23548,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -24150,7 +24150,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -24957,7 +24957,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -25707,7 +25707,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -26330,7 +26330,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -27085,7 +27085,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -27835,7 +27835,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -28380,7 +28380,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -28925,7 +28925,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -29521,7 +29521,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -30066,7 +30066,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -30611,7 +30611,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. Not an upsert and not keyed on anything but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
+                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
                 "requestBody": {
                     "required": true,
                     "content": {

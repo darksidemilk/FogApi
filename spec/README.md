@@ -96,6 +96,62 @@ php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version <ver> 
 a temp directory and compares, re-emits the pilot cmdlets and compares, and
 checks the manifest against the files on disk.
 
+## Terms
+
+A handful of words appear throughout the spec, the overlay and the generated
+descriptions. Defined here so nobody has to infer them from usage.
+
+**Upsert** — update-or-insert: one operation that creates a record if it is not
+there and updates it if it is, so you can run it repeatedly without checking
+first and without making duplicates.
+
+FOG already works this way one layer down. `FOGController::save()` — the single
+method behind `$host->save()`, `$image->save()` and every other model write —
+builds one statement for both cases:
+
+```sql
+INSERT INTO hosts (hostName, ...) VALUES (?, ...)
+ON DUPLICATE KEY UPDATE hostName=VALUES(hostName), ...
+```
+
+That is why saving a model never needs to know whether it is new. Over the REST
+API, `POST /group/join` is the operation that exposes the same idea: give it
+names, get back an id for each, existing or newly created.
+
+**Natural key** — the field that identifies a record when an id will not do.
+An upsert cannot match on an id, because the record may not exist yet and so has
+no id; it matches on something else that is unique, like a group's name. Worth
+keeping distinct from the id, because the two behave differently on a retry: an
+id is stable forever, a natural key changes if somebody renames the thing.
+
+**Route class** — one of the 52 names in `Route::$validClasses` (`host`,
+`printer`, `snapinassociation`, …). It is the `{class}` in every generic path,
+and the unit the coverage matrix counts in.
+
+**Route shape** / **route name** — the operation kind within a class, as the
+router names it: `list`, `indiv`, `create`, `update`, `delete`, `search`,
+`count`, `names`, `ids`, `join`, plus `task`, `cancel` and `active` on the
+classes that have them. FOG's `operationId` is this name plus the capitalised
+class, which is how the builder recovers one from the other.
+
+**Folded** — an operation that becomes a *parameter* on another cmdlet rather
+than a cmdlet of its own. `count`, `names` and `ids` are folded onto the list
+cmdlet as `-Count`, `-NamesOnly` and `-IdsOnly`.
+
+**Deferred** — understood, deliberately not modelled yet, with the reason
+recorded in the overlay. Distinct from folded: folded means handled, deferred
+means not handled. The coverage matrix scores them separately so a deferred
+operation can never be counted as covered.
+
+**L1** — the generic CRUD layer (`Get-FogObject`, `New-FogObject`,
+`Update-FogObject`, `Remove-FogObject`, `Find-FogObject`). Every typed cmdlet
+routes through it; only the tier-5 fixed routes may call `Invoke-FogApi`
+directly, because those endpoints have no L1 representation.
+
+**Emitter** — the thing that turns the resolved spec into code for one language.
+`New-FogApiFunctionFile.ps1` is the PowerShell emitter; Python and bash are
+planned as siblings, reading the same spec rather than reimplementing it.
+
 ## Rules
 
 - **`fog-api-spec.json` and `openapi/fog-1.6.json` are generated.** Editing

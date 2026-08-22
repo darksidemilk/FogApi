@@ -11,7 +11,10 @@
     "that way, and where FOG 1.5 differs. That is this file.",
     "",
     "Kept deliberately small. Anything mechanically derivable belongs in",
-    "spec/tools/Build-FogApiSpec.ps1 as a rule, not here as 554 entries."
+    "spec/tools/Build-FogApiSpec.ps1 as a rule, not here as 555 entries.",
+    "",
+    "Terms used here -- upsert, natural key, route class, route shape, folded,",
+    "deferred, L1, emitter -- are defined in spec/README.md under Terms."
   ],
 
   "naming": {
