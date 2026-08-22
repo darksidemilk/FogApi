@@ -455,25 +455,51 @@ PowerShell classes. Corrected after re-measuring:
 - **"The opaque type name."** A class in a *dynamic* module (`New-Module -ScriptBlock`) reports
   as `<hash>.FogHost`. A real file-based module does not — both arms reported clean names.
 
-- **"Dot-sourcing is why the class arm failed."** Wrong, and the distinction is scope, not the
-  cmdlet. Loading class files from **inside** the `.psm1` fails identically whether you
-  dot-source them or `Import-Module` them, twice or not. What works is importing the class
-  files from the **caller's** scope after the module, which is what `build.ps1:129-132` does
-  before running PlatyPS:
+- **"A dot-sourced module cannot use its own classes."** Wrong, and this was the big one. The
+  class arm was never mechanically blocked. The single cause of every failure was writing
+  `[OutputType([FogHost])]` — **a type literal as an attribute argument**. Nothing else.
 
-  | Class files loaded… | cmdlet | `Get-Help` | caller can name the type |
-  |---|---|---|---|
-  | inside the psm1, dot-source ×2 | FAIL | FAIL | FAIL |
-  | inside the psm1, `Import-Module` ×2 | FAIL | FAIL | FAIL |
-  | from the caller's scope, `Import-Module` ×2 | OK | OK | OK |
+  Reproduced faithfully against `ProvisioningMgmt`'s exact loader (recurse, `Sort-Object
+  -Descending`, `Import-Module` each class file, twice) on pwsh 7.4.6:
 
-  A `param()` block naming a class resolves the type at **invocation**, against the session's
-  type table; a class loaded in module scope never reaches it.
+  | Usage | Result |
+  |---|---|
+  | `param([Step]$step)` on a dot-sourced function | **OK** |
+  | `[Step]@{...}` constructed in a dot-sourced function body | **OK** |
+  | `[SubStepCommand[]]$cmds` — a class property typed as another class | **OK** |
+  | a class method calling a module-**private** function | **OK** |
+  | `[OutputType([Step])]` — type literal | **FAIL**, and it poisons the whole function: invoking it fails too, not just `Get-Help` |
+  | `[OutputType('Step')]` — string | **OK**: invoke, `Get-Help`, and `(Get-Command …).OutputType.Name` all report `Step`, returning a real class instance |
 
-  **Open, and not testable here:** `ProvisioningMgmt.psm1` (a production Arrowhead module) does
-  the class `Import-Module` loop *inside* its psm1 and works. That contradicts the table above,
-  so the behaviour likely differs on Windows PowerShell 5.1, which this Linux container cannot
-  run. Worth confirming before relying on either result.
+  So the rule is narrow: **a class name is fine as a parameter type, a property type, a cast or
+  a constructor anywhere in the module; it is not fine as a type-literal argument to an
+  attribute.** `[ValidateSet([Generator])]` fails for the same reason. Use the string form of
+  `OutputType` and a dot-sourced class module works end to end, including the PlatyPS docs
+  build — no caller-scope import step required. `build.ps1:129-132`'s twice-over
+  `Import-Module` of the class files is what makes even the type-literal form work, by putting
+  the type in the session table before PlatyPS runs.
+
+  Three incidental notes from the reproduction, all worth honouring in any generated class:
+
+  - **Class ordering only matters in the source layout.** Each dot-sourced file is parsed
+    separately, so `SubStep`'s `[SubStepCommand[]]` property needs `SubStepCommand` already
+    loaded — hence `Sort-Object -Descending` plus a second pass. In the **concatenated build**
+    the whole thing is one parse and forward references resolve fine: the shipped
+    `ProvisioningMgmt.psm1` has `Step`(94) → `SubStep`(140) → `SubStepCommand`(186), with
+    `SubStep` referring forward to a class 46 lines below it. Verified independently — a
+    forward class reference in a single file parses. So `invoke-modulebuild.ps1`'s alphabetical
+    `Get-ChildItem` order is safe for the built module regardless.
+  - `[T]@{...}` runs the **default constructor before** the hashtable properties are assigned,
+    so derived state computed there sees empty values. `ProvisioningMgmt` works around it by
+    re-calling `SetStepName()`/`SetSynopsis()` in `Invoke-ProvisioningStep`. Better: do not
+    compute derived state in a default constructor at all.
+  - **The C#-from-source pattern is already in use in this codebase's neighbours**, and even
+    more cheaply than JiraPS does it: `ProvisioningMgmt.psm1:2471` and `AutoLogon.psm1:171` do
+    `Add-Type -TypeDefinition (Get-Content "$script:lib\X.cs" -Raw)` **inside the function that
+    needs the type**, not at import — so nothing is compiled unless it is used. Neither module
+    sets `RequiredAssemblies`, `TypesToProcess` or `FormatsToProcess`; every one of those keys
+    is still commented out in their manifests. Precedent for shipping `.cs` exists; precedent
+    for manifest-driven type/format data does not.
 
 ### Scoreboard
 
@@ -488,26 +514,32 @@ no csproj and no shipped binary.
 | …and those fields visible to `Get-Member` | ✗ | ✗ | ✓ |
 | Rejects a wrong-shaped object | ✓ (no `[object]` ctor) | ✓ | ✓ |
 | Methods on the object | ✓ | ✓ | ✓ (`ScriptMethod`) |
+| Works in the dot-sourced source layout | ✓ (`[OutputType('X')]` string form) | ✓ | ✓ |
 | Readable default table | ✗ needs a format file anyway | ✗ same | ✓ |
-| Caller can name the type | ✓ after the caller-scope class import | ✓ always, no ceremony | ✓ always |
+| Caller can name the type | ✗ needs `using module` or the caller-scope import | ✓ always, no ceremony | ✓ always |
 | Declared scalar types | ✓ `Int32` | ✓ + real `DateTime?` | ✗ `Int64` from `ConvertFrom-Json` |
 | Editor IntelliSense on `$h.` | ✓ | ✓ | ✗ |
 | Load cost, 54 types / ~418 props | 129 ms | 561 ms cold, ~0 warm | 56 ms |
 | Unloads with the module | ✓ | ✗ assemblies never unload | ✗ leaks session-globally |
 
-`System.Dynamic.DynamicObject` is the one real discriminator between the two typed options:
-overriding `TryGetMember` in **C#** makes `$h.macs` and `$h.inventory.sysuuid` resolve for
-fields the model never declared. The same inheritance from a **PowerShell** class does **not**
-work — PowerShell's own member lookup does not route through `TryGetMember`; `$h.macs` came back
-empty. So only the compiled option can be both typed and non-relocating.
+Two real discriminators remain, and neither is about whether classes "work":
 
-Ranking on that evidence: compiled C# is the strongest long-term shape, type data is a close and
-much cheaper second, and `.ps1` classes are dominated by both — not because they fail
-mechanically, but because they carry the relocation cost of a typed model without the natural-path
-escape that makes it palatable.
+1. **`System.Dynamic.DynamicObject`.** Overriding `TryGetMember` in **C#** makes `$h.macs` and
+   `$h.inventory.sysuuid` resolve for fields the model never declared. The same inheritance from
+   a **PowerShell** class does **not** work — PowerShell's member lookup does not route through
+   `TryGetMember`; `$h.macs` came back empty. So only the compiled option is both typed and
+   non-relocating.
+2. **Type data asserts nothing about fields,** so it is the only option with no relocation cost
+   at all, at the price of no static types and `Int64` scalars.
 
-Type data is what shipped, and remains right for now: the deciding factor is that a typed model
-must be regenerated once `_entitySchema()` is fixed, and the spec fix is deferred. A format file
+Ranking: compiled C# strongest, type data a close and much cheaper second, `.ps1` classes third
+— but a *viable* third, not a broken one. Their cost is the relocation a typed model forces
+without C#'s natural-path escape, plus needing `using module` for a caller to name the type.
+
+Type data is what shipped and remains right **for now**, for one reason only: a typed model has
+to be regenerated once `_entitySchema()` is fixed, and that fix is deferred. This is a weaker
+verdict than the first pass claimed — it is a sequencing call, not a technical knockout, and it
+should be revisited as soon as the spec describes the response. A format file
 (`FormatsToProcess`) is wanted under all three and is the obvious next increment.
 
 ### What landed
