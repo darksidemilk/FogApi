@@ -24,7 +24,7 @@ install of the smart installer if that fails
     )
 
     process {
-        if ($script:IsPosix) {
+        if ($IsLinux -or $IsMacOS) {
             #the linux fog client is a different artifact installed through the distro's package
             #manager, so there is nothing meaningful for this to do here
             Write-Warning "This installs the windows fog client and is only implemented for windows. On linux install the fog client through your package manager.";

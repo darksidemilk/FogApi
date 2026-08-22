@@ -71,7 +71,7 @@ This will prompt you for each setting and allow you to paste in the values for e
             }
         }
         if($interactive -or $PSCmdlet.ParameterSetName -eq 'prompt') {
-            if ($script:IsPosix) {
+            if ($IsLinux -or $IsMacOS) {
                 Write-Warning "If you have issues with pasting your apikeys into these prompts (issue with read-host in some linux instances of pwsh), try again without -interactive and paste into each param. i.e. `Set-FogServerSettings -fogapiToken '12345abcdefg' -fogUserToken 'abcdefg12345' -fogServer 'fog'"
             }
             ($serverSettings.psobject.properties).Name | ForEach-Object {
@@ -148,7 +148,7 @@ This will prompt you for each setting and allow you to paste in the values for e
                     $editor = 'notepad.exe';
                 }
             }
-            if ($script:IsPosix) {
+            if ($IsLinux -or $IsMacOS) {
                 #wait to open the editor until the user has a chance to read the warning
                 "Editor $editor will open in 5 seconds, please read the warning above before editing the settings file" | out-host;
                 "Tip: use the insert key to enter insert mode if using vi then 'esc' then ':wq' to save and exit in vi, or 'ctrl+x' then 'y' to save and exit in nano" | out-host;

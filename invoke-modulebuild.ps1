@@ -100,7 +100,6 @@ if ((Get-ChildItem (Join-Path $modulePath 'bin')).count -gt 0) {
 # Copy-Item (Join-Path $modulePath 'tools') (Join-Path $buildPth 'tools') -Recurse;
 Add-Content -Path $moduleFile -Value "`$script:tools = Join-Path `$PSModuleRoot 'tools'";
 # Single posix test, so a branch can't be written for linux and forget mac
-Add-Content -Path $moduleFile -Value "`$script:IsPosix = (`$IsLinux -or `$IsMacOS)";
 
 
 #Build the psm1 file

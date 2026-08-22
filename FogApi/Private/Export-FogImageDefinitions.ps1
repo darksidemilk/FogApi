@@ -25,7 +25,7 @@ function Export-FogImageDefinitions {
         #$env:HOSTNAME is a bash convenience variable that is not exported to child processes, so it
         #is routinely empty under systemd, cron or 'pwsh -c' - resolve the hostname properly instead
         $localHostName = try { [System.Net.Dns]::GetHostName() } catch { $env:HOSTNAME }
-        if ($script:IsPosix -AND ($localHostName -match (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
+        if (($IsLinux -or $IsMacOS) -AND ($localHostName -match (Get-FogServerSettings).fogserver) -AND ([string]::IsNullOrEmpty($exportPath))) {
             "This is linux, is the fogserver set in the api settings and no export path was given" | Out-Host;
             "Assuming you want to create a /images/imageDefinitions folder for migrating your fog server images to another server" | out-host;
             $exportPath = "/images/imageDefinitions"

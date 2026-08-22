@@ -31,7 +31,7 @@ Will return the contents of the fog log as a string
     process {
         if ($userFogLog) {
             $fogLog = "$home/.fog_user.log"
-        } elseif ($script:IsPosix) {
+        } elseif ($IsLinux -or $IsMacOS) {
             #on a linux fog server the logs live under /var/log/fog, and the client writes to
             #/var/log/fog.log. This used to fall through to the windows paths and then return
             #one of them regardless, handing the caller a path that does not exist here
@@ -49,7 +49,7 @@ Will return the contents of the fog log as a string
         if (!$static) {
             "Starting dynamic fog log in new window, Hit Ctrl+C on new window or close it to exit dynamic fog log" | Out-Host;
             #pwsh on linux and mac, powershell.exe does not exist there
-            $shell = if ($script:IsPosix) { 'pwsh' } else { 'Powershell.exe' };
+            $shell = if ($IsLinux -or $IsMacOS) { 'pwsh' } else { 'Powershell.exe' };
             Start-Process $shell -ArgumentList "-Command `"Get-Content $fogLog -Wait`"";
         }
         else {

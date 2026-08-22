@@ -45,10 +45,56 @@ Describe 'Module paths are separator agnostic' {
         { Get-Content $template -Raw | ConvertFrom-Json } | Should -Not -Throw
     }
 
-    It 'exposes a single posix test so a branch cannot cover linux and forget mac' {
-        $isPosix = InModuleScope FogApi { $script:IsPosix }
-        $isPosix | Should -BeOfType [bool]
-        $isPosix | Should -Be ($IsLinux -or $IsMacOS)
+    It 'never tests $IsLinux without handling $IsMacOS nearby' {
+        # The bug this guards was four branches testing $IsLinux alone, so mac
+        # fell through to the CIM path and errored.
+        #
+        # A $script:IsPosix helper would also prevent it, and was tried. It is
+        # not worth the cost: $IsLinux, $IsMacOS and $IsWindows are automatic
+        # variables every PowerShell reader already knows, and a module-private
+        # alias has to be declared twice -- once in FogApi.psm1 for the source
+        # tree and again in invoke-modulebuild.ps1 for the built module -- so a
+        # reader opening one Public/ file finds a variable defined in neither
+        # Public/ nor Private/. Their absence on Windows PowerShell 5.1 is also
+        # a useful edition signal, and an alias throws it away.
+        #
+        # Nothing is lost on 5.1, where the three do not exist: this module
+        # sets no StrictMode, so an undefined $IsLinux is $null and the branch
+        # is simply false, which is correct on a Windows-only edition.
+        #
+        # "Nearby" rather than "same line", because an if/elseif chain is a
+        # legitimate way to cover both -- Set-FogServerSettings picks vi on
+        # linux and TextEdit on mac in adjacent branches. A window is a
+        # heuristic and not a proof; it is here to catch the omission that
+        # actually happened, not to be a type system.
+        $window = 10
+        $offenders = foreach ($file in (Get-ChildItem (Join-Path $PSScriptRoot '..' 'FogApi') -Recurse -Filter '*.ps1')) {
+            $lines = Get-Content -LiteralPath $file.FullName
+            for ($i = 0; $i -lt $lines.Count; $i++) {
+                $line = $lines[$i]
+                if ($line -notmatch '\$IsLinux') { continue }
+                if ($line -match '^\s*#') { continue }
+                $from = [Math]::Max(0, $i - 1)
+                $to = [Math]::Min($lines.Count - 1, $i + $window)
+                $near = $lines[$from..$to] -join "`n"
+                if ($near -notmatch '\$IsMacOS') {
+                    "$($file.Name):$($i + 1): $($line.Trim())"
+                }
+            }
+        }
+        $offenders | Should -BeNullOrEmpty -Because 'a posix branch must cover mac too'
+    }
+
+    It 'defines no module-private alias for the built-in platform variables' {
+        # Both places the old $script:IsPosix had to be declared, so removing
+        # one and leaving the other cannot pass.
+        $repoRoot = Join-Path $PSScriptRoot '..'
+        $offenders = @(
+            Get-ChildItem (Join-Path $repoRoot 'FogApi') -Recurse -Filter '*.ps*1'
+            Get-Item (Join-Path $repoRoot 'invoke-modulebuild.ps1')
+        ) | Select-String -Pattern 'IsPosix' |
+            ForEach-Object { "$($_.Filename):$($_.LineNumber)" }
+        $offenders | Should -BeNullOrEmpty -Because 'use $IsLinux/$IsMacOS/$IsWindows directly'
     }
 
     It 'has no source file building a module path with a hardcoded backslash' {

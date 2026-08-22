@@ -46,7 +46,7 @@ function Get-FogLocalIdentity {
             Write-Verbose "could not resolve the local hostname: $($_.Exception.Message)";
         }
 
-        if ($script:IsPosix) {
+        if ($IsLinux -or $IsMacOS) {
             Write-Verbose 'collecting local identity from the posix dmi and net trees';
 
             #product_uuid is root readable only on most distros, so this can legitimately come back null

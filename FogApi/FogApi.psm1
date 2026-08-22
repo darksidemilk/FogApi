@@ -5,7 +5,6 @@ $PSModuleRoot = $PSScriptRoot
 $script:lib = Join-Path $PSModuleRoot 'lib'
 $script:bin = Join-Path $PSModuleRoot 'bin'
 # Single posix test so a branch can't be written for linux and forget mac
-$script:IsPosix = ($IsLinux -or $IsMacOS)
 $PublicFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Public/*.ps1" -ErrorAction SilentlyContinue )
 $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorAction SilentlyContinue )
 

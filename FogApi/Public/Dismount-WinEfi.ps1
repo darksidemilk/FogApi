@@ -17,7 +17,7 @@ function Dismount-WinEfi {
         param ()
             
         process {
-            if ($script:IsPosix) {
+            if ($IsLinux -or $IsMacOS) {
                 Write-Warning "This is currently only implemented for windows";
                 return $null;
             }
