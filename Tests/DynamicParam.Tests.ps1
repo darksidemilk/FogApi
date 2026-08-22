@@ -38,13 +38,17 @@ Describe 'dynamic -coreObject binding' {
             has to resolve the parameter and its ValidateSet, and the call fails
             during binding rather than reaching the network.
             #>
-            param([string]$Name)
+            param([string]$Name, [string]$Type)
+            $splat = @{ coreObject = '~nosuchclass~'; ErrorAction = 'Stop' }
+            if ($Type) { $splat.type = $Type }
             try {
-                & $Name -coreObject '~nosuchclass~' -ErrorAction Stop 2>&1 | Out-Null
+                & $Name @splat 2>&1 | Out-Null
             } catch {
-                # "cannot be found that matches parameter name 'coreObject'" means
-                # the parameter was never added. A ValidateSet complaint means it
-                # was added and did its job, which is what we are asserting.
+                # "cannot be found that matches parameter name 'coreObject'" is
+                # the only failure that means the parameter was never added.
+                # Anything else -- a ValidateSet complaint, or a failed version
+                # probe while the set was being built -- means it WAS added,
+                # which is the whole assertion.
                 if ($_.Exception.Message -match "matches parameter name 'coreObject'") {
                     return $false
                 }
@@ -61,12 +65,21 @@ than $type, which is always null there unless the caller named it
 '@
         }
 
-        It '<_> still accepts an explicit -type, so no caller breaks' -ForEach @(
+        It '<Fn> still accepts an explicit -type, so no caller breaks' -ForEach @(
             @{ Fn = 'Find-FogObject';   Type = 'search' }
             @{ Fn = 'Update-FogObject'; Type = 'object' }
         ) {
-            { & $Fn -type $Type -coreObject '~nosuchclass~' -ErrorAction Stop 2>&1 | Out-Null } |
-                Should -Throw -ExpectedMessage '*~nosuchclass~*'
+            # Asserted as "-coreObject was found", not as "the ValidateSet
+            # rejected the value". Building the set calls Get-FogVersion, which
+            # is a real request -- so an assertion on the rejection message only
+            # passes when a server happens to be reachable, and this suite is
+            # the mocked gate. It failed exactly that way once.
+            #
+            # Get-DynmicParam calling Get-FogVersion during binding is the
+            # round-trip cost noted for phase 0.5; until that is fixed, a test
+            # at this layer cannot assume the parameter's contents offline. What
+            # it can assume is that the parameter exists to be bound.
+            Test-CoreObjectBinds -Name $Fn -Type $Type | Should -BeTrue
         }
     }
 
