@@ -1,0 +1,302 @@
+{
+  "$schema": "./overlay.schema.md",
+  "$comment": [
+    "The half of the spec a server cannot tell us.",
+    "",
+    "spec/openapi/fog-1.6.json is FOG's own description of itself: every path, every",
+    "method, every field with its type, length, nullability and required-ness, and the",
+    "permission each operation needs. It is authoritative and it is regenerated, never",
+    "edited. What it cannot know is what FogApi should call any of it, which operations",
+    "deserve a typed cmdlet at all, which ones are already hand-written and must stay",
+    "that way, and where FOG 1.5 differs. That is this file.",
+    "",
+    "Kept deliberately small. Anything mechanically derivable belongs in",
+    "spec/tools/Build-FogApiSpec.ps1 as a rule, not here as 554 entries."
+  ],
+
+  "naming": {
+    "$comment": [
+      "One rule, four renderings. The spec stores verb and noun separately so every",
+      "emitter derives from the same source rather than munging another emitter's",
+      "output: Get-FogHost / get_fog_host() / getFogHost / 'fogapi get-fog-host'.",
+      "",
+      "Verbs are checked against Get-Verb by the builder, which fails rather than",
+      "warns. An unapproved verb reaching a released module is a PSScriptAnalyzer",
+      "error on somebody else's CI, not ours."
+    ],
+    "prefix": "Fog",
+    "operations": {
+      "list":   { "verb": "Get",    "nounForm": "plural"   },
+      "indiv":  { "verb": "Get",    "nounForm": "singular" },
+      "create": { "verb": "New",    "nounForm": "singular" },
+      "update": { "verb": "Update", "nounForm": "singular" },
+      "delete": { "verb": "Remove", "nounForm": "singular" },
+      "search": { "verb": "Find",   "nounForm": "singular" },
+      "task":   { "verb": "Start",  "nounForm": "singular", "suffix": "Task" },
+      "cancel": { "verb": "Stop",   "nounForm": "singular", "suffix": "Task" },
+      "active": { "verb": "Get",    "nounForm": "plural",   "infix": "Active" }
+    },
+    "foldedOperations": {
+      "$comment": [
+        "Operations that become a parameter on another cmdlet rather than a cmdlet of",
+        "their own. Emitting all 554 operations would produce a module nobody can",
+        "tab-complete through, and these four are all modifiers on 'list' or 'create'",
+        "rather than distinct things an admin wants to do.",
+        "",
+        "join is the interesting one: PUT /{class}/join upserts against the natural",
+        "key rather than an id. PowerShell's Set- is the verb for create-or-modify,",
+        "but Set-FogGroup and Set-FogHostImage already exist as aliases for other",
+        "things, so claiming Set-Fog{Noun} module-wide would break callers. Folding it",
+        "onto New-Fog{Noun} -Upsert avoids the collision entirely and reads correctly."
+      ],
+      "count": { "foldsInto": "list",   "as": "-Count switch"    },
+      "names": { "foldsInto": "list",   "as": "-NamesOnly switch" },
+      "ids":   { "foldsInto": "list",   "as": "-IdsOnly switch"   },
+      "join":  { "foldsInto": "create", "as": "-Upsert switch"    }
+    },
+    "nouns": {
+      "$comment": [
+        "Route class name to FogApi noun. Only classes whose PascalCase is not simply",
+        "the capitalised route name need an entry; the builder title-cases the rest.",
+        "Plurals likewise: only irregular ones are listed."
+      ],
+      "hostautologout": "HostAutoLogout",
+      "hostscreensetting": "HostScreenSetting",
+      "imageassociation": "ImageAssociation",
+      "imagepartitiontype": "ImagePartitionType",
+      "imagetype": "ImageType",
+      "imaginglog": "ImagingLog",
+      "filedeletequeue": "FileDeleteQueue",
+      "groupassociation": "GroupAssociation",
+      "hookevent": "HookEvent",
+      "keysequence": "KeySequence",
+      "macaddressassociation": "MacAddressAssociation",
+      "moduleassociation": "ModuleAssociation",
+      "multicastsession": "MulticastSession",
+      "multicastsessionassociation": "MulticastSessionAssociation",
+      "nodefailure": "NodeFailure",
+      "notifyevent": "NotifyEvent",
+      "os": "OS",
+      "oui": "Oui",
+      "powermanagement": "PowerManagement",
+      "printerassociation": "PrinterAssociation",
+      "pxemenuoptions": "PxeMenuOption",
+      "rolepermission": "RolePermission",
+      "roleuserassociation": "RoleUserAssociation",
+      "roleusergroupassociation": "RoleUserGroupAssociation",
+      "scheduledtask": "ScheduledTask",
+      "snapinassociation": "SnapinAssociation",
+      "snapingroupassociation": "SnapinGroupAssociation",
+      "snapinjob": "SnapinJob",
+      "snapintask": "SnapinTask",
+      "storagegroup": "StorageGroup",
+      "storagenode": "StorageNode",
+      "tasklog": "TaskLog",
+      "taskstate": "TaskState",
+      "tasktype": "TaskType",
+      "usergroup": "UserGroup",
+      "usergroupmember": "UserGroupMember",
+      "usertracking": "UserTracking"
+    },
+    "irregularPlurals": {
+      "os": "OSes",
+      "pxemenuoptions": "PxeMenuOptions",
+      "inventory": "Inventories",
+      "history": "Histories"
+    }
+  },
+
+  "tiers": {
+    "$comment": [
+      "Which classes get typed cmdlets, and in what order. The tier decides scope, not",
+      "naming: a tier-3 class still gets the same Get-Fog{Noun}s / Get-Fog{Noun} names,",
+      "it just does not get the four write verbs even where the server allows them,",
+      "because nobody manages a lookup table from a cmdlet.",
+      "",
+      "Counts here are what the emitter will produce, derived by the builder from the",
+      "operations the snapshot actually declares for each class. They are not typed in."
+    ],
+    "1": {
+      "label": "Core objects",
+      "operations": ["list", "indiv", "create", "update", "delete", "search", "task", "cancel", "active"],
+      "classes": [
+        "host", "group", "image", "snapin", "task", "scheduledtask", "user",
+        "storagenode", "storagegroup", "printer", "os", "module",
+        "multicastsession", "powermanagement", "setting", "site"
+      ]
+    },
+    "2": {
+      "label": "Association rows",
+      "operations": ["list", "indiv", "create", "delete", "search"],
+      "classes": [
+        "groupassociation", "imageassociation", "macaddressassociation",
+        "moduleassociation", "printerassociation", "snapinassociation",
+        "snapingroupassociation", "multicastsessionassociation",
+        "roleuserassociation", "roleusergroupassociation", "usergroupmember"
+      ]
+    },
+    "3": {
+      "label": "Read-only lookups and logs",
+      "operations": ["list", "indiv", "search"],
+      "classes": [
+        "history", "hookevent", "imaginglog", "imagepartitiontype", "imagetype",
+        "inventory", "ipxe", "keysequence", "nodefailure", "notifyevent", "oui",
+        "plugin", "pxemenuoptions", "snapinjob", "snapintask", "tasklog",
+        "taskstate", "tasktype", "usertracking", "hostautologout",
+        "hostscreensetting", "filedeletequeue", "role", "rolepermission",
+        "usergroup"
+      ]
+    },
+    "5": {
+      "label": "Fixed routes, hand-written",
+      "$comment": [
+        "No L1 representation, so these are the only cmdlets allowed to call",
+        "Invoke-FogApi directly. Named individually because a fixed route has no",
+        "class to derive a noun from."
+      ],
+      "operations": {
+        "status":               { "function": "Get-FogSystemInfo",       "existing": "Get-FogVersion",       "note": "Also serves /system/status; same handler, same payload. Carries version AND the paging bounds, which is what makes it the cheap probe." },
+        "openapi":              { "function": "Get-FogApiSpec",          "note": "Unauthenticated. The runtime half of this whole effort." },
+        "export":               { "function": "Export-FogDatabase" },
+        "unisearch":            { "function": "Find-FogAll",             "note": "-Limit is per entity type, not a total, and there is no nextUrl. Must not reuse -First." },
+        "whoami":               { "function": "Get-FogCurrentUser" },
+        "pendingmacs":          { "function": "Get-FogPendingMacs",      "existing": "Get-FogHostPendingMacs", "note": "Existing function is host-scoped; this route is server-wide." },
+        "kernelUpdate":         { "function": "Get-FogAvailableKernels" },
+        "initrdUpdate":         { "function": "Get-FogAvailableInitrds" },
+        "bandwidth":            { "function": "Get-FogBandwidth" },
+        "logfiles":             { "function": "Get-FogServerLog",        "existing": "Get-FogLog",           "note": "Get-FogLog reads a LOCAL log file. This route reads the server's." },
+        "settingsCacheView":    { "function": "Get-FogSettingsCache" },
+        "settingsCacheFlush":   { "function": "Clear-FogSettingsCache" },
+        "settingsCacheRefresh": { "function": "Update-FogSettingsCache" },
+        "snapinCreateWithFile": { "function": "New-FogSnapinWithFile",   "existing": "New-FogSnapin" },
+        "uploadSnapinFiles":    { "function": "Send-FogSnapinFiles" }
+      }
+    }
+  },
+
+  "handWritten": {
+    "$comment": [
+      "The functions that stay hand-written forever, and why. They are registered",
+      "rather than generated so the coverage matrix shows them as covered instead of",
+      "as gaps, and so the Python and bash emitters know which ones they owe.",
+      "",
+      "category:",
+      "  transport      the single HTTP choke point",
+      "  l1             the generic CRUD layer everything else routes through",
+      "  workflow       version branching, join-table reconciliation, multi-call",
+      "                 orchestration. Generating these would mean generating",
+      "                 judgement.",
+      "  local          talks to the machine it runs on, not to FOG",
+      "  utility        pure local logic, no API call",
+      "  config         reads or writes the settings file",
+      "platform: any | windows | posix",
+      "targets: which emitters owe an equivalent"
+    ],
+    "Invoke-FogApi":                     { "category": "transport", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogObject":                     { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "New-FogObject":                     { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Update-FogObject":                  { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Remove-FogObject":                  { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Find-FogObject":                    { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogPagedResult":                { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Add-FogResultData":                 { "category": "l1", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "Normalises the 1.5/1.6 response envelope difference." },
+
+    "Send-FogImage":                     { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Receive-FogImage":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Send-FogWolTask":                   { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "WOL is not a route: it is task with wol true / taskTypeID 14." },
+    "Send-FogGroupTask":                 { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "New-FogHost":                       { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogHost":                       { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "Identifies the local machine when given no parameters. The pure by-id read is what the generated Get-FogHost would be, which is why this one keeps the name and the generator skips host/indiv." },
+    "Add-FogHostMac":                    { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Approve-FogPendingMac":             { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Deny-FogPendingMac":                { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Remove-UsbMac":                     { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Add-FogHostGroup":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Remove-FogHostGroup":               { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Update-FogGroup":                   { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogHostGroup":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogGroupByName":                { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogHostMacs":                   { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogHostPendingMacs":            { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogHostAssociatedSnapins":      { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Set-FogSnapins":                    { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Start-FogSnapin":                   { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Start-FogSnapins":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Repair-FogSnapinAssociations":      { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "FOG enforces no integrity on association rows; this reconciles them." },
+    "New-FogSnapin":                     { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Set-FogHostImage":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-LastImageTime":                 { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Reset-HostEncryption":              { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Set-FogInventory":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogActiveTasks":                { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogScheduledTasks":             { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Resolve-HostID":                    { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogVersion":                    { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "Probes system/info then falls back to service/getversion.php for 1.5." },
+    "Test-FogVerAbove1dot6":             { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+
+    "Get-FogInventory":                  { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "Splits in phase 5.5 into Get-FogLocalInventory and Get-FogHostInventory." },
+    "Get-FogLog":                        { "category": "local", "platform": "any", "targets": ["powershell"] },
+    "Install-FogService":                { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Mount-WinEfi":                      { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Dismount-WinEfi":                   { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Get-WinEfiMountLetter":             { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Get-WinBcdPxeID":                   { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Set-WinToBootToPxe":                { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "Unifies with efibootmgr as Set-FogBootToPxe in phase 5.5." },
+
+    "Get-FogServerSettings":             { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Set-FogServerSettings":             { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Get-FogServerSettingsFile":         { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Set-FogServerSettingsFileSecurity": { "category": "config", "platform": "any", "targets": ["powershell"] },
+    "Enable-FogApiHTTPS":                { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "Disable-FogApiHTTPS":               { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
+
+    "Get-FogSecsSinceEpoch":             { "category": "utility", "platform": "any", "targets": [] },
+    "Test-StringNotNullOrEmpty":         { "category": "utility", "platform": "any", "targets": [] }
+  },
+
+  "thinWrappers": {
+    "$comment": [
+      "Existing one-line wrappers over L1 that the generator would otherwise emit a",
+      "duplicate of. The generated name wins where they differ, and the existing name",
+      "becomes an alias -- never the reverse, and nothing here is deleted.",
+      "",
+      "operation is the snapshot operationId these stand in for, so the coverage",
+      "matrix can mark it covered."
+    ],
+    "Get-FogHosts":                { "operation": "listHost" },
+    "Get-FogImages":              { "operation": "listImage" },
+    "Get-FogGroups":              { "operation": "listGroup" },
+    "Get-FogSnapins":             { "operation": "listSnapin" },
+    "Get-FogModules":             { "operation": "listModule" },
+    "Get-FogSettings":            { "operation": "listSetting" },
+    "Get-FogSetting":             { "operation": "searchSetting" },
+    "Set-FogSetting":             { "operation": "updateSetting" },
+    "Get-FogMacAddresses":        { "operation": "listMacaddressassociation" },
+    "Get-FogGroupAssociations":   { "operation": "listGroupassociation" },
+    "Get-FogSnapinAssociations":  { "operation": "listSnapinassociation" }
+  },
+
+  "fifteen": {
+    "$comment": [
+      "FOG 1.5 deltas. There is no 1.5 spec to generate from -- that line ships no",
+      "commons/schema-expected.php, so nothing describes its types -- which means the",
+      "1.5 story is hand-recorded here or it is guessed at.",
+      "",
+      "Every generated cmdlet must work against both, so the emitter reads this to",
+      "decide what to branch on."
+    ],
+    "envelope": "{count, <classname>s[]} rather than 1.6's DataTables-style envelope. Add-FogResultData already normalises this.",
+    "absentOperations": ["count", "join", "names", "ids", "active", "unisearch", "whoami", "logfiles", "pendingmacs", "settingsCacheView", "settingsCacheFlush", "settingsCacheRefresh", "kernelUpdate", "initrdUpdate", "bandwidth", "openapi"],
+    "extraOperations": ["listdetails"],
+    "routeSpellings": {
+      "$comment": "1.6 documents PUT /{class}/{id} and DELETE /{class}/{id}; 1.5 serves only the /edit and /delete spellings. 1.6 accepts both, so the /edit spelling is the one that works on both and is what the emitter uses.",
+      "update": "{class}/{id}/edit",
+      "delete": "{class}/{id}/delete"
+    },
+    "paging": "None. No limit(), no complex(), no MAX_ROWS, no paginate. The query string is ignored and lists are unbounded, so the pager collapses to one request.",
+    "absentClasses": {
+      "$comment": "Classes in the 1.6 snapshot that 1.5 has no route for. A generated cmdlet for one of these has to fail clearly on 1.5 rather than 404 obscurely.",
+      "classes": ["filedeletequeue", "role", "rolepermission", "roleuserassociation", "roleusergroupassociation", "usergroup", "usergroupmember", "hookevent", "notifyevent", "keysequence", "nodefailure"]
+    }
+  }
+}

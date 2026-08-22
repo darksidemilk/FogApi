@@ -250,8 +250,74 @@ function Get-FogMockResponse {
         }
     }
 
+    # Convention-based fallback.
+    #
+    # The table above is hand-maintained, which was fine for a demand-driven
+    # module and does not survive generated cmdlets: the spec resolves to over
+    # two hundred of them across fifty-two classes, and four hand-written switch
+    # arms each is eight hundred arms nobody will keep correct.
+    #
+    # Generated cmdlets all hit the same shapes, so the shapes are matched
+    # instead. A class opts in purely by having a fixture file with the
+    # conventional name -- there is nothing to register. The explicit table
+    # still wins, so nothing above changes behaviour.
+    #
+    # A conventional list fixture holds exactly ONE row. The generated examples
+    # assert a single-element array, because an emitter has no way to know how
+    # many rows a server would return; multi-row behaviour is asserted on the
+    # request sequence in Get-FogPagedResult.Tests.ps1 instead, which is where
+    # it belongs.
+    #
+    #   GET    {class}                 -> {class}s.json
+    #   GET    {class}/{id}            -> {class}.json
+    #   GET    {class}/search/{item}   -> {class}s-search.json, else {class}s.json
+    #   POST   {class}                 -> the body echoed back with an id
+    #   PUT    {class}/{id}/edit       -> the body echoed back with that id
+    #   DELETE {class}/{id}/delete     -> delete-result.json
+    function Test-Fixture([string]$name) {
+        Test-Path -LiteralPath (Join-Path $script:FixturesPath $name)
+    }
+    function New-EchoedObject([string]$body, $id) {
+        # A real server answers a create or an edit with the stored object, so
+        # the mock echoes the request back rather than inventing a shape. An id
+        # is added when the caller did not send one, which is what a create does.
+        $echo = if ([string]::IsNullOrEmpty($body)) { [pscustomobject]@{} } else { $body | ConvertFrom-Json }
+        if ($null -ne $id -and -not ($echo.PSObject.Properties.Name -contains 'id')) {
+            $echo | Add-Member -NotePropertyName 'id' -NotePropertyValue $id
+        }
+        return $echo
+    }
+
+    $class = $null
+    $shape = $null
+    $objectId = $null
+    switch -regex ($uriPath) {
+        '^(?<class>[a-z]+)$'                          { $class = $Matches['class']; $shape = 'collection' }
+        '^(?<class>[a-z]+)/search/.+$'                { $class = $Matches['class']; $shape = 'search' }
+        '^(?<class>[a-z]+)/(?<id>\d+)$'               { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'single' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/edit$'          { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'edit' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/delete$'        { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'delete' }
+    }
+
+    if ($class) {
+        switch ("$Method/$shape") {
+            'GET/collection' { if (Test-Fixture "$($class)s.json") { return Get-Fixture "$($class)s.json" } }
+            'GET/single'     { if (Test-Fixture "$class.json")     { return Get-Fixture "$class.json" } }
+            'GET/search'     {
+                if (Test-Fixture "$($class)s-search.json") { return Get-Fixture "$($class)s-search.json" }
+                if (Test-Fixture "$($class)s.json")        { return Get-Fixture "$($class)s.json" }
+            }
+            'POST/collection' { return New-EchoedObject -body $jsonData -id 1 }
+            'PUT/edit'        { return New-EchoedObject -body $jsonData -id $objectId }
+            'DELETE/delete'   { if (Test-Fixture 'delete-result.json') { return Get-Fixture 'delete-result.json' } }
+        }
+    }
+
     $qsNote = if ($queryString) { " (query string '$queryString' was stripped before lookup)" } else { '' }
-    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'$qsNote"
+    $hint = if ($class) {
+        " The path matched the '$shape' shape for class '$class', so adding Tests/Fixtures/$($class)s.json (or $class.json for a single object) is enough - no change to this file is needed."
+    } else { '' }
+    throw "Get-FogMockResponse: no fixture mapped for uriPath '$uriPath' with Method '$Method'$qsNote.$hint"
 }
 
 function Test-FogIdLikeValue {

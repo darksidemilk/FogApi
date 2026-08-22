@@ -22,58 +22,45 @@ BeforeDiscovery {
     Import-Module $moduleManifest -Force
     Import-Module (Join-Path $PSScriptRoot 'FogApi.TestHelpers.psm1') -Force
 
-    # Pilot function list - see the plan doc for why these were chosen.
-    # Invoke-FogApi itself is covered by its own dedicated test file
-    # (Tests/Invoke-FogApi.Tests.ps1) since it can't be tested by mocking
-    # itself. -Function narrows this down further for a targeted local run.
+    # Every exported function, minus a short exclusion list.
+    #
+    # This was a hardcoded inclusion list of 46 names, which had the failure mode
+    # that matters least when nothing is being added and most when things are:
+    # a new function got zero tests and said nothing about it. Generated cmdlets
+    # arrive dozens at a time, so an inclusion list would have quietly left the
+    # whole generated surface untested.
+    #
+    # Inverted, a function is covered the moment it exists, and skipping one is
+    # a line somebody has to write and a reviewer can see.
+    $script:FogExcludedFromExamples = @{
+        # Cannot be tested by mocking itself; has its own file.
+        'Invoke-FogApi'                     = 'covered by Tests/Invoke-FogApi.Tests.ps1'
+        # Read or write the local settings file rather than calling the API.
+        'Get-FogServerSettings'             = 'reads the local settings file'
+        'Set-FogServerSettings'             = 'writes the local settings file, and prompts'
+        'Get-FogServerSettingsFile'         = 'returns a local path'
+        'Set-FogServerSettingsFileSecurity' = 'sets local file permissions'
+        'Enable-FogApiHTTPS'                = 'rewrites the local settings file'
+        'Disable-FogApiHTTPS'               = 'rewrites the local settings file'
+        # Windows-only local system operations with no API call to mock.
+        'Install-FogService'                = 'installs a Windows service'
+        'Mount-WinEfi'                      = 'mounts the local EFI partition'
+        'Dismount-WinEfi'                   = 'unmounts the local EFI partition'
+        'Get-WinEfiMountLetter'             = 'reads local disk state'
+        'Get-WinBcdPxeID'                   = 'reads the local BCD store'
+        'Set-WinToBootToPxe'                = 'writes the local BCD store'
+        'Get-FogInventory'                  = 'collects hardware from the local machine'
+        'Set-FogInventory'                  = 'reads the local machine before writing'
+        'Get-FogLog'                        = 'reads a local log file'
+        # Pure local helpers with no API call.
+        'Get-FogSecsSinceEpoch'             = 'returns the current time'
+        'Resolve-HostID'                    = 'resolves against the current host'
+        # Pager internals, asserted on request sequence instead.
+        'Get-FogPagedResult'                = 'covered by Tests/Get-FogPagedResult.Tests.ps1'
+    }
+    $exported = @((Get-Module FogApi).ExportedFunctions.Keys)
     $script:FogPilotFunctions = @(
-        'Get-FogObject',
-        'Get-FogHost',
-        'Get-FogHosts',
-        'New-FogHost',
-        'Update-FogObject',
-        'New-FogObject',
-        'Send-FogWolTask',
-        'Test-StringNotNullOrEmpty',
-        'Add-FogHostGroup',
-        'Remove-FogHostGroup',
-        'Update-FogGroup',
-        'Send-FogGroupTask',
-        'Add-FogHostMac',
-        'Get-FogHostMacs',
-        'Get-FogHostPendingMacs',
-        'Approve-FogPendingMac',
-        'Deny-FogPendingMac',
-        'Get-FogMacAddresses',
-        'Remove-UsbMac',
-        'Get-FogHostGroup',
-        'Set-FogHostImage',
-        'Reset-HostEncryption',
-        'Get-FogGroups',
-        'Get-FogGroupByName',
-        'Get-FogGroupAssociations',
-        'Get-FogImages',
-        'Receive-FogImage',
-        'Send-FogImage',
-        'Get-FogSnapins',
-        'Get-FogSnapinAssociations',
-        'Get-FogHostAssociatedSnapins',
-        'Repair-FogSnapinAssociations',
-        'Set-FogSnapins',
-        'Start-FogSnapins',
-        'Start-FogSnapin',
-        'Get-FogModules',
-        'Get-FogSettings',
-        'Get-FogSetting',
-        'Set-FogSetting',
-        'Get-FogActiveTasks',
-        'Get-FogScheduledTasks',
-        'Remove-FogObject',
-        'Find-FogObject',
-        'Add-FogResultData',
-        'Get-LastImageTime',
-        'Test-FogVerAbove1dot6',
-        'Get-FogVersion'
+        $exported | Where-Object { -not $script:FogExcludedFromExamples.ContainsKey($_) } | Sort-Object
     )
     if ($Function) {
         $script:FogPilotFunctions = $script:FogPilotFunctions | Where-Object { $_ -in $Function }

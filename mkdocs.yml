@@ -69,6 +69,7 @@ nav:
   - About: about_FogApi.md
   - Contributing: Contributing.md
   - Testing Validation: TestValidation.md
+  - API Coverage: ApiCoverage.md
   - Real-Server Validation History: RealServerValidation.md
   - Release Notes: ReleaseNotes.md
   - Commands: 

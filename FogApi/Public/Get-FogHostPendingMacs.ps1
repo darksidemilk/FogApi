@@ -29,8 +29,8 @@ function Get-FogHostPendingMacs {
 
     #>
     
-    [Alias('Get-PendingMacsForHost')]
     [CmdletBinding(DefaultParameterSetName='byId')]
+    [Alias('Get-PendingMacsForHost')]
     param (
         [parameter(ValueFromPipeline=$true,ParameterSetName='byHost')]
         $fogHost,

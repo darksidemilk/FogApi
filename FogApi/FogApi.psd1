@@ -114,29 +114,33 @@ PowerShellVersion = '5.1'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData', 
-               'Approve-FogPendingMac', 'Deny-FogPendingMac', 'Disable-FogApiHTTPS', 
-               'Dismount-WinEfi', 'Enable-FogApiHTTPS', 'Find-FogObject', 
-               'Get-FogActiveTasks', 'Get-FogGroupAssociations', 
-               'Get-FogGroupByName', 'Get-FogGroups', 'Get-FogHost', 
-               'Get-FogHostAssociatedSnapins', 'Get-FogHostGroup', 'Get-FogHostMacs', 
-               'Get-FogHostPendingMacs', 'Get-FogHosts', 'Get-FogImages', 
-               'Get-FogInventory', 'Get-FogLog', 'Get-FogMacAddresses', 
-               'Get-FogModules', 'Get-FogObject', 'Get-FogPagedResult',
-               'Get-FogScheduledTasks',
+               'Approve-FogPendingMac', 'Deny-FogPendingMac', 
+               'Disable-FogApiHTTPS', 'Dismount-WinEfi', 'Enable-FogApiHTTPS', 
+               'Find-FogObject', 'Find-FogPrinter', 'Get-FogActiveTasks', 
+               'Get-FogGroupAssociations', 'Get-FogGroupByName', 
+               'Get-FogGroups', 'Get-FogHost', 'Get-FogHostAssociatedSnapins', 
+               'Get-FogHostGroup', 'Get-FogHostMacs', 'Get-FogHostPendingMacs', 
+               'Get-FogHosts', 'Get-FogImages', 'Get-FogInventory', 
+               'Get-FogLog', 'Get-FogMacAddresses', 'Get-FogModules', 
+               'Get-FogObject', 'Get-FogPagedResult', 'Get-FogPrinter', 
+               'Get-FogPrinters', 'Get-FogScheduledTasks', 
                'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 
-               'Get-FogServerSettingsFile', 'Get-FogSetting', 'Get-FogSettings', 
-               'Get-FogSnapinAssociations', 'Get-FogSnapins', 'Get-FogVersion', 
-               'Get-LastImageTime', 'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
-               'Install-FogService', 'Invoke-FogApi', 'Mount-WinEfi', 'New-FogHost', 
-               'New-FogObject', 'New-FogSnapin', 'Receive-FogImage', 
-               'Remove-FogHostGroup', 'Remove-FogObject', 'Remove-UsbMac', 
+               'Get-FogServerSettingsFile', 'Get-FogSetting', 
+               'Get-FogSettings', 'Get-FogSnapinAssociations', 
+               'Get-FogSnapins', 'Get-FogVersion', 'Get-LastImageTime', 
+               'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
+               'Install-FogService', 'Invoke-FogApi', 'Mount-WinEfi', 
+               'New-FogHost', 'New-FogObject', 'New-FogPrinter', 
+               'New-FogSnapin', 'Receive-FogImage', 'Remove-FogHostGroup', 
+               'Remove-FogObject', 'Remove-FogPrinter', 'Remove-UsbMac', 
                'Repair-FogSnapinAssociations', 'Reset-HostEncryption', 
                'Resolve-HostID', 'Send-FogGroupTask', 'Send-FogImage', 
                'Send-FogWolTask', 'Set-FogHostImage', 'Set-FogInventory', 
                'Set-FogServerSettings', 'Set-FogServerSettingsFileSecurity', 
                'Set-FogSetting', 'Set-FogSnapins', 'Set-WinToBootToPxe', 
                'Start-FogSnapin', 'Start-FogSnapins', 'Test-FogVerAbove1dot6', 
-               'Test-StringNotNullOrEmpty', 'Update-FogGroup', 'Update-FogObject'
+               'Test-StringNotNullOrEmpty', 'Update-FogGroup', 
+               'Update-FogObject', 'Update-FogPrinter'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -145,15 +149,16 @@ CmdletsToExport = @()
 VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject', 'Add-FogSnapins', 
-               'Capture-FogImage', 'Deploy-FogImage', 'Get-FogAssociatedSnapins', 
-               'Get-FogGroup', 'Get-FogHostInventory', 
-               'Get-FogHostSnapinAssociations', 'Get-FogHostSnapins', 'Get-FogMacs',
-               'Get-MacsForHost', 'Get-PendingMacsForHost', 'Get-WinInventoryForFog',
-               'Invoke-FogImageCapture',
-               'Pull-FogImage', 'Push-FogImage', 'Remove-FogGroupHost', 
-               'Remove-FogMac', 'Reset-FogHostEncryption', 'Save-FogImage', 
-               'Set-FogGroup', 'Set-FogObject'
+AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject', 
+               'Add-FogSnapins', 'Capture-FogImage', 'Deploy-FogImage', 
+               'Get-FogAssociatedSnapins', 'Get-FogGroup', 
+               'Get-FogHostInventory', 'Get-FogHostSnapinAssociations', 
+               'Get-FogHostSnapins', 'Get-FogMacs', 'Get-MacsForHost', 
+               'Get-PendingMacsForHost', 'Get-WinInventoryForFog', 
+               'Invoke-FogImageCapture', 'Pull-FogImage', 'Push-FogImage', 
+               'Remove-FogGroupHost', 'Remove-FogMac', 
+               'Reset-FogHostEncryption', 'Save-FogImage', 'Set-FogGroup', 
+               'Set-FogObject'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()

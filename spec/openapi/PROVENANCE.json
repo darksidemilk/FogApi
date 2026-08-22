@@ -1,0 +1,36 @@
+{
+  "$comment": "Where spec/openapi/fog-1.6.json came from. Regenerate both together; a snapshot with a stale provenance record is worse than no snapshot, because the diff it produces cannot be traced back to a server change.",
+  "document": "fog-1.6.json",
+  "source": {
+    "repo": "https://github.com/FOGProject/fogproject",
+    "branch": "working-1.6",
+    "commit": "e830495865e514f02a401a3d8567f2d630fb71ef",
+    "commitShort": "e83049586",
+    "commitDate": "2026-08-21T22:04:26+00:00",
+    "fogVersion": "1.6.0-beta.3789",
+    "openapiClassLastChanged": "e874cd3cd"
+  },
+  "generatedBy": "spec/tools/dump-openapi.php",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3789 --out spec/openapi/fog-1.6.json",
+  "servedLiveAt": [
+    "GET {webroot}/system/openapi",
+    "GET {webroot}/swagger.json"
+  ],
+  "counts": {
+    "paths": 401,
+    "operations": 554,
+    "schemas": 54,
+    "routeClasses": 52
+  },
+  "notes": [
+    "Both live routes sit in the router's unauthenticated allowlist, so discovery needs no tokens.",
+    "The live document is built per request and includes classes contributed by plugin hooks. This snapshot fires no hooks, so it describes stock FOG. That is the intended baseline for generated cmdlets; plugin classes are a runtime concern, handled by reading the live document.",
+    "1.6 only. The 1.5 line has no commons/schema-expected.php, so there is no type source to generate against there."
+  ],
+  "verifiedAgainstLiveServer": {
+    "date": "2026-08-22",
+    "method": "Installed FOG 1.6 from this commit (bin/installfog.sh), deployed the schema, then fetched GET /system/openapi and diffed it against this snapshot key by key.",
+    "result": "Identical except servers[0].url, which is a deliberate placeholder here. 401 paths, 54 schemas, 53 tags, x-fog-paging {maxRows: 10000, expandMaxItems: 2500} on both.",
+    "note": "This is what makes the offline generator trustworthy: it calls OpenAPI::document() rather than reimplementing it, and the diff confirms the four things it stubs (FOG_VERSION, the host, the hook manager, the FOGBase statics) are the only things that differ."
+  }
+}

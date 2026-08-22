@@ -41,10 +41,10 @@ three that can execute at all.
 | **0 — Paging** | **Done, awaiting review** | `fix/fog16-paging-truncation` |
 | 0.3 — Layer-violation refactor | Not started | `refactor/l1-crud-standardization` |
 | 0.5 — ValidateSet additions + version caching | Not started | `fix/dynamic-param-classes` |
-| 1 — Spec + generator + coverage matrix + printer pilot | Not started | `feat/api-spec-generator` |
+| **1 — Spec + generator + coverage matrix + printer pilot** | **Done, awaiting review** | `claude/fogapi-openapi-spec-9o14r0` |
 | 2-5 — Generate Tiers 1-3, hand-write fixed routes | Not started | one branch per tier |
 | 6 — Test rebuild around language-neutral corpus | Not started | |
-| 7 — Real-server CI + fog-workflows release gate | Blocked on FOGProject org move | |
+| 7 — Real-server CI + fog-workflows release gate | **Largely already exists** — see below | |
 | 8 — Python + bash ports | Not started | Python first within the phase |
 
 **Branching rule:** every phase branches from `dev` and PRs back into `dev`. Never branch from or PR
@@ -91,6 +91,196 @@ Get-FogHosts | Measure-Object                                # unchanged call si
 Also worth a real-server sanity check that nothing regressed on the unpaged paths:
 `Get-FogHost -hostID <id>`, `Get-FogActiveTasks`, and
 `Find-FogObject -coreObject unisearch -stringToSearch <term>`.
+
+---
+
+## Phase 1 — what shipped, and how the plan changed
+
+**FOG 1.6 now describes itself.** `working-1.6` gained `lib/fog/openapi.class.php`,
+which serves an OpenAPI 3.0.3 document at `GET {webroot}/system/openapi` with
+`GET {webroot}/swagger.json` as an alias for the same handler. That is the single
+biggest change to this plan since it was written, and it changes what Phase 1 *is*.
+
+The original plan had `spec/fog-api-spec.json` hand-authored: someone reads the PHP,
+transcribes every class, every field, every route shape, and keeps it current by
+remembering to. That spec would have been wrong the first time a column changed and
+would have had no way to know it. It is now **generated from FOG's own metadata**,
+and the hand-written part shrinks to the part a server genuinely cannot know.
+
+### The three-file pipeline
+
+```
+FOG checkout ──dump-openapi.php──> spec/openapi/fog-1.6.json   (generated, never edited)
+                                              │
+spec/overlay/fog-api-overlay.json ────────────┤  (hand-maintained, small)
+                                              ▼
+                              Build-FogApiSpec.ps1
+                                              │
+                                              ▼
+                                  spec/fog-api-spec.json
+                                              │
+                    ┌─────────────────────────┼──────────────────────┐
+                    ▼                         ▼                      ▼
+      New-FogApiFunctionFile.ps1   Get-FogApiCoverage.ps1     Python / bash emitters
+        (FogApi/Public/*.ps1)        (docs/ApiCoverage.md)          (phase 8)
+```
+
+The snapshot carries everything worth never retyping: 401 paths, 554 operations,
+54 entity schemas, and per field the JSON type, the raw column name
+(`x-fog-column`), `maxLength`, nullability, enum values, whether the server owns it
+(`readOnly`) and whether it is required on create — plus `x-fog-permission` per
+operation and `x-fog-paging` at the root. `Update-FogPrinter`'s
+`[ValidateLength(0,250)]` on `-name` is not a number anyone typed; it is
+`varchar(250)` on `printers.pAlias`, read through the document.
+
+### The snapshot is generated offline, and verified against a live server
+
+The document is built **per request** on purpose — `$validClasses` and the
+sensitive-field lists are mutated at runtime by plugin hooks, so a build-time file
+would omit every class a plugin adds. Right for a server, wrong for a code
+generator: generating cmdlets has to be reproducible from a commit and reviewable
+as a diff.
+
+`spec/tools/dump-openapi.php` therefore calls `OpenAPI::document()` directly against
+a checkout, rather than reimplementing it. That is possible because building the
+document touches no data — the class lists are literal statics, the field maps come
+from `ReflectionClass::getDefaultProperties()`, the types come from
+`commons/schema-expected.php`, and defining a PHP class has no side effects. Four
+things are stubbed and only four: `FOG_VERSION`, the request host, the hook manager,
+and two `FOGBase` statics.
+
+**Verified, not assumed.** A FOG 1.6 server was installed from the same commit
+(`bin/installfog.sh`), the schema deployed, and `GET /system/openapi` diffed against
+the checked-in snapshot key by key. **One difference, in `servers[0].url`**, which is
+the deliberate placeholder. Recorded in `spec/openapi/PROVENANCE.json`.
+
+### Corrections to the "Verified server facts" below
+
+The hand-derived route list in that section was close but not exact. From the
+document:
+
+- **1.6 has ten generic per-class shapes, not eight.** `list`, `indiv`, `create`,
+  `update`, `delete`, `search`, **`count`**, **`names`**, **`ids`**, **`join`** — all
+  ten on all 52 classes bar `history`, which is read-only. Plus `task`/`cancel` on 8
+  tasking classes and `active` (`{class}/current`) on 7.
+- **`join` is `PUT /{class}/join`, an upsert against the natural key** rather than an
+  id. It was not in the plan at all.
+- **`/search/{item}/{limit}` is not a second route.** It is an alias spelling of
+  `/unisearch/{item}/{limit}`; the router registers `/[search|unisearch]/...` once.
+- **`system/status` is not a separate route either** — `/system/[status|info]` is one
+  registration with one handler and one payload, so the document describes
+  `/system/info` alone.
+- **`system/info` now carries `paging: {maxRows, expandMaxItems}`.** Phase 0's page
+  sizing can read the server's real bounds instead of assuming; `x-fog-paging` at the
+  document root says the same thing, and the API-validation workflow already asserts
+  the two agree.
+- **52 route classes, not "~50".** The document is the authoritative denominator, and
+  `docs/ApiCoverage.md` is generated against it.
+
+### Scope, now that the denominator is real
+
+554 operations is not 554 cmdlets. Four shapes fold into parameters on another
+cmdlet rather than becoming cmdlets of their own — `count`, `names` and `ids` onto
+the list cmdlet, and `join` onto `New-Fog{Noun} -Upsert`. That folding is 208 of the
+554 by itself.
+
+`join` folding is worth recording: PowerShell's `Set-` is the verb for
+create-or-modify, but `Set-FogGroup` and `Set-FogHostImage` already exist as aliases
+for other things, so claiming `Set-Fog{Noun}` module-wide would break callers.
+`New-Fog{Noun} -Upsert` avoids the collision and reads correctly.
+
+What the resolved spec says today:
+
+| | count |
+|---|---|
+| Operations the server serves | 554 |
+| Folded into a parameter on another cmdlet | 208 |
+| Cmdlets specified for generation | 233 |
+| Skipped because a hand-written function owns the name | 7 |
+| Replacing an existing thin wrapper (old name kept as an alias) | 11 |
+| Fixed routes, hand-written (tier 5) | 15 |
+| Hand-written, registered rather than generated | 56 |
+| Reachable only through L1, by choice | 86 |
+
+The last row is the honest residual and is not a backlog. Nobody wants a typed cmdlet
+for every write verb on every lookup table; the tiers are chosen against that number.
+
+### The printer pilot, verified live
+
+Six cmdlets emitted from the spec — `Get-FogPrinters`, `Get-FogPrinter`,
+`New-FogPrinter`, `Update-FogPrinter`, `Remove-FogPrinter`, `Find-FogPrinter` — and
+exercised against the live server, not only the mocks: create, list, get-by-id,
+update, search, delete, the `id`-or-object pipeline contract, the `-settings` escape
+hatch overriding a named parameter, and `[ValidateLength(250)]` rejecting 251
+characters.
+
+**Two emitter bugs the mocks would not have caught**, one of them sitting on top of a
+real FogApi bug:
+
+- **The `indiv` template appended `.data`**, copied from the `list` template where it
+  belongs, so `Get-FogPrinter` returned `$null`. `Get-FogObject` is *correct* here and
+  says so at `Get-FogObject.ps1:127`: a fetch by id returns the bare object because a
+  single-object response has no envelope, and `Add-FogResultData` exists to normalise
+  the 1.5-vs-1.6 **list** envelope specifically. Emitter fixed; nothing to change in
+  the module. Worth writing down because the asymmetry is easy to re-introduce — every
+  other template does take `.data`.
+- **The `search` template omitted `-type search`,** relying on that parameter's
+  default. A `DynamicParam` block sees only *bound* parameters, so with `-type` omitted
+  `Set-DynamicParams` is handed `$null`, adds no `-coreObject`, and the call cannot
+  bind. Passing it explicitly fixes the emitted code — but the fragility underneath is
+  a genuine pre-existing FogApi bug: `Find-FogObject -coreObject host -stringToSearch x`
+  has never worked, and nothing in the signature explains why, because `-type` looks
+  optional and is. Belongs in Phase 0.5 with the rest of the dynamic-param work.
+
+### Phase 1 also closed four listed traps
+
+- **Stale source manifest.** New `./update-sourcemanifest.ps1` rewrites the source
+  `FunctionsToExport`/`AliasesToExport` from the files on disk, with `-Check` for CI.
+  It found the root cause of the `Get-PendingMacsForHost` bug Phase 0 patched by
+  hand: `Get-FogHostPendingMacs.ps1` had its `[Alias()]` *above* `[CmdletBinding()]`,
+  and the build's reader only looks at the line immediately below. Attributes
+  swapped; the script now warns whenever an alias sits anywhere the build cannot see
+  it.
+- **The 46-name inclusion list** in `Tests/FogApi.Examples.Tests.ps1` is inverted to
+  manifest-driven-minus-exclusions, so a new cmdlet is covered the moment it exists
+  and skipping one is a line a reviewer sees.
+- **`Get-FogMockResponse` is now convention-based.** The hand-maintained
+  `switch -regex` still wins, but unmatched paths fall through to shape matching
+  (`GET {class}` → `{class}s.json`, `GET {class}/{id}` → `{class}.json`, and so on).
+  A class opts in by having a fixture file; there is nothing to register. Four
+  hand-written arms times 52 classes was never going to stay correct. The error
+  message for a genuine miss now names the fixture to add.
+- **The one-help-block rule bit the emitter itself** while it was being written: a
+  literal close-comment marker inside its own `.DESCRIPTION` ended the block early
+  and the prose after it parsed as code. Worth knowing before writing a generator
+  that emits help blocks.
+
+### New: the spec at runtime
+
+`GET /system/openapi` is unauthenticated, which makes it usable for discovery before
+credentials exist. Two things follow, both now specified in tier 5 rather than
+speculative:
+
+- **`Get-FogApiSpec`** fetches and caches the live document. That is the real fix for
+  [#33](https://github.com/darksidemilk/FogApi/issues/33) (plugin API objects): a
+  plugin's classes appear in the live document, so a spec-driven `ValidateSet` covers
+  them without a FogApi release. Hardcoding them never can.
+- **`Get-FogSystemInfo`** reads `system/info`, which now carries the version *and*
+  the paging bounds in one cheap unauthenticated call. That is the shape Phase 0.5
+  wants for killing the three-round-trip version probe.
+
+### Phase 7 is further along than this doc thought
+
+`FOGProject/fog-workflows` already has `.github/workflows/reusable_api_validation.yml`,
+which installs FOG in distrobox, seeds API credentials, asserts the OpenAPI document
+is served on both paths and is the same document, checks `system/info` and
+`x-fog-paging` agree, then sets up FogApi and runs its real-server suite. It is not
+blocked on the org move.
+
+What it does not yet do is compare the live document against FogApi's checked-in
+snapshot. That is the natural addition and the thing that would catch upstream adding
+a class or changing a column before it reaches a release: fetch `/system/openapi`,
+diff against `spec/openapi/fog-1.6.json`, and fail with the delta.
 
 ---
 
@@ -244,7 +434,9 @@ dispatch), not `installfog.sh`'s heavier GNU `getopt`.
 
 ## Known traps
 
-- **Stale source manifest.** `invoke-modulebuild.ps1` updates only the `_module_build` copy of
+- **Stale source manifest.** ~~`invoke-modulebuild.ps1` updates only the `_module_build` copy of
+  `FogApi.psd1`, never the source.~~ **Closed in Phase 1** by `./update-sourcemanifest.ps1`.
+  Originally: `invoke-modulebuild.ps1` updates only the `_module_build` copy of
   `FogApi.psd1`, never the source. New functions are invisible to the test suite until the source
   `FunctionsToExport` is rewritten. This already bit once (`Get-PendingMacsForHost`, fixed in Phase 0).
 - **`FogApi.psm1:4` globs `Public/*.ps1` non-recursively** — a `Generated/` subfolder would be
@@ -252,10 +444,12 @@ dispatch), not `installfog.sh`'s heavier GNU `getopt`.
 - **One `<#...#>` block per file, help block first.** Both build scripts strip comments via
   `IndexOf('<#')`/`IndexOf('#>')` — first occurrence only.
 - **`[Alias()]` must be on the line immediately after `[CmdletBinding(...)]`** — `Get-AliasesToExport`
-  indexes that exact line and silently drops aliases declared elsewhere.
-- **`Tests/FogApi.Examples.Tests.ps1` uses a hardcoded 46-name inclusion list** — new functions get
+  indexes that exact line and silently drops aliases declared elsewhere. Still true;
+  `./update-sourcemanifest.ps1` now warns when it finds one the build would miss, and
+  fixed the one live instance (`Get-FogHostPendingMacs`).
+- **Closed in Phase 1.** ~~`Tests/FogApi.Examples.Tests.ps1` uses a hardcoded 46-name inclusion list~~ — new functions get
   zero tests, silently. Invert to manifest-driven-minus-exclusions (Phase 1).
-- **`Get-FogMockResponse` throws on unmapped paths** and is a hand-maintained `switch -regex`.
+- **Closed in Phase 1.** ~~`Get-FogMockResponse` throws on unmapped paths~~ and is a hand-maintained `switch -regex`.
   Phase 0 taught it to strip query strings; Phase 1 should make lookup convention-based.
 - **`invoke-modulebuild.ps1:75` references `$docsPth`**, never defined, so the built module ships
   with no help content. Non-terminating, so CI passes today.
@@ -264,9 +458,27 @@ dispatch), not `installfog.sh`'s heavier GNU `getopt`.
 
 ## Next session, start here
 
-1. Confirm Phase 0 is merged to `dev`.
-2. `git checkout dev && git pull && git checkout -b refactor/l1-crud-standardization`
-3. Phase 0.3 scope:
+Phase 1 is on `claude/fogapi-openapi-spec-9o14r0`, branched from
+`fix/fog16-paging-truncation` (Phase 0) because it revises this document. Merge order
+is #62 → #63 → #64 → Phase 1.
+
+Highest-value next steps, in order:
+
+1. **Phase 0.3 / 0.5 first, not Phase 2.** Two things the pilot proved are needed
+   before emitting 233 cmdlets:
+   - The folded `-Count` / `-NamesOnly` / `-IdsOnly` switches have nowhere to go:
+     `Get-FogObject` cannot address `{class}/count`, `{class}/names` or
+     `{class}/ids`. It needs one `-subPath` parameter, or those switches stay
+     unimplemented and 208 folded operations are folded into nothing.
+   - `Find-FogObject`'s dynamic-param binding (above) is a live bug and every
+     generated `Find-Fog*` works around it today.
+2. **Wire the drift check into `reusable_api_validation.yml`** — diff the live
+   document against `spec/openapi/fog-1.6.json`. Cheapest possible early warning for
+   an upstream schema change, and the workflow already has a running server.
+3. **Then Phase 2**, tier 1, `-Class host,group,image,snapin` and so on. The pipeline
+   is proven; each tier is now mostly review rather than authorship.
+
+Phase 0.3 scope (unchanged):
    - `Start-FogSnapins.ps1:62,72` -> `Get-FogObject -type objectactivetasktype -coreActiveTaskObject task`
      and `Remove-FogObject -type objecttasktype -coreTaskObject task -IDofObject $id`
    - `Remove-UsbMac.ps1:100,125` -> `Update-FogObject` / `Remove-FogObject` on `macaddressassociation`
