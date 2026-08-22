@@ -1,6 +1,9 @@
 $PSModuleRoot = $PSScriptRoot
-$script:lib = "$PSModuleRoot\lib"
-$script:bin = "$PSModuleRoot\bin"
+# Join-Path, not "$PSModuleRoot\lib" - on linux and mac a backslash is a literal
+# filename character, so the hardcoded separator produced a path that never
+# resolved and broke the settings file bootstrap that every command depends on
+$script:lib = Join-Path $PSModuleRoot 'lib'
+$script:bin = Join-Path $PSModuleRoot 'bin'
 $PublicFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Public/*.ps1" -ErrorAction SilentlyContinue )
 $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorAction SilentlyContinue )
 

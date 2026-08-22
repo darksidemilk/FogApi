@@ -46,44 +46,59 @@ Param()
 Import-Module .\BuildHelpers.psm1
 
 $moduleName = 'FogApi'
-$modulePath = "$PSScriptRoot\$moduleName";
+$modulePath = Join-Path $PSScriptRoot $moduleName;
+$docsPth = Join-Path $PSScriptRoot 'docs';
 
-mkdir $modulePath -EA 0;
-# mkdir "$modulePath\tools" -EA 0;
-# mkdir "$modulePath\docs" -EA 0;
-mkdir "$modulePath\lib" -EA 0;
-mkdir "$modulePath\bin" -EA 0;
-mkdir "$modulePath\Public" -EA 0;
-mkdir "$modulePath\Private" -EA 0;
-mkdir "$modulePath\Classes" -EA 0;
+# New-Item, not mkdir. Powershell only defines mkdir as a function on windows; on linux
+# and mac it resolves to /usr/bin/mkdir, so '-EA 0' is handed to the native binary as
+# '-E -A 0' and the whole build fails with "mkdir: invalid option -- 'E'"
+New-Item -ItemType Directory -Force -Path $modulePath -EA 0 | Out-Null;
+# New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'tools') -EA 0 | Out-Null;
+# New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'docs') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'lib') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'bin') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Public') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Private') -EA 0 | Out-Null;
+New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'Classes') -EA 0 | Out-Null;
 
 
-$PublicFunctions = Get-ChildItem "$modulePath\Public" -Recurse -Filter '*.ps1' -EA 0;
-$Classes = Get-ChildItem "$modulePath\Classes" -Recurse -Filter '*.ps1' -EA 0;
-$PrivateFunctions = Get-ChildItem "$modulePath\Private" -Recurse -Filter '*.ps1' -EA 0;
-# mkdir "$PSSCriptRoot\ModuleBuild" -EA 0;
-$buildPth = ".\_module_build\$moduleName";
-$moduleFile = "$buildPth\$moduleName.psm1";
+$PublicFunctions = Get-ChildItem (Join-Path $modulePath 'Public') -Recurse -Filter '*.ps1' -EA 0;
+$Classes = Get-ChildItem (Join-Path $modulePath 'Classes') -Recurse -Filter '*.ps1' -EA 0;
+$PrivateFunctions = Get-ChildItem (Join-Path $modulePath 'Private') -Recurse -Filter '*.ps1' -EA 0;
+# mkdir (Join-Path $PSSCriptRoot 'ModuleBuild') -EA 0;
+$buildPth = Join-Path '.' '_module_build' $moduleName;
+$moduleFile = Join-Path $buildPth "$moduleName.psm1";
 
 # Create the build output folder
 if (Test-Path $buildPth) {
 	Remove-Item $buildPth -force -recurse;
 }
-mkdir $buildPth | Out-Null;
+New-Item -ItemType Directory -Force -Path $buildPth | Out-Null;
 
 New-Item $moduleFile -Force | Out-Null;
-Copy-Item "$docsPth\en-us" "$buildPth\en-us" -Recurse -Exclude '*.md';
+# $docsPth was never defined here, so this resolved to '\en-us' and silently failed,
+# shipping a built module with no external help content
+$enUsSource = Join-Path $docsPth 'en-us';
+if (Test-Path $enUsSource) {
+	Copy-Item $enUsSource (Join-Path $buildPth 'en-us') -Recurse -Exclude '*.md';
+} else {
+	Write-Warning "No en-us help content found at $enUsSource, the built module will have no external help";
+}
 Add-Content -Path $moduleFile -Value "`$PSModuleRoot = `$PSScriptRoot";
-if ((Get-ChildItem "$modulePath\lib").count -gt 0) {
-	Copy-Item "$modulePath\lib" "$buildPth\lib" -Recurse;
-	Add-Content -Path $moduleFile -Value "`$script:lib = `"`$PSModuleRoot\lib`"";
+# Emit Join-Path rather than a hardcoded backslash. On linux and mac a backslash is a literal
+# filename character, so "`$PSModuleRoot\lib" produced a path that never resolved and broke the
+# settings bootstrap that every command depends on. This is the copy that ships, so fixing the
+# source FogApi.psm1 alone would not have fixed the published module.
+if ((Get-ChildItem (Join-Path $modulePath 'lib')).count -gt 0) {
+	Copy-Item (Join-Path $modulePath 'lib') (Join-Path $buildPth 'lib') -Recurse;
+	Add-Content -Path $moduleFile -Value "`$script:lib = Join-Path `$PSModuleRoot 'lib'";
 }
-if ((Get-ChildItem "$modulePath\bin").count -gt 0) {
-	Copy-Item "$modulePath\bin" "$buildPth\bin" -Recurse;
-	Add-Content -Path $moduleFile -Value "`$script:bin = `"`$PSModuleRoot\bin`"";
+if ((Get-ChildItem (Join-Path $modulePath 'bin')).count -gt 0) {
+	Copy-Item (Join-Path $modulePath 'bin') (Join-Path $buildPth 'bin') -Recurse;
+	Add-Content -Path $moduleFile -Value "`$script:bin = Join-Path `$PSModuleRoot 'bin'";
 }
-# Copy-Item "$modulePath\tools" "$buildPth\tools" -Recurse;
-Add-Content -Path $moduleFile -Value "`$script:tools = `"`$PSModuleRoot\tools`"";
+# Copy-Item (Join-Path $modulePath 'tools') (Join-Path $buildPth 'tools') -Recurse;
+Add-Content -Path $moduleFile -Value "`$script:tools = Join-Path `$PSModuleRoot 'tools'";
 
 
 #Build the psm1 file
@@ -121,14 +136,15 @@ if ($null -ne $PrivateFunctions) {
 	}
 }
 
-$manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
-Copy-Item $manifest "$buildPth\$moduleName.psd1";
+$manifest = Join-Path $PSScriptRoot $moduleName "$moduleName.psd1"
+$builtManifest = Join-Path $buildPth "$moduleName.psd1";
+Copy-Item $manifest $builtManifest;
 
-if (Get-Command Update-PSModuleManifest) {
-    Update-PSModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+if (Get-Command Update-PSModuleManifest -ea 0) {
+    Update-PSModuleManifest -Path $builtManifest -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
 } else {
-	"PSResourceGet version of update manifest not found, reverting to psget version, may cause issues with choco nuspec" | out-host; 
-	Update-ModuleManifest -Path "$buildPth\$moduleName.psd1" -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
+	"PSResourceGet version of update manifest not found, reverting to psget version, may cause issues with choco nuspec" | out-host;
+	Update-ModuleManifest -Path $builtManifest -RootModule "$moduleName.psm1" -FunctionsToExport $PublicFunctions.BaseName
 }
-Set-EmptyExportArray -psd1Path "$buildPth\$moduleName.psd1" -ExportType Cmdlets;
-Set-EmptyExportArray -psd1Path "$buildPth\$moduleName.psd1" -ExportType Variables;
+Set-EmptyExportArray -psd1Path $builtManifest -ExportType Cmdlets;
+Set-EmptyExportArray -psd1Path $builtManifest -ExportType Variables;
