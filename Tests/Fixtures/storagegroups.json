@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "storagegroups": [
+    {
+      "id": 1,
+      "name": "ExampleStoragegroup",
+      "description": "",
+      "trustedcidrs": ""
+    }
+  ]
+}

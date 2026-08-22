@@ -250,6 +250,7 @@ foreach ($class in $snapshotClasses) {
             pattern  = $(if ($f.PSObject.Properties.Name -contains 'pattern') { $f.pattern } else { $null })
             enum     = $(if ($f.PSObject.Properties.Name -contains 'enum') { @($f.enum) } else { $null })
             required = ($required -contains $prop.Name)
+            aliases  = @()
         }
     }
     $schemaByClass[$class] = [pscustomobject][ordered]@{
@@ -347,6 +348,56 @@ foreach ($rn in Get-OverlayKeys $overlay.naming.operations) {
     $opNaming[$rn] = $overlay.naming.operations.$rn
 }
 
+# Parameter aliases, resolved per class. Validated here rather than trusted:
+# an alias that collides with a real parameter name silently shadows nothing and
+# fails at import, and one naming a field the class does not have is a typo that
+# would otherwise just never appear.
+$paramAliasCommon = @{}
+if ($overlay.PSObject.Properties.Name -contains 'parameterAliases') {
+    foreach ($k in Get-OverlayKeys $overlay.parameterAliases.common) {
+        $paramAliasCommon[$k] = @($overlay.parameterAliases.common.$k)
+    }
+    foreach ($cls in Get-OverlayKeys $overlay.parameterAliases.byClass) {
+        if ($snapshotClasses -notcontains $cls) {
+            Add-Problem "parameterAliases.byClass names class '$cls', which the snapshot does not have"
+            continue
+        }
+        $fieldNames = @($schemaByClass[$cls].fields | ForEach-Object { $_.name })
+        foreach ($field in Get-OverlayKeys $overlay.parameterAliases.byClass.$cls) {
+            if ($fieldNames -notcontains $field) {
+                Add-Problem "parameterAliases.byClass.$cls names field '$field', which is not a field of that class"
+                continue
+            }
+            foreach ($alias in @($overlay.parameterAliases.byClass.$cls.$field)) {
+                if ($fieldNames -contains $alias) {
+                    Add-Problem "parameterAliases.byClass.$cls.$field aliases '$alias', which is already a real field on that class"
+                }
+            }
+        }
+    }
+}
+
+function Resolve-ParameterAliases {
+    <#
+    Every alias for one parameter of one class: the common ones plus that
+    class's own, deduplicated and in a stable order so the spec stays
+    byte-identical between runs.
+    #>
+    param([string]$Class, [string]$Parameter)
+    $all = [System.Collections.Generic.List[string]]::new()
+    if ($paramAliasCommon.ContainsKey($Parameter)) {
+        foreach ($a in $paramAliasCommon[$Parameter]) { $all.Add($a) }
+    }
+    $byClass = $overlay.parameterAliases.byClass
+    if ($byClass -and ($byClass.PSObject.Properties.Name -contains $Class)) {
+        $forClass = $byClass.$Class
+        if ($forClass.PSObject.Properties.Name -contains $Parameter) {
+            foreach ($a in @($forClass.$Parameter)) { $all.Add($a) }
+        }
+    }
+    @($all | Select-Object -Unique)
+}
+
 $fifteenAbsentOps = @($overlay.fifteen.absentOperations)
 $fifteenAbsentClasses = @($overlay.fifteen.absentClasses.classes)
 $fifteenSpellings = @{}
@@ -365,6 +416,15 @@ $l1For = @{
     delete = 'Remove-FogObject'
     task   = 'New-FogObject'
     cancel = 'Remove-FogObject'
+}
+
+# Filled after the alias tables are built, because validating an alias needs the
+# field list the schema pass produces.
+foreach ($class in $snapshotClasses) {
+    if (-not $schemaByClass.Contains($class)) { continue }
+    foreach ($field in $schemaByClass[$class].fields) {
+        $field.aliases = @(Resolve-ParameterAliases -Class $class -Parameter $field.name)
+    }
 }
 
 $generated = [System.Collections.Generic.List[object]]::new()
@@ -490,6 +550,7 @@ foreach ($class in $snapshotClasses) {
             blockedBy     = $blockedBy
             replaces      = $replaces
             aliases       = $aliases
+            suppressedAliases = @()
             verb          = $naming.verb
             noun          = "$infix$($overlay.naming.prefix)$noun$suffix"
             operationId   = $opId
@@ -544,6 +605,33 @@ foreach ($routeName in Get-OverlayKeys $overlay.tiers.'5'.operations) {
         # reason to call the transport directly.
         l1Function   = $null
     })
+}
+
+# --- an alias must never shadow a generated function ---------------------
+
+# A thin wrapper's old name becomes an alias on whatever replaced it, which is
+# how callers keep working. That is wrong when the same name is ALSO a generated
+# function: Get-FogSetting was the search wrapper's name, so Find-FogSetting
+# claimed it as an alias -- and shadowed the real generated Get-FogSetting,
+# which then answered as a search and refused -settingName. The alias wins at
+# resolution time, so the collision is silent until something calls it.
+$generatedNameSet = @{}
+foreach ($fn in $generated) {
+    if ($fn.status -in @('generate', 'replaces-thin-wrapper')) { $generatedNameSet[$fn.functionName] = $true }
+}
+foreach ($fn in $generated) {
+    if (-not $fn.aliases -or $fn.aliases.Count -eq 0) { continue }
+    $kept = @()
+    foreach ($alias in $fn.aliases) {
+        if ($generatedNameSet.ContainsKey($alias) -and $alias -ne $fn.functionName) {
+            # Dropped, not an error: the function of that name is the better
+            # answer for a caller typing it, and it is emitted either way.
+            $fn.suppressedAliases = @($fn.suppressedAliases) + $alias
+            continue
+        }
+        $kept += $alias
+    }
+    $fn.aliases = @($kept)
 }
 
 # --- every file in Public is accounted for -------------------------------
@@ -613,6 +701,7 @@ $spec = [ordered]@{
     thinWrappers = $overlay.thinWrappers
     schemas      = $schemaByClass
     folded       = $overlay.naming.foldedOperations
+    parameterAliases = $overlay.parameterAliases
 }
 
 $json = $spec | ConvertTo-Json -Depth 12

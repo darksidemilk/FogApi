@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "roleuserassociations": [
+    {
+      "id": 1,
+      "name": "ExampleRoleuserassociation",
+      "roleID": 1,
+      "userID": 1
+    }
+  ]
+}

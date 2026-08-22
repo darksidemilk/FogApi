@@ -1,0 +1,11 @@
+{
+  "count": 1,
+  "snapinjobs": [
+    {
+      "id": 1,
+      "hostID": 1,
+      "stateID": 1,
+      "abortOnFail": "0"
+    }
+  ]
+}

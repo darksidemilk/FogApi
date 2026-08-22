@@ -173,7 +173,11 @@ function Get-FogMockResponse {
                 $created | Add-Member -MemberType NoteProperty -Name id -Value 88 -Force
                 return $created
             }
-            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
+            # scheduledtasks.json, not scheduledtasks-current.json: a plain list
+            # of scheduled tasks is not the active-task list, and -current is
+            # empty. The two were conflated here, so the list route answered
+            # with nothing -- invisible until a generated list cmdlet asked.
+            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks.json' }
         }
         '^scheduledtask/current$' {
             if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
@@ -237,7 +241,11 @@ function Get-FogMockResponse {
             if ($Method -eq 'GET') { return Get-Fixture 'images.json' }
         }
         '^imaginglog$' {
-            if ($Method -eq 'GET') { return Get-Fixture 'imaginglog.json' }
+            # imaginglogs.json, not imaginglog.json: this is the LIST route, and
+            # returning the single-object fixture handed callers one object
+            # where the envelope belongs. Nothing noticed until a generated
+            # list cmdlet asked for it.
+            if ($Method -eq 'GET') { return Get-Fixture 'imaginglogs.json' }
         }
         '^inventory/new$' {
             if ($Method -eq 'POST') { return $jsonData | ConvertFrom-Json }

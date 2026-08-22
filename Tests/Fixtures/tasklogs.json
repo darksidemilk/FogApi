@@ -1,0 +1,16 @@
+{
+  "count": 1,
+  "tasklogs": [
+    {
+      "id": 1,
+      "taskID": 1,
+      "stateID": 1,
+      "ip": "",
+      "type": "",
+      "text": "",
+      "hostID": 1,
+      "hostName": "",
+      "taskTypeName": ""
+    }
+  ]
+}

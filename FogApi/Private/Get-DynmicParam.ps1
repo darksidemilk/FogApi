@@ -32,30 +32,11 @@ the position to put the dynamic parameter in
 
         $attributeCollection.Add($attributes)
 
-        if ((Get-FogVersion) -like '1.6*') {
-            $coreObjects = @(
-                "group", "groupassociation", "history", "hookevent", "host", "hostautologout", 
-                "hostscreensetting", "image", "imageassociation", "imagepartitiontype", "imagetype", 
-                "imaginglog", "inventory", "ipxe", "keysequence", "macaddressassociation", "module", 
-                "moduleassociation", "multicastsession", "multicastsessionassociation", "nodefailure", 
-                "notifyevent", "os", "oui", "plugin", "powermanagement", "printer", "printerassociation", 
-                "pxemenuoptions", "scheduledtask", "setting", "snapin", "snapinassociation", 
-                "snapingroupassociation", "snapinjob", "snapintask", "storagegroup", "storagenode", "task", 
-                "tasklog", "taskstate", "tasktype", "unisearch", "user", "usertracking", "setting", "user", "site", "siteassociation"
-            );
-        } else {
-            $coreObjects = @(
-                "clientupdater", "dircleaner", "greenfog", "group", "groupassociation",
-                "history", "hookevent", "host", "hostautologout", "hostscreensetting", "image",
-                "imageassociation", "imagepartitiontype", "imagetype", "imaginglog", "inventory", "ipxe",
-                "keysequence", "macaddressassociation", "module", "moduleassociation", "multicastsession",
-                "multicastsessionassociation", "nodefailure", "notifyevent", "os", "oui", "plugin",
-                "powermanagement", "printer", "printerassociation", "pxemenuoptions", "scheduledtask",
-                "service", "setting", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
-                "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate", "tasktype",
-                "unisearch", "user", "usercleanup", "usertracking", "virus"
-            );
-        }
+        # The class list is generated from the spec rather than typed here --
+        # it had drifted by seven classes, and every L1 call for one of those
+        # failed during parameter binding rather than at the server. See
+        # Get-FogCoreObjectList and spec/tools/New-FogCoreObjectList.ps1.
+        $coreObjects = Get-FogCoreObjectList -version (Get-FogVersion);
 
         $coreTaskObjects = @("group", "host", "multicastsession", "scheduledtask", "snapinjob", "snapintask", "task");
         $coreActiveTaskObjects = @("multicastsession", "powermanagement", "scheduledtask", "snapinjob", "snapintask", "task");

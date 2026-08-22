@@ -63,6 +63,9 @@ param (
     [string[]]$Route,
     [string]$SpecFile,
     [string]$OutDir,
+    # Where the example values come from, so an emitted "Expected output:" block
+    # matches what the mock will actually return.
+    [string]$FixtureDir,
     [switch]$WhatIfOnly
 )
 
@@ -73,6 +76,7 @@ $specRoot = Split-Path -Parent (Split-Path -Parent $PSCommandPath)
 $repoRoot = Split-Path -Parent $specRoot
 if (-not $SpecFile) { $SpecFile = Join-Path $specRoot 'fog-api-spec.json' }
 if (-not $OutDir)   { $OutDir   = Join-Path (Join-Path $repoRoot 'FogApi') 'Public' }
+if (-not $FixtureDir) { $FixtureDir = Join-Path (Join-Path $repoRoot 'Tests') 'Fixtures' }
 
 if (-not (Test-Path -LiteralPath $SpecFile)) {
     throw "Spec not found at $SpecFile. Run spec/tools/Build-FogApiSpec.ps1 first."
@@ -90,20 +94,164 @@ function Get-FieldList {
     @($spec.schemas.$ClassName.fields)
 }
 
+function Get-FixtureRow {
+    <#
+    The first row of a class's test fixture, when it has one.
+
+    Generated examples carry an "Expected output:" block that
+    Tests/FogApi.Examples.Tests.ps1 asserts against the mocked response, so the
+    example and the fixture have to agree. Inventing values makes them disagree
+    the moment a class already has a hand-authored fixture -- and several do,
+    carrying meaningful values that older tests depend on: host 42 is
+    MeowMachine, group 7 is TestGroup.
+
+    Reading the fixture rather than regenerating it keeps those working, and has
+    the side benefit that the published documentation shows values that look
+    like a real server's rather than Example<Class>.
+    #>
+    param([string]$ClassName, [string]$FixtureDir)
+    if (-not $FixtureDir -or -not (Test-Path -LiteralPath $FixtureDir)) { return $null }
+    foreach ($candidate in @("$ClassName.json", "$($ClassName)s.json")) {
+        $path = Join-Path $FixtureDir $candidate
+        if (-not (Test-Path -LiteralPath $path)) { continue }
+        try {
+            $content = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
+        } catch { continue }
+        if ($content -is [array]) { return $content[0] }
+        # A top-level id means this file IS the object, and it is checked first:
+        # scanning for an array property would otherwise pick a nested one --
+        # host.json carries a macs array, so the scan returned a MAC string
+        # rather than the host, and every host example documented the wrong
+        # thing.
+        if ($content.PSObject.Properties.Name -contains 'id') { return $content }
+        $rows = @($content.PSObject.Properties |
+            Where-Object { $_.Name -ne 'count' -and $_.Value -is [System.Collections.IEnumerable] -and $_.Value -isnot [string] } |
+            Select-Object -First 1)
+        if ($rows.Count -gt 0 -and @($rows[0].Value).Count -gt 0) { return @($rows[0].Value)[0] }
+    }
+    return $null
+}
+
+function Get-FixtureRowSet {
+    <#
+    Every row of a class's LIST fixture, in order.
+
+    The example tests compare an array element by element and require the
+    lengths to match, so a generated example claiming one row fails against any
+    fixture that has more -- and several hand-authored ones do. Rendering as
+    many objects as the fixture holds keeps the documented output equal to what
+    the mock returns, which is the only version of this that stays true.
+    #>
+    param([string]$ClassName, [string]$FixtureDir)
+    if (-not $FixtureDir -or -not (Test-Path -LiteralPath $FixtureDir)) { return @() }
+    foreach ($candidate in @("$($ClassName)s-search.json", "$($ClassName)s.json")) {
+        $path = Join-Path $FixtureDir $candidate
+        if (-not (Test-Path -LiteralPath $path)) { continue }
+        try { $content = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json } catch { continue }
+        if ($content -is [array]) { return @($content) }
+        $rows = @($content.PSObject.Properties |
+            Where-Object { $_.Name -ne 'count' -and $_.Value -is [System.Collections.IEnumerable] -and $_.Value -isnot [string] } |
+            Select-Object -First 1)
+        if ($rows.Count -gt 0) { return @($rows[0].Value) }
+    }
+    return @()
+}
+
+function Format-SampleObject {
+    <#
+    The JSON an example claims the server returns, built from the class's own
+    fields. Twenty-one of the fifty-two classes have no name column, so a
+    hardcoded {"id":1,"name":"..."} would document a field that does not exist
+    -- and the example tests assert against it, so it would fail rather than
+    merely mislead.
+    #>
+    param($Fields, [string]$TitleNoun, [switch]$AsArray, $FixtureRow, $RowSet)
+    $parts = [System.Collections.Generic.List[string]]::new()
+    $sampleId = if ($FixtureRow -and $FixtureRow.PSObject.Properties.Name -contains 'id') { $FixtureRow.id } else { 1 }
+    $parts.Add(('"id": {0}' -f $sampleId))
+    if (@($Fields | Where-Object { $_.name -eq 'name' }).Count -gt 0) {
+        $sampleName = if ($FixtureRow -and $FixtureRow.PSObject.Properties.Name -contains 'name') {
+            $FixtureRow.name
+        } else { "Example$TitleNoun" }
+        $parts.Add(('"name": "{0}"' -f $sampleName))
+    }
+    $obj = '{ ' + ($parts -join ', ') + ' }'
+    if (-not $AsArray) { return $obj }
+    # One entry per fixture row, so the documented array and the mocked array
+    # are the same length.
+    if ($RowSet -and @($RowSet).Count -gt 1) {
+        $hasName = @($Fields | Where-Object { $_.name -eq 'name' }).Count -gt 0
+        $objs = foreach ($row in @($RowSet)) {
+            $rp = [System.Collections.Generic.List[string]]::new()
+            $rid = if ($row.PSObject.Properties.Name -contains 'id') { $row.id } else { 1 }
+            $rp.Add(('"id": {0}' -f $rid))
+            if ($hasName -and $row.PSObject.Properties.Name -contains 'name') {
+                $rp.Add(('"name": "{0}"' -f $row.name))
+            }
+            '{ ' + ($rp -join ', ') + ' }'
+        }
+        return '[ ' + ($objs -join ', ') + ' ]'
+    }
+    "[ $obj ]"
+}
+
+function Format-AliasAttribute {
+    <#
+    The Alias attribute line for a parameter, or nothing when it has none.
+
+    Emitted from the spec rather than written into the template, because the
+    emitter overwrites what it emits -- an alias added to a generated file by
+    hand lasts until the next run and then vanishes silently.
+    #>
+    param([string[]]$Aliases)
+    if (-not $Aliases -or $Aliases.Count -eq 0) { return @() }
+    @("        [Alias('{0}')]" -f (($Aliases | ForEach-Object { $_ -replace "'", "''" }) -join "','"))
+}
+
+function Get-IdAliases {
+    <#
+    The aliases for the synthetic -id parameter. It is not a schema field on the
+    request side -- id is readOnly -- so it does not come through the field list
+    and has to be read from the spec's own table.
+    #>
+    param($Spec, [string]$ClassName)
+    $out = [System.Collections.Generic.List[string]]::new()
+    $pa = $Spec.parameterAliases
+    if (-not $pa) { return @() }
+    if ($pa.common -and ($pa.common.PSObject.Properties.Name -contains 'id')) {
+        foreach ($a in @($pa.common.id)) { $out.Add($a) }
+    }
+    if ($pa.byClass -and ($pa.byClass.PSObject.Properties.Name -contains $ClassName)) {
+        $forClass = $pa.byClass.$ClassName
+        if ($forClass.PSObject.Properties.Name -contains 'id') {
+            foreach ($a in @($forClass.id)) { $out.Add($a) }
+        }
+    }
+    @($out | Select-Object -Unique)
+}
+
 function Get-SampleValue {
     <#
     A plausible value for a field, used only in generated help examples. Derived
     from the field's own type and length so an example never shows a value the
     server would reject.
     #>
-    param($Field)
+    param($Field, [string]$TitleNoun)
     switch ($Field.type) {
         'integer' { '1' }
         'number'  { '1' }
         'boolean' { '$true' }
         default   {
             if ($Field.enum) { "'{0}'" -f $Field.enum[0] }
-            elseif ($Field.name -eq 'name') { "'ExamplePrinter'" }
+            elseif ($Field.name -eq 'name') {
+                $sample = "Example$TitleNoun"
+                # A declared length is a real constraint: host names cap at 15,
+                # so a long class name would make an example the server refuses.
+                if ($Field.maxLength -and $sample.Length -gt $Field.maxLength) {
+                    $sample = $sample.Substring(0, $Field.maxLength)
+                }
+                "'$sample'"
+            }
             else { "'example'" }
         }
     }
@@ -144,6 +292,7 @@ function New-FieldParamBlock {
         } elseif ($f.maxLength) {
             $attrs.Add("        [ValidateLength(0,$($f.maxLength))]")
         }
+        foreach ($aliasAttr in (Format-AliasAttribute -Aliases $f.aliases)) { $attrs.Add($aliasAttr) }
         $type = switch ($f.type) { 'integer' { '[int]' } 'number' { '[double]' } 'boolean' { '[bool]' } default { '[string]' } }
         $attrs.Add(('        {0}${1},' -f $type, $f.name))
         foreach ($a in $attrs) { $lines.Add($a) }
@@ -195,8 +344,11 @@ function New-FunctionFile {
 
     $noun = $Fn.class
     $fields = Get-FieldList $noun
+    $fixtureRow = Get-FixtureRow -ClassName $noun -FixtureDir $FixtureDir
+    $fixtureRows = Get-FixtureRowSet -ClassName $noun -FixtureDir $FixtureDir
     $writable = @($fields | Where-Object { -not $_.readOnly })
-    $nameField = @($fields | Where-Object { $_.name -eq 'name' })[0]
+    $nameMatches = @($fields | Where-Object { $_.name -eq 'name' })
+    $nameField = if ($nameMatches.Count -gt 0) { $nameMatches[0] } else { $null }
     $aliasLine = if ($Fn.aliases -and $Fn.aliases.Count -gt 0) {
         "    [Alias('{0}')]" -f ($Fn.aliases -join "','")
     } else { $null }
@@ -208,6 +360,10 @@ function New-FunctionFile {
     switch ($Fn.routeName) {
         'indiv' {
             $titleNoun = (Get-Culture).TextInfo.ToTitleCase($noun)
+            # Twenty-one of the fifty-two classes have no name column -- association
+            # rows and logs are keyed by their foreign keys, not by a label -- so
+            # -name is emitted only where it means something.
+            $hasNameField = @($fields | Where-Object { $_.name -eq 'name' }).Count -gt 0
             $pagedToo = @($Fn.mergedOperations) -contains ('list' + $titleNoun)
             $help.Add('    .SYNOPSIS')
             $help.Add(('    Gets {0} objects from the fog server.' -f $noun))
@@ -219,17 +375,21 @@ function New-FunctionFile {
             $help.Add(('    On FOG 1.6 a full list is paged automatically and every page is followed, so' -f $noun))
             $help.Add(('    the result is complete rather than capped at the server''s row limit ({0} rows).' -f $spec.paging.maxRows))
             $help.Add('')
-            $help.Add('    -name is a client side convenience: FOG has no get-by-name route, because the')
-            $help.Add('    router constrains the id segment to an integer. It resolves through the class''s')
-            $help.Add('    id/name listing, which is unpaged and uncapped, then fetches the match by id.')
-            $help.Add('    Two small requests rather than one large one.')
-            $help.Add('')
+            if ($hasNameField) {
+                $help.Add('    -name is a client side convenience: FOG has no get-by-name route, because the')
+                $help.Add('    router constrains the id segment to an integer. It resolves through the class''s')
+                $help.Add('    id/name listing, which is unpaged and uncapped, then fetches the match by id.')
+                $help.Add('    Two small requests rather than one large one.')
+                $help.Add('')
+            }
             $help.Add('    -Count, -NamesOnly and -IdsOnly ask the cheaper questions the server can answer')
             $help.Add('    without sending the rows. All three are FOG 1.6 only.')
             $help.Add('')
             $help.AddRange([string[]]@(Format-HelpParam 'All' ('Return every {0}. The default when no other parameter is given.' -f $noun)))
             $help.AddRange([string[]]@(Format-HelpParam 'id' ('The id of a single {0}. Accepts an id or an object with an id property, and binds from the pipeline.' -f $noun)))
-            $help.AddRange([string[]]@(Format-HelpParam 'name' ('The name of a single {0}. Resolved client side; a name matching nothing returns nothing, and an ambiguous one warns.' -f $noun)))
+            if ($hasNameField) {
+                $help.AddRange([string[]]@(Format-HelpParam 'name' ('The name of a single {0}. Resolved client side; a name matching nothing returns nothing, and an ambiguous one warns.' -f $noun)))
+            }
             $help.AddRange([string[]]@(Format-HelpParam 'First' 'Return at most this many objects.'))
             $help.AddRange([string[]]@(Format-HelpParam 'Skip' 'Skip this many objects before returning any.'))
             $help.AddRange([string[]]@(Format-HelpParam 'PageSize' 'Rows to request per page. Ignored on FOG 1.5, which does not page.'))
@@ -243,7 +403,7 @@ function New-FunctionFile {
             $help.Add(('    Returns every {0}.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f $titleNoun))
+            $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun $titleNoun -AsArray -FixtureRow $fixtureRow -RowSet $fixtureRows))
             $help.Add('')
             $help.Add('    .EXAMPLE')
             $help.Add(('    {0} -id 1' -f $Fn.functionName))
@@ -251,23 +411,30 @@ function New-FunctionFile {
             $help.Add(('    Returns one {0} by id. Fields the list withholds are returned here.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    {{ "id": 1, "name": "Example{0}" }}' -f $titleNoun))
+            $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun $titleNoun -FixtureRow $fixtureRow))
             $help.Add('')
-            $help.Add('    .EXAMPLE')
-            $help.Add(('    {0} -name ''Example{1}''' -f $Fn.functionName, $titleNoun))
-            $help.Add('')
-            $help.Add(('    Returns one {0} by name.' -f $noun))
-            $help.Add('')
-            $help.Add('    Expected output:')
-            $help.Add(('    {{ "id": 1, "name": "Example{0}" }}' -f $titleNoun))
-            $help.Add('')
+            if ($hasNameField) {
+                $help.Add('    .EXAMPLE')
+                # The name the fixture actually holds, or the example invokes with
+                # one value and asserts against another.
+                $sampleName = if ($fixtureRow -and $fixtureRow.PSObject.Properties.Name -contains 'name' -and $fixtureRow.name) {
+                    $fixtureRow.name
+                } else { "Example$titleNoun" }
+                $help.Add(('    {0} -name ''{1}''' -f $Fn.functionName, $sampleName))
+                $help.Add('')
+                $help.Add(('    Returns one {0} by name.' -f $noun))
+                $help.Add('')
+                $help.Add('    Expected output:')
+                $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun $titleNoun -FixtureRow $fixtureRow))
+                $help.Add('')
+            }
             $help.Add('    .EXAMPLE')
             $help.Add(('    {0} -Count' -f $Fn.functionName))
             $help.Add('')
             $help.Add(('    Asks how many {0} objects exist without transferring any of them.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add('    { "total": 1 }')
+            $help.Add(('    {{ "total": {0} }}' -f (@($fixtureRows).Count | ForEach-Object { if ($_ -lt 1) { 1 } else { $_ } })))
             $help.Add('')
             $help.Add('    .EXAMPLE')
             $help.Add(('    {0} -NamesOnly' -f $Fn.functionName))
@@ -275,7 +442,7 @@ function New-FunctionFile {
             $help.Add('    Returns id and name pairs only.')
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f $titleNoun))
+            $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun $titleNoun -AsArray -FixtureRow $fixtureRow -RowSet $fixtureRows))
             $help.Add('')
             $help.Add('    .EXAMPLE')
             $help.Add(('    {0} -IdsOnly' -f $Fn.functionName))
@@ -283,13 +450,20 @@ function New-FunctionFile {
             $help.Add(('    Returns just the ids, the cheapest way to enumerate {0}.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add('    [ 1 ]')
+            $idList = if (@($fixtureRows).Count -gt 0) {
+                (@($fixtureRows) | ForEach-Object { if ($_.PSObject.Properties.Name -contains 'id') { $_.id } else { 1 } }) -join ', '
+            } else { '1' }
+            $help.Add(('    [ {0} ]' -f $idList))
             $help.Add('')
             $params.Add('        [Parameter(ParameterSetName=''byId'',Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]')
-            $params.Add('        [Alias(''IDofObject'')]')
+            foreach ($aliasAttr in (Format-AliasAttribute -Aliases (Get-IdAliases -Spec $spec -ClassName $noun))) { $params.Add($aliasAttr) }
             $params.Add('        [Object]$id,')
-            $params.Add('        [Parameter(ParameterSetName=''byName'',Mandatory=$true,Position=0)]')
-            $params.Add('        [string]$name,')
+            if ($hasNameField) {
+                $nameMatches = @($fields | Where-Object { $_.name -eq 'name' })
+                $params.Add('        [Parameter(ParameterSetName=''byName'',Mandatory=$true,Position=0)]')
+                foreach ($aliasAttr in (Format-AliasAttribute -Aliases $nameMatches[0].aliases)) { $params.Add($aliasAttr) }
+                $params.Add('        [string]$name,')
+            }
             $params.Add('        [Parameter(ParameterSetName=''all'')]')
             $params.Add('        [switch]$All,')
             $params.Add('        [Parameter(ParameterSetName=''all'')]')
@@ -316,30 +490,32 @@ function New-FunctionFile {
             $body.Add('                # the bare object.')
             $body.Add(('                return Get-FogObject -type object -coreObject {0} -IDofObject $objectId;' -f $noun))
             $body.Add('            }')
-            $body.Add('            ''byName'' {')
-            $body.Add(('                Write-Verbose "resolving fog {0} named $name";' -f $noun))
-            $body.Add('                # FOG has no get-by-name route, so this resolves the id first. The')
-            $body.Add('                # names listing is unpaged and uncapped, which makes it cheaper than')
-            $body.Add('                # fetching the whole table and far more exact than a search, which')
-            $body.Add('                # matches the term across every field.')
-            $body.Add('                try {')
-            $body.Add(('                    $pairs = Get-FogObject -type object -coreObject {0} -subPath names;' -f $noun))
-            $body.Add('                } catch {')
-            $body.Add('                    # FOG 1.5 has no names route. Fall back to search rather than')
-            $body.Add('                    # probing the version, which would cost a round trip on 1.6 too.')
-            $body.Add('                    Write-Verbose "names route unavailable, falling back to search";')
-            $body.Add(('                    $pairs = (Find-FogObject -coreObject {0} -stringToSearch $name).data;' -f $noun))
-            $body.Add('                }')
-            $body.Add('                $match = @($pairs | Where-Object { $_.name -eq $name });')
-            $body.Add('                if ($match.Count -eq 0) {')
-            $body.Add(('                    Write-Warning "no fog {0} is named ''$name''";' -f $noun))
-            $body.Add('                    return $null;')
-            $body.Add('                }')
-            $body.Add('                if ($match.Count -gt 1) {')
-            $body.Add(('                    Write-Warning "$($match.Count) fog {0} objects are named ''$name''; returning the first. Use -id to be unambiguous.";' -f $noun))
-            $body.Add('                }')
-            $body.Add(('                return Get-FogObject -type object -coreObject {0} -IDofObject $match[0].id;' -f $noun))
-            $body.Add('            }')
+            if ($hasNameField) {
+                $body.Add('            ''byName'' {')
+                $body.Add(('                Write-Verbose "resolving fog {0} named $name";' -f $noun))
+                $body.Add('                # FOG has no get-by-name route, so this resolves the id first. The')
+                $body.Add('                # names listing is unpaged and uncapped, which makes it cheaper than')
+                $body.Add('                # fetching the whole table and far more exact than a search, which')
+                $body.Add('                # matches the term across every field.')
+                $body.Add('                try {')
+                $body.Add(('                    $pairs = Get-FogObject -type object -coreObject {0} -subPath names;' -f $noun))
+                $body.Add('                } catch {')
+                $body.Add('                    # FOG 1.5 has no names route. Fall back to search rather than')
+                $body.Add('                    # probing the version, which would cost a round trip on 1.6 too.')
+                $body.Add('                    Write-Verbose "names route unavailable, falling back to search";')
+                $body.Add(('                    $pairs = (Find-FogObject -coreObject {0} -stringToSearch $name).data;' -f $noun))
+                $body.Add('                }')
+                $body.Add('                $match = @($pairs | Where-Object { $_.name -eq $name });')
+                $body.Add('                if ($match.Count -eq 0) {')
+                $body.Add(('                    Write-Warning "no fog {0} is named ''$name''";' -f $noun))
+                $body.Add('                    return $null;')
+                $body.Add('                }')
+                $body.Add('                if ($match.Count -gt 1) {')
+                $body.Add(('                    Write-Warning "$($match.Count) fog {0} objects are named ''$name''; returning the first. Use -id to be unambiguous.";' -f $noun))
+                $body.Add('                }')
+                $body.Add(('                return Get-FogObject -type object -coreObject {0} -IDofObject $match[0].id;' -f $noun))
+                $body.Add('            }')
+            }
             $body.Add('            ''count''  { return Get-FogObject -type object -coreObject ' + $noun + ' -subPath count; }')
             $body.Add('            ''names''  { return Get-FogObject -type object -coreObject ' + $noun + ' -subPath names; }')
             $body.Add('            ''ids''    { return Get-FogObject -type object -coreObject ' + $noun + ' -subPath ids; }')
@@ -368,7 +544,7 @@ function New-FunctionFile {
             $help.Add(('    Returns every {0} matching "Example".' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    [ {{ "id": 1, "name": "Example{0}" }} ]' -f (Get-Culture).TextInfo.ToTitleCase($noun)))
+            $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun ((Get-Culture).TextInfo.ToTitleCase($noun)) -AsArray -FixtureRow $fixtureRow -RowSet $fixtureRows))
             $help.Add('')
             $params.Add('        [Parameter(Mandatory=$true,Position=0)]')
             $params.Add('        [string]$stringToSearch')
@@ -392,13 +568,30 @@ function New-FunctionFile {
             }
             $help.AddRange([string[]]@(Format-HelpParam 'settings' 'A hashtable of raw field values, merged over the named parameters. An escape hatch for fields not yet modelled.'))
             $help.Add('    .EXAMPLE')
-            $sample = if ($nameField) { ('{0} -name {1}' -f $Fn.functionName, (Get-SampleValue $nameField)) } else { $Fn.functionName }
+            # Every required field, because the emitted parameters are Mandatory
+            # and an example naming only -name fails to bind on any class that
+            # requires more -- New-FogImage wants path, imageTypeID and osID.
+            $createTitle = (Get-Culture).TextInfo.ToTitleCase($noun)
+            $requiredArgs = foreach ($f in ($writable | Where-Object { $_.required })) {
+                '-{0} {1}' -f $f.name, (Get-SampleValue -Field $f -TitleNoun $createTitle)
+            }
+            $sample = (@($Fn.functionName) + @($requiredArgs)) -join ' '
             $help.Add(('    {0}' -f $sample))
             $help.Add('')
             $help.Add(('    Creates a {0} and returns the created object.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add(('    {{ "id": 1, "name": "Example{0}" }}' -f (Get-Culture).TextInfo.ToTitleCase($noun)))
+            # A create echoes the request back with an id assigned, so the
+            # documented output is what the example SENT -- not the class's
+            # fixture, which describes a different, already existing object.
+            $echoParts = [System.Collections.Generic.List[string]]::new()
+            $echoParts.Add('"id": 1')
+            foreach ($f in ($writable | Where-Object { $_.required })) {
+                $v = (Get-SampleValue -Field $f -TitleNoun $createTitle)
+                $rendered = if ($v -match '^\d+$') { $v } else { '"' + ($v.Trim("'")) + '"' }
+                $echoParts.Add(('"{0}": {1}' -f $f.name, $rendered))
+            }
+            $help.Add('    { ' + ($echoParts -join ', ') + ' }')
             $help.Add('')
             $params.AddRange([string[]]@(New-FieldParamBlock -Fields $writable -RequiredAsMandatory))
             $params[$params.Count - 1] = $params[$params.Count - 1] + ','
@@ -424,15 +617,33 @@ function New-FunctionFile {
             }
             $help.AddRange([string[]]@(Format-HelpParam 'settings' 'A hashtable of raw field values, merged over the named parameters.'))
             $help.Add('    .EXAMPLE')
-            $help.Add(('    {0} -id 1 -description ''Updated''' -f $Fn.functionName))
-            $help.Add('')
-            $help.Add(('    Updates the description of {0} 1.' -f $noun))
-            $help.Add('')
-            $help.Add('    Expected output:')
-            $help.Add('    { "id": 1, "description": "Updated" }')
+            # Not every class has a description; pick a real writable string
+            # field, or fall back to whatever the first writable one is.
+            $editable = @($writable | Where-Object { $_.type -eq 'string' -and -not $_.enum })
+            $editField = if ($editable.Count -gt 0) { $editable[0] } elseif ($writable.Count -gt 0) { $writable[0] } else { $null }
+            if ($editField) {
+                $editValue = if ($editField.type -eq 'string') { "'Updated'" } else { '1' }
+                $editJson = if ($editField.type -eq 'string') { '"Updated"' } else { '1' }
+                $help.Add(('    {0} -id 1 -{1} {2}' -f $Fn.functionName, $editField.name, $editValue))
+                $help.Add('')
+                $help.Add(('    Updates the {0} of {1} 1.' -f $editField.name, $noun))
+                $help.Add('')
+                $help.Add('    Expected output:')
+                # Only the field sent. An update echoes back what it was given,
+                # and whether the id rides along depends on the route, so
+                # asserting on it would document the mock rather than the server.
+                $help.Add(('    {{ "{0}": {1} }}' -f $editField.name, $editJson))
+            } else {
+                $help.Add(('    {0} -id 1' -f $Fn.functionName))
+                $help.Add('')
+                $help.Add(('    Updates {0} 1.' -f $noun))
+                $help.Add('')
+                $help.Add('    Expected output:')
+                $help.Add('    { "id": 1 }')
+            }
             $help.Add('')
             $params.Add('        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]')
-            $params.Add('        [Alias(''IDofObject'')]')
+            foreach ($aliasAttr in (Format-AliasAttribute -Aliases (Get-IdAliases -Spec $spec -ClassName $noun))) { $params.Add($aliasAttr) }
             $params.Add('        [Object]$id,')
             $params.AddRange([string[]]@(New-FieldParamBlock -Fields $writable))
             $params[$params.Count - 1] = $params[$params.Count - 1] + ','
@@ -460,7 +671,7 @@ function New-FunctionFile {
             $help.Add('    ""')
             $help.Add('')
             $params.Add('        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]')
-            $params.Add('        [Alias(''IDofObject'')]')
+            foreach ($aliasAttr in (Format-AliasAttribute -Aliases (Get-IdAliases -Spec $spec -ClassName $noun))) { $params.Add($aliasAttr) }
             $params.Add('        [Object]$id')
             $body.Add('        $objectId = if ($id -is [System.Management.Automation.PSObject] -and $id.PSObject.Properties.Name -contains ''id'') { $id.id } else { $id };')
             $body.Add(('        Write-Verbose "removing fog {0} $objectId";' -f $noun))

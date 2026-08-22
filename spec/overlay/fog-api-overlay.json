@@ -158,6 +158,46 @@
     }
   },
 
+  "parameterAliases": {
+    "$comment": [
+      "Alternative spellings for a generated cmdlet's parameters.",
+      "",
+      "These have to live here rather than in the emitted file, because the",
+      "emitter overwrites what it emits: an alias added by hand to a generated",
+      "cmdlet survives exactly until the next run, then disappears with no error.",
+      "Declaring it here is what makes it durable.",
+      "",
+      "They matter more than they look. A parameter alias is the whole mechanism",
+      "for renaming a parameter without breaking callers, and the generated names",
+      "come from the server's field names, which do not always match what FogApi",
+      "already called the same thing.",
+      "",
+      "Parameter aliases are NOT module aliases and never reach AliasesToExport.",
+      "PowerShell resolves them intrinsically, they survive invoke-modulebuild",
+      "into the built psm1, and Get-Help reports them so PlatyPS documents them.",
+      "All four of those were verified rather than assumed.",
+      "",
+      "common applies to every generated cmdlet that has the parameter.",
+      "byClass is keyed class then parameter, for the cases where one class",
+      "already had a different name for a field."
+    ],
+    "common": {
+      "id": ["IDofObject"]
+    },
+    "byClass": {
+      "setting": {
+        "$comment": "Get-FogSetting has taken -settingName since it was written. The server calls the field name, so the generated cmdlet does too, and the old spelling stays bindable.",
+        "name": ["settingName"]
+      },
+      "host": {
+        "name": ["hostName"]
+      },
+      "group": {
+        "name": ["groupName"]
+      }
+    }
+  },
+
   "tiers": {
     "$comment": [
       "Which classes get typed cmdlets, and in what order. The tier decides scope, not",

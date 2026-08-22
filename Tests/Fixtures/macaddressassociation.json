@@ -1,0 +1,10 @@
+{
+  "id": 10,
+  "hostID": "42",
+  "mac": "00:11:22:33:44:55",
+  "description": " ",
+  "pending": "0",
+  "primary": "1",
+  "clientIgnore": "0",
+  "imageIgnore": "0"
+}

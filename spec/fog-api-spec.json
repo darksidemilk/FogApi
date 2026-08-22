@@ -105,6 +105,7 @@
       "aliases": [
         "Get-FogFileDeleteQueues"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogFileDeleteQueue",
       "operationId": "indivFiledeletequeue",
@@ -130,6 +131,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogFileDeleteQueue",
       "operationId": "searchFiledeletequeue",
@@ -155,6 +157,7 @@
       "aliases": [
         "Get-FogGroups"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogGroup",
       "operationId": "indivGroup",
@@ -180,6 +183,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogGroup",
       "operationId": "createGroup",
@@ -203,6 +207,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogGroup",
       "operationId": "updateGroup",
@@ -226,6 +231,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogGroup",
       "operationId": "deleteGroup",
@@ -249,6 +255,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogGroup",
       "operationId": "searchGroup",
@@ -272,6 +279,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Start",
       "noun": "FogGroupTask",
       "operationId": "taskGroup",
@@ -295,6 +303,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Stop",
       "noun": "FogGroupTask",
       "operationId": "cancelGroup",
@@ -320,6 +329,7 @@
       "aliases": [
         "Get-FogGroupAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogGroupAssociation",
       "operationId": "indivGroupassociation",
@@ -345,6 +355,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogGroupAssociation",
       "operationId": "createGroupassociation",
@@ -368,6 +379,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogGroupAssociation",
       "operationId": "deleteGroupassociation",
@@ -391,6 +403,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogGroupAssociation",
       "operationId": "searchGroupassociation",
@@ -416,6 +429,7 @@
       "aliases": [
         "Get-FogHistories"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogHistory",
       "operationId": "indivHistory",
@@ -441,6 +455,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogHistory",
       "operationId": "searchHistory",
@@ -466,6 +481,7 @@
       "aliases": [
         "Get-FogHookEvents"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogHookEvent",
       "operationId": "indivHookevent",
@@ -491,6 +507,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogHookEvent",
       "operationId": "searchHookevent",
@@ -516,6 +533,7 @@
       "aliases": [
         "Get-FogHosts"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogHost",
       "operationId": "indivHost",
@@ -541,6 +559,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogHost",
       "operationId": "createHost",
@@ -564,6 +583,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogHost",
       "operationId": "updateHost",
@@ -587,6 +607,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogHost",
       "operationId": "deleteHost",
@@ -610,6 +631,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogHost",
       "operationId": "searchHost",
@@ -633,6 +655,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Start",
       "noun": "FogHostTask",
       "operationId": "taskHost",
@@ -656,6 +679,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Stop",
       "noun": "FogHostTask",
       "operationId": "cancelHost",
@@ -681,6 +705,7 @@
       "aliases": [
         "Get-FogHostAutoLogouts"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogHostAutoLogout",
       "operationId": "indivHostautologout",
@@ -706,6 +731,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogHostAutoLogout",
       "operationId": "searchHostautologout",
@@ -731,6 +757,7 @@
       "aliases": [
         "Get-FogHostScreenSettings"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogHostScreenSetting",
       "operationId": "indivHostscreensetting",
@@ -756,6 +783,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogHostScreenSetting",
       "operationId": "searchHostscreensetting",
@@ -781,6 +809,7 @@
       "aliases": [
         "Get-FogImages"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogImage",
       "operationId": "indivImage",
@@ -806,6 +835,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogImage",
       "operationId": "createImage",
@@ -829,6 +859,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogImage",
       "operationId": "updateImage",
@@ -852,6 +883,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogImage",
       "operationId": "deleteImage",
@@ -875,6 +907,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogImage",
       "operationId": "searchImage",
@@ -900,6 +933,7 @@
       "aliases": [
         "Get-FogImageAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogImageAssociation",
       "operationId": "indivImageassociation",
@@ -925,6 +959,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogImageAssociation",
       "operationId": "createImageassociation",
@@ -948,6 +983,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogImageAssociation",
       "operationId": "deleteImageassociation",
@@ -971,6 +1007,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogImageAssociation",
       "operationId": "searchImageassociation",
@@ -996,6 +1033,7 @@
       "aliases": [
         "Get-FogImagePartitionTypes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogImagePartitionType",
       "operationId": "indivImagepartitiontype",
@@ -1021,6 +1059,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogImagePartitionType",
       "operationId": "searchImagepartitiontype",
@@ -1046,6 +1085,7 @@
       "aliases": [
         "Get-FogImageTypes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogImageType",
       "operationId": "indivImagetype",
@@ -1071,6 +1111,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogImageType",
       "operationId": "searchImagetype",
@@ -1096,6 +1137,7 @@
       "aliases": [
         "Get-FogImagingLogs"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogImagingLog",
       "operationId": "indivImaginglog",
@@ -1121,6 +1163,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogImagingLog",
       "operationId": "searchImaginglog",
@@ -1146,6 +1189,7 @@
       "aliases": [
         "Get-FogInventories"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogInventory",
       "operationId": "indivInventory",
@@ -1171,6 +1215,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogInventory",
       "operationId": "searchInventory",
@@ -1196,6 +1241,7 @@
       "aliases": [
         "Get-FogIpxes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogIpxe",
       "operationId": "indivIpxe",
@@ -1221,6 +1267,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogIpxe",
       "operationId": "searchIpxe",
@@ -1246,6 +1293,7 @@
       "aliases": [
         "Get-FogKeySequences"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogKeySequence",
       "operationId": "indivKeysequence",
@@ -1271,6 +1319,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogKeySequence",
       "operationId": "searchKeysequence",
@@ -1296,6 +1345,7 @@
       "aliases": [
         "Get-FogMacAddresses"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogMacAddressAssociation",
       "operationId": "indivMacaddressassociation",
@@ -1321,6 +1371,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogMacAddressAssociation",
       "operationId": "createMacaddressassociation",
@@ -1344,6 +1395,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogMacAddressAssociation",
       "operationId": "deleteMacaddressassociation",
@@ -1367,6 +1419,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogMacAddressAssociation",
       "operationId": "searchMacaddressassociation",
@@ -1392,6 +1445,7 @@
       "aliases": [
         "Get-FogModules"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogModule",
       "operationId": "indivModule",
@@ -1417,6 +1471,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogModule",
       "operationId": "createModule",
@@ -1440,6 +1495,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogModule",
       "operationId": "updateModule",
@@ -1463,6 +1519,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogModule",
       "operationId": "deleteModule",
@@ -1486,6 +1543,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogModule",
       "operationId": "searchModule",
@@ -1511,6 +1569,7 @@
       "aliases": [
         "Get-FogModuleAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogModuleAssociation",
       "operationId": "indivModuleassociation",
@@ -1536,6 +1595,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogModuleAssociation",
       "operationId": "createModuleassociation",
@@ -1559,6 +1619,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogModuleAssociation",
       "operationId": "deleteModuleassociation",
@@ -1582,6 +1643,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogModuleAssociation",
       "operationId": "searchModuleassociation",
@@ -1607,6 +1669,7 @@
       "aliases": [
         "Get-FogMulticastSessions"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogMulticastSession",
       "operationId": "indivMulticastsession",
@@ -1632,6 +1695,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogMulticastSession",
       "operationId": "createMulticastsession",
@@ -1655,6 +1719,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogMulticastSession",
       "operationId": "updateMulticastsession",
@@ -1678,6 +1743,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogMulticastSession",
       "operationId": "deleteMulticastsession",
@@ -1701,6 +1767,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogMulticastSession",
       "operationId": "searchMulticastsession",
@@ -1724,6 +1791,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Start",
       "noun": "FogMulticastSessionTask",
       "operationId": "taskMulticastsession",
@@ -1747,6 +1815,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Stop",
       "noun": "FogMulticastSessionTask",
       "operationId": "cancelMulticastsession",
@@ -1770,6 +1839,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "ActiveFogMulticastSessions",
       "operationId": "activeMulticastsession",
@@ -1795,6 +1865,7 @@
       "aliases": [
         "Get-FogMulticastSessionAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogMulticastSessionAssociation",
       "operationId": "indivMulticastsessionassociation",
@@ -1820,6 +1891,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogMulticastSessionAssociation",
       "operationId": "createMulticastsessionassociation",
@@ -1843,6 +1915,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogMulticastSessionAssociation",
       "operationId": "deleteMulticastsessionassociation",
@@ -1866,6 +1939,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogMulticastSessionAssociation",
       "operationId": "searchMulticastsessionassociation",
@@ -1891,6 +1965,7 @@
       "aliases": [
         "Get-FogNodeFailures"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogNodeFailure",
       "operationId": "indivNodefailure",
@@ -1916,6 +1991,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogNodeFailure",
       "operationId": "searchNodefailure",
@@ -1941,6 +2017,7 @@
       "aliases": [
         "Get-FogNotifyEvents"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogNotifyEvent",
       "operationId": "indivNotifyevent",
@@ -1966,6 +2043,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogNotifyEvent",
       "operationId": "searchNotifyevent",
@@ -1991,6 +2069,7 @@
       "aliases": [
         "Get-FogOSes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogOS",
       "operationId": "indivOs",
@@ -2016,6 +2095,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogOS",
       "operationId": "createOs",
@@ -2039,6 +2119,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogOS",
       "operationId": "updateOs",
@@ -2062,6 +2143,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogOS",
       "operationId": "deleteOs",
@@ -2085,6 +2167,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogOS",
       "operationId": "searchOs",
@@ -2110,6 +2193,7 @@
       "aliases": [
         "Get-FogOuis"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogOui",
       "operationId": "indivOui",
@@ -2135,6 +2219,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogOui",
       "operationId": "searchOui",
@@ -2160,6 +2245,7 @@
       "aliases": [
         "Get-FogPlugins"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogPlugin",
       "operationId": "indivPlugin",
@@ -2185,6 +2271,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogPlugin",
       "operationId": "searchPlugin",
@@ -2210,6 +2297,7 @@
       "aliases": [
         "Get-FogPowerManagements"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogPowerManagement",
       "operationId": "indivPowermanagement",
@@ -2235,6 +2323,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogPowerManagement",
       "operationId": "createPowermanagement",
@@ -2258,6 +2347,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogPowerManagement",
       "operationId": "updatePowermanagement",
@@ -2281,6 +2371,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogPowerManagement",
       "operationId": "deletePowermanagement",
@@ -2304,6 +2395,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogPowerManagement",
       "operationId": "searchPowermanagement",
@@ -2327,6 +2419,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "ActiveFogPowerManagements",
       "operationId": "activePowermanagement",
@@ -2352,6 +2445,7 @@
       "aliases": [
         "Get-FogPrinters"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogPrinter",
       "operationId": "indivPrinter",
@@ -2377,6 +2471,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogPrinter",
       "operationId": "createPrinter",
@@ -2400,6 +2495,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogPrinter",
       "operationId": "updatePrinter",
@@ -2423,6 +2519,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogPrinter",
       "operationId": "deletePrinter",
@@ -2446,6 +2543,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogPrinter",
       "operationId": "searchPrinter",
@@ -2471,6 +2569,7 @@
       "aliases": [
         "Get-FogPrinterAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogPrinterAssociation",
       "operationId": "indivPrinterassociation",
@@ -2496,6 +2595,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogPrinterAssociation",
       "operationId": "createPrinterassociation",
@@ -2519,6 +2619,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogPrinterAssociation",
       "operationId": "deletePrinterassociation",
@@ -2542,6 +2643,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogPrinterAssociation",
       "operationId": "searchPrinterassociation",
@@ -2567,6 +2669,7 @@
       "aliases": [
         "Get-FogPxeMenuOptions"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogPxeMenuOption",
       "operationId": "indivPxemenuoptions",
@@ -2592,6 +2695,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogPxeMenuOption",
       "operationId": "searchPxemenuoptions",
@@ -2617,6 +2721,7 @@
       "aliases": [
         "Get-FogRoles"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogRole",
       "operationId": "indivRole",
@@ -2642,6 +2747,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogRole",
       "operationId": "searchRole",
@@ -2667,6 +2773,7 @@
       "aliases": [
         "Get-FogRolePermissions"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogRolePermission",
       "operationId": "indivRolepermission",
@@ -2692,6 +2799,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogRolePermission",
       "operationId": "searchRolepermission",
@@ -2717,6 +2825,7 @@
       "aliases": [
         "Get-FogRoleUserAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogRoleUserAssociation",
       "operationId": "indivRoleuserassociation",
@@ -2742,6 +2851,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogRoleUserAssociation",
       "operationId": "createRoleuserassociation",
@@ -2765,6 +2875,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogRoleUserAssociation",
       "operationId": "deleteRoleuserassociation",
@@ -2788,6 +2899,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogRoleUserAssociation",
       "operationId": "searchRoleuserassociation",
@@ -2813,6 +2925,7 @@
       "aliases": [
         "Get-FogRoleUserGroupAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogRoleUserGroupAssociation",
       "operationId": "indivRoleusergroupassociation",
@@ -2838,6 +2951,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogRoleUserGroupAssociation",
       "operationId": "createRoleusergroupassociation",
@@ -2861,6 +2975,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogRoleUserGroupAssociation",
       "operationId": "deleteRoleusergroupassociation",
@@ -2884,6 +2999,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogRoleUserGroupAssociation",
       "operationId": "searchRoleusergroupassociation",
@@ -2909,6 +3025,7 @@
       "aliases": [
         "Get-FogScheduledTasks"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogScheduledTask",
       "operationId": "indivScheduledtask",
@@ -2934,6 +3051,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogScheduledTask",
       "operationId": "createScheduledtask",
@@ -2957,6 +3075,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogScheduledTask",
       "operationId": "updateScheduledtask",
@@ -2980,6 +3099,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogScheduledTask",
       "operationId": "deleteScheduledtask",
@@ -3003,6 +3123,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogScheduledTask",
       "operationId": "searchScheduledtask",
@@ -3026,6 +3147,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Start",
       "noun": "FogScheduledTaskTask",
       "operationId": "taskScheduledtask",
@@ -3049,6 +3171,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Stop",
       "noun": "FogScheduledTaskTask",
       "operationId": "cancelScheduledtask",
@@ -3072,6 +3195,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "ActiveFogScheduledTasks",
       "operationId": "activeScheduledtask",
@@ -3097,6 +3221,7 @@
       "aliases": [
         "Get-FogSettings"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSetting",
       "operationId": "indivSetting",
@@ -3122,6 +3247,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogSetting",
       "operationId": "createSetting",
@@ -3147,6 +3273,7 @@
       "aliases": [
         "Set-FogSetting"
       ],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogSetting",
       "operationId": "updateSetting",
@@ -3170,6 +3297,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogSetting",
       "operationId": "deleteSetting",
@@ -3192,7 +3320,8 @@
       "status": "replaces-thin-wrapper",
       "blockedBy": null,
       "replaces": "Get-FogSetting",
-      "aliases": [
+      "aliases": [],
+      "suppressedAliases": [
         "Get-FogSetting"
       ],
       "verb": "Find",
@@ -3220,6 +3349,7 @@
       "aliases": [
         "Get-FogSites"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSite",
       "operationId": "indivSite",
@@ -3245,6 +3375,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogSite",
       "operationId": "createSite",
@@ -3268,6 +3399,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogSite",
       "operationId": "updateSite",
@@ -3291,6 +3423,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogSite",
       "operationId": "deleteSite",
@@ -3314,6 +3447,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSite",
       "operationId": "searchSite",
@@ -3339,6 +3473,7 @@
       "aliases": [
         "Get-FogSnapins"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSnapin",
       "operationId": "indivSnapin",
@@ -3364,6 +3499,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogSnapin",
       "operationId": "createSnapin",
@@ -3387,6 +3523,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogSnapin",
       "operationId": "updateSnapin",
@@ -3410,6 +3547,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogSnapin",
       "operationId": "deleteSnapin",
@@ -3433,6 +3571,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSnapin",
       "operationId": "searchSnapin",
@@ -3458,6 +3597,7 @@
       "aliases": [
         "Get-FogSnapinAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSnapinAssociation",
       "operationId": "indivSnapinassociation",
@@ -3483,6 +3623,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogSnapinAssociation",
       "operationId": "createSnapinassociation",
@@ -3506,6 +3647,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogSnapinAssociation",
       "operationId": "deleteSnapinassociation",
@@ -3529,6 +3671,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSnapinAssociation",
       "operationId": "searchSnapinassociation",
@@ -3554,6 +3697,7 @@
       "aliases": [
         "Get-FogSnapinGroupAssociations"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSnapinGroupAssociation",
       "operationId": "indivSnapingroupassociation",
@@ -3579,6 +3723,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogSnapinGroupAssociation",
       "operationId": "createSnapingroupassociation",
@@ -3602,6 +3747,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogSnapinGroupAssociation",
       "operationId": "deleteSnapingroupassociation",
@@ -3625,6 +3771,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSnapinGroupAssociation",
       "operationId": "searchSnapingroupassociation",
@@ -3650,6 +3797,7 @@
       "aliases": [
         "Get-FogSnapinJobs"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSnapinJob",
       "operationId": "indivSnapinjob",
@@ -3675,6 +3823,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSnapinJob",
       "operationId": "searchSnapinjob",
@@ -3700,6 +3849,7 @@
       "aliases": [
         "Get-FogSnapinTasks"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogSnapinTask",
       "operationId": "indivSnapintask",
@@ -3725,6 +3875,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogSnapinTask",
       "operationId": "searchSnapintask",
@@ -3750,6 +3901,7 @@
       "aliases": [
         "Get-FogStorageGroups"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogStorageGroup",
       "operationId": "indivStoragegroup",
@@ -3775,6 +3927,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogStorageGroup",
       "operationId": "createStoragegroup",
@@ -3798,6 +3951,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogStorageGroup",
       "operationId": "updateStoragegroup",
@@ -3821,6 +3975,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogStorageGroup",
       "operationId": "deleteStoragegroup",
@@ -3844,6 +3999,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogStorageGroup",
       "operationId": "searchStoragegroup",
@@ -3869,6 +4025,7 @@
       "aliases": [
         "Get-FogStorageNodes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogStorageNode",
       "operationId": "indivStoragenode",
@@ -3894,6 +4051,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogStorageNode",
       "operationId": "createStoragenode",
@@ -3917,6 +4075,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogStorageNode",
       "operationId": "updateStoragenode",
@@ -3940,6 +4099,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogStorageNode",
       "operationId": "deleteStoragenode",
@@ -3963,6 +4123,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogStorageNode",
       "operationId": "searchStoragenode",
@@ -3988,6 +4149,7 @@
       "aliases": [
         "Get-FogTasks"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogTask",
       "operationId": "indivTask",
@@ -4013,6 +4175,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogTask",
       "operationId": "createTask",
@@ -4036,6 +4199,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogTask",
       "operationId": "updateTask",
@@ -4059,6 +4223,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogTask",
       "operationId": "deleteTask",
@@ -4082,6 +4247,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogTask",
       "operationId": "searchTask",
@@ -4105,6 +4271,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Start",
       "noun": "FogTaskTask",
       "operationId": "taskTask",
@@ -4128,6 +4295,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Stop",
       "noun": "FogTaskTask",
       "operationId": "cancelTask",
@@ -4151,6 +4319,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "ActiveFogTasks",
       "operationId": "activeTask",
@@ -4176,6 +4345,7 @@
       "aliases": [
         "Get-FogTaskLogs"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogTaskLog",
       "operationId": "indivTasklog",
@@ -4201,6 +4371,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogTaskLog",
       "operationId": "searchTasklog",
@@ -4226,6 +4397,7 @@
       "aliases": [
         "Get-FogTaskStates"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogTaskState",
       "operationId": "indivTaskstate",
@@ -4251,6 +4423,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogTaskState",
       "operationId": "searchTaskstate",
@@ -4276,6 +4449,7 @@
       "aliases": [
         "Get-FogTaskTypes"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogTaskType",
       "operationId": "indivTasktype",
@@ -4301,6 +4475,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogTaskType",
       "operationId": "searchTasktype",
@@ -4326,6 +4501,7 @@
       "aliases": [
         "Get-FogUsers"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogUser",
       "operationId": "indivUser",
@@ -4351,6 +4527,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogUser",
       "operationId": "createUser",
@@ -4374,6 +4551,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Update",
       "noun": "FogUser",
       "operationId": "updateUser",
@@ -4397,6 +4575,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogUser",
       "operationId": "deleteUser",
@@ -4420,6 +4599,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogUser",
       "operationId": "searchUser",
@@ -4445,6 +4625,7 @@
       "aliases": [
         "Get-FogUserGroups"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogUserGroup",
       "operationId": "indivUsergroup",
@@ -4470,6 +4651,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogUserGroup",
       "operationId": "searchUsergroup",
@@ -4495,6 +4677,7 @@
       "aliases": [
         "Get-FogUserGroupMembers"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogUserGroupMember",
       "operationId": "indivUsergroupmember",
@@ -4520,6 +4703,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "New",
       "noun": "FogUserGroupMember",
       "operationId": "createUsergroupmember",
@@ -4543,6 +4727,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Remove",
       "noun": "FogUserGroupMember",
       "operationId": "deleteUsergroupmember",
@@ -4566,6 +4751,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogUserGroupMember",
       "operationId": "searchUsergroupmember",
@@ -4591,6 +4777,7 @@
       "aliases": [
         "Get-FogUserTrackings"
       ],
+      "suppressedAliases": [],
       "verb": "Get",
       "noun": "FogUserTracking",
       "operationId": "indivUsertracking",
@@ -4616,6 +4803,7 @@
       "blockedBy": null,
       "replaces": null,
       "aliases": [],
+      "suppressedAliases": [],
       "verb": "Find",
       "noun": "FogUserTracking",
       "operationId": "searchUsertracking",
@@ -5377,7 +5565,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "path",
@@ -5388,7 +5579,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -5399,7 +5591,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "completedTime",
@@ -5410,7 +5603,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -5421,7 +5615,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pathtype",
@@ -5432,7 +5627,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -5449,7 +5645,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -5460,7 +5659,10 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": [
+            "groupName"
+          ]
         },
         {
           "name": "description",
@@ -5471,7 +5673,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "building",
@@ -5482,7 +5685,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernel",
@@ -5493,7 +5697,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernelArgs",
@@ -5504,7 +5709,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernelDevice",
@@ -5515,7 +5721,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "init",
@@ -5526,7 +5733,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -5543,7 +5751,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -5554,7 +5765,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "groupID",
@@ -5565,7 +5777,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -5582,7 +5795,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "info",
@@ -5593,7 +5809,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ip",
@@ -5604,7 +5821,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -5621,7 +5839,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -5632,7 +5853,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -5649,7 +5871,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -5660,7 +5885,10 @@
           "maxLength": 15,
           "pattern": "^[A-Za-z0-9_!@#$%^()\\-'{}.~]{1,15}$",
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": [
+            "hostName"
+          ]
         },
         {
           "name": "description",
@@ -5671,7 +5899,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ip",
@@ -5682,7 +5911,8 @@
           "maxLength": 25,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "imageID",
@@ -5693,7 +5923,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "building",
@@ -5704,7 +5935,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "deployed",
@@ -5715,7 +5947,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "useAD",
@@ -5726,7 +5959,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ADDomain",
@@ -5737,7 +5971,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ADOU",
@@ -5748,7 +5983,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ADUser",
@@ -5759,7 +5995,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ADPass",
@@ -5770,7 +6007,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ADPassLegacy",
@@ -5781,7 +6019,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "productKey",
@@ -5792,7 +6031,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "printerLevel",
@@ -5803,7 +6043,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernelArgs",
@@ -5814,7 +6055,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernel",
@@ -5825,7 +6067,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernelDevice",
@@ -5836,7 +6079,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "init",
@@ -5847,7 +6091,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pending",
@@ -5861,7 +6106,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pub_key",
@@ -5872,7 +6118,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sec_tok",
@@ -5883,7 +6130,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "prev_sec_tok",
@@ -5894,7 +6142,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sec_time",
@@ -5905,7 +6154,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pingstatus",
@@ -5916,7 +6166,8 @@
           "maxLength": 20,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "biosexit",
@@ -5927,7 +6178,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "efiexit",
@@ -5938,7 +6190,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "enforce",
@@ -5952,7 +6205,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "token",
@@ -5963,7 +6217,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "tokenlock",
@@ -5974,7 +6229,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -5991,7 +6247,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -6002,7 +6261,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "time",
@@ -6013,7 +6273,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -6030,7 +6291,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -6041,7 +6305,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "width",
@@ -6052,7 +6317,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "height",
@@ -6063,7 +6329,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "refresh",
@@ -6074,7 +6341,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "orientation",
@@ -6085,7 +6353,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other1",
@@ -6096,7 +6365,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other2",
@@ -6107,7 +6377,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -6124,7 +6395,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -6135,7 +6409,8 @@
           "maxLength": 40,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -6146,7 +6421,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "path",
@@ -6157,7 +6433,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "building",
@@ -6168,7 +6445,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "size",
@@ -6179,7 +6457,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "imageTypeID",
@@ -6190,7 +6469,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "imagePartitionTypeID",
@@ -6201,7 +6481,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "osID",
@@ -6212,7 +6493,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "deployed",
@@ -6223,7 +6505,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "format",
@@ -6234,7 +6517,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "magnet",
@@ -6245,7 +6529,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "protected",
@@ -6256,7 +6541,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "compress",
@@ -6267,7 +6553,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isEnabled",
@@ -6281,7 +6568,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "toReplicate",
@@ -6295,7 +6583,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "srvsize",
@@ -6306,7 +6595,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -6323,7 +6613,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "imageID",
@@ -6334,7 +6627,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -6345,7 +6639,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "primary",
@@ -6359,7 +6654,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -6376,7 +6672,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -6387,7 +6686,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "type",
@@ -6398,7 +6698,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -6415,7 +6716,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -6426,7 +6730,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "type",
@@ -6437,7 +6742,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -6454,7 +6760,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -6465,7 +6774,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "start",
@@ -6476,7 +6786,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "finish",
@@ -6487,7 +6798,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "image",
@@ -6498,7 +6810,8 @@
           "maxLength": 64,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "type",
@@ -6509,7 +6822,8 @@
           "maxLength": 64,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -6526,7 +6840,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -6537,7 +6854,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "primaryUser",
@@ -6548,7 +6866,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other1",
@@ -6559,7 +6878,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other2",
@@ -6570,7 +6890,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "deleteDate",
@@ -6581,7 +6902,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sysman",
@@ -6592,7 +6914,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sysproduct",
@@ -6603,7 +6926,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sysversion",
@@ -6614,7 +6938,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sysserial",
@@ -6625,7 +6950,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sysuuid",
@@ -6636,7 +6962,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "systype",
@@ -6647,7 +6974,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "biosversion",
@@ -6658,7 +6986,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "biosvendor",
@@ -6669,7 +6998,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "biosdate",
@@ -6680,7 +7010,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mbman",
@@ -6691,7 +7022,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mbproductname",
@@ -6702,7 +7034,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mbversion",
@@ -6713,7 +7046,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mbserial",
@@ -6724,7 +7058,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mbasset",
@@ -6735,7 +7070,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "cpuman",
@@ -6746,7 +7082,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "cpuversion",
@@ -6757,7 +7094,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "cpucurrent",
@@ -6768,7 +7106,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "cpumax",
@@ -6779,7 +7118,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mem",
@@ -6790,7 +7130,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hdmodel",
@@ -6801,7 +7142,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hdserial",
@@ -6812,7 +7154,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hdfirmware",
@@ -6823,7 +7166,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "caseman",
@@ -6834,7 +7178,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "casever",
@@ -6845,7 +7190,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "caseserial",
@@ -6856,7 +7202,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "caseasset",
@@ -6867,7 +7214,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "gpuvendors",
@@ -6878,7 +7226,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "gpuproducts",
@@ -6889,7 +7238,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -6906,7 +7256,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "product",
@@ -6917,7 +7270,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "manufacturer",
@@ -6928,7 +7282,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "mac",
@@ -6939,7 +7294,8 @@
           "maxLength": 17,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "success",
@@ -6950,7 +7306,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "failure",
@@ -6961,7 +7318,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "file",
@@ -6972,7 +7330,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "version",
@@ -6983,7 +7342,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7000,7 +7360,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7011,7 +7374,8 @@
           "maxLength": 25,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "ascii",
@@ -7022,7 +7386,8 @@
           "maxLength": 25,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7039,7 +7404,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -7050,7 +7418,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "mac",
@@ -7061,7 +7430,8 @@
           "maxLength": 59,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -7072,7 +7442,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pending",
@@ -7086,7 +7457,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "primary",
@@ -7100,7 +7472,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "clientIgnore",
@@ -7114,7 +7487,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "imageIgnore",
@@ -7128,7 +7502,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7145,7 +7520,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7156,7 +7534,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "shortName",
@@ -7167,7 +7546,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -7178,7 +7558,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isDefault",
@@ -7189,7 +7570,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7206,7 +7588,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -7217,7 +7602,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "moduleID",
@@ -7228,7 +7614,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "state",
@@ -7239,7 +7626,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7256,7 +7644,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7267,7 +7658,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "port",
@@ -7278,7 +7670,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "logpath",
@@ -7289,7 +7682,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "image",
@@ -7300,7 +7694,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "clients",
@@ -7311,7 +7706,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sessclients",
@@ -7322,7 +7718,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "interface",
@@ -7333,7 +7730,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "starttime",
@@ -7344,7 +7742,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "percent",
@@ -7355,7 +7754,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -7366,7 +7766,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "completetime",
@@ -7377,7 +7778,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isDD",
@@ -7388,7 +7790,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -7399,7 +7802,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "shutdown",
@@ -7413,7 +7817,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "maxwait",
@@ -7424,7 +7829,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "senderpid",
@@ -7435,7 +7841,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sendernode",
@@ -7446,7 +7853,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "senderstart",
@@ -7457,7 +7865,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon5",
@@ -7468,7 +7877,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7485,7 +7895,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "msID",
@@ -7496,7 +7909,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "taskID",
@@ -7507,7 +7921,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7524,7 +7939,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "storagenodeID",
@@ -7535,7 +7953,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "taskID",
@@ -7546,7 +7965,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "hostID",
@@ -7557,7 +7977,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -7568,7 +7989,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "failureTime",
@@ -7579,7 +8001,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7596,7 +8019,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7607,7 +8033,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7624,7 +8051,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7635,7 +8065,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -7646,7 +8077,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7663,7 +8095,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "prefix",
@@ -7674,7 +8109,8 @@
           "maxLength": 8,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "name",
@@ -7685,7 +8121,8 @@
           "maxLength": 254,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7702,7 +8139,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7713,7 +8153,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "state",
@@ -7724,7 +8165,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "installed",
@@ -7735,7 +8177,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "version",
@@ -7746,7 +8189,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "icon",
@@ -7757,7 +8201,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "runfile",
@@ -7768,7 +8213,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "location",
@@ -7779,7 +8225,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "description",
@@ -7790,7 +8237,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "schema",
@@ -7801,7 +8249,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pAnon5",
@@ -7812,7 +8261,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -7829,7 +8279,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -7840,7 +8293,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "min",
@@ -7851,7 +8305,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hour",
@@ -7862,7 +8317,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dom",
@@ -7873,7 +8329,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "month",
@@ -7884,7 +8341,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dow",
@@ -7895,7 +8353,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "onDemand",
@@ -7909,7 +8368,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "action",
@@ -7924,7 +8384,8 @@
             "reboot",
             "wol"
           ],
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -7941,7 +8402,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -7952,7 +8416,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -7963,7 +8428,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "port",
@@ -7974,7 +8440,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "file",
@@ -7985,7 +8452,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "model",
@@ -7996,7 +8464,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "config",
@@ -8007,7 +8476,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "configFile",
@@ -8018,7 +8488,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ip",
@@ -8029,7 +8500,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pAnon2",
@@ -8040,7 +8512,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pAnon3",
@@ -8051,7 +8524,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pAnon4",
@@ -8062,7 +8536,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "pAnon5",
@@ -8073,7 +8548,8 @@
           "maxLength": 10,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8090,7 +8566,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -8101,7 +8580,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "printerID",
@@ -8112,7 +8592,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "isDefault",
@@ -8123,7 +8604,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon1",
@@ -8134,7 +8616,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon2",
@@ -8145,7 +8628,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon3",
@@ -8156,7 +8640,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon4",
@@ -8167,7 +8652,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon5",
@@ -8178,7 +8664,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8195,7 +8682,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8206,7 +8696,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -8217,7 +8708,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "params",
@@ -8228,7 +8720,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "default",
@@ -8239,7 +8732,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "regMenu",
@@ -8250,7 +8744,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "args",
@@ -8261,7 +8756,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hotkey",
@@ -8275,7 +8771,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "keysequence",
@@ -8286,7 +8783,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8303,7 +8801,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8314,7 +8815,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -8325,7 +8827,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8342,7 +8845,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "roleID",
@@ -8353,7 +8859,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "name",
@@ -8364,7 +8871,8 @@
           "maxLength": 64,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -8381,7 +8889,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8392,7 +8903,8 @@
           "maxLength": 60,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "roleID",
@@ -8403,7 +8915,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "userID",
@@ -8414,7 +8927,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -8431,7 +8945,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8442,7 +8959,8 @@
           "maxLength": 60,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "usergroupID",
@@ -8453,7 +8971,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "roleID",
@@ -8464,7 +8983,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -8481,7 +9001,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8492,7 +9015,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "description",
@@ -8503,7 +9027,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "type",
@@ -8514,7 +9039,8 @@
           "maxLength": 24,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "taskTypeID",
@@ -8525,7 +9051,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "minute",
@@ -8536,7 +9063,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hour",
@@ -8547,7 +9075,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dayOfMonth",
@@ -8558,7 +9087,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "month",
@@ -8569,7 +9099,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dayOfWeek",
@@ -8580,7 +9111,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isGroupTask",
@@ -8591,7 +9123,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hostID",
@@ -8602,7 +9135,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "shutdown",
@@ -8613,7 +9147,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other1",
@@ -8624,7 +9159,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other2",
@@ -8635,7 +9171,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other3",
@@ -8646,7 +9183,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other4",
@@ -8657,7 +9195,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "other5",
@@ -8668,7 +9207,8 @@
           "maxLength": 240,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "scheduleTime",
@@ -8679,7 +9219,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isActive",
@@ -8690,7 +9231,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "imageID",
@@ -8701,7 +9243,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8718,7 +9261,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8729,7 +9275,10 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": [
+            "settingName"
+          ]
         },
         {
           "name": "description",
@@ -8740,7 +9289,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "value",
@@ -8751,7 +9301,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "category",
@@ -8762,7 +9313,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8779,7 +9331,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8790,7 +9345,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -8801,7 +9357,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -8818,7 +9375,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -8829,7 +9389,8 @@
           "maxLength": 200,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -8840,7 +9401,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "file",
@@ -8851,7 +9413,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "args",
@@ -8862,7 +9425,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "reboot",
@@ -8873,7 +9437,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "shutdown",
@@ -8887,7 +9452,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "runWith",
@@ -8898,7 +9464,8 @@
           "maxLength": 245,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "runWithArgs",
@@ -8909,7 +9476,8 @@
           "maxLength": 200,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "protected",
@@ -8920,7 +9488,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isEnabled",
@@ -8934,7 +9503,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "toReplicate",
@@ -8948,7 +9518,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hide",
@@ -8962,7 +9533,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "timeout",
@@ -8973,7 +9545,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "packtype",
@@ -8987,7 +9560,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hash",
@@ -8998,7 +9572,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "size",
@@ -9009,7 +9584,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon3",
@@ -9020,7 +9596,8 @@
           "maxLength": 45,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9037,7 +9614,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -9048,7 +9628,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "snapinID",
@@ -9059,7 +9640,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "sequence",
@@ -9070,7 +9652,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9087,7 +9670,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "snapinID",
@@ -9098,7 +9684,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -9109,7 +9696,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "primary",
@@ -9123,7 +9711,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9140,7 +9729,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -9151,7 +9743,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -9162,7 +9755,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "abortOnFail",
@@ -9176,7 +9770,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9193,7 +9788,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "jobID",
@@ -9204,7 +9802,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -9215,7 +9814,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "checkin",
@@ -9226,7 +9826,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "complete",
@@ -9237,7 +9838,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "snapinID",
@@ -9248,7 +9850,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "sequence",
@@ -9259,7 +9862,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "return",
@@ -9270,7 +9874,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "details",
@@ -9281,7 +9886,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9298,7 +9904,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -9309,7 +9918,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -9320,7 +9930,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "trustedcidrs",
@@ -9331,7 +9942,8 @@
           "maxLength": 2048,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9348,7 +9960,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -9359,7 +9974,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "description",
@@ -9370,7 +9986,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isMaster",
@@ -9381,7 +9998,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -9392,7 +10010,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isEnabled",
@@ -9403,7 +10022,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isGraphEnabled",
@@ -9417,7 +10037,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "path",
@@ -9428,7 +10049,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "ftppath",
@@ -9439,7 +10061,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "bitrate",
@@ -9450,7 +10073,8 @@
           "maxLength": 25,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "helloInterval",
@@ -9461,7 +10085,8 @@
           "maxLength": 8,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "snapinpath",
@@ -9472,7 +10097,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "sslpath",
@@ -9483,7 +10109,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ip",
@@ -9494,7 +10121,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "maxClients",
@@ -9505,7 +10133,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "user",
@@ -9516,7 +10145,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "pass",
@@ -9527,7 +10157,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "key",
@@ -9538,7 +10169,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "interface",
@@ -9549,7 +10181,8 @@
           "maxLength": 25,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "bandwidth",
@@ -9560,7 +10193,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "webroot",
@@ -9571,7 +10205,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "graphcolor",
@@ -9582,7 +10217,8 @@
           "maxLength": 6,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9599,7 +10235,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -9610,7 +10249,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "checkInTime",
@@ -9621,7 +10261,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hostID",
@@ -9632,7 +10273,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -9643,7 +10285,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isForced",
@@ -9654,7 +10297,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "scheduledStartTime",
@@ -9665,7 +10309,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "typeID",
@@ -9676,7 +10321,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "pct",
@@ -9687,7 +10333,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "bpm",
@@ -9698,7 +10345,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "timeElapsed",
@@ -9709,7 +10357,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "timeRemaining",
@@ -9720,7 +10369,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dataCopied",
@@ -9731,7 +10381,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "percent",
@@ -9742,7 +10393,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "dataTotal",
@@ -9753,7 +10405,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "storagegroupID",
@@ -9764,7 +10417,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "storagenodeID",
@@ -9775,7 +10429,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "NFSFailures",
@@ -9786,7 +10441,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "NFSLastMemberID",
@@ -9797,7 +10453,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "shutdown",
@@ -9808,7 +10465,8 @@
           "maxLength": 1,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "passreset",
@@ -9819,7 +10477,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isDebug",
@@ -9830,7 +10489,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "imageID",
@@ -9841,7 +10501,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "wol",
@@ -9855,7 +10516,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "bypassbitlocker",
@@ -9869,7 +10531,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "stateChangedTime",
@@ -9880,7 +10543,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -9897,7 +10561,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "taskID",
@@ -9908,7 +10575,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "stateID",
@@ -9919,7 +10587,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "ip",
@@ -9930,7 +10599,8 @@
           "maxLength": 15,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "type",
@@ -9941,7 +10611,8 @@
           "maxLength": 16,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "text",
@@ -9952,7 +10623,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hostID",
@@ -9963,7 +10635,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "hostName",
@@ -9974,7 +10647,8 @@
           "maxLength": 16,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "taskTypeName",
@@ -9985,7 +10659,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -10002,7 +10677,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -10013,7 +10691,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -10024,7 +10703,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "order",
@@ -10035,7 +10715,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "icon",
@@ -10046,7 +10727,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -10063,7 +10745,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -10074,7 +10759,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -10085,7 +10771,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "icon",
@@ -10096,7 +10783,8 @@
           "maxLength": 30,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "kernel",
@@ -10107,7 +10795,8 @@
           "maxLength": 100,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "kernelArgs",
@@ -10118,7 +10807,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "type",
@@ -10132,7 +10822,8 @@
             "fog",
             "user"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "isAdvanced",
@@ -10146,7 +10837,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "access",
@@ -10161,7 +10853,8 @@
             "host",
             "group"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "initrd",
@@ -10172,7 +10865,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -10189,7 +10883,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -10200,7 +10897,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "password",
@@ -10211,7 +10909,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "type",
@@ -10222,7 +10921,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "display",
@@ -10233,7 +10933,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "api",
@@ -10247,7 +10948,8 @@
             "0",
             "1"
           ],
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "token",
@@ -10258,7 +10960,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "authsource",
@@ -10269,7 +10972,8 @@
           "maxLength": 32,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -10286,7 +10990,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -10297,7 +11004,8 @@
           "maxLength": 255,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "description",
@@ -10308,7 +11016,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     },
@@ -10325,7 +11034,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "name",
@@ -10336,7 +11048,8 @@
           "maxLength": 60,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "usergroupID",
@@ -10347,7 +11060,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "userID",
@@ -10358,7 +11072,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         }
       ]
     },
@@ -10375,7 +11090,10 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": [
+            "IDofObject"
+          ]
         },
         {
           "name": "hostID",
@@ -10386,7 +11104,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "username",
@@ -10397,7 +11116,8 @@
           "maxLength": 50,
           "pattern": null,
           "enum": null,
-          "required": true
+          "required": true,
+          "aliases": []
         },
         {
           "name": "action",
@@ -10408,7 +11128,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "description",
@@ -10419,7 +11140,8 @@
           "maxLength": 250,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "date",
@@ -10430,7 +11152,8 @@
           "maxLength": null,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         },
         {
           "name": "anon3",
@@ -10441,7 +11164,8 @@
           "maxLength": 2,
           "pattern": null,
           "enum": null,
-          "required": false
+          "required": false,
+          "aliases": []
         }
       ]
     }
@@ -10484,6 +11208,53 @@
       "reason": "PUT is a bulk edit over an ids array; POST is a group-only get-or-create. Neither is a modifier on an existing cmdlet, and both want their own design. Reachable meanwhile through Update-FogObject -uri.",
       "putSemantics": "PUT /{class}/join with {ids:[...], <fields>} applies those field values to every listed object, leaving omitted fields alone. 202, no body. No ids means no effect.",
       "postSemantics": "POST /group/join with {names:[...]} returns an id per name, creating any that do not exist. 201. Group only; all other classes answer 400."
+    }
+  },
+  "parameterAliases": {
+    "$comment": [
+      "Alternative spellings for a generated cmdlet's parameters.",
+      "",
+      "These have to live here rather than in the emitted file, because the",
+      "emitter overwrites what it emits: an alias added by hand to a generated",
+      "cmdlet survives exactly until the next run, then disappears with no error.",
+      "Declaring it here is what makes it durable.",
+      "",
+      "They matter more than they look. A parameter alias is the whole mechanism",
+      "for renaming a parameter without breaking callers, and the generated names",
+      "come from the server's field names, which do not always match what FogApi",
+      "already called the same thing.",
+      "",
+      "Parameter aliases are NOT module aliases and never reach AliasesToExport.",
+      "PowerShell resolves them intrinsically, they survive invoke-modulebuild",
+      "into the built psm1, and Get-Help reports them so PlatyPS documents them.",
+      "All four of those were verified rather than assumed.",
+      "",
+      "common applies to every generated cmdlet that has the parameter.",
+      "byClass is keyed class then parameter, for the cases where one class",
+      "already had a different name for a field."
+    ],
+    "common": {
+      "id": [
+        "IDofObject"
+      ]
+    },
+    "byClass": {
+      "setting": {
+        "$comment": "Get-FogSetting has taken -settingName since it was written. The server calls the field name, so the generated cmdlet does too, and the old spelling stays bindable.",
+        "name": [
+          "settingName"
+        ]
+      },
+      "host": {
+        "name": [
+          "hostName"
+        ]
+      },
+      "group": {
+        "name": [
+          "groupName"
+        ]
+      }
     }
   }
 }

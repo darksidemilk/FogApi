@@ -111,6 +111,51 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
         }
     }
 
+    Context 'parameter aliases' {
+        It 'renders every declared alias onto the parameter it names' {
+            # Declared in the overlay rather than in the emitted file, because
+            # the emitter overwrites what it emits -- an alias added to a
+            # generated cmdlet by hand lasts until the next run and then
+            # disappears with no error. This asserts the declaration actually
+            # reaches the parameter.
+            Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
+            $checked = 0
+            foreach ($fn in $script:Spec.functions) {
+                if ($fn.status -eq 'skipped-name-taken') { continue }
+                $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue
+                if (-not $cmd) { continue }
+                $classSchema = $script:Spec.schemas.($fn.class)
+                if (-not $classSchema) { continue }
+                foreach ($field in $classSchema.fields) {
+                    if (-not $field.aliases -or $field.aliases.Count -eq 0) { continue }
+                    if (-not $cmd.Parameters.ContainsKey($field.name)) { continue }
+                    foreach ($alias in $field.aliases) {
+                        $cmd.Parameters[$field.name].Aliases |
+                            Should -Contain $alias -Because "$($fn.functionName) -$($field.name) declares the alias -$alias"
+                        $checked++
+                    }
+                }
+            }
+            $checked | Should -BeGreaterThan 0 -Because 'the assertion above is worthless if it examined nothing'
+        }
+
+        It 'never aliases a parameter to the name of another parameter' {
+            # An alias colliding with a real parameter name fails at import,
+            # which is a late and confusing place to find out.
+            Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
+            foreach ($fn in $script:Spec.functions) {
+                $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue
+                if (-not $cmd) { continue }
+                $real = @($cmd.Parameters.Keys)
+                foreach ($p in $cmd.Parameters.Values) {
+                    foreach ($alias in @($p.Aliases)) {
+                        $real | Should -Not -Contain $alias -Because "$($fn.functionName) aliases -$($p.Name) to -$alias, which is already a parameter"
+                    }
+                }
+            }
+        }
+    }
+
     Context 'the manifest' {
         It 'lists every file in Public and every alias declared in one' {
             { & (Join-Path $script:RepoRoot 'update-sourcemanifest.ps1') -Check } |
