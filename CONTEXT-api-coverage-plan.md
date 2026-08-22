@@ -406,6 +406,100 @@ out to assert on real requests. Fixing this is Phase 0.5 and is now load-bearing
 
 ---
 
+## Typed objects — ETS type data, not PowerShell classes
+
+Both were built for `host` and compared against the live server. Verdict: **ETS type data**
+(`Update-TypeData` + a `PSTypeName` stamp). The class arm was deleted.
+
+### The finding that decided it: the schema does not describe the response
+
+`OpenAPI::_entitySchema()` reflects a model's `$databaseFields` — its own columns — while the
+route returns the entity **joined to its relations**. Measured against a stock 1.6 server:
+
+| Class | Live fields | Schema declares | Undeclared in response | Declared but withheld |
+|---|---|---|---|---|
+| `host` | 39 | 30 | `createdBy`, `createdTime`, `hostalo`, `hostscreen`, `image`, `imagename`, `inventory`, `macs`, `primac` | — |
+| `storagenode` | 25 | 22 | `images`, `location_url`, `online`, `snapinfiles`, `storagegroup` | `key`, `pass` |
+| `group` | 11 | 8 | `createdBy`, `createdTime`, `hostcount` | — |
+| `user` | 10 | 8 | `createdBy`, `createdTime` | — |
+
+Systematic, every class, and two of `host`'s nine (`macs`, `inventory`) are fields
+`Get-FogHost` itself reads to match by MAC or UUID. A class must declare its fields, so it
+either drops the difference or relocates it to a catch-all: `$h.macs` becomes
+`$h.AdditionalFields.macs`. Nothing is lost, but **every existing caller's property path
+breaks**, and the breakage is invisible until runtime. Type data asserts nothing about fields,
+so nothing moves.
+
+`storagenode` is the mirror image: `key` and `pass` are *declared* and not returned, so a class
+would present two always-empty typed properties as though they were real.
+
+### Second finding: a class validates worse than a type name
+
+Measured, and the opposite of what was expected:
+
+| Parameter | Given a `[pscustomobject]@{nope=1}` |
+|---|---|
+| `[FogHost]$x` | **accepted** — PowerShell coerces any PSObject into a class by property-matching |
+| `[PSTypeName('FogApi.Host')]$x` | **rejected**, `MismatchedPSTypeName` |
+
+So the class arm loses the "typed parameters / validation" goal it was supposed to win.
+
+### What did *not* decide it
+
+Two things looked disqualifying and were not, both corrected after measuring:
+
+- **The opaque type name.** A class in a dynamic module (`New-Module -ScriptBlock`) reports as
+  `<hash>.FogHost`. A real file-based module does not — both arms reported clean names, and
+  `(Get-Command …).OutputType.Name` was `FogHost` / `FogApi.Host` respectively.
+- **The source layout.** A dot-sourced class is invisible to a dot-sourced function at
+  invocation time, so `Get-Help` on `[OutputType([FogHost])]` throws and the cmdlet cannot
+  construct its own return type. But `build.ps1:129-132` already fixes this — it
+  `Import-Module`s each `Classes/*.ps1` **twice** ("do it twice to resolve classes with
+  dependencies"), which puts the type in the session table and makes `Get-Help`, caller type
+  naming, and construction all work. Verified. Repeated `Import-Module` of the *module* does
+  not substitute; it has to be the class files.
+
+### Scoreboard
+
+| | class | type data |
+|---|---|---|
+| Field paths preserved | ✗ 9 of 39 relocate | ✓ untouched |
+| Rejects a wrong-shaped object | ✗ silently coerces | ✓ |
+| Methods on the object | ✓ | ✓ (`ScriptMethod`) |
+| Readable default table | ✗ needs type data anyway | ✓ `DefaultDisplayPropertySet` |
+| Caller can name the type | ✓ after the class-import step | ✓ always |
+| Declared scalar types | ✓ `Int32` | ✗ `Int64` from `ConvertFrom-Json` |
+| Editor IntelliSense on `$h.` | ✓ | ✗ |
+| Artifact size, 54 types extrapolated | ~40.5 KB | ~5.1 KB |
+| Import cost, measured at 52×35 props | 92 ms parse / 129 ms | 56 ms |
+| Plumbing needed | psm1 loader + class-import step everywhere | one call, re-emitted by the build |
+
+The class arm's two real wins are declared scalar types and editor IntelliSense. Neither
+outweighs breaking property paths on data the schema does not fully describe.
+
+### What landed
+
+- `FogApi/Private/Register-FogTypeData.ps1` — `FogApi.Host`: display set, `ToString`,
+  `Refresh`/`Deploy`/`Cancel` `ScriptMethod`s, and a `SysUuid` `ScriptProperty` reaching through
+  the joined inventory.
+- `Get-FogHost` stamps `FogApi.Host` on what the server returned, additively.
+- `FogApi.psm1` calls `Register-FogTypeData`; `invoke-modulebuild.ps1` re-emits that call into
+  the built psm1, which is **generated** and does not inherit the source psm1's body — an
+  import-time call added to one and not the other silently does not happen in the shipped module.
+- `FogApi.psm1` also now dot-sources `Classes/*.ps1` first. No classes ship, but the source
+  layout previously ignored a directory the build already concatenated.
+
+### Follow-on, not done here
+
+The schema/response gap is worth fixing **upstream** rather than working around per consumer:
+`_entitySchema()` should describe what the route actually returns — the joined and derived
+fields — and mark the withheld ones. That helps every consumer of `swagger.json`, including the
+Python and bash emitters, and it is the difference between a spec that documents the model and
+one that documents the API. Type names for the other 53 classes are mechanical once that lands;
+generating them before it would bake today's gap into 54 display sets.
+
+---
+
 ## Locked decisions
 
 - **Approved verbs only.** Audited: every proposed and existing function verb passes `Get-Verb`. The
