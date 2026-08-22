@@ -4,7 +4,6 @@ $PSModuleRoot = $PSScriptRoot
 # resolved and broke the settings file bootstrap that every command depends on
 $script:lib = Join-Path $PSModuleRoot 'lib'
 $script:bin = Join-Path $PSModuleRoot 'bin'
-# Single posix test so a branch can't be written for linux and forget mac
 $PublicFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Public/*.ps1" -ErrorAction SilentlyContinue )
 $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorAction SilentlyContinue )
 
