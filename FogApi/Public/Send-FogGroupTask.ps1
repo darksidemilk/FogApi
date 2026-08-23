@@ -35,6 +35,11 @@ function Send-FogGroupTask {
     .PARAMETER bypassbitlocker
     Switch param to bypass bitlocker checks, this will set the bitlocker flag to 1 in the task, this is the 'other5' property.
 
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. Any field it sets wins over the switches
+    below; anything it leaves unset keeps this cmdlet's own default. An escape
+    hatch for a field this cmdlet does not expose, such as -sessionjoin.
     .EXAMPLE
     Send-FogGroupTask -groupID 7 -taskTypeID 14
 
@@ -76,7 +81,8 @@ function Send-FogGroupTask {
         [switch]$NoWol,
         [switch]$shutdown,
         [switch]$NoSnapins,
-        [switch]$bypassbitlocker
+        [switch]$bypassbitlocker,
+        [FogTaskRequest]$TaskRequest
     )
 
     process {
@@ -102,29 +108,17 @@ function Send-FogGroupTask {
 
         if ($null -eq $StartAtTime) {
             "Queuing an immediate task of type $taskTypeID for every host in group $groupID" | Out-Host;
-            if (Test-FogVerAbove1dot6) {
-                $jsonData = @"
-                {
-                    "taskName":"Group Task for group id $groupID",
-                    "taskTypeID":"$taskTypeID",
-                    "shutdown":"$shutdownStr",
-                    "debug":"$debugStr",
-                    "wol":"$wolStr",
-                    "isActive":"1"
-                }
-"@
-            } else {
-                $jsonData = @"
-                {
-                    "taskTypeID":"$taskTypeID",
-                    "shutdown":"$shutdownStr",
-                    "other2":"$debugStr",
-                    "other4":"$wolStr",
-                    "isActive":"1"
-                }
-"@
-            }
-            return New-FogObject -type objecttasktype -coreTaskObject group -jsonData $jsonData -IDofObject $groupID;
+            # One body for both server versions. The 1.5 branch this replaces
+            # sent other2/other4 -- scheduledtask columns -- and omitted
+            # taskName, debug and wol in the spelling 1.5's Route::task() reads.
+            $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+            if ($null -eq $request.taskTypeID) { $request.taskTypeID = $taskTypeID }
+            if ([string]::IsNullOrEmpty($request.taskName)) { $request.taskName = "Group Task for group id $groupID" }
+            if ($null -eq $request.shutdown) { $request.shutdown = [bool]$shutdown }
+            if ($null -eq $request.debug)    { $request.debug = [bool]$debugMode }
+            if ($null -eq $request.wol)      { $request.wol = (-not $NoWol) }
+            if ($null -eq $request.extra)    { $request.extra = @{ isActive = 1 } }
+            return New-FogObject -type objecttasktype -coreTaskObject group -jsonData $request.ToJson() -IDofObject $groupID;
         } else {
             if ($NoSnapins) {
                 $deploySnapins = "0";

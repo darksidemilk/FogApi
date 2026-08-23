@@ -47,7 +47,7 @@ function Get-FogHostGroup {
         } else {
             $groups = $Null;
         }
-        return $groups;
+        return (Add-FogTypeName -InputObject $groups -TypeName 'FogApi.Group');
     }
 
 }

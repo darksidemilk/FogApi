@@ -120,7 +120,7 @@ function Get-FogNodeFailure {
                 Write-Verbose "getting fog nodefailure $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject nodefailure -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject nodefailure -IDofObject $objectId) -TypeName 'FogApi.Nodefailure');
             }
             'count'  { return Get-FogObject -type object -coreObject nodefailure -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject nodefailure -subPath names; }
@@ -131,7 +131,7 @@ function Get-FogNodeFailure {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Nodefailure');
             }
         }
     }

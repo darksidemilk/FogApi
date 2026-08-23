@@ -32,7 +32,7 @@ function Find-FogImageType {
 
     process {
         Write-Verbose "searching fog imagetype for $stringToSearch";
-        return (Find-FogObject -coreObject imagetype -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject imagetype -stringToSearch $stringToSearch).data -TypeName 'FogApi.Imagetype');
     }
 
 }

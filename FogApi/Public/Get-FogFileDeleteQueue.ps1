@@ -120,7 +120,7 @@ function Get-FogFileDeleteQueue {
                 Write-Verbose "getting fog filedeletequeue $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject filedeletequeue -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject filedeletequeue -IDofObject $objectId) -TypeName 'FogApi.Filedeletequeue');
             }
             'count'  { return Get-FogObject -type object -coreObject filedeletequeue -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject filedeletequeue -subPath names; }
@@ -131,7 +131,7 @@ function Get-FogFileDeleteQueue {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Filedeletequeue');
             }
         }
     }

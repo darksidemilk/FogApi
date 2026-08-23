@@ -138,7 +138,7 @@ function Get-FogRoleUserGroupAssociation {
                 Write-Verbose "getting fog roleusergroupassociation $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject roleusergroupassociation -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject roleusergroupassociation -IDofObject $objectId) -TypeName 'FogApi.Roleusergroupassociation');
             }
             'byName' {
                 Write-Verbose "resolving fog roleusergroupassociation named $name";
@@ -162,7 +162,7 @@ function Get-FogRoleUserGroupAssociation {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog roleusergroupassociation objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject roleusergroupassociation -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject roleusergroupassociation -IDofObject $match[0].id) -TypeName 'FogApi.Roleusergroupassociation');
             }
             'count'  { return Get-FogObject -type object -coreObject roleusergroupassociation -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject roleusergroupassociation -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogRoleUserGroupAssociation {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Roleusergroupassociation');
             }
         }
     }

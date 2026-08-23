@@ -32,7 +32,7 @@ function Find-FogPlugin {
 
     process {
         Write-Verbose "searching fog plugin for $stringToSearch";
-        return (Find-FogObject -coreObject plugin -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject plugin -stringToSearch $stringToSearch).data -TypeName 'FogApi.Plugin');
     }
 
 }

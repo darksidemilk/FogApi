@@ -32,7 +32,7 @@ function Find-FogStorageGroup {
 
     process {
         Write-Verbose "searching fog storagegroup for $stringToSearch";
-        return (Find-FogObject -coreObject storagegroup -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject storagegroup -stringToSearch $stringToSearch).data -TypeName 'FogApi.Storagegroup');
     }
 
 }

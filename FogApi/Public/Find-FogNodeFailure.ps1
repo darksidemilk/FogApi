@@ -33,7 +33,7 @@ function Find-FogNodeFailure {
 
     process {
         Write-Verbose "searching fog nodefailure for $stringToSearch";
-        return (Find-FogObject -coreObject nodefailure -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject nodefailure -stringToSearch $stringToSearch).data -TypeName 'FogApi.Nodefailure');
     }
 
 }

@@ -19,6 +19,6 @@ function Get-FogImages {
     param (  )
     
     process {
-        return (Get-FogObject -type object -coreObject image).data;
+        return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject image).data -TypeName 'FogApi.Image');
     }
 }

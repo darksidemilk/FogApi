@@ -32,7 +32,7 @@ function Find-FogHostScreenSetting {
 
     process {
         Write-Verbose "searching fog hostscreensetting for $stringToSearch";
-        return (Find-FogObject -coreObject hostscreensetting -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject hostscreensetting -stringToSearch $stringToSearch).data -TypeName 'FogApi.Hostscreensetting');
     }
 
 }

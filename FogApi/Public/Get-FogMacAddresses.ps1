@@ -25,7 +25,7 @@ function Get-FogMacAddresses {
     
     process {
         $macs = Get-FogObject -type object -coreObject macaddressassociation;
-        return $macs.data;
+        return (Add-FogTypeName -InputObject $macs.data -TypeName 'FogApi.Macaddressassociation');
     }
     
 }

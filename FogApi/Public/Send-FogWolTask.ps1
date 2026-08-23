@@ -12,6 +12,11 @@ function Send-FogWolTask {
     
     .PARAMETER computername
     The name of the computer to get the fog host of 
+
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. Anything it does not set keeps the wake-on-lan
+    defaults below. An escape hatch for a field this cmdlet does not expose.
     
     .EXAMPLE
     Send-FogWolTask -computername "MeowMachine"
@@ -33,7 +38,7 @@ function Send-FogWolTask {
     #>
     [CmdletBinding()]
     param (
-        [Parameter(ParameterSetName='byHostObject')]
+        [Parameter(ParameterSetName='byHostObject',ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
         $hostObj,
         [Parameter(ParameterSetName='byname')]
         [ArgumentCompleter({
@@ -49,7 +54,10 @@ function Send-FogWolTask {
                 }
             }
         })]  
-        [string]$computername
+        [string]$computername,
+        [Parameter(ParameterSetName='byHostObject')]
+        [Parameter(ParameterSetName='byname')]
+        [FogTaskRequest]$TaskRequest
     )
     process {
         if ($PSCmdlet.ParameterSetName -eq 'byHostObject') {
@@ -60,14 +68,21 @@ function Send-FogWolTask {
         } else {
             $hostID= (get-foghost -hostName $computername).id
         }
-        $jsonData = @{
-            taskTypeID = "14";
-            wol = "1";
-            other2 = "-1";
-            other4 = "1";
-            isActive = "1;"
-        }
-    
-        return New-FogObject -type objecttasktype -coreTaskObject host -jsonData ($jsonData | ConvertTo-Json) -IDofObject $hostID
+        # Was a hand-built hashtable that sent isActive as "1;" -- a stray
+        # semicolon inside the string, on the wire, since this cmdlet was
+        # written. It also sent other2="-1" and other4="1" beside wol, believing
+        # those were the FOG 1.5 spelling. They are scheduledtask columns, and
+        # neither 1.5's nor 1.6's Route::task() reads them.
+        #
+        # other2 is the scheduledtask column for deploySnapins, so translating
+        # it would have set deploySnapins=-1 and made every wake-on-lan task
+        # also deploy every snapin assigned to the host. The field was inert
+        # before, so it stays out: this queues a wake, and nothing else.
+        $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+        if ($null -eq $request.taskTypeID) { $request.taskTypeID = 14 }
+        if ($null -eq $request.wol)        { $request.wol = $true }
+        if ($null -eq $request.extra)      { $request.extra = @{ isActive = 1 } }
+
+        return New-FogObject -type objecttasktype -coreTaskObject host -jsonData $request.ToJson() -IDofObject $hostID
     }
 }

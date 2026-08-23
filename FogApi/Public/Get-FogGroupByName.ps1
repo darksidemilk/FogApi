@@ -30,7 +30,7 @@ function Get-FogGroupByName {
         
         $group = (Find-FogObject -type search -coreobject group -stringToSearch $groupName);
         $group = $group.data | Where-Object name -match $groupName;
-        return $group;      
+        return (Add-FogTypeName -InputObject $group -TypeName 'FogApi.Group');      
     }
     
 }

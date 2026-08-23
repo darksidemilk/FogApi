@@ -138,7 +138,7 @@ function Get-FogSetting {
                 Write-Verbose "getting fog setting $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject setting -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject setting -IDofObject $objectId) -TypeName 'FogApi.Setting');
             }
             'byName' {
                 Write-Verbose "resolving fog setting named $name";
@@ -162,7 +162,7 @@ function Get-FogSetting {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog setting objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject setting -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject setting -IDofObject $match[0].id) -TypeName 'FogApi.Setting');
             }
             'count'  { return Get-FogObject -type object -coreObject setting -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject setting -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogSetting {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Setting');
             }
         }
     }

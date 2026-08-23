@@ -32,7 +32,7 @@ function Find-FogSnapinJob {
 
     process {
         Write-Verbose "searching fog snapinjob for $stringToSearch";
-        return (Find-FogObject -coreObject snapinjob -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject snapinjob -stringToSearch $stringToSearch).data -TypeName 'FogApi.Snapinjob');
     }
 
 }

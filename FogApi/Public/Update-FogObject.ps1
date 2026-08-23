@@ -63,7 +63,7 @@ i.e. if your fog host name is 'computer1' and you pass in a json string link {"n
         $apiInvoke = @{
             uriPath=$uri;
             Method="PUT";
-            jsonData=$jsonData;
+            jsonData=(ConvertTo-FogJsonBody -Body $jsonData);
         }
         $result = Invoke-FogApi @apiInvoke;
         return $result;

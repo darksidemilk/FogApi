@@ -52,7 +52,7 @@ function New-FogMulticastSessionAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog multicastsessionassociation";
-        return New-FogObject -type object -coreObject multicastsessionassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject multicastsessionassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Multicastsessionassociation');
     }
 
 }

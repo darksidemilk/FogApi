@@ -32,7 +32,7 @@ function Find-FogUser {
 
     process {
         Write-Verbose "searching fog user for $stringToSearch";
-        return (Find-FogObject -coreObject user -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject user -stringToSearch $stringToSearch).data -TypeName 'FogApi.User');
     }
 
 }

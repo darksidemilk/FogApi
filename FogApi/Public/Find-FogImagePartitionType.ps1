@@ -32,7 +32,7 @@ function Find-FogImagePartitionType {
 
     process {
         Write-Verbose "searching fog imagepartitiontype for $stringToSearch";
-        return (Find-FogObject -coreObject imagepartitiontype -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject imagepartitiontype -stringToSearch $stringToSearch).data -TypeName 'FogApi.Imagepartitiontype');
     }
 
 }

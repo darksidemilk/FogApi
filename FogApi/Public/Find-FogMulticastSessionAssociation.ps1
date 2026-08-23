@@ -32,7 +32,7 @@ function Find-FogMulticastSessionAssociation {
 
     process {
         Write-Verbose "searching fog multicastsessionassociation for $stringToSearch";
-        return (Find-FogObject -coreObject multicastsessionassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject multicastsessionassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Multicastsessionassociation');
     }
 
 }

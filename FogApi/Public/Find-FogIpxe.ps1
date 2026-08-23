@@ -32,7 +32,7 @@ function Find-FogIpxe {
 
     process {
         Write-Verbose "searching fog ipxe for $stringToSearch";
-        return (Find-FogObject -coreObject ipxe -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject ipxe -stringToSearch $stringToSearch).data -TypeName 'FogApi.Ipxe');
     }
 
 }

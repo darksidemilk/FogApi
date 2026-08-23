@@ -32,7 +32,7 @@ function Find-FogInventory {
 
     process {
         Write-Verbose "searching fog inventory for $stringToSearch";
-        return (Find-FogObject -coreObject inventory -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject inventory -stringToSearch $stringToSearch).data -TypeName 'FogApi.Inventory');
     }
 
 }

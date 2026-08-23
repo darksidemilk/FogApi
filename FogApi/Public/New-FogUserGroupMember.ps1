@@ -60,7 +60,7 @@ function New-FogUserGroupMember {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog usergroupmember";
-        return New-FogObject -type object -coreObject usergroupmember -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject usergroupmember -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Usergroupmember');
     }
 
 }

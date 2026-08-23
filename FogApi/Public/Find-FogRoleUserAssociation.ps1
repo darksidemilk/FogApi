@@ -33,7 +33,7 @@ function Find-FogRoleUserAssociation {
 
     process {
         Write-Verbose "searching fog roleuserassociation for $stringToSearch";
-        return (Find-FogObject -coreObject roleuserassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject roleuserassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Roleuserassociation');
     }
 
 }

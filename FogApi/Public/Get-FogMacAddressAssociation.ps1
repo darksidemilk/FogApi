@@ -119,7 +119,7 @@ function Get-FogMacAddressAssociation {
                 Write-Verbose "getting fog macaddressassociation $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject macaddressassociation -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject macaddressassociation -IDofObject $objectId) -TypeName 'FogApi.Macaddressassociation');
             }
             'count'  { return Get-FogObject -type object -coreObject macaddressassociation -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject macaddressassociation -subPath names; }
@@ -130,7 +130,7 @@ function Get-FogMacAddressAssociation {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Macaddressassociation');
             }
         }
     }

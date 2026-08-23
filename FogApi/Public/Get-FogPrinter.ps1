@@ -137,7 +137,7 @@ function Get-FogPrinter {
                 Write-Verbose "getting fog printer $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject printer -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject printer -IDofObject $objectId) -TypeName 'FogApi.Printer');
             }
             'byName' {
                 Write-Verbose "resolving fog printer named $name";
@@ -161,7 +161,7 @@ function Get-FogPrinter {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog printer objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject printer -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject printer -IDofObject $match[0].id) -TypeName 'FogApi.Printer');
             }
             'count'  { return Get-FogObject -type object -coreObject printer -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject printer -subPath names; }
@@ -172,7 +172,7 @@ function Get-FogPrinter {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Printer');
             }
         }
     }

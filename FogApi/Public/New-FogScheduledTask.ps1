@@ -175,7 +175,7 @@ function New-FogScheduledTask {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog scheduledtask";
-        return New-FogObject -type object -coreObject scheduledtask -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject scheduledtask -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Scheduledtask');
     }
 
 }

@@ -2,6 +2,12 @@ name: Test Build
 
 on:
   workflow_dispatch:
+    inputs:
+      run_pester:
+        description: "Run the Pester suite (mocked, not vetted - see the test job)"
+        required: false
+        default: false
+        type: boolean
   # push:
   #   branches:
   #     - master
@@ -70,13 +76,25 @@ jobs:
         steps:
         - uses: actions/checkout@v7
 
-        # Non-blocking for now. The suite is being rebuilt around a language-neutral
-        # conformance corpus (see CONTEXT-api-coverage-plan.md phase 6) so the python and
-        # bash ports can replay the same cases rather than growing their own suites. Until
-        # that lands, the current example-derived suite reports but does not gate, so
-        # in-flight phase work is not blocked by fixture gaps it did not introduce.
-        # To re-enable the gate, delete the continue-on-error line.
+        # Off by default, and not a gate. The example-derived suite is a mock-up
+        # that has never been vetted against a real server: every response comes
+        # from Tests/Fixtures, so it asserts that the module still produces the
+        # shape somebody wrote down, not that the shape is right. It was already
+        # continue-on-error, which made it noise on every PR - a red step nobody
+        # is meant to act on teaches people to ignore red steps.
+        #
+        # It also has a structural failure mode that has now happened twice: a
+        # new cmdlet arrives with no fixture, and the suite fails for the one
+        # reason that says nothing about the change. Adding a cmdlet should not
+        # require inventing a canned response for it.
+        #
+        # Run it on demand from the Actions tab with run_pester: true. The real
+        # gate is Tests/FogApi.RealServer.Tests.ps1 against a live server, plus
+        # the build job above. Phase 6 of CONTEXT-api-coverage-plan.md decides
+        # what replaces this - a language-neutral conformance corpus the python
+        # and bash ports can replay, rather than three parallel mock suites.
         - name: Run Pester tests
+          if: ${{ inputs.run_pester }}
           shell: pwsh
           continue-on-error: true
           run: ./Invoke-FogApiTests.ps1 -CI
@@ -98,14 +116,14 @@ jobs:
             "OK: bootstrapped $settingsFile" | Out-Host
 
         - name: Upload test results
-          if: always()
+          if: ${{ always() && inputs.run_pester }}
           uses: actions/upload-artifact@v4
           with:
             name: pester-results-${{ matrix.os }}
             path: TestResults/pester-results.xml
 
         - name: Upload coverage report
-          if: always()
+          if: ${{ always() && inputs.run_pester }}
           uses: actions/upload-artifact@v4
           with:
             name: parameter-set-coverage-report-${{ matrix.os }}

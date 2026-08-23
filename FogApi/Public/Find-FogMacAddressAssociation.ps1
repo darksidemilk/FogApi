@@ -32,7 +32,7 @@ function Find-FogMacAddressAssociation {
 
     process {
         Write-Verbose "searching fog macaddressassociation for $stringToSearch";
-        return (Find-FogObject -coreObject macaddressassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject macaddressassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Macaddressassociation');
     }
 
 }

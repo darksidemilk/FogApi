@@ -137,7 +137,7 @@ function Get-FogImage {
                 Write-Verbose "getting fog image $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject image -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject image -IDofObject $objectId) -TypeName 'FogApi.Image');
             }
             'byName' {
                 Write-Verbose "resolving fog image named $name";
@@ -161,7 +161,7 @@ function Get-FogImage {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog image objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject image -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject image -IDofObject $match[0].id) -TypeName 'FogApi.Image');
             }
             'count'  { return Get-FogObject -type object -coreObject image -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject image -subPath names; }
@@ -172,7 +172,7 @@ function Get-FogImage {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Image');
             }
         }
     }

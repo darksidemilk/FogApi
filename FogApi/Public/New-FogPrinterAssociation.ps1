@@ -94,7 +94,7 @@ function New-FogPrinterAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog printerassociation";
-        return New-FogObject -type object -coreObject printerassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject printerassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Printerassociation');
     }
 
 }

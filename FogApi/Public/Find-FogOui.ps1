@@ -32,7 +32,7 @@ function Find-FogOui {
 
     process {
         Write-Verbose "searching fog oui for $stringToSearch";
-        return (Find-FogObject -coreObject oui -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject oui -stringToSearch $stringToSearch).data -TypeName 'FogApi.Oui');
     }
 
 }

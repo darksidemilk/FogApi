@@ -32,7 +32,7 @@ function Find-FogPrinter {
 
     process {
         Write-Verbose "searching fog printer for $stringToSearch";
-        return (Find-FogObject -coreObject printer -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject printer -stringToSearch $stringToSearch).data -TypeName 'FogApi.Printer');
     }
 
 }

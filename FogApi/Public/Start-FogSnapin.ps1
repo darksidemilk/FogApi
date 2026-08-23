@@ -15,6 +15,11 @@ function Start-FogSnapin {
     .PARAMETER snapinId
     The id of the snapin to deploy
     
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. This cmdlet still sets deploySnapins itself;
+    anything else the request carries is sent as given. An escape hatch for a
+    field this cmdlet does not expose.
     .EXAMPLE
     Start-FogSnapin -hostID 42 -snapinname 'office365'
 
@@ -60,7 +65,8 @@ function Start-FogSnapin {
         [string[]]$snapinname,
         [parameter(ParameterSetName='byId')]
         [parameter(ParameterSetName='byId-byobj')]
-        [string[]]$snapinId
+        [string[]]$snapinId,
+        [FogTaskRequest]$TaskRequest
     )
     
     
@@ -95,10 +101,10 @@ function Start-FogSnapin {
             }
             $results = New-Object System.Collections.Generic.List[Object];
             $snapinId | ForEach-Object {
-                $json = (@{
-                    "taskTypeID"='13';
-                    "deploySnapins"="$_";
-                } | ConvertTo-Json);
+                $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+                if ($null -eq $request.taskTypeID) { $request.taskTypeID = 13 }
+                $request.deploySnapins = $_;
+                $json = $request.ToJson();
                 if ($null -eq $fogHost) {
                     $fogHost = Get-Foghost -hostID $hostID;
                 }

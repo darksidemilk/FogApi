@@ -138,7 +138,7 @@ function Get-FogKeySequence {
                 Write-Verbose "getting fog keysequence $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject keysequence -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject keysequence -IDofObject $objectId) -TypeName 'FogApi.Keysequence');
             }
             'byName' {
                 Write-Verbose "resolving fog keysequence named $name";
@@ -162,7 +162,7 @@ function Get-FogKeySequence {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog keysequence objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject keysequence -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject keysequence -IDofObject $match[0].id) -TypeName 'FogApi.Keysequence');
             }
             'count'  { return Get-FogObject -type object -coreObject keysequence -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject keysequence -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogKeySequence {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Keysequence');
             }
         }
     }

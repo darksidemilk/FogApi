@@ -137,7 +137,7 @@ function Get-FogStorageNode {
                 Write-Verbose "getting fog storagenode $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject storagenode -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject storagenode -IDofObject $objectId) -TypeName 'FogApi.Storagenode');
             }
             'byName' {
                 Write-Verbose "resolving fog storagenode named $name";
@@ -161,7 +161,7 @@ function Get-FogStorageNode {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog storagenode objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject storagenode -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject storagenode -IDofObject $match[0].id) -TypeName 'FogApi.Storagenode');
             }
             'count'  { return Get-FogObject -type object -coreObject storagenode -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject storagenode -subPath names; }
@@ -172,7 +172,7 @@ function Get-FogStorageNode {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Storagenode');
             }
         }
     }

@@ -137,7 +137,7 @@ function Get-FogImagePartitionType {
                 Write-Verbose "getting fog imagepartitiontype $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject imagepartitiontype -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject imagepartitiontype -IDofObject $objectId) -TypeName 'FogApi.Imagepartitiontype');
             }
             'byName' {
                 Write-Verbose "resolving fog imagepartitiontype named $name";
@@ -161,7 +161,7 @@ function Get-FogImagePartitionType {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog imagepartitiontype objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject imagepartitiontype -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject imagepartitiontype -IDofObject $match[0].id) -TypeName 'FogApi.Imagepartitiontype');
             }
             'count'  { return Get-FogObject -type object -coreObject imagepartitiontype -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject imagepartitiontype -subPath names; }
@@ -172,7 +172,7 @@ function Get-FogImagePartitionType {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Imagepartitiontype');
             }
         }
     }

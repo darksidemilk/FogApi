@@ -18,6 +18,14 @@ function Get-FogHost {
     .PARAMETER macAddr
     a mac address linked to the host
     
+    .PARAMETER hostID
+    the id of the host. Accepts an id or an object with an id property, and binds
+    from the pipeline, so a host from one cmdlet flows into another:
+    Get-FogHosts | Where-Object name -like 'lab-*' | Get-FogHost
+
+    .PARAMETER serialNumber
+    a serial number from the host's FOG inventory - system, motherboard or case
+
     .PARAMETER hosts
     defaults to calling Get-FogHosts but if you already have that in an object you can pass it here to speed up processing
     
@@ -68,7 +76,9 @@ function Get-FogHost {
         [string]$hostName,
         [parameter(ParameterSetName='searchTerm')]
         [string]$macAddr,
-        [parameter(ParameterSetName='byID',Mandatory=$true)]
+        [parameter(ParameterSetName='byID',Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
+        [Alias('id','IDofObject')]
+        [FogObjectRefTransform()]
         [string]$hostID,
         [parameter(ParameterSetName='serialNumber',Mandatory=$true)]
         [string]$serialNumber

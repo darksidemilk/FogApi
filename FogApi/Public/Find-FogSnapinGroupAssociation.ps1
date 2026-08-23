@@ -32,7 +32,7 @@ function Find-FogSnapinGroupAssociation {
 
     process {
         Write-Verbose "searching fog snapingroupassociation for $stringToSearch";
-        return (Find-FogObject -coreObject snapingroupassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject snapingroupassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Snapingroupassociation');
     }
 
 }

@@ -73,7 +73,7 @@ function Update-FogSetting {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "updating fog setting $objectId";
-        return Update-FogObject -type object -coreObject setting -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject setting -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Setting');
     }
 
 }

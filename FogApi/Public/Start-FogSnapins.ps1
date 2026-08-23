@@ -16,6 +16,11 @@ function Start-FogSnapins {
     .PARAMETER taskTypeid
     the id of the task to start, defaults to 12
 
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. This cmdlet still sets deploySnapins itself;
+    anything else the request carries is sent as given. An escape hatch for a
+    field this cmdlet does not expose.
     .EXAMPLE
     Start-FogSnapins
 
@@ -45,7 +50,8 @@ function Start-FogSnapins {
         $fogHost,
         [parameter(ParameterSetName='byid')]
         $hostid,
-        $taskTypeid = '12'
+        $taskTypeid = '12',
+        [FogTaskRequest]$TaskRequest
     )
 
     process {
@@ -76,10 +82,10 @@ function Start-FogSnapins {
         # $snapAssocs = Invoke-FogApi -uriPath snapinassociation -Method Get;
         # $snaps = $snapAssocs.snapinassociations | ? hostid -eq $hostid;
         Write-Verbose "starting all snapin task for host";
-        $json = (@{
-            "taskTypeID"=$taskTypeid;
-            "deploySnapins"=-1;
-        } | ConvertTo-Json);
+        $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+        if ($null -eq $request.taskTypeID)    { $request.taskTypeID = $taskTypeid }
+        if ($null -eq $request.deploySnapins) { $request.deploySnapins = -1 }
+        $json = $request.ToJson();
         $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject $hostid;
         Write-Verbose "Snapin tasks have been queued on the server";
         return $result;

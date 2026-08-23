@@ -32,7 +32,7 @@ function Find-FogPxeMenuOption {
 
     process {
         Write-Verbose "searching fog pxemenuoptions for $stringToSearch";
-        return (Find-FogObject -coreObject pxemenuoptions -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject pxemenuoptions -stringToSearch $stringToSearch).data -TypeName 'FogApi.Pxemenuoptions');
     }
 
 }

@@ -21,7 +21,7 @@ function Get-FogSnapins {
     
     
     process {
-        return (Get-FogObject -type object -coreObject snapin).data;
+        return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject snapin).data -TypeName 'FogApi.Snapin');
     }
     
     

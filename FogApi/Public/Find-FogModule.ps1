@@ -32,7 +32,7 @@ function Find-FogModule {
 
     process {
         Write-Verbose "searching fog module for $stringToSearch";
-        return (Find-FogObject -coreObject module -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject module -stringToSearch $stringToSearch).data -TypeName 'FogApi.Module');
     }
 
 }

@@ -32,7 +32,7 @@ function Find-FogPowerManagement {
 
     process {
         Write-Verbose "searching fog powermanagement for $stringToSearch";
-        return (Find-FogObject -coreObject powermanagement -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject powermanagement -stringToSearch $stringToSearch).data -TypeName 'FogApi.Powermanagement');
     }
 
 }

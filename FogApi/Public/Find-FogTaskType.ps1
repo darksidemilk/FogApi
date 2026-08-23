@@ -32,7 +32,7 @@ function Find-FogTaskType {
 
     process {
         Write-Verbose "searching fog tasktype for $stringToSearch";
-        return (Find-FogObject -coreObject tasktype -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject tasktype -stringToSearch $stringToSearch).data -TypeName 'FogApi.Tasktype');
     }
 
 }
