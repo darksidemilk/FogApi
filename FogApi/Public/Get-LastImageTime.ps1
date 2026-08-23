@@ -4,9 +4,10 @@ function Get-LastImageTime {
     Prompts for a serial number, finds the host by that serial number, and returns a string showing the last image time of that host
     
     .DESCRIPTION
-    Searches the task log for the hostid and returns the most recent imaging entry's created time and image name in a
-    descriptive string. imagingLog was retired in FOG 1.6 (ADR 0022); taskLog carries the image name now, so this reads
-    taskLog and keeps only the rows that name an image.
+    Returns the most recent imaging entry's created time and image name in a descriptive string.
+    imagingLog was retired in FOG 1.6 (ADR 0022); taskLog carries the image name now, so this reads
+    taskLog, asks the server for that host's rows only, and keeps the ones that name an image.
+    Requires a FOG 1.6 server.
     
     .PARAMETER serialNumber
     The serialnumber to search for, if not specified, it will prompt for input with readhost if none is given
@@ -95,28 +96,36 @@ function Get-LastImageTime {
         # alone -- which image ran -- is now taskLog.imageName. So the history
         # comes from taskLog.
         #
-        # Listed, not searched, even though /tasklog/search/{item} is documented.
-        # That route cannot work here: Route::search() is built on unisearch, and
-        # unisearch deliberately skips any entity with no `name` column -- taskLog
-        # has none, so the search always answers recordsFiltered:0 no matter what
-        # is asked for. Verified against a live 1.6 server with rows that plainly
-        # matched. Twenty route classes are advertised with a search route they
-        # cannot honour; that belongs upstream in OpenAPI::_paths(), not worked
-        # around here.
+        # Filtered server side. /tasklog/search/{item} still cannot help -- search
+        # matches a name column and taskLog has none, which is why the document
+        # correctly does not advertise search for it -- but the list route takes a
+        # column filter, and hostID is one of taskLog's declared fields. FOG only
+        # began ADVERTISING that filter in 1.6.0-beta.3894 (FOGProject/fogproject
+        # b25193faf); the route itself has always honoured it, so this works
+        # against older 1.6 servers too.
         #
-        # So this pages the table and filters client side. Nothing deletes taskLog
-        # rows and it records every task state change rather than only imaging, so
-        # the cost grows with server age. A server-side filter is what this really
-        # wants; the list route takes only start/length/expand today.
-        $logs = (Get-FogObject -type object -coreObject tasklog).data;
+        # This previously listed the whole table and filtered with Where-Object,
+        # which had a failure worse than being slow: the unpaged list is capped at
+        # the server's MAX_ROWS (10000) and truncates SILENTLY, so on a server with
+        # more taskLog rows than that, the rows for this host might never be in the
+        # page at all and the function would report the wrong "last imaged" time,
+        # or none, with no indication anything had been dropped.
+        $logs = (Get-FogObject -type object -coreObject tasklog -Filter @{ hostID = $HostID }).data;
+
+        # imageName is still filtered here rather than server side. The filter ANDs
+        # exact matches and there is no "is not empty" operator, so "rows that name
+        # an image" is not something it can express -- but this now runs over one
+        # host's rows instead of the entire table.
         $hostLogs = @($logs | Where-Object {
-            $_.hostID -eq $HostID -AND -not [string]::IsNullOrWhiteSpace($_.imageName)
+            -not [string]::IsNullOrWhiteSpace($_.imageName)
         });
         if (!$hostLogs) {
             Write-Warning "No imaging logs found for host $($fogHost.name)!"
             return $null;
         } else {
-            $hostLog = $hostLogs[-1] # select the last/most recent log
+            # Sorted rather than taking [-1]: that assumed the server returns
+            # rows in ascending time order, which nothing in the API promises.
+            $hostLog = ($hostLogs | Sort-Object { [datetime]$_.createdTime })[-1];
             #return a string of the information about the serial number
             if ($serialNumber) {
                 "Serial number $serialNumber belongs to host $($fogHost.name), it was last imaged at $($hostLog.createdTime) with the image $($hostLog.imageName)" | Out-Host

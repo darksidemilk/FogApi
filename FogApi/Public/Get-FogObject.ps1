@@ -30,6 +30,17 @@ function Get-FogObject {
     .PARAMETER NoAutoPage
     make a single request and return the raw api envelope untouched instead of auto paging
 
+    .PARAMETER Filter
+    Server side column filter, as a hashtable of field/value pairs ANDed together.
+    An array value matches any of its parts. Only fields the class declares are
+    accepted; the server answers 400 naming the key otherwise, and refuses
+    credential fields outright.
+
+    Requires FOG 1.6.0-beta.3894 or later, the release that began advertising
+    ?filter= in its OpenAPI document. Earlier servers ignore the parameter and
+    return the whole list, so check Test-FogVerAbove1dot6 and the server version
+    if you need to be certain a filter was applied rather than assumed.
+
     .PARAMETER subPath
     one of the cheap per-class sub-routes: count, names or ids. FOG 1.6 only.
     These are unpaged and are returned exactly as the server sends them, because none of them
@@ -78,6 +89,21 @@ function Get-FogObject {
 
     Expected output:
     [ { "id": 42, "name": "MeowMachine" } ]
+    .EXAMPLE
+    Get-FogObject -type object -coreObject tasklog -Filter @{ hostID = 42 }
+
+    Returns only the taskLog rows for host 42, filtered by the server rather than
+    after the fact. Expected output:
+    { "id": 1, "hostID": 42, "hostName": "MeowMachine", "imageName": "Win-10-21H2" }
+
+    .EXAMPLE
+    Get-FogObject -type object -coreObject tasklog -Filter @{ hostID = 42 } -subPath count
+
+    Returns how many taskLog rows host 42 has, without transferring any of them.
+    The filter applies to count, names and ids as well as to the list itself.
+    Expected output:
+    { "total": 3 }
+
 
     .NOTES
     FOG 1.6 caps any unbounded list request at 10000 rows (MAX_ROWS), so a plain list call silently
@@ -114,7 +140,15 @@ function Get-FogObject {
         # sub-routes that belong to a class alongside its list.
         [Parameter()]
         [ValidateSet('count','names','ids')]
-        [string]$subPath
+        [string]$subPath,
+        # Server side column filter. A hashtable rather than a raw string
+        # because the wire format is a query string nested inside one query
+        # parameter, so it has to be encoded as a unit -- see
+        # ConvertTo-FogFilterQuery. FOG 1.6.0-beta.3894 and later; earlier
+        # 1.6 servers and all of 1.5 ignore it and return the unfiltered list,
+        # which is why this does not silently become the only way to filter.
+        [Parameter()]
+        [hashtable]$Filter
     )
 
     DynamicParam { $paramDict = Set-DynamicParams $type; return $paramDict;}
@@ -148,6 +182,22 @@ function Get-FogObject {
             #         $uri = "$type/$stringToSearch"
             #     }
             # }
+        }
+        # Only list-shaped calls take a filter. /{class}/{id} addresses one
+        # row and /{class}/current is the active-task route -- neither reads
+        # the parameter, so sending it would look supported and do nothing.
+        if ($null -ne $Filter -AND $Filter.Keys.Count -gt 0) {
+            if ($type -ne 'object') {
+                throw "Get-FogObject: -Filter applies to object lists, not to '$type'.";
+            }
+            if (-not [string]::IsNullOrEmpty($IDofObject)) {
+                throw "Get-FogObject: -Filter and -IDofObject are mutually exclusive. A filter selects rows from the class; an id already names one.";
+            }
+            # ${uri} braced deliberately: `?` is a legal character in an
+            # unbraced PowerShell variable name, so "$uri?..." parses as the
+            # variable `uri?`, which does not exist -- it expands to empty and
+            # the class name silently vanishes from the path.
+            $uri = "${uri}?$(ConvertTo-FogFilterQuery -Filter $Filter)";
         }
         Write-Verbose "uri for get is $uri";
         $apiInvoke = @{

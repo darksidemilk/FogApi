@@ -95,7 +95,12 @@ function Get-FogPagedResult {
         while ($true) {
             $pageNum++;
             $pageInvoke = $apiInvoke.Clone();
-            $pageInvoke.uriPath = "${basePath}?start=$start&length=$PageSize";
+            # `&` when the caller already put a query string on the path --
+            # a -Filter arrives that way. Hardcoding `?` produced
+            # tasklog?filter=x?start=0, which the server reads as a filter
+            # value of "x?start=0" and then rejects as an unknown field.
+            $joiner = if ($basePath.Contains('?')) { '&' } else { '?' };
+            $pageInvoke.uriPath = "${basePath}${joiner}start=$start&length=$PageSize";
             Write-Verbose "paging: requesting $($pageInvoke.uriPath)";
 
             $page = Add-FogResultData (Invoke-FogApi @pageInvoke);

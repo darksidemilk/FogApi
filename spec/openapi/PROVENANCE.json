@@ -4,16 +4,16 @@
   "source": {
     "repo": "https://github.com/FOGProject/fogproject",
     "branch": "working-1.6",
-    "commit": "7432c9ef77bc52874ba6187a2f6940e3e2d33485",
-    "commitShort": "7432c9ef7",
-    "commitDate": "2026-08-23T01:49:42+00:00",
-    "fogVersion": "1.6.0-beta.3860",
-    "openapiClassLastChanged": "4350d5048",
+    "commit": "b25193faf3b6292da43dfd15bde005b1d4a1634a",
+    "commitShort": "b25193faf",
+    "commitDate": "2026-08-23T11:41:57+00:00",
+    "fogVersion": "1.6.0-beta.3894",
+    "openapiClassLastChanged": "b25193faf",
     "localCorrections": [],
-    "$note": "Dumped from origin/working-1.6 directly. The three local corrections the previous record carried (31932e73e, a1e12d49b, d9865c845) landed upstream in FOGProject/fogproject#1285 and are ancestors of this commit, so there is no longer a merged tree to dump from. Verify that with `git merge-base --is-ancestor` before reintroducing a local-correction branch; if one is ever needed again, dump from the merged tree and say so here."
+    "$note": "Dumped from FOGProject/fogproject working-1.6 directly; b25193faf is an ancestor of origin/working-1.6, verified with `git merge-base --is-ancestor`. No local corrections -- there is no merged tree to dump from."
   },
   "generatedBy": "spec/tools/dump-openapi.php",
-  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3860 --out spec/openapi/fog-1.6.json",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3894 --out spec/openapi/fog-1.6.json",
   "servedLiveAt": [
     "GET {webroot}/system/openapi",
     "GET {webroot}/swagger.json"
@@ -28,20 +28,33 @@
     "Both live routes sit in the router's unauthenticated allowlist, so discovery needs no tokens.",
     "The live document is built per request and includes classes contributed by plugin hooks. This snapshot fires no hooks, so it describes stock FOG. That is the intended baseline for generated cmdlets; plugin classes are a runtime concern, handled by reading the live document.",
     "1.6 only. The 1.5 line has no commons/schema-expected.php, so there is no type source to generate against there.",
-    "A class dropping out of the search list does NOT mean the route stopped answering. /{class}/search/{item} still returns 200 with recordsFiltered: 0 for all 20; the change is to what the document advertises, which is why the retirement is a client-side one."
+    "The generic read routes take a server-side column filter. It is advertised as the shared ?filter= query parameter on list/count/names/ids for every class -- 204 operations -- and NOT on search, which builds its own where clause from matched ids and cannot honour one. The equivalent trailing path segment (/{class}/list/field=value) still works and wins when both are sent; it is deliberately not a documented path, because OpenAPI cannot mark a path parameter optional and describing it would add 204 paths to a 372-path document."
   ],
   "verifiedAgainstLiveServer": {
     "date": "2026-08-23",
-    "method": "Stood up FOG 1.6.0-beta.3860 from this exact commit (Apache 2.4.58 + PHP 8.4.24 + MariaDB 10.11.14, --install-mode http-only equivalent: web tree at /var/www/html/fog, hand-written config.class.php, schema deployed via the installer's own POST to management/index.php?node=schema with X-Fog-Install-Token). Fetched GET /system/openapi and compared it to this snapshot key by key with a recursive walk.",
-    "result": "One difference, and it is the deliberate placeholder: servers[0].url is http://127.0.0.1/fog live and https://fog.example.invalid/fog here. 372 paths, 517 operations and 53 schemas on both; info.version 1.6.0-beta.3860 on both.",
+    "method": "Deployed b25193faf to the maintainer's lab server (FOG 1.6.0-beta.3894, nginx 1.30.4 + PHP 8.3.33 + MariaDB, schema 356) and exercised the filter over HTTPS against real rows, with counts cross-checked directly against the database.",
+    "result": "11/11 checks passed. taskLog holds 56 rows of which 3 carry logHostID=154; ?filter=hostID%3D154 returns recordsFiltered 3 against recordsTotal 56 on /tasklog, /tasklog/count returns 3 and /tasklog/ids returns the three ids.",
     "behaviourChecks": [
-      "GET /host/search/probe -> 200, recordsTotal 1, recordsFiltered 1 against a seeded host: a name-bearing class still searches.",
-      "GET /tasklog/search/probe -> 200, recordsTotal 0, recordsFiltered 0: the nameless route is still reachable and still answers nothing, which is exactly why documenting it was wrong.",
-      "POST /history, PUT /history/join, POST /tasklog, PUT /tasklog/join -> 501: history and tasklog really are read-only now, not merely undocumented."
+      "GET /tasklog?filter=hostID%3D154 -> recordsFiltered 3; two fields ANDed via ?filter=hostID%3D154%26type%3Derror -> 3; ?filter=hostID%3D999999 -> 0.",
+      "GET /tasklog/list/hostID=154 -> 3, and the segment still wins when a contradicting ?filter= is sent alongside it.",
+      "GET /tasklog?filter=nosuchfield%3D1 -> 400 naming the key; GET /user?filter=password%3Dx -> 400, credential fields refused.",
+      "GET /host/search/fos and /host/search/fos?filter=id%3D999999 return the SAME count: search builds its where clause in PHP and a request filter cannot replace it."
     ],
-    "note": "This is what makes the offline generator trustworthy: it calls OpenAPI::document() rather than reimplementing it, and the diff confirms the four things it stubs (FOG_VERSION, the host, the hook manager, the FOGBase statics) are the only things that differ."
+    "note": "The offline generator was re-diffed against the previous snapshot as well: 372 paths, 517 operations and 53 schemas before and after, identical path set, no schema changed shape, and components.parameters gained exactly one entry."
   },
   "changeLog": [
+    {
+      "from": "7432c9ef7 (1.6.0-beta.3860, 372 paths / 517 operations / 53 schemas)",
+      "to": "b25193faf (1.6.0-beta.3894, 372 paths / 517 operations / 53 schemas)",
+      "summary": "The list filter is now discoverable. Nothing was added or removed -- the only difference is a shared ?filter= parameter on 204 existing operations.",
+      "detail": [
+        "b25193faf \"fix(api): document the list filter, and let it be sent as ?filter=\" adds components.parameters.filter and attaches it to list/count/names/ids on all 51 classes.",
+        "The filter itself is not new. Route::defineRoutes() has always registered those four with a trailing [*:whereItems]? segment, and handleWhereItems() parse_str()s it, checks the keys against the class and refuses credential fields. GET /tasklog/list/hostID=154 has always worked.",
+        "What was wrong was the description: it appeared only on list, only in prose, and said \"accepts field:value pairs\" when parse_str wants field=value -- so the documented form answers 400. That is what #66 recorded as \"no server-side column filter at all\", and why Get-LastImageTime paged the whole of taskLog and filtered client-side.",
+        "search does NOT gain the parameter. It passes its matched ids down as a non-empty array, which the server refuses to let a request filter replace, so advertising one would repeat the defect being fixed.",
+        "No hand-edit beyond openapi.class.php was needed: _listParameters() feeds every generic read operation, so the document self-updates."
+      ]
+    },
     {
       "from": "2dc470fed (1.6.0-beta.3820, 394 paths / 545 operations / 53 schemas)",
       "to": "7432c9ef7 (1.6.0-beta.3860, 372 paths / 517 operations / 53 schemas)",

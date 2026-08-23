@@ -14,8 +14,15 @@
 #      $databaseFieldsToIgnore hides from components.schemas.Tasklog while
 #      save() still fills the column and the API still returns it. Reading a
 #      field the schema does not declare is correct here, not a mistake.
-#   3. It searches rather than lists. Nothing deletes taskLog rows, so listing
-#      the whole table to keep a handful gets worse every day a server runs.
+#   3. It filters SERVER side. Nothing deletes taskLog rows, so pulling the
+#      whole table to keep a handful got worse every day a server ran -- and
+#      worse than slow, the unpaged list is capped at the server's MAX_ROWS
+#      (10000) and truncates silently, so past that point the host's rows might
+#      not be in the page at all and the cmdlet would report the wrong answer
+#      with nothing to indicate rows had been dropped.
+#      /tasklog/search/{item} still cannot help: search matches a name column
+#      and taskLog has none. The list route's column filter can, and hostID is
+#      one of taskLog's declared fields.
 #
 
 BeforeAll {
@@ -48,15 +55,39 @@ Describe 'Get-LastImageTime' {
     }
 
     It 'lists rather than searching, because tasklog search cannot work' {
-        # /tasklog/search/{item} is documented but always empty: Route::search()
-        # runs through unisearch, which skips entities with no `name` column, and
-        # taskLog has none. Confirmed live against rows that plainly matched.
+        # /tasklog/search/{item} matches a name column and taskLog has none, so
+        # the route answers nothing however it is asked. FOG's own document does
+        # not advertise search for taskLog, and correctly so.
         Get-LastImageTime -hostId 42 6>$null | Out-Null
         Should -Invoke Invoke-FogApi -ModuleName FogApi -Times 0 -ParameterFilter {
             $uriPath -match 'tasklog/search/'
         }
         Should -Invoke Invoke-FogApi -ModuleName FogApi -Times 1 -ParameterFilter {
             $uriPath -match '^tasklog'
+        }
+    }
+
+    It 'asks the server for one host, rather than pulling the whole table' {
+        # The point of the change. Without the filter this pulled every taskLog
+        # row on the server and kept the matching handful, which is capped at
+        # MAX_ROWS and truncates silently.
+        Get-LastImageTime -hostId 42 6>$null | Out-Null
+        Should -Invoke Invoke-FogApi -ModuleName FogApi -Times 1 -ParameterFilter {
+            $uriPath -match 'filter=hostID%3D42'
+        }
+    }
+
+    It 'keeps the class name in the path when it adds the filter' {
+        # `?` is a legal character in an unbraced PowerShell variable name, so
+        # "$uri?$query" parses as the variable `uri?` -- which does not exist,
+        # expands to empty, and silently drops the class from the path. That
+        # shipped once; this is what catches it coming back.
+        Get-LastImageTime -hostId 42 6>$null | Out-Null
+        Should -Invoke Invoke-FogApi -ModuleName FogApi -Times 1 -ParameterFilter {
+            $uriPath -match '^tasklog\?'
+        }
+        Should -Invoke Invoke-FogApi -ModuleName FogApi -Times 0 -ParameterFilter {
+            $uriPath -match '^filter='
         }
     }
 
