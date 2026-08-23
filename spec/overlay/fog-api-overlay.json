@@ -296,6 +296,7 @@
     "Receive-FogImage":                  { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
     "Send-FogWolTask":                   { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "WOL is not a route: it is task with wol true / taskTypeID 14." },
     "Send-FogGroupTask":                 { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
+    "New-FogTaskRequest":                { "category": "utility", "platform": "any", "targets": ["powershell"], "note": "Static factory for the FogTaskRequest class. A PowerShell class is not reachable by name after Import-Module -- naming it needs `using module` -- so the type needs a cmdlet to construct it. PowerShell only: the class is a PowerShell language feature, and the other emitters model the same request body their own way." },
     "New-FogHost":                       { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },
     "Get-FogHost":                       { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"], "note": "Identifies the local machine when given no parameters. The pure by-id read is what the generated Get-FogHost would be, which is why this one keeps the name and the generator skips host/indiv." },
     "Add-FogHostMac":                    { "category": "workflow", "platform": "any", "targets": ["powershell", "python", "bash"] },

@@ -346,7 +346,12 @@ diff against `spec/openapi/fog-1.6.json`, and fail with the delta.
 
 ---
 
-## Upstream bug: 20 classes advertise a search route that cannot work
+## Fixed upstream: 20 classes advertised a search route that cannot work
+
+**Landed.** Fixed in FOGProject/fogproject `4350d5048` (PR #1292, on `working-1.6`), and the client
+side is retired as of the 1.6.0-beta.3860 snapshot: the 20 `Find-Fog<Noun>` cmdlets below are
+gone. Kept here because the reasoning is what stops it being reintroduced, and because the
+residual limitation in the last paragraph is still live.
 
 Found while repointing `Get-LastImageTime` at `taskLog`, and confirmed against a live 1.6 server
 with rows that plainly matched the search term.
@@ -369,11 +374,26 @@ them is documented with a `/search/{item}` it cannot honour:**
 `multicastsessionassociation`, `nodefailure`, `powermanagement`, `printerassociation`,
 `snapinassociation`, `snapingroupassociation`, `snapinjob`, `snapintask`, `tasklog`, `usertracking`
 
-The fix belongs upstream, in `_paths()`: emit the `search` operation only where the model has a
-`name` field, the same condition `unisearch` already applies. That is a spec change, so it is a
+The fix belonged upstream, in `_paths()`: emit the `search` operation only where the model has a
+`name` field, the same condition `unisearch` already applies. That is a spec change, so it was a
 hand-edit to `openapi.class.php` under the project's own rule — the document is only partly
-generated from the router. Until it lands, generated `Find-Fog<Noun>` cmdlets for those twenty
-classes are dead on arrival, and `Get-LastImageTime` pages the list instead.
+generated from the router. `Get-LastImageTime` pages the list instead, and still does.
+
+That is what `4350d5048` does, as `OpenAPI::_isSearchable()`. It tests the reflected
+`$databaseFields` rather than a hand-kept list of class names, because `$validClasses` is mutated at
+runtime by the `API_VALID_CLASSES` hook — a written-out list would mis-describe every class a plugin
+contributes, and would be a second copy of a rule that already has one home.
+
+**The route did not stop answering, and that is the point.** `GET /tasklog/search/probe` still
+returns 200 with `recordsFiltered: 0`; only the *document* changed. So the retirement is a
+client-side one: nothing 404s, the cmdlets were simply advertising an operation the server cannot
+honour. Verified on a live 1.6.0-beta.3860 server — `/host/search/probe` returns
+`recordsFiltered: 1` against a seeded host, `/tasklog/search/probe` returns 0.
+
+A necessary condition, not a sufficient one: `unisearch()` iterates `$searchPages` rather than
+`$validClasses` and skips `task` outright, so a few classes that pass the `name` test still answer
+empty. Narrowing to that is a larger change to what the document claims, and is tracked upstream
+rather than here.
 
 Worth pairing with the other thing this exposed: the list routes take only `start`, `length` and
 `expand`, so there is no server-side column filter at all. Reading one host's imaging history means
