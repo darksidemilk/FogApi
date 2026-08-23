@@ -38,14 +38,19 @@ three that can execute at all.
 
 | Phase | State | Branch |
 |---|---|---|
-| **0 — Paging** | **Done, awaiting review** | `fix/fog16-paging-truncation` |
+| **0 — Paging** | **Merged** — #62 | `fix/fog16-paging-truncation` |
 | 0.3 — Layer-violation refactor | Not started | `refactor/l1-crud-standardization` |
 | 0.5 — ValidateSet additions + version caching | Not started | `fix/dynamic-param-classes` |
-| **1 — Spec + generator + coverage matrix + printer pilot** | **Done, awaiting review** | `claude/fogapi-openapi-spec-9o14r0` |
+| **1 — Spec + generator + coverage matrix + printer pilot** | **Merged** — #65, into #62 | `claude/fogapi-openapi-spec-9o14r0` |
 | 2-5 — Generate Tiers 1-3, hand-write fixed routes | Not started | one branch per tier |
-| 6 — Test rebuild around language-neutral corpus | Not started | |
+| 6 — Test rebuild around language-neutral corpus | **Forced** — the mocked suite is off in CI as of #67 | |
 | 7 — Real-server CI + fog-workflows release gate | **Largely already exists** — see below | |
 | 8 — Python + bash ports | Not started | Python first within the phase |
+
+A separate sub-plan branched off this one and is tracked in
+[`CONTEXT-typed-objects-plan.md`](CONTEXT-typed-objects-plan.md) and issue #66. Its phases 1, 2
+and 4 are merged (#65, #67); its phase 3 — `.ps1xml` for all 51 entities — is the open one. It
+does not renumber anything here.
 
 **Branching rule:** every phase branches from `dev` and PRs back into `dev`. Never branch from or PR
 into `master` — `dev`->`master` is the separate PR that triggers `tag-and-release.yml`.
@@ -439,10 +444,18 @@ out to assert on real requests. Fixing this is Phase 0.5 and is now load-bearing
 
 ---
 
-## Typed objects — ETS type data, not PowerShell classes
+## Typed objects — ETS type data for responses, classes for inputs
 
-Both were built for `host` and compared against the live server. Verdict: **ETS type data**
-(`Update-TypeData` + a `PSTypeName` stamp). The class arm was deleted.
+Both were built for `host` and compared against the live server. Verdict for **responses**:
+**ETS type data** (`Update-TypeData` + a `PSTypeName` stamp). That response-class arm was deleted.
+
+> **Superseded in part, 2026-08-23.** The verdict below is about *responses* and still holds. The
+> section's own closing lesson — "classes for inputs, type data for outputs" — was then acted on:
+> `FogTaskRequest` and `FogObjectRefTransform` shipped in #67, and the `PSTypeName` stamp was
+> extended from `Get-FogHost` alone to every entity-returning getter. So `FogApi/Classes/` is no
+> longer empty and the sentence "no classes ship" below is out of date. The live detail lives in
+> [`CONTEXT-typed-objects-plan.md`](CONTEXT-typed-objects-plan.md) and issue #66; this section is
+> kept for the measurements that produced the verdict.
 
 ### The finding that decided it: the schema does not describe the response
 
@@ -615,8 +628,13 @@ should be revisited as soon as the spec describes the response. A format file
 - `FogApi.psm1` calls `Register-FogTypeData`; `invoke-modulebuild.ps1` re-emits that call into
   the built psm1, which is **generated** and does not inherit the source psm1's body — an
   import-time call added to one and not the other silently does not happen in the shipped module.
-- `FogApi.psm1` also now dot-sources `Classes/*.ps1` first. No classes ship, but the source
-  layout previously ignored a directory the build already concatenated.
+- `FogApi.psm1` also now dot-sources `Classes/*.ps1` first. No classes shipped *at the time*; the
+  source layout previously ignored a directory the build already concatenated. **Two ship now** —
+  `FogTaskRequest` and `FogObjectRefTransform`, both input-side, added in #67 — and that loader
+  order is what makes them resolve.
+- **Since #67:** `Get-FogHost` is no longer the only stamped getter. `FogApi/Private/Add-FogTypeName.ps1`
+  applies `FogApi.<Noun>` from every entity-returning generated template and nine hand-written
+  getters, so `Register-FogTypeData`'s methods now reach list output as well as `Get-FogHost`.
 
 ### Follow-on, not done here
 
@@ -748,25 +766,48 @@ dispatch), not `installfog.sh`'s heavier GNU `getopt`.
 
 ## Next session, start here
 
-Phase 1 is on `claude/fogapi-openapi-spec-9o14r0`, branched from
-`fix/fog16-paging-truncation` (Phase 0) because it revises this document. Merge order
-is #62 → #63 → #64 → Phase 1.
+*(Rewritten 2026-08-23. Everything the previous version pointed at has merged: #62, #63,
+#64, #65 and the typed-object sub-plan's #67 are all in `dev`.)*
+
+Two items the previous version listed as blockers are **already done**, so do not redo them:
+
+- `Get-FogObject -subPath` shipped in #65. The folded `-Count` / `-NamesOnly` / `-IdsOnly`
+  switches address `{class}/count`, `{class}/names` and `{class}/ids` now.
+- `Find-FogObject`'s dynamic-param binding was fixed in #65, for `Find-` and
+  `Update-FogObject`, and asserted in `Tests/DynamicParam.Tests.ps1`.
 
 Highest-value next steps, in order:
 
-1. **Phase 0.3 / 0.5 first, not Phase 2.** Two things the pilot proved are needed
-   before emitting 233 cmdlets:
-   - The folded `-Count` / `-NamesOnly` / `-IdsOnly` switches have nowhere to go:
-     `Get-FogObject` cannot address `{class}/count`, `{class}/names` or
-     `{class}/ids`. It needs one `-subPath` parameter, or those switches stay
-     unimplemented and 208 folded operations are folded into nothing.
-   - `Find-FogObject`'s dynamic-param binding (above) is a live bug and every
-     generated `Find-Fog*` works around it today.
-2. **Wire the drift check into `reusable_api_validation.yml`** — diff the live
-   document against `spec/openapi/fog-1.6.json`. Cheapest possible early warning for
-   an upstream schema change, and the workflow already has a running server.
-3. **Then Phase 2**, tier 1, `-Class host,group,image,snapin` and so on. The pipeline
-   is proven; each tier is now mostly review rather than authorship.
+1. **Phase 0.5 — the version-probe cost.** Still open and now the most expensive thing
+   here. `Get-DynmicParam` calls `Get-FogVersion` while binding `-coreObject`, so every
+   call that binds a dynamic param issues `GET system/info` first. That was one extra
+   round trip per call when there were 60 cmdlets; there are 247 now, and the generated
+   ones bind a dynamic param on nearly every call. Cache it per session.
+2. **Phase 0.3 — the layer-violation refactor.** Scope below, unchanged. Smaller than 0.5
+   and independent of it.
+3. **The typed-object sub-plan's phase 3** — `.ps1xml` for all 51 entities. Independent of
+   both of the above, and its own doc says what gates it. Type names are already stamped
+   (#67), so it applies on arrival rather than being inert.
+4. **Phase 6 is no longer optional.** The mocked suite was switched off in CI in #67 —
+   it is a fixture mock-up that was never vetted against a real server, it was already
+   `continue-on-error`, and it failed 20/20 on cmdlets that had no fixtures rather than on
+   anything about the change. Nothing gates behaviour now except the build job and a
+   real-server run. Decide what the language-neutral corpus is before the python and bash
+   ports (phase 8) make it three parallel mock suites instead of one.
+5. **Wire the drift check into `reusable_api_validation.yml`** — diff the live document
+   against `spec/openapi/fog-1.6.json`. Still the cheapest early warning for an upstream
+   schema change, and the workflow already has a running server. A local check is
+   `394 paths / 53 schemas` with no `/imaginglog`.
+6. **Then Phases 2-5**, tier 1, `-Class host,group,image,snapin` and so on. The pipeline is
+   proven and now covers every route shape: #67 added the `task`, `cancel` and `active`
+   templates that #65 listed as missing, so a tier-1 class can be emitted whole.
+
+One trap the emitter has not learned yet, worth fixing before a tier lands: **it has no
+reserved-parameter-name handling.** A schema field named `debug` produces a `-debug`
+parameter, which collides with the `-Debug` common parameter and fails at **import** with
+"a parameter with the name 'Debug' was defined multiple times" — taking the whole module
+down, not one cmdlet. It was worked around by hand in `New-FogTaskRequest`;
+`parameterAliases` in the spec is where the general fix belongs.
 
 Phase 0.3 scope (unchanged):
    - `Start-FogSnapins.ps1:62,72` -> `Get-FogObject -type objectactivetasktype -coreActiveTaskObject task`

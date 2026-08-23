@@ -236,7 +236,11 @@ suites.
   exists. Emitting it makes the alias shadow that function, which is a migration
   in its own right rather than a side effect of Phase 2.
 
-### Phase 3 — response type data, as generated .ps1xml — **not started**
+### Phase 3 — response type data, as generated .ps1xml — **not started, and now unblocked**
+
+Phase 4 landed first (see below), so every entity a getter returns already carries
+`FogApi.<Noun>`. A `<Type>` block written now applies the moment it ships, rather than being
+inert until a later pass.
 
 11. **New** `spec/tools/New-FogTypeFile.ps1`, styled after `New-FogCoreObjectList.ps1`. Emits
     `FogApi/FogApi.types.ps1xml` and `FogApi/FogApi.format.ps1xml` for **all 51 entities**
@@ -247,35 +251,57 @@ suites.
 12. `FogApi/FogApi.psd1` — set `TypesToProcess` and `FormatsToProcess` (lines 107, 110).
 13. **Delete** `FogApi/Private/Register-FogTypeData.ps1`; remove its call from `FogApi.psm1` and
     its re-emission block from `invoke-modulebuild.ps1`; make the build copy both xml (it copies
-    only `lib`/`bin` today).
+    only `lib`/`bin` today). `Add-FogTypeName` stays — it applies the name, which is orthogonal
+    to where the behaviour behind the name is declared.
 
 Why xml over the shipped `Update-TypeData`, all measured: column widths and labels, it **unloads
 on `Remove-Module`** (verified "gone"; `Update-TypeData`'s survives), and being declarative it
 needs no import-time call — the only reason that re-emission block exists.
 
-### Phase 4 — stamping, or phase 3 is inert — **not started**
+### Phase 4 — stamping, or phase 3 is inert — **DONE, `#67`**
 
-A `<Type>` block does nothing until an object carries the name; `Get-FogHost` already does
-`PSObject.TypeNames.Insert(0, 'FogApi.Host')`.
+Brought forward into the phase-2 pass, because phase 3 is worth nothing without it and the
+stamp turned out to pay off on its own.
 
-14. `spec/tools/New-FogApiFunctionFile.ps1` — add the stamp to the templates that return an
-    entity, then regenerate. Covers the generated cmdlets in one change.
-15. Hand-written getters returning a known entity get the same one-liner.
+14. ~~`spec/tools/New-FogApiFunctionFile.ps1` — add the stamp to the templates that return an
+    entity, then regenerate.~~ Done. Every entity-returning template (`indiv`, the `byName`
+    resolve, the paged `list`, `create`, `update`, `search`, `active`) wraps its return in
+    `Add-FogTypeName`.
+15. ~~Hand-written getters returning a known entity get the same one-liner.~~ Done, nine of
+    them: `Get-FogHosts`, `Get-FogGroups`, `Get-FogImages`, `Get-FogSnapins`,
+    `Get-FogMacAddresses`, `Get-FogScheduledTasks`, `Get-FogActiveTasks`, `Get-FogHostGroup`,
+    `Get-FogGroupByName`.
+
+It is a function rather than the inline one-liner `Get-FogHost` uses:
+`FogApi/Private/Add-FogTypeName.ps1`. Additive (`Insert(0, ...)`), collection-aware — the name
+has to be on each element for a format definition to apply — and it passes its input straight
+through, so it wraps a return without changing it.
+
+**The payoff did not wait for phase 3.** `Register-FogTypeData` has always defined
+`FogApi.Host`'s display set, `ToString`, `Deploy`/`Cancel`/`Refresh` and `SysUuid`, and only
+`Get-FogHost` carried the name. `Get-FogHosts` results now carry it too, so those methods reach
+list output for the first time. Every other entity now carries a name with nothing attached yet
+— which is exactly the state phase 3 fills in.
 
 ## Verification
 
 ```powershell
 pwsh -File spec/tools/Build-FogApiSpec.ps1        # expect 51 entities, imaginglog gone
 pwsh -File spec/tools/New-FogInputClass.ps1
-pwsh -File spec/tools/New-FogTypeFile.ps1
 pwsh -File spec/tools/New-FogCoreObjectList.ps1
 pwsh -File spec/tools/Get-FogApiCoverage.ps1
 pwsh -File update-sourcemanifest.ps1 -Check
-pwsh -Command "Test-ModuleManifest ./FogApi/FogApi.psd1"   # fails if either xml path is wrong
-pwsh -File Invoke-FogApiTests.ps1 -CI                      # floor 541/0, less imaginglog cases
-pwsh -File Invoke-FogApiTests.ps1 -RealServer              # floor 558/0
+pwsh -Command "Test-ModuleManifest ./FogApi/FogApi.psd1"
+pwsh -File Invoke-FogApiTests.ps1 -RealServer
 Import-Module ./BuildHelpers.psm1; ./invoke-modulebuild.ps1
 ```
+
+`New-FogTypeFile.ps1` is not in that list because phase 3 has not written it yet; add it when
+it exists, along with the `Test-ModuleManifest` note that it fails if either xml path is wrong.
+
+`Invoke-FogApiTests.ps1 -CI` is not in that list either. The mocked suite is **off in CI** as of
+`#67` — see below — so it has no floor to hold to. Run it by hand if you want the signal, but a
+failure in it is not a gate.
 
 Input classes specifically — the phase-2 acceptance:
 
@@ -304,9 +330,12 @@ Remove-Module FogApi
 ([pscustomobject]@{PSTypeName='FogApi.Host'}) | Get-Member -MemberType ScriptMethod  # gone
 ```
 
-The live server runs the **old** build, so `/imaginglog` still answers there. Re-deploy the merged
-tree before trusting a real-server run against the new shape, or `Get-LastImageTime`'s test passes
-for the wrong reason.
+A real-server run needs a server built from `working-1.6` at or after the imaginglog retirement,
+or `Get-LastImageTime`'s test passes for the wrong reason. Check before trusting it:
+`GET {webroot}system/openapi` should report **394 paths / 53 schemas** and no `/imaginglog` path,
+which is what the committed `spec/openapi/fog-1.6.json` snapshot describes. The phase-2 pass was
+verified against 1.6.0-beta.3837, which matches the snapshot on paths, schemas and the
+`/{class}/{id}/task` request body.
 
 ## Risks
 
@@ -319,7 +348,15 @@ for the wrong reason.
   `Remove-FogObject`. Confirm mocked before committing; if a `<Script>` cannot see the module's
   cmdlets, keep xml for display and fall back to `Update-TypeData` for methods only.
 - Phases are separable. 1 is prerequisite; 2 is independently shippable and is the user-facing
-  win; 3 without 4 is inert rather than broken.
+  win. ~~3 without 4 is inert rather than broken.~~ 4 is done, so 3 now applies the moment it
+  ships.
+- **The mocked suite is off in CI** (`#67`), so it will not catch a regression in a later phase.
+  Nothing replaces it until phase 6. The build job and a real-server run are the whole gate.
+- **The emitter has no reserved-name handling.** `debug` collided with the `-Debug` common
+  parameter and was worked around by hand in `New-FogTaskRequest`. A generated cmdlet will hit
+  this eventually, and it fails at **import** with "a parameter with the name 'Debug' was defined
+  multiple times" rather than warning — so it takes the whole module out, not one cmdlet.
+  `parameterAliases` in the spec is the place to fix it.
 
 ## Not in scope
 
@@ -329,3 +366,42 @@ for the wrong reason.
   against 30 declared). Explicitly deferred earlier this session.
 - Response objects as classes — settled: type data, because the schema does not describe the whole
   response. Input classes are the opposite case, which is why they are phase 2.
+
+---
+
+## Next pass, start here
+
+State as of `#67` (merged into `dev`, 2026-08-23):
+
+| Phase | State |
+|---|---|
+| 1 · spec refresh, imaginglog retired | done — `fe6b67d`, merged via #65 |
+| 2 · input classes | done — merged via #67 |
+| 3 · response type data as `.ps1xml` | **not started, unblocked** |
+| 4 · stamping | done — merged via #67, ahead of 3 |
+
+**Do phase 3 next, and answer its one gating question first.**
+
+The question is whether a `.ps1xml` `<Script>` body can resolve the module's own cmdlets.
+`SysUuid` was only ever invoked from a `<ScriptProperty>`; `Deploy()` and `Cancel()` call
+`New-FogObject` / `Remove-FogObject` and have never been called from a `<Script>` body at all.
+Answer it with a throwaway two-type xml before writing an emitter for 51 of them — if a
+`<Script>` cannot see module scope, the design changes to xml-for-display plus
+`Update-TypeData`-for-methods, and that is a different emitter.
+
+Everything else phase 3 needs is in place: every entity-returning getter already stamps
+`FogApi.<Noun>` via `Add-FogTypeName`, so a `<Type>` block applies on arrival.
+
+Three things this pass left behind, none of them blocking:
+
+1. **Reserved parameter names in the emitter.** See Risks. Fails at import, takes the module
+   with it.
+2. **No fixtures for the 20 new task/cancel cmdlets.** Only matters if phase 6 rebuilds the
+   mocked layer rather than replacing it; the routes return FOG's `{}` envelope, not an entity.
+3. **`Get-FogGroup` is still unemitted.** Status `replaces-thin-wrapper`, alias `Get-FogGroups`,
+   which would shadow the hand-written `Get-FogGroups` function. It is a migration, not a
+   regeneration — decide it deliberately.
+
+Not this plan's phases, but adjacent and worth knowing: the parent
+`CONTEXT-api-coverage-plan.md` still has phases 0.3, 0.5 and 2-5 open, and its own
+"Next session, start here" is the authority on those.
