@@ -24,7 +24,7 @@ function Send-FogWolTask {
     Will send a magic computer to the computer MeowMachine from the fog server;
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     .EXAMPLE
     $sleepers = (Get-foghosts | ? name -in ((Get-ADComputer -Filter '*' -SearchBase 'ou=someOU,dc=company,dc=local').name)); $sleepers | % {Send-FogWolTask -hostObj $_}

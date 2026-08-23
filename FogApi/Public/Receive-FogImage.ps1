@@ -35,7 +35,7 @@ function Receive-FogImage {
     Will queue a capture task for host 42 right now
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     .EXAMPLE
     Capture-FogImage -hostID "1234" -StartAtTime (Get-date 8pm)

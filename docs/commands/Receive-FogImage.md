@@ -49,7 +49,7 @@ Receive-FogImage -hostID "42"
 Will queue a capture task for host 42 right now
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ### EXAMPLE 2
 ```

@@ -434,11 +434,17 @@ answers 200 with a two-byte body, `""`, and the task really is created (`GET /ta
 it). `DELETE /host/{id}/cancel` answers `""` the same way on a genuinely active task. Do not
 "fix" these to look like a created object.
 
-The 19 mocked failures that remain are all **unvetted-fixture** artifacts, not product defects:
-`task-create.json` returns `{"id":501,"success":true}` where the server returns `""`, and
-`tasks-current.json` and friends carry an empty `data` array so the `active` examples have nothing
-to match. The mocked layer is off in CI as of `#67` and its fate is the open E/phase-6 decision —
-that is the place to deal with these, not by editing docs to match fixtures nobody has checked.
+~~The 19 mocked failures that remain are all **unvetted-fixture** artifacts, not product defects~~
+— **fixed.** The diagnosis above was right and the fixtures were the problem, so they were vetted
+against a live server rather than left for phase 6. `task-create.json`, `tasks-current.json` and
+`scheduledtasks-current.json` are gone; `/current`, `/{id}/task` and `/{id}/cancel` are answered
+by convention like every other shape, `/current` deriving from the class list fixture so the
+mocked answer and the emitted `Expected output:` block cannot drift apart. Nine hand-written
+examples that documented the invented `{"id":501,"success":true}` now document `""`, which is
+what FOG returns. **Mocked: 576 passed / 0 failed / 17 skipped.**
+
+This does not pre-empt the E/phase-6 decision on the mocked layer's fate — the fixtures are the
+ground truth whether that layer is rebuilt or replaced, and they were lying.
 
 **Do phase 3 next, and answer its one gating question first.**
 
@@ -456,11 +462,16 @@ Three things this pass left behind, none of them blocking:
 
 1. **Reserved parameter names in the emitter.** See Risks. Fails at import, takes the module
    with it.
-2. **No fixtures for the 20 new task/cancel cmdlets.** Only matters if phase 6 rebuilds the
-   mocked layer rather than replacing it; the routes return FOG's `{}` envelope, not an entity.
+2. ~~**No fixtures for the 20 new task/cancel cmdlets.**~~ Done — by convention rather than by
+   twenty files. The routes return an EMPTY body, not an envelope: verified at beta.3894 as well
+   as beta.3860.
 3. **`Get-FogGroup` is still unemitted.** Status `replaces-thin-wrapper`, alias `Get-FogGroups`,
    which would shadow the hand-written `Get-FogGroups` function. It is a migration, not a
-   regeneration — decide it deliberately.
+   regeneration — decide it deliberately. Still open, and deliberately not decided here: what
+   changed is that the emitter no longer *assumes* the getter exists. `Get-Fog<TitleNoun>` is
+   resolved against `FogApi/Public` and falls back to `Get-FogObject`, so `Start-FogGroupTask`'s
+   pipeline example stopped naming a command the module does not export. Emitting `Get-FogGroup`
+   later upgrades that example on the next regeneration with no further change.
 
 Not this plan's phases, but adjacent and worth knowing: the parent
 `CONTEXT-api-coverage-plan.md` still has phases 0.3, 0.5 and 2-5 open, and its own

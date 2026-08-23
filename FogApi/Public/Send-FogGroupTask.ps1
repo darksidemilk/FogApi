@@ -47,7 +47,7 @@ function Send-FogGroupTask {
     Use the default taskTypeID of 1 to queue a deploy task instead.
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     .EXAMPLE
     Get-FogGroupByName "TestGroup" | Send-FogGroupTask -taskTypeID 14 -StartAtTime ((Get-Date).AddHours(2))

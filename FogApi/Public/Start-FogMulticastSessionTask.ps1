@@ -27,7 +27,7 @@ function Start-FogMulticastSessionTask {
     ""
 
     .EXAMPLE
-    Get-FogMulticastsession -id 1 | Start-FogMulticastSessionTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
+    Get-FogMulticastSession -id 1 | Start-FogMulticastSessionTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
 
     Wakes multicastsession 1, passing the object straight down the pipeline.
 

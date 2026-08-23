@@ -50,7 +50,7 @@ This will find the id of the snapin named 'office365' and deploy it on the host 
 The name of the host and the snapin will be output to the console before the task is started
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ### EXAMPLE 2
 ```
@@ -61,7 +61,7 @@ This will deploy a single snapin task for the snapin of id 6 for host 42
 The name of the host and the snapin will be output to the console before the task is started
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ## PARAMETERS
 

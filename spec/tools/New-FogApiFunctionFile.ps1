@@ -88,6 +88,41 @@ if ($Class) { $targets = @($targets | Where-Object { $_.class -in $Class }) }
 if ($Route) { $targets = @($targets | Where-Object { $_.routeName -in $Route }) }
 if (-not $targets) { throw 'no operations matched' }
 
+function Get-PipelineSource {
+    <#
+    The command an example can pipe a single object from, for this class.
+
+    This used to be hardcoded as Get-Fog<TitleNoun>, which is true for most
+    classes and false for group: Get-FogGroup is in the spec as
+    replaces-thin-wrapper but has deliberately never been emitted, because its
+    alias Get-FogGroups would shadow the hand-written Get-FogGroups -- a
+    different thing entirely, returning every group rather than one. So the
+    emitted example named a command the module does not export, and the
+    documented-examples suite failed on a cmdlet that was working fine.
+
+    Resolved against what is actually on disk rather than against the spec,
+    because the spec describes what COULD be generated and the example has to
+    run against what was. A full regeneration writes Get-Fog* before
+    Start-Fog*Task (sorted by name), so a class gets the nicer form the moment
+    its getter really lands.
+
+    Get-FogObject is the fallback: it is hand-written, always exported, and
+    returns the same entity, so the example stays runnable either way.
+    #>
+    param([string]$TitleNoun, [string]$Noun)
+    # Matched case-insensitively, and the name is taken from the FILE rather
+    # than rebuilt from $TitleNoun: the title-cased noun is 'Multicastsession'
+    # while the real command is Get-FogMulticastSession. PowerShell resolves
+    # either, but this file system does not, so building the path from
+    # $TitleNoun found nothing on Linux and quietly downgraded four working
+    # examples to the generic form.
+    $getter = @(Get-ChildItem -LiteralPath $OutDir -Filter 'Get-Fog*.ps1' -ErrorAction SilentlyContinue |
+        Where-Object { $_.BaseName -eq "Get-Fog$TitleNoun" } |
+        Select-Object -First 1)
+    if ($getter.Count -gt 0) { return ('{0} -id 1' -f $getter[0].BaseName) }
+    return ('Get-FogObject -type object -coreObject {0} -IDofObject 1' -f $Noun)
+}
+
 function Get-FieldList {
     param([string]$ClassName)
     if (-not ($spec.schemas.PSObject.Properties.Name -contains $ClassName)) { return @() }
@@ -708,7 +743,7 @@ function New-FunctionFile {
             $help.Add('    ""')
             $help.Add('')
             $help.Add('    .EXAMPLE')
-            $help.Add(('    Get-Fog{0} -id 1 | {1} -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)' -f $titleNoun, $Fn.functionName))
+            $help.Add(('    {0} | {1} -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)' -f (Get-PipelineSource -TitleNoun $titleNoun -Noun $noun), $Fn.functionName))
             $help.Add('')
             $help.Add(('    Wakes {0} 1, passing the object straight down the pipeline.' -f $noun))
             $help.Add('')

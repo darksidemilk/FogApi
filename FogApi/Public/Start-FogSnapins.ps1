@@ -32,7 +32,7 @@ function Start-FogSnapins {
     will start all snapins on the host with the id 42
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     .EXAMPLE
     Get-foghost -hostname 'MeowMachine' | Start-FogSnapins
@@ -40,7 +40,7 @@ function Start-FogSnapins {
     will get the host object for the host named 'MeowMachine' and start all snapins on it
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
 #>
 

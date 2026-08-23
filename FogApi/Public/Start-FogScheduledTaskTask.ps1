@@ -27,7 +27,7 @@ function Start-FogScheduledTaskTask {
     ""
 
     .EXAMPLE
-    Get-FogScheduledtask -id 1 | Start-FogScheduledTaskTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
+    Get-FogScheduledTask -id 1 | Start-FogScheduledTaskTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
 
     Wakes scheduledtask 1, passing the object straight down the pipeline.
 

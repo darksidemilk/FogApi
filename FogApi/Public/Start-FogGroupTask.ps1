@@ -27,7 +27,7 @@ function Start-FogGroupTask {
     ""
 
     .EXAMPLE
-    Get-FogGroup -id 1 | Start-FogGroupTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
+    Get-FogObject -type object -coreObject group -IDofObject 1 | Start-FogGroupTask -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)
 
     Wakes group 1, passing the object straight down the pipeline.
 

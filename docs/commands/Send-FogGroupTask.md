@@ -40,7 +40,7 @@ Queues an immediate wake-up task for every host in the group with id 7.
 Use the default taskTypeID of 1 to queue a deploy task instead.
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ### EXAMPLE 2
 ```
