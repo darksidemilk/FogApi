@@ -764,10 +764,17 @@ function New-FunctionFile {
             $help.Add(('    Lists the active {0} entries.' -f $noun))
             $help.Add('')
             $help.Add('    Expected output:')
-            $help.Add('    { "id": 1, "name": "example" }')
+            $help.Add('    ' + (Format-SampleObject -Fields $fields -TitleNoun $titleNoun -AsArray -FixtureRow $fixtureRow -RowSet $fixtureRows))
             $help.Add('')
             $body.Add(('        Write-Verbose "getting the active fog {0} entries";' -f $noun))
-            $body.Add(('        return (Add-FogTypeName -InputObject (Get-FogObject -type objectactivetasktype -coreActiveTaskObject {0}) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
+            # .data, like every other getter. /current answers with the same
+            # ListEnvelope a list does -- verified against a live 1.6 server:
+            # GET /task/current returns draw/recordsTotal/data/_lang, not a bare
+            # row. Returning the envelope stamped FogApi.<Noun> onto the
+            # envelope instead of onto the rows, so phase 4's type data -- the
+            # display set and the Refresh/Deploy/Cancel methods -- attached to
+            # the wrong object and never applied to a task at all.
+            $body.Add(('        return (Add-FogTypeName -InputObject (Get-FogObject -type objectactivetasktype -coreActiveTaskObject {0}).data -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
         }
         default { throw "no template for route '$($Fn.routeName)'" }
     }

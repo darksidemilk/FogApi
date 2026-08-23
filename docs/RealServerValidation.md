@@ -9,7 +9,7 @@ Which integration tests (Tests/FogApi.RealServer.Tests.ps1) have actually been r
 
 ## FogApi real-server integration > Group lifecycle
 
-- [ ] `Add-FogHostGroup associates the host and Get-FogHostGroup reflects it` - last validated 2026-08-23, Failed
+- [x] `Add-FogHostGroup associates the host and Get-FogHostGroup reflects it` - last validated 2026-08-23, Passed
 - [x] `created a real group with a real id` - last validated 2026-08-23, Passed
 - [x] `Remove-FogHostGroup removes the association` - last validated 2026-08-23, Passed
 - [x] `Update-FogGroup changes the description` - last validated 2026-08-23, Passed

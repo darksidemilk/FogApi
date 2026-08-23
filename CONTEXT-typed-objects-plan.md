@@ -410,11 +410,35 @@ Test baselines moved with the cmdlet count, and the drop is exactly the retired 
 
 20 example tests went with the 20 cmdlets, and `FogApiSpec.Tests.ps1`'s
 `is up to date with its inputs` went from **failing to passing** — `dev`'s spec build was red
-because `New-FogTaskRequest.ps1` had no overlay entry (see below). **No new failures on either
-suite.** The 20 that remain are phase-2 leftovers, unrelated to this work: the generated
-`Start-Fog*Task` / `Stop-Fog*Task` / `Get-ActiveFog*` cmdlets carry an empty
-`Expected output:` in their `.EXAMPLE` blocks, and `Get-FogHostGroup` fails mocked and real
-alike. Both are on the L list.
+because `New-FogTaskRequest.ps1` had no overlay entry (see below). **No new failures.**
+
+Two real bugs from the L list are fixed here, both found by the real-server run and both
+verified against the live server rather than against the mocked fixtures:
+
+1. **`Add-FogTypeName` threw on a `[List[object]]`.** It wrapped its input in `@()` before
+   iterating, and on pwsh 7.6.5 `@($list)` throws
+   `ArgumentException: Argument types do not match` for a `List[object]` — which is exactly what
+   `Get-FogHostGroup` builds, so stamping its return threw instead of returning groups. It
+   enumerates directly now; `foreach` covers every shape `@()` was there for. Guarded by five
+   cases in `TypedObjects.Tests.ps1`, reproducible with no server at all.
+2. **The `active` cmdlets returned the envelope, not the rows.** `Get-ActiveFog*` was the only
+   getter family that skipped `.data`, so `Add-FogTypeName` stamped `FogApi.<Noun>` onto the
+   `ListEnvelope` and phase 4's type data — the display set, `Refresh`/`Deploy`/`Cancel` — attached
+   to the wrong object and never applied to a task at all. Fixed in the emitter's `active` branch.
+   Confirmed live: with one real active task, `Get-ActiveFogTasks` now returns one row carrying
+   `FogApi.Task` and no envelope keys.
+
+**`Expected output: ""` on the task and cancel cmdlets is not a bug.** It reads like an unfilled
+placeholder, and it is what a live 1.6.0-beta.3860 server actually returns: `POST /host/{id}/task`
+answers 200 with a two-byte body, `""`, and the task really is created (`GET /task/current` shows
+it). `DELETE /host/{id}/cancel` answers `""` the same way on a genuinely active task. Do not
+"fix" these to look like a created object.
+
+The 19 mocked failures that remain are all **unvetted-fixture** artifacts, not product defects:
+`task-create.json` returns `{"id":501,"success":true}` where the server returns `""`, and
+`tasks-current.json` and friends carry an empty `data` array so the `active` examples have nothing
+to match. The mocked layer is off in CI as of `#67` and its fate is the open E/phase-6 decision —
+that is the place to deal with these, not by editing docs to match fixtures nobody has checked.
 
 **Do phase 3 next, and answer its one gating question first.**
 

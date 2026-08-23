@@ -14,7 +14,7 @@
   {
     "Group": "FogApi real-server integration > Group lifecycle",
     "Name": "Add-FogHostGroup associates the host and Get-FogHostGroup reflects it",
-    "Result": "Failed",
+    "Result": "Passed",
     "LastValidatedOnReal": "2026-08-23"
   },
   {
