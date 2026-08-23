@@ -57,7 +57,7 @@ Expected output:
         $apiInvoke = @{
             uriPath=$uri;
             Method="POST";
-            jsonData=$jsonData;
+            jsonData=(ConvertTo-FogJsonBody -Body $jsonData);
         }
         $result = Invoke-FogApi @apiInvoke;
         return $result;
