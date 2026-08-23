@@ -32,7 +32,7 @@ function Find-FogGroup {
 
     process {
         Write-Verbose "searching fog group for $stringToSearch";
-        return (Find-FogObject -coreObject group -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject group -stringToSearch $stringToSearch).data -TypeName 'FogApi.Group');
     }
 
 }

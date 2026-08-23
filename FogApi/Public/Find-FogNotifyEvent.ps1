@@ -33,7 +33,7 @@ function Find-FogNotifyEvent {
 
     process {
         Write-Verbose "searching fog notifyevent for $stringToSearch";
-        return (Find-FogObject -coreObject notifyevent -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject notifyevent -stringToSearch $stringToSearch).data -TypeName 'FogApi.Notifyevent');
     }
 
 }

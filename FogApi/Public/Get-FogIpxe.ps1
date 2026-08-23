@@ -119,7 +119,7 @@ function Get-FogIpxe {
                 Write-Verbose "getting fog ipxe $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject ipxe -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject ipxe -IDofObject $objectId) -TypeName 'FogApi.Ipxe');
             }
             'count'  { return Get-FogObject -type object -coreObject ipxe -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject ipxe -subPath names; }
@@ -130,7 +130,7 @@ function Get-FogIpxe {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Ipxe');
             }
         }
     }

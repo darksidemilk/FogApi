@@ -21,6 +21,6 @@ function Get-FogActiveTasks {
     
     process {
         $result = Get-FogObject -type objectactivetasktype -coreActiveTaskObject task
-        return $result.data;
+        return (Add-FogTypeName -InputObject $result.data -TypeName 'FogApi.Task');
     }
 }

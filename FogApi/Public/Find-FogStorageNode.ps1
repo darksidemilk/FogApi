@@ -32,7 +32,7 @@ function Find-FogStorageNode {
 
     process {
         Write-Verbose "searching fog storagenode for $stringToSearch";
-        return (Find-FogObject -coreObject storagenode -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject storagenode -stringToSearch $stringToSearch).data -TypeName 'FogApi.Storagenode');
     }
 
 }

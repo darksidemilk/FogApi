@@ -127,7 +127,7 @@ function Update-FogPrinter {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "updating fog printer $objectId";
-        return Update-FogObject -type object -coreObject printer -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject printer -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Printer');
     }
 
 }

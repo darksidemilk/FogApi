@@ -59,7 +59,7 @@ function Update-FogOS {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "updating fog os $objectId";
-        return Update-FogObject -type object -coreObject os -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject os -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Os');
     }
 
 }

@@ -119,7 +119,7 @@ function Get-FogHostAutoLogout {
                 Write-Verbose "getting fog hostautologout $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject hostautologout -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject hostautologout -IDofObject $objectId) -TypeName 'FogApi.Hostautologout');
             }
             'count'  { return Get-FogObject -type object -coreObject hostautologout -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject hostautologout -subPath names; }
@@ -130,7 +130,7 @@ function Get-FogHostAutoLogout {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Hostautologout');
             }
         }
     }

@@ -181,7 +181,7 @@ function Update-FogScheduledTask {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "updating fog scheduledtask $objectId";
-        return Update-FogObject -type object -coreObject scheduledtask -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject scheduledtask -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Scheduledtask');
     }
 
 }

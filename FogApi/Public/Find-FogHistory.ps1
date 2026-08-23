@@ -32,7 +32,7 @@ function Find-FogHistory {
 
     process {
         Write-Verbose "searching fog history for $stringToSearch";
-        return (Find-FogObject -coreObject history -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject history -stringToSearch $stringToSearch).data -TypeName 'FogApi.History');
     }
 
 }

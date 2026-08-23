@@ -138,7 +138,7 @@ function Get-FogUserGroupMember {
                 Write-Verbose "getting fog usergroupmember $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject usergroupmember -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject usergroupmember -IDofObject $objectId) -TypeName 'FogApi.Usergroupmember');
             }
             'byName' {
                 Write-Verbose "resolving fog usergroupmember named $name";
@@ -162,7 +162,7 @@ function Get-FogUserGroupMember {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog usergroupmember objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject usergroupmember -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject usergroupmember -IDofObject $match[0].id) -TypeName 'FogApi.Usergroupmember');
             }
             'count'  { return Get-FogObject -type object -coreObject usergroupmember -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject usergroupmember -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogUserGroupMember {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Usergroupmember');
             }
         }
     }

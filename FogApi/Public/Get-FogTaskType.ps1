@@ -137,7 +137,7 @@ function Get-FogTaskType {
                 Write-Verbose "getting fog tasktype $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject tasktype -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject tasktype -IDofObject $objectId) -TypeName 'FogApi.Tasktype');
             }
             'byName' {
                 Write-Verbose "resolving fog tasktype named $name";
@@ -161,7 +161,7 @@ function Get-FogTaskType {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog tasktype objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject tasktype -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject tasktype -IDofObject $match[0].id) -TypeName 'FogApi.Tasktype');
             }
             'count'  { return Get-FogObject -type object -coreObject tasktype -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject tasktype -subPath names; }
@@ -172,7 +172,7 @@ function Get-FogTaskType {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Tasktype');
             }
         }
     }

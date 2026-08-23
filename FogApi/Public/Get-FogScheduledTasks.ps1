@@ -47,6 +47,6 @@ function Get-FogScheduledTasks {
                 }
             }
         }
-        return $result.data;
+        return (Add-FogTypeName -InputObject $result.data -TypeName 'FogApi.Scheduledtask');
     }
 }

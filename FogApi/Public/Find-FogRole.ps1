@@ -33,7 +33,7 @@ function Find-FogRole {
 
     process {
         Write-Verbose "searching fog role for $stringToSearch";
-        return (Find-FogObject -coreObject role -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject role -stringToSearch $stringToSearch).data -TypeName 'FogApi.Role');
     }
 
 }

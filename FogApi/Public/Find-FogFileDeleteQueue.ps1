@@ -33,7 +33,7 @@ function Find-FogFileDeleteQueue {
 
     process {
         Write-Verbose "searching fog filedeletequeue for $stringToSearch";
-        return (Find-FogObject -coreObject filedeletequeue -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject filedeletequeue -stringToSearch $stringToSearch).data -TypeName 'FogApi.Filedeletequeue');
     }
 
 }

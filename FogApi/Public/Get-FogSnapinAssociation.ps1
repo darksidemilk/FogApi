@@ -119,7 +119,7 @@ function Get-FogSnapinAssociation {
                 Write-Verbose "getting fog snapinassociation $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject snapinassociation -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject snapinassociation -IDofObject $objectId) -TypeName 'FogApi.Snapinassociation');
             }
             'count'  { return Get-FogObject -type object -coreObject snapinassociation -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject snapinassociation -subPath names; }
@@ -130,7 +130,7 @@ function Get-FogSnapinAssociation {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Snapinassociation');
             }
         }
     }

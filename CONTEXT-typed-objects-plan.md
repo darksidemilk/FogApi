@@ -74,7 +74,7 @@ Watch aliases: `Get-FogImagingLog` may own one another function could then claim
 `Build-FogApiSpec.ps1` tracks alias collisions and `update-sourcemanifest.ps1 -Check` catches a
 stale manifest — read both rather than assuming.
 
-### Phase 2 — input classes (the point) — **NEXT**
+### Phase 2 — input classes (the point) — **DONE**
 
 7. **`FogApi/Classes/FogTaskRequest.ps1`**, generated. Spec-derived: the `/{class}/{id}/task`
    request body declares `taskTypeID`, `taskName`, `shutdown`, `debug`, `deploySnapins`,
@@ -113,6 +113,96 @@ mostly duplicate what exists. Argument for: it gives a single object to build on
 and pipe, and it is what the L1 layer would take in #8 instead of a bare `PSCustomObject`. My read
 is that #7–#9 capture the real awkwardness and per-entity input classes are redundant — but that
 judgement is exactly where "the whole point is simplifying input" should overrule me.
+
+#### What Phase 2 found
+
+Five things the plan did not know, each measured rather than reasoned:
+
+**There is no FOG 1.5 task body.** The six route callers each carried a
+`Test-FogVerAbove1dot6` branch with a separate here-string per version, and the
+1.5 half was wrong in every one of them. FOG 1.5's `Route::task()` decodes the
+body and passes it straight to `createImagePackage($taskTypeID, $taskName,
+$shutdown, $debug, $deploySnapins, $isGroupTask, $username, $passreset,
+$sessionjoin, $wol)` — the same eight caller-supplied fields 1.6 declares, and it
+reads no `other2` or `other4` anywhere. Checked in 1.5.10.2253 and working-1.6.
+So those branches sent `scheduledtask` table columns to a route that ignores
+them, while omitting `taskName`, `debug` and `wol` in the spelling it reads: on a
+1.5 server `-debugMode` and the wake have never reached a task through
+`Send-FogImage`, `Receive-FogImage` or `Send-FogGroupTask`. `ToLegacyBody` was
+written, then deleted — there is nothing for it to do. Two of the eight
+here-strings were also broken outright: `Receive-FogImage`'s 1.5 branch is not
+valid JSON (no comma after `"taskTypeID": "2"`), and `Send-FogWolTask` sent
+`isActive` as `"1;"`.
+
+**A dead field must stay dead.** `Send-FogWolTask` sent `other2="-1"`, and
+`other2` is the `scheduledtask` column for `deploySnapins`. Translating it
+faithfully would have set `deploySnapins=-1` and made every wake-on-lan task also
+deploy every snapin assigned to the host. The field was inert, so it stays out.
+Preserving observable behaviour is not the same as preserving bytes.
+
+**Integer beats boolean in a `oneOf`.** `deploySnapins` is `oneOf
+string/integer/boolean` and its real values are `-1`, `0` or a snapin id.
+Mapping it to `bool` — checking boolean first, which reads as the more specific
+type — coerced `-1` to `$true` and put `"1"` on the wire: a different snapin
+task, silently. The wider domain is always the safe mapping.
+
+**`debug` cannot be a parameter name.** `-Debug` is a common parameter, so a
+`-debug` parameter is a duplicate-name error at import, not a shadowing warning.
+The wire field stays `debug`; `New-FogTaskRequest` calls it `-debugMode`, which
+is what `Send-FogImage` and `Receive-FogImage` already called it. The emitter has
+no reserved-name handling — worth adding before a generated cmdlet hits the same
+collision.
+
+**A class does not escape its module, so it needs a factory.** After
+`Import-Module FogApi`, `[FogTaskRequest]@{...}` is *Unable to find type*: naming
+a module's class requires `using module`. The plan's own acceptance snippet was
+written that way and does not work as written. Two things do, and both ship: a
+hashtable binds to the `[FogTaskRequest]` parameter and converts on binding —
+rejecting a misspelled field by name, listing the ones it accepts — and
+`New-FogTaskRequest` builds one with tab completion. This is the same limitation
+the scoreboard records as "caller can name the type: ✗ needs `using module`"; it
+matters more for an input class than the table implies, because an input class is
+the one a caller has to construct.
+
+#### What landed
+
+- `spec/tools/New-FogInputClass.ps1` → `FogApi/Classes/FogTaskRequest.ps1`, which
+  asserts all eight `/{class}/{id}/task` routes still declare one body shape
+  before it writes.
+- `FogApi/Classes/FogObjectRefTransform.ps1`, on the generated `task`/`cancel`
+  `-id` parameters and on `Get-FogHost`.
+- `FogApi/Private/ConvertTo-FogJsonBody.ps1`. `-jsonData` was already `[Object]`
+  on both L1 cmdlets, but `Invoke-FogApi`'s is `[string]`, and splatting a
+  hashtable into a `[string]` parameter stringifies rather than failing — the
+  body reached the server as the literal text `System.Collections.Hashtable` and
+  came back a 500. Normalising before the splat is what actually made the
+  documented `[Object]` true.
+- `New-FogTaskRequest`, public, aliased `New-FogTaskBody`.
+- The six route callers, all now building one body with no version branch, each
+  taking `-TaskRequest`.
+- `task`, `cancel` and `active` emitter templates — the gap #65 listed as the
+  first Phase 2 job. Ten new cmdlets: `Start-Fog*Task` / `Stop-Fog*Task`, plus
+  four `Get-ActiveFog*`.
+- Phase 4 stamping, since a `<Type>` block is inert without it:
+  `FogApi/Private/Add-FogTypeName.ps1`, wired into every entity-returning
+  generated template and nine hand-written getters. Visible payoff already —
+  `Get-FogHosts` results now carry `FogApi.Host`, so `Register-FogTypeData`'s
+  `Deploy`/`Cancel`/`Refresh` methods apply to list output for the first time.
+
+#### Corrections to this plan
+
+- **The ten cmdlets are not one shape.** `New-FogTask`, `Update-FogTask`,
+  `New-FogScheduledTask` and `Update-FogScheduledTask` build the `task` /
+  `scheduledtask` **entity** body — `name`, `checkInTime`, `hostID`, `stateID`,
+  `typeID`, `imageID`, `NFSFailures`, `bypassbitlocker` — and POST it to
+  `/task`. That is a different route and a different shape from
+  `/{class}/{id}/task`, and `FogTaskRequest` does not describe it. They are
+  untouched. The six route callers plus the ten newly generated `Start-`/`Stop-`
+  cmdlets are where the class belongs.
+- **`Get-FogGroup` was not emitted.** It is status `replaces-thin-wrapper` with
+  `Get-FogGroups` as an alias, and a hand-written `Get-FogGroups` function still
+  exists. Emitting it makes the alias shadow that function, which is a migration
+  in its own right rather than a side effect of Phase 2.
 
 ### Phase 3 — response type data, as generated .ps1xml — **not started**
 
@@ -158,10 +248,17 @@ Import-Module ./BuildHelpers.psm1; ./invoke-modulebuild.ps1
 Input classes specifically — the phase-2 acceptance:
 
 ```powershell
-$t = [FogTaskRequest]@{ taskTypeID = 1; taskName = 'deploy'; shutdown = $false }
-Send-FogImage -hostName <name> -TaskRequest $t          # no hashtable, tab-completes
-New-FogObject -type object -coreObject host -jsonData $t # object accepted, not a JSON string
-New-FogObject -type object -coreObject host -jsonData '{"name":"x"}'  # string still works
+# [FogTaskRequest]@{...} does NOT work from a caller's session -- naming a
+# module's class needs `using module FogApi`, not Import-Module. Both of these do:
+$t = New-FogTaskRequest -taskTypeID 1 -taskName 'deploy' -shutdown $false
+Send-FogImage -hostName <name> -TaskRequest $t
+Send-FogImage -hostName <name> -TaskRequest @{ taskTypeID = 1; shutdown = $false }
+
+Get-FogHost -hostID 42 | Start-FogHostTask -TaskRequest @{ taskTypeID = 14; wol = $true }
+Get-FogHost -hostID 42 | Stop-FogHostTask
+
+New-FogObject -type object -coreObject host -jsonData @{ name = 'x' }   # object accepted
+New-FogObject -type object -coreObject host -jsonData '{"name":"x"}'    # string still works
 ```
 
 Built module, since the xml is a new thing the build must carry:

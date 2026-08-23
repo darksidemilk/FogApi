@@ -32,7 +32,7 @@ function Find-FogImageAssociation {
 
     process {
         Write-Verbose "searching fog imageassociation for $stringToSearch";
-        return (Find-FogObject -coreObject imageassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject imageassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Imageassociation');
     }
 
 }

@@ -59,7 +59,7 @@ function New-FogImageAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog imageassociation";
-        return New-FogObject -type object -coreObject imageassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject imageassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Imageassociation');
     }
 
 }

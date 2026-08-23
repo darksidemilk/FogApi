@@ -23,7 +23,7 @@ function Get-FogHosts {
     process {
         Write-Verbose "getting fog hosts"
         $hosts = (Get-FogObject -type Object -CoreObject host).data
-        return $hosts;
+        return (Add-FogTypeName -InputObject $hosts -TypeName 'FogApi.Host');
     }
 
 }

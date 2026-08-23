@@ -32,7 +32,7 @@ function Find-FogHostAutoLogout {
 
     process {
         Write-Verbose "searching fog hostautologout for $stringToSearch";
-        return (Find-FogObject -coreObject hostautologout -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject hostautologout -stringToSearch $stringToSearch).data -TypeName 'FogApi.Hostautologout');
     }
 
 }

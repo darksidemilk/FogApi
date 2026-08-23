@@ -53,7 +53,7 @@ function New-FogOS {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog os";
-        return New-FogObject -type object -coreObject os -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject os -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Os');
     }
 
 }

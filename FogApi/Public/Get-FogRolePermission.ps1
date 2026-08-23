@@ -138,7 +138,7 @@ function Get-FogRolePermission {
                 Write-Verbose "getting fog rolepermission $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject rolepermission -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject rolepermission -IDofObject $objectId) -TypeName 'FogApi.Rolepermission');
             }
             'byName' {
                 Write-Verbose "resolving fog rolepermission named $name";
@@ -162,7 +162,7 @@ function Get-FogRolePermission {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog rolepermission objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject rolepermission -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject rolepermission -IDofObject $match[0].id) -TypeName 'FogApi.Rolepermission');
             }
             'count'  { return Get-FogObject -type object -coreObject rolepermission -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject rolepermission -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogRolePermission {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Rolepermission');
             }
         }
     }

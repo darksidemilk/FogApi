@@ -32,7 +32,7 @@ function Find-FogSetting {
 
     process {
         Write-Verbose "searching fog setting for $stringToSearch";
-        return (Find-FogObject -coreObject setting -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject setting -stringToSearch $stringToSearch).data -TypeName 'FogApi.Setting');
     }
 
 }

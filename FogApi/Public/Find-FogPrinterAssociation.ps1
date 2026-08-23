@@ -32,7 +32,7 @@ function Find-FogPrinterAssociation {
 
     process {
         Write-Verbose "searching fog printerassociation for $stringToSearch";
-        return (Find-FogObject -coreObject printerassociation -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject printerassociation -stringToSearch $stringToSearch).data -TypeName 'FogApi.Printerassociation');
     }
 
 }

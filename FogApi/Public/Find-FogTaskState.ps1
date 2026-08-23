@@ -32,7 +32,7 @@ function Find-FogTaskState {
 
     process {
         Write-Verbose "searching fog taskstate for $stringToSearch";
-        return (Find-FogObject -coreObject taskstate -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject taskstate -stringToSearch $stringToSearch).data -TypeName 'FogApi.Taskstate');
     }
 
 }

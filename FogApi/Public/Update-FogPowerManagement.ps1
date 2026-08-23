@@ -101,7 +101,7 @@ function Update-FogPowerManagement {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "updating fog powermanagement $objectId";
-        return Update-FogObject -type object -coreObject powermanagement -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject powermanagement -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Powermanagement');
     }
 
 }

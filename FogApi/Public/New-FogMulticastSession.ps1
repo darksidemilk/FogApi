@@ -158,7 +158,7 @@ function New-FogMulticastSession {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog multicastsession";
-        return New-FogObject -type object -coreObject multicastsession -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject multicastsession -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Multicastsession');
     }
 
 }

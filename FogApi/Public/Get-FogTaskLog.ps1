@@ -119,7 +119,7 @@ function Get-FogTaskLog {
                 Write-Verbose "getting fog tasklog $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject tasklog -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject tasklog -IDofObject $objectId) -TypeName 'FogApi.Tasklog');
             }
             'count'  { return Get-FogObject -type object -coreObject tasklog -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject tasklog -subPath names; }
@@ -130,7 +130,7 @@ function Get-FogTaskLog {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Tasklog');
             }
         }
     }

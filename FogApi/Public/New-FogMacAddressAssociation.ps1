@@ -87,7 +87,7 @@ function New-FogMacAddressAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog macaddressassociation";
-        return New-FogObject -type object -coreObject macaddressassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject macaddressassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Macaddressassociation');
     }
 
 }

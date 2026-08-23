@@ -138,7 +138,7 @@ function Get-FogHookEvent {
                 Write-Verbose "getting fog hookevent $objectId";
                 # No .data: Get-FogObject only wraps a list, and a fetch by id returns
                 # the bare object.
-                return Get-FogObject -type object -coreObject hookevent -IDofObject $objectId;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject hookevent -IDofObject $objectId) -TypeName 'FogApi.Hookevent');
             }
             'byName' {
                 Write-Verbose "resolving fog hookevent named $name";
@@ -162,7 +162,7 @@ function Get-FogHookEvent {
                 if ($match.Count -gt 1) {
                     Write-Warning "$($match.Count) fog hookevent objects are named '$name'; returning the first. Use -id to be unambiguous.";
                 }
-                return Get-FogObject -type object -coreObject hookevent -IDofObject $match[0].id;
+                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject hookevent -IDofObject $match[0].id) -TypeName 'FogApi.Hookevent');
             }
             'count'  { return Get-FogObject -type object -coreObject hookevent -subPath count; }
             'names'  { return Get-FogObject -type object -coreObject hookevent -subPath names; }
@@ -173,7 +173,7 @@ function Get-FogHookEvent {
                 foreach ($p in @('First','Skip','PageSize','NoAutoPage')) {
                     if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }
                 }
-                return (Get-FogObject @splat).data;
+                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName 'FogApi.Hookevent');
             }
         }
     }

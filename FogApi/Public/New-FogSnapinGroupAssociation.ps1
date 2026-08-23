@@ -59,7 +59,7 @@ function New-FogSnapinGroupAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog snapingroupassociation";
-        return New-FogObject -type object -coreObject snapingroupassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject snapingroupassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Snapingroupassociation');
     }
 
 }

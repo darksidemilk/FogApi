@@ -80,7 +80,7 @@ function New-FogUser {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog user";
-        return New-FogObject -type object -coreObject user -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject user -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.User');
     }
 
 }

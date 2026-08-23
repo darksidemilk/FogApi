@@ -24,7 +24,7 @@ function Get-FogGroups {
     
     process {
         $groups = (Get-FogObject -type object -coreobject group);
-        return $groups.data;
+        return (Add-FogTypeName -InputObject $groups.data -TypeName 'FogApi.Group');
     }
     
 }

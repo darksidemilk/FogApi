@@ -488,7 +488,7 @@ function New-FunctionFile {
             $body.Add(('                Write-Verbose "getting fog {0} $objectId";' -f $noun))
             $body.Add('                # No .data: Get-FogObject only wraps a list, and a fetch by id returns')
             $body.Add('                # the bare object.')
-            $body.Add(('                return Get-FogObject -type object -coreObject {0} -IDofObject $objectId;' -f $noun))
+            $body.Add(('                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject {0} -IDofObject $objectId) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
             $body.Add('            }')
             if ($hasNameField) {
                 $body.Add('            ''byName'' {')
@@ -513,7 +513,7 @@ function New-FunctionFile {
                 $body.Add('                if ($match.Count -gt 1) {')
                 $body.Add(('                    Write-Warning "$($match.Count) fog {0} objects are named ''$name''; returning the first. Use -id to be unambiguous.";' -f $noun))
                 $body.Add('                }')
-                $body.Add(('                return Get-FogObject -type object -coreObject {0} -IDofObject $match[0].id;' -f $noun))
+                $body.Add(('                return (Add-FogTypeName -InputObject (Get-FogObject -type object -coreObject {0} -IDofObject $match[0].id) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
                 $body.Add('            }')
             }
             $body.Add('            ''count''  { return Get-FogObject -type object -coreObject ' + $noun + ' -subPath count; }')
@@ -525,7 +525,7 @@ function New-FunctionFile {
             $body.Add('                foreach ($p in @(''First'',''Skip'',''PageSize'',''NoAutoPage'')) {')
             $body.Add('                    if ($PSBoundParameters.ContainsKey($p)) { $splat[$p] = $PSBoundParameters[$p]; }')
             $body.Add('                }')
-            $body.Add('                return (Get-FogObject @splat).data;')
+            $body.Add(('                return (Add-FogTypeName -InputObject (Get-FogObject @splat).data -TypeName ''FogApi.{0}'');' -f $titleNoun))
             $body.Add('            }')
             $body.Add('        }')
         }
@@ -549,7 +549,7 @@ function New-FunctionFile {
             $params.Add('        [Parameter(Mandatory=$true,Position=0)]')
             $params.Add('        [string]$stringToSearch')
             $body.Add(('        Write-Verbose "searching fog {0} for $stringToSearch";' -f $noun))
-            $body.Add(('        return (Find-FogObject -coreObject {0} -stringToSearch $stringToSearch).data;' -f $noun))
+            $body.Add(('        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject {0} -stringToSearch $stringToSearch).data -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
         }
         'create' {
             $help.Add('    .SYNOPSIS')
@@ -599,7 +599,7 @@ function New-FunctionFile {
             $params.Add('        [hashtable]$settings')
             $body.AddRange([string[]]@(New-PayloadBlock -Fields $writable))
             $body.Add(('        Write-Verbose "creating fog {0}";' -f $noun))
-            $body.Add(('        return New-FogObject -type object -coreObject {0} -jsonData ($payload | ConvertTo-Json -Compress);' -f $noun))
+            $body.Add(('        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject {0} -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
         }
         'update' {
             $help.Add('    .SYNOPSIS')
@@ -652,7 +652,7 @@ function New-FunctionFile {
             $body.Add('        $objectId = if ($id -is [System.Management.Automation.PSObject] -and $id.PSObject.Properties.Name -contains ''id'') { $id.id } else { $id };')
             $body.AddRange([string[]]@(New-PayloadBlock -Fields $writable))
             $body.Add(('        Write-Verbose "updating fog {0} $objectId";' -f $noun))
-            $body.Add(('        return Update-FogObject -type object -coreObject {0} -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress);' -f $noun))
+            $body.Add(('        return (Add-FogTypeName -InputObject (Update-FogObject -type object -coreObject {0} -IDofObject $objectId -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
         }
         'delete' {
             $help.Add('    .SYNOPSIS')
@@ -748,6 +748,26 @@ function New-FunctionFile {
             $params.Add('        [Object]$id')
             $body.Add(('        Write-Verbose "cancelling the fog {0} task on $id";' -f $noun))
             $body.Add(('        return Remove-FogObject -type objecttasktype -coreTaskObject {0} -IDofObject $id;' -f $noun))
+        }
+        'active' {
+            $help.Add('    .SYNOPSIS')
+            $help.Add(('    Gets the currently active {0} entries.' -f $noun))
+            $help.Add('')
+            $help.Add('    .DESCRIPTION')
+            $help.Add(('    Returns what FOG considers in flight right now for {0} -- the /current' -f $noun))
+            $help.Add('    route, which is a filtered view rather than a page of the full list, so it')
+            $help.Add('    takes no paging parameters.')
+            $help.Add('')
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0}' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Lists the active {0} entries.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    { "id": 1, "name": "example" }')
+            $help.Add('')
+            $body.Add(('        Write-Verbose "getting the active fog {0} entries";' -f $noun))
+            $body.Add(('        return (Add-FogTypeName -InputObject (Get-FogObject -type objectactivetasktype -coreActiveTaskObject {0}) -TypeName ''FogApi.{1}'');' -f $noun, $titleNoun))
         }
         default { throw "no template for route '$($Fn.routeName)'" }
     }

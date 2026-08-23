@@ -60,7 +60,7 @@ function New-FogRoleUserGroupAssociation {
             foreach ($key in $settings.Keys) { $payload[$key] = $settings[$key]; }
         }
         Write-Verbose "creating fog roleusergroupassociation";
-        return New-FogObject -type object -coreObject roleusergroupassociation -jsonData ($payload | ConvertTo-Json -Compress);
+        return (Add-FogTypeName -InputObject (New-FogObject -type object -coreObject roleusergroupassociation -jsonData ($payload | ConvertTo-Json -Compress)) -TypeName 'FogApi.Roleusergroupassociation');
     }
 
 }

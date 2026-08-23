@@ -32,7 +32,7 @@ function Find-FogScheduledTask {
 
     process {
         Write-Verbose "searching fog scheduledtask for $stringToSearch";
-        return (Find-FogObject -coreObject scheduledtask -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject scheduledtask -stringToSearch $stringToSearch).data -TypeName 'FogApi.Scheduledtask');
     }
 
 }

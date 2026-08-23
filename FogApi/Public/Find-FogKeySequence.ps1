@@ -33,7 +33,7 @@ function Find-FogKeySequence {
 
     process {
         Write-Verbose "searching fog keysequence for $stringToSearch";
-        return (Find-FogObject -coreObject keysequence -stringToSearch $stringToSearch).data;
+        return (Add-FogTypeName -InputObject (Find-FogObject -coreObject keysequence -stringToSearch $stringToSearch).data -TypeName 'FogApi.Keysequence');
     }
 
 }
