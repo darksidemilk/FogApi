@@ -343,6 +343,7 @@ function New-FunctionFile {
     param($Fn)
 
     $noun = $Fn.class
+    $titleNoun = (Get-Culture).TextInfo.ToTitleCase($noun)
     $fields = Get-FieldList $noun
     $fixtureRow = Get-FixtureRow -ClassName $noun -FixtureDir $FixtureDir
     $fixtureRows = Get-FixtureRowSet -ClassName $noun -FixtureDir $FixtureDir
@@ -359,7 +360,6 @@ function New-FunctionFile {
 
     switch ($Fn.routeName) {
         'indiv' {
-            $titleNoun = (Get-Culture).TextInfo.ToTitleCase($noun)
             # Twenty-one of the fifty-two classes have no name column -- association
             # rows and logs are keyed by their foreign keys, not by a label -- so
             # -name is emitted only where it means something.
@@ -676,6 +676,78 @@ function New-FunctionFile {
             $body.Add('        $objectId = if ($id -is [System.Management.Automation.PSObject] -and $id.PSObject.Properties.Name -contains ''id'') { $id.id } else { $id };')
             $body.Add(('        Write-Verbose "removing fog {0} $objectId";' -f $noun))
             $body.Add(('        return Remove-FogObject -type object -coreObject {0} -IDofObject $objectId;' -f $noun))
+        }
+        'task' {
+            # The one route whose body FogApi models as a class. Everything else
+            # here builds a hashtable per field; this takes a FogTaskRequest,
+            # because the same eight fields are what ten hand-written cmdlets
+            # were each assembling by hand.
+            #
+            # -TaskRequest is [FogTaskRequest] and a hashtable converts to it on
+            # binding, so a caller who never wants to see the type never has to.
+            $help.Add('    .SYNOPSIS')
+            $help.Add(('    Queues a task against a {0}.' -f $noun))
+            $help.Add('')
+            $help.Add('    .DESCRIPTION')
+            $help.Add(('    Posts a task request to {0}, which is how FOG queues imaging, snapin,' -f $Fn.path))
+            $help.Add('    password-reset and wake-on-lan work. Wake-on-lan is this route with wol')
+            $help.Add('    set, not a route of its own.')
+            $help.Add('')
+            $help.Add('    The body is the same on FOG 1.5 and 1.6: both hand it to')
+            $help.Add('    createImagePackage() and read the same eight fields, so there is no')
+            $help.Add('    version branch here.')
+            $help.Add('')
+            $help.AddRange([string[]]@(Format-HelpParam 'id' ('The id of the {0} to task. Accepts an id or an object with an id property, and binds from the pipeline.' -f $noun)))
+            $help.AddRange([string[]]@(Format-HelpParam 'TaskRequest' 'The task body, from New-FogTaskRequest or as a hashtable. Only the fields it sets are sent.'))
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0} -id 1 -TaskRequest @{{ taskTypeID = 1 }}' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Queues a deploy task against {0} 1.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    ""')
+            $help.Add('')
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    Get-Fog{0} -id 1 | {1} -TaskRequest (New-FogTaskRequest -taskTypeID 14 -wol $true)' -f $titleNoun, $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Wakes {0} 1, passing the object straight down the pipeline.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    ""')
+            $help.Add('')
+            $params.Add('        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]')
+            foreach ($aliasAttr in (Format-AliasAttribute -Aliases (Get-IdAliases -Spec $spec -ClassName $noun))) { $params.Add($aliasAttr) }
+            $params.Add('        [FogObjectRefTransform()]')
+            $params.Add('        [Object]$id,')
+            $params.Add('        [Parameter(Position=1)]')
+            $params.Add('        [FogTaskRequest]$TaskRequest')
+            $body.Add('        $request = if ($PSBoundParameters.ContainsKey(''TaskRequest'')) { $TaskRequest } else { [FogTaskRequest]::new() };')
+            $body.Add(('        Write-Verbose "queuing a fog {0} task on $id";' -f $noun))
+            $body.Add(('        return New-FogObject -type objecttasktype -coreTaskObject {0} -IDofObject $id -jsonData $request;' -f $noun))
+        }
+        'cancel' {
+            $help.Add('    .SYNOPSIS')
+            $help.Add(('    Cancels the active task on a {0}.' -f $noun))
+            $help.Add('')
+            $help.Add('    .DESCRIPTION')
+            $help.Add(('    Cancels whatever task is currently queued or running for the {0} with the' -f $noun))
+            $help.Add('    given id. Cancelling a task that is not there is not an error.')
+            $help.Add('')
+            $help.AddRange([string[]]@(Format-HelpParam 'id' ('The id of the {0} whose task should be cancelled. Accepts an id or an object with an id property, and binds from the pipeline.' -f $noun)))
+            $help.Add('    .EXAMPLE')
+            $help.Add(('    {0} -id 1' -f $Fn.functionName))
+            $help.Add('')
+            $help.Add(('    Cancels the active task on {0} 1.' -f $noun))
+            $help.Add('')
+            $help.Add('    Expected output:')
+            $help.Add('    ""')
+            $help.Add('')
+            $params.Add('        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]')
+            foreach ($aliasAttr in (Format-AliasAttribute -Aliases (Get-IdAliases -Spec $spec -ClassName $noun))) { $params.Add($aliasAttr) }
+            $params.Add('        [FogObjectRefTransform()]')
+            $params.Add('        [Object]$id')
+            $body.Add(('        Write-Verbose "cancelling the fog {0} task on $id";' -f $noun))
+            $body.Add(('        return Remove-FogObject -type objecttasktype -coreTaskObject {0} -IDofObject $id;' -f $noun))
         }
         default { throw "no template for route '$($Fn.routeName)'" }
     }
