@@ -124,9 +124,6 @@ function Get-FogMockResponse {
         '^module$' {
             if ($Method -eq 'GET') { return Get-Fixture 'modules.json' }
         }
-        '^host/\d+/task$' {
-            if ($Method -eq 'POST') { return Get-Fixture 'task-create.json' }
-        }
         '^host/\d+/edit$' {
             if ($Method -eq 'PUT') {
                 if ([string]::IsNullOrEmpty($jsonData)) { return Get-Fixture 'host.json' }
@@ -164,26 +161,17 @@ function Get-FogMockResponse {
                 return $jsonData | ConvertFrom-Json
             }
         }
-        '^group/\d+/task$' {
-            if ($Method -eq 'POST') { return Get-Fixture 'task-create.json' }
-        }
         '^scheduledtask$' {
             if ($Method -eq 'POST') {
                 $created = if ([string]::IsNullOrEmpty($jsonData)) { [PSCustomObject]@{} } else { $jsonData | ConvertFrom-Json }
                 $created | Add-Member -MemberType NoteProperty -Name id -Value 88 -Force
                 return $created
             }
-            # scheduledtasks.json, not scheduledtasks-current.json: a plain list
-            # of scheduled tasks is not the active-task list, and -current is
-            # empty. The two were conflated here, so the list route answered
-            # with nothing -- invisible until a generated list cmdlet asked.
+            # scheduledtasks.json: the plain list. This arm used to answer with
+            # scheduledtasks-current.json, an empty active-task fixture, so the
+            # list route returned nothing -- invisible until a generated list
+            # cmdlet asked. /current is handled by convention now.
             if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks.json' }
-        }
-        '^scheduledtask/current$' {
-            if ($Method -eq 'GET') { return Get-Fixture 'scheduledtasks-current.json' }
-        }
-        '^task/current$' {
-            if ($Method -eq 'GET') { return Get-Fixture 'tasks-current.json' }
         }
         '^macaddressassociation$' {
             if ($Method -eq 'GET') { return Get-Fixture 'macaddressassociations.json' }
@@ -354,12 +342,15 @@ function Get-FogMockResponse {
     switch -regex ($uriPath) {
         '^(?<class>[a-z]+)$'                          { $class = $Matches['class']; $shape = 'collection' }
         '^(?<class>[a-z]+)/search/.+$'                { $class = $Matches['class']; $shape = 'search' }
+        '^(?<class>[a-z]+)/current$'                  { $class = $Matches['class']; $shape = 'current' }
         '^(?<class>[a-z]+)/count$'                    { $class = $Matches['class']; $shape = 'count' }
         '^(?<class>[a-z]+)/names$'                    { $class = $Matches['class']; $shape = 'names' }
         '^(?<class>[a-z]+)/ids$'                      { $class = $Matches['class']; $shape = 'ids' }
         '^(?<class>[a-z]+)/(?<id>\d+)$'               { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'single' }
         '^(?<class>[a-z]+)/(?<id>\d+)/edit$'          { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'edit' }
         '^(?<class>[a-z]+)/(?<id>\d+)/delete$'        { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'delete' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/task$'          { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'task' }
+        '^(?<class>[a-z]+)/(?<id>\d+)/cancel$'        { $class = $Matches['class']; $objectId = $Matches['id']; $shape = 'cancel' }
     }
 
     if ($class) {
@@ -382,6 +373,26 @@ function Get-FogMockResponse {
                 }
             }
             'GET/single'     { if (Test-Fixture "$class.json")     { return Get-Fixture "$class.json" } }
+            # /current is a state-filtered view of the same table, and a real
+            # server answers it with the same list envelope a list route
+            # returns -- verified against 1.6.0-beta.3894: GET /task/current
+            # gives draw/recordsTotal/recordsFiltered/data/_lang, not a bare
+            # array. So it is DERIVED from the list fixture for the same reason
+            # count, names and ids are: one file per class is the only way the
+            # views cannot contradict each other, and it is also the file the
+            # emitter builds the "Expected output:" block from, so a separate
+            # -current fixture could only ever drift away from the documented
+            # example. tasks-current.json and scheduledtasks-current.json were
+            # exactly that drift -- hand-written, in the 1.5 {count,tasks[]}
+            # shape, and empty, so every active-task example asserted a row
+            # against nothing.
+            #
+            # Which rows a real server considers active is not modelled: the
+            # fixture holds one row and /current returns it. That the cmdlet
+            # asked for /current rather than the plain list is asserted on the
+            # request path in TaskRoutes.Tests.ps1, which is where a request
+            # fact belongs.
+            'GET/current'    { if (Test-Fixture "$($class)s.json")  { return Get-Fixture "$($class)s.json" } }
             'GET/search'     {
                 if (Test-Fixture "$($class)s-search.json") { return Get-Fixture "$($class)s-search.json" }
                 if (Test-Fixture "$($class)s.json")        { return Get-Fixture "$($class)s.json" }
@@ -408,6 +419,26 @@ function Get-FogMockResponse {
                     return @(Select-FilteredRows (Get-FixtureRows "$($class)s.json") (Get-RequestedFilter) | ForEach-Object { $_.id })
                 }
             }
+            # Tasking and cancelling answer 200 with an EMPTY body. That is not
+            # a placeholder -- it is what the server does, confirmed twice
+            # against a live 1.6 server (beta.3860 and beta.3894): POST
+            # /host/{id}/task returns "" and the task really is created, and
+            # DELETE /host/{id}/cancel returns "" on a task that was genuinely
+            # active. So the generated "Expected output: """ on every
+            # Start-Fog*Task and Stop-Fog*Task is correct and must not be
+            # "fixed" to look like a created object.
+            #
+            # task-create.json used to answer {"id":501,"success":true} here,
+            # which is a shape FOG has never returned. It was hand-written, and
+            # it made three documented examples fail against their own module.
+            #
+            # Cancelling when nothing is running is the one case that is NOT
+            # empty: the server answers 409 {"msg":"Host has no active task to
+            # cancel"}. Not modelled, because the mock has no notion of a task
+            # being active; a caller that needs that branch wants the real
+            # server suite.
+            'POST/task'       { return '' }
+            'DELETE/cancel'   { return '' }
             'POST/collection' { return New-EchoedObject -body $jsonData -id 1 }
             'PUT/edit'        { return New-EchoedObject -body $jsonData -id $objectId }
             'DELETE/delete'   { if (Test-Fixture 'delete-result.json') { return Get-Fixture 'delete-result.json' } }

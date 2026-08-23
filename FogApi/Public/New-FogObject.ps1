@@ -6,6 +6,12 @@ Create a new fog object with the api
 .DESCRIPTION
 creates a new object such as a host or task
 
+A -type of objecttasktype queues a task, and FOG answers that with an EMPTY
+body: 200 and two bytes, "". That is not a placeholder and not a failure -- the
+task really is created, and GET /task/current will show it. Verified against a
+live 1.6 server twice, at beta.3860 and beta.3894. If you need the task's id,
+read it back from /task/current; the create response does not carry one.
+
 .PARAMETER type
 the type of api object, either objecttasktype or object
 
@@ -21,7 +27,7 @@ $hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-
 Would create a new fog object of a start all snapins task.
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 #>
 

@@ -27,7 +27,7 @@ function Start-FogSnapin {
     The name of the host and the snapin will be output to the console before the task is started
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     .EXAMPLE
     Start-FogSnapin -hostID 42 -snapinid 6
@@ -36,7 +36,7 @@ function Start-FogSnapin {
     The name of the host and the snapin will be output to the console before the task is started
 
     Expected output:
-    { "id": 501, "success": true }
+    ""
 
     #>
     [CmdletBinding(DefaultParameterSetName='byId')]

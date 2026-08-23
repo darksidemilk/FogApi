@@ -44,7 +44,7 @@ Start-FogSnapins -hostid 42
 will start all snapins on the host with the id 42
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ### EXAMPLE 3
 ```
@@ -54,7 +54,7 @@ Get-foghost -hostname 'MeowMachine' | Start-FogSnapins
 will get the host object for the host named 'MeowMachine' and start all snapins on it
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ## PARAMETERS
 

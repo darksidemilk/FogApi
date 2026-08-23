@@ -12,7 +12,7 @@ function Get-FogActiveTasks {
     This will list any active tasks and their properties
 
     Expected output:
-    []
+    [ { "id": 1, "name": "ExampleTask" } ]
 
     #>
     

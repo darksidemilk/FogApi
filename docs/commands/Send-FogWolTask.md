@@ -37,7 +37,7 @@ Send-FogWolTask -computername "MeowMachine"
 Will send a magic computer to the computer MeowMachine from the fog server;
 
 Expected output:
-{ "id": 501, "success": true }
+""
 
 ### EXAMPLE 2
 ```

@@ -4567,7 +4567,7 @@
         <dev:code>$hostID = 1234; $json = (@{"taskTypeID"='12';"deploySnapins"="-1";} | ConvertTo-Json); $result = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $json -IDofObject "$hostID"; $result;</dev:code>
         <dev:remarks>
           <maml:para>Would create a new fog object of a start all snapins task.</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -5420,7 +5420,7 @@
         <dev:code>Receive-FogImage -hostID "42"</dev:code>
         <dev:remarks>
           <maml:para>Will queue a capture task for host 42 right now</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -6628,7 +6628,7 @@
         <dev:code>Send-FogGroupTask -groupID 7 -taskTypeID 14</dev:code>
         <dev:remarks>
           <maml:para>Queues an immediate wake-up task for every host in the group with id 7. Use the default taskTypeID of 1 to queue a deploy task instead.</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -7201,7 +7201,7 @@
         <dev:code>Send-FogWolTask -computername "MeowMachine"</dev:code>
         <dev:remarks>
           <maml:para>Will send a magic computer to the computer MeowMachine from the fog server;</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -8490,7 +8490,7 @@
         <dev:code>Start-FogSnapin -hostID 42 -snapinname 'office365'</dev:code>
         <dev:remarks>
           <maml:para>This will find the id of the snapin named 'office365' and deploy it on the host of id 42 The name of the host and the snapin will be output to the console before the task is started</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -8498,7 +8498,7 @@
         <dev:code>Start-FogSnapin -hostID 42 -snapinid 6</dev:code>
         <dev:remarks>
           <maml:para>This will deploy a single snapin task for the snapin of id 6 for host 42 The name of the host and the snapin will be output to the console before the task is started</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -8671,7 +8671,7 @@
         <dev:code>Start-FogSnapins -hostid 42</dev:code>
         <dev:remarks>
           <maml:para>will start all snapins on the host with the id 42</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -8679,7 +8679,7 @@
         <dev:code>Get-foghost -hostname 'MeowMachine' | Start-FogSnapins</dev:code>
         <dev:remarks>
           <maml:para>will get the host object for the host named 'MeowMachine' and start all snapins on it</maml:para>
-          <maml:para>Expected output: { "id": 501, "success": true }</maml:para>
+          <maml:para>Expected output: ""</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
