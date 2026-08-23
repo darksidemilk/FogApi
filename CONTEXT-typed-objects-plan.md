@@ -1,10 +1,25 @@
 <!--
   Working plan for the typed-object / input-class work on FogApi.
-  Lives in the repo so any session can reference it without a plan file.
-  Mirrored to the GitHub tracking issue linked at the top of the Context section.
+  THIS FILE ON `dev` IS CANONICAL. Update it in the same PR as the work it describes.
+  Issue #66 mirrors it; if the two disagree this file wins, because it is versioned
+  with the code it describes.
 -->
 
 # Classes to simplify user input, plus a spec refresh and generated type data
+
+## Where to look first
+
+| | |
+|---|---|
+| **"Next pass, start here"**, at the bottom of this file | what is actually done, and what to do next. **Read it before starting anything.** |
+| **"Session prompts"**, also at the bottom | ready-to-paste prompts for the open streams, with their ordering |
+| [Issue #66](https://github.com/darksidemilk/FogApi/issues/66) | mirror of this file, linkable from other repos and sessions |
+| `CONTEXT-api-coverage-plan.md` | the parent #61 plan this sits inside — locked decisions, verified server facts, and the phases this one does not renumber |
+| `spec/README.md` | how the spec pipeline works, and the term glossary |
+
+Phase sections below are kept in their original order and carry their own status in the
+heading, so the history of the decision stays readable. The tables at the bottom are the
+current state.
 
 ## Context
 
@@ -405,3 +420,72 @@ Three things this pass left behind, none of them blocking:
 Not this plan's phases, but adjacent and worth knowing: the parent
 `CONTEXT-api-coverage-plan.md` still has phases 0.3, 0.5 and 2-5 open, and its own
 "Next session, start here" is the authority on those.
+
+---
+
+## Session prompts
+
+Only the **open** streams are listed. Phase 2, phase 4 and the mocked-suite decision are done
+(#67, #68) and their prompts are deliberately gone — a prompt for finished work is how a session
+ends up redoing it.
+
+Every prompt names this file first. **Do not work from a prompt alone**: "Next pass, start here"
+above is what says whether the work is still needed, and it moves faster than any copy of a prompt.
+
+No live server comes with these. `bin/installfog.sh -y --install-mode http-only -H` from a
+`working-1.6` checkout stands one up; `spec/openapi/PROVENANCE.json` records how the last one was
+verified. Without a server, run `-CI` only and say so rather than claiming a real-server pass.
+
+### P3 · Phase 3 — type data as generated .ps1xml *(the main open phase)*
+> Read `CONTEXT-typed-objects-plan.md` on `dev` in darksidemilk/FogApi, then do Phase 3.
+> **Answer its one gating question first**, with a throwaway two-type xml rather than an emitter
+> for 51: can a `.ps1xml` `<ScriptMethod>` `<Script>` body resolve the module's own cmdlets?
+> `SysUuid` was only ever proven from a `<ScriptProperty>`; `Deploy()` and `Cancel()` call
+> `New-FogObject` / `Remove-FogObject` and have never been called from a `<Script>` at all. If a
+> `<Script>` cannot see module scope, the design changes to xml-for-display plus
+> `Update-TypeData`-for-methods, which is a different emitter — decide before building.
+> Everything else is in place: phase 4 landed ahead of this one, so every entity-returning getter
+> already stamps `FogApi.<Noun>` via `Add-FogTypeName` and a `<Type>` block applies on arrival.
+
+### A · Upstream — emit `search` only where it can work
+> Read the "Blocking upstream bug" section of `CONTEXT-typed-objects-plan.md` on `dev` in
+> darksidemilk/FogApi, then work in FOGProject/fogproject on `working-1.6`. `OpenAPI::_paths()`
+> still emits `search` for every route class unconditionally, but `Route::search()` runs through
+> `unisearch()`, which deliberately skips entities with no `name` column — so
+> `/{class}/search/{item}` is permanently empty for 20 classes. Emit `search` only where the model
+> has a `name` field, the same condition `unisearch` already applies. Verify against a live server
+> that a name-bearing class still searches and a nameless one no longer advertises the route. Per
+> that repo's CLAUDE.md the document is only partly generated, so this is a hand-edit to
+> `openapi.class.php` and belongs in the same commit as any route change.
+
+### S · Refresh the snapshot — upstream has moved again
+> FogApi's snapshot is from fogproject `2dc470fed` (1.6.0-beta.3820, 394 paths / 53 schemas).
+> `working-1.6` has since advanced past `70871455c`, which includes
+> `fix(api): event tables answer no write verb (ADR 0020 decision 7)` — a route change, so the
+> document has changed. Regenerate with `spec/tools/dump-openapi.php` against a current checkout,
+> update `spec/openapi/PROVENANCE.json`, rebuild the resolved spec, the core object list and the
+> coverage doc, and deal with whatever cmdlets the change orphans. `fe6b67d` (the `imagingLog`
+> retirement) is the worked example of a clean removal, including overlay entries, fixtures and
+> test-helper routing. `Build-FogApiSpec.ps1` fails the build on a file nothing accounts for, so
+> let it tell you what you missed. **Can be combined with C below if A has already landed.**
+
+### C · Retire the dead `Find-Fog<Noun>` — *after A merges*
+> Stream A has merged upstream. Regenerate FogApi's snapshot from a fogproject checkout containing
+> that fix, then remove the `Find-Fog<Noun>` cmdlets for the classes that no longer advertise a
+> search route. Same removal precedent as `fe6b67d`. If the snapshot is being refreshed anyway
+> (stream S), do both in one pass rather than regenerating twice.
+
+### L · The three loose ends phase 2 left behind
+> Read "Next pass, start here" in `CONTEXT-typed-objects-plan.md` on `dev`. Three non-blocking
+> items are recorded there: **reserved parameter names in the emitter** (fails at import and takes
+> the module with it — see Risks), **no fixtures for the 20 new task/cancel cmdlets**, and
+> **`Get-FogGroup` still unemitted** because its `Get-FogGroups` alias would shadow the
+> hand-written function of that name. The last is a migration to decide deliberately, not a
+> regeneration to run. Pick them off in any order; none blocks phase 3.
+
+### Ordering
+
+- **P3, A, S and L are all independent** — any of them can start now.
+- **C needs A merged.** If S runs first, fold C into it rather than regenerating the snapshot twice.
+- P3 and L both touch `spec/tools/` and generated cmdlets; coordinate or sequence them.
+- A is in a different repository from the rest and collides with nothing here.
