@@ -302,6 +302,52 @@ function Get-FogMockResponse {
         return @($rowProp[0].Value)
     }
 
+    function Get-RequestedFilter {
+        # ?filter= is a query string nested inside one query parameter --
+        # field=value joined with &, url encoded as a unit. Decoded here so the
+        # mock can apply it, because a mock that ignores the filter makes a
+        # filtered call and an unfiltered one indistinguishable, and then no
+        # test can prove the filter was sent at all.
+        if ([string]::IsNullOrEmpty($queryString)) { return $null }
+        # Parsed by hand rather than with System.Web.HttpUtility: that assembly
+        # is not loaded by default on Windows PowerShell 5.1, which this module
+        # still supports, and pulling in an Add-Type for one lookup is a worse
+        # trade than four lines of splitting.
+        $raw = $null
+        foreach ($outerPair in ($queryString -split '&')) {
+            if ($outerPair -match '^filter=(?<v>.*)$') {
+                $raw = [uri]::UnescapeDataString($Matches['v'])
+                break
+            }
+        }
+        if ([string]::IsNullOrEmpty($raw)) { return $null }
+        $parsed = @{}
+        foreach ($pair in ($raw -split '&')) {
+            if ($pair -notmatch '^(?<k>[^=]+)=(?<v>.*)$') { continue }
+            $parsed[$Matches['k']] = $Matches['v']
+        }
+        if ($parsed.Keys.Count -eq 0) { return $null }
+        return $parsed
+    }
+
+    function Select-FilteredRows($rows, $filter) {
+        # AND across keys, and a comma separated value matches any of its
+        # parts -- the same two rules Route::handleWhereItems() applies.
+        # Compared as strings because the fixture holds real types and the
+        # filter arrives off a URL, where everything is text.
+        if ($null -eq $filter) { return @($rows) }
+        return @($rows | Where-Object {
+            $row = $_
+            $keep = $true
+            foreach ($key in $filter.Keys) {
+                $want = @($filter[$key] -split ',')
+                $have = [string]$row.$key
+                if ($want -notcontains $have) { $keep = $false; break }
+            }
+            $keep
+        })
+    }
+
     $class = $null
     $shape = $null
     $objectId = $null
@@ -318,7 +364,23 @@ function Get-FogMockResponse {
 
     if ($class) {
         switch ("$Method/$shape") {
-            'GET/collection' { if (Test-Fixture "$($class)s.json") { return Get-Fixture "$($class)s.json" } }
+            'GET/collection' {
+                if (Test-Fixture "$($class)s.json") {
+                    $fixture = Get-Fixture "$($class)s.json"
+                    $filter = Get-RequestedFilter
+                    if ($null -eq $filter) { return $fixture }
+                    # Rewrite the rows in place so the envelope keeps whatever
+                    # shape the fixture uses -- 1.5 keys them by class name,
+                    # 1.6 by 'data' -- and any count property stays honest.
+                    $kept = Select-FilteredRows (Get-FixtureRows "$($class)s.json") $filter
+                    $rowProp = @($fixture.PSObject.Properties |
+                        Where-Object { $_.Name -ne 'count' -and $_.Value -is [System.Collections.IEnumerable] -and $_.Value -isnot [string] } |
+                        Select-Object -First 1)
+                    if ($rowProp.Count -gt 0) { $fixture.($rowProp[0].Name) = $kept }
+                    if ($fixture.PSObject.Properties.Name -contains 'count') { $fixture.count = $kept.Count }
+                    return $fixture
+                }
+            }
             'GET/single'     { if (Test-Fixture "$class.json")     { return Get-Fixture "$class.json" } }
             'GET/search'     {
                 if (Test-Fixture "$($class)s-search.json") { return Get-Fixture "$($class)s-search.json" }
@@ -332,18 +394,18 @@ function Get-FogMockResponse {
             # array of id/name pairs, and a bare array of ids.
             'GET/count' {
                 if (Test-Fixture "$($class)s.json") {
-                    return [pscustomobject]@{ total = @(Get-FixtureRows "$($class)s.json").Count }
+                    return [pscustomobject]@{ total = @(Select-FilteredRows (Get-FixtureRows "$($class)s.json") (Get-RequestedFilter)).Count }
                 }
             }
             'GET/names' {
                 if (Test-Fixture "$($class)s.json") {
-                    return @(Get-FixtureRows "$($class)s.json" |
+                    return @(Select-FilteredRows (Get-FixtureRows "$($class)s.json") (Get-RequestedFilter) |
                         ForEach-Object { [pscustomobject]@{ id = $_.id; name = $_.name } })
                 }
             }
             'GET/ids' {
                 if (Test-Fixture "$($class)s.json") {
-                    return @(Get-FixtureRows "$($class)s.json" | ForEach-Object { $_.id })
+                    return @(Select-FilteredRows (Get-FixtureRows "$($class)s.json") (Get-RequestedFilter) | ForEach-Object { $_.id })
                 }
             }
             'POST/collection' { return New-EchoedObject -body $jsonData -id 1 }

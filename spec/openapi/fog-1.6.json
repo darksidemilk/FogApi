@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "FOG Project API",
-        "version": "1.6.0-beta.3860",
+        "version": "1.6.0-beta.3894",
         "description": "Generated from this server's own routing and model metadata,\nso it describes the classes and routes THIS server exposes,\nincluding any a plugin has added.\n\nEnable under FOG Configuration > FOG Settings > API System.\nAuthenticate with the `fog-api-token` (server-wide) and\n`fog-user-token` (per user) headers, or with HTTP basic auth.\n\nField names: every property is also addressable by its raw\ndatabase column name, because the model layer flips\n$databaseFields into $databaseFieldsFlipped and accepts\neither spelling. Only the property name is documented here.",
         "license": {
             "name": "GPL-3.0",
@@ -433,7 +433,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -443,6 +443,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -541,7 +544,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -643,7 +651,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -752,7 +765,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -1161,7 +1179,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -1171,6 +1189,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "group.view"
@@ -1269,7 +1290,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -1314,7 +1340,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -1488,7 +1519,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -1556,7 +1592,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -1976,7 +2012,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -1986,6 +2022,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "group.view"
@@ -2084,7 +2123,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -2129,7 +2173,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -2238,7 +2287,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "group.view"
             }
         },
@@ -2442,7 +2496,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -2452,6 +2506,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "report.view"
@@ -2500,7 +2557,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "report.view"
             }
         },
@@ -2545,7 +2607,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "report.view"
             }
         },
@@ -2590,7 +2657,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "report.view"
             }
         },
@@ -2699,7 +2771,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -2709,6 +2781,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "settings.view"
@@ -2807,7 +2882,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -2852,7 +2932,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -2961,7 +3046,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -3029,7 +3119,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -3244,7 +3334,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -3254,6 +3344,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -3352,7 +3445,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -3397,7 +3495,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -3506,7 +3609,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -3574,7 +3682,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -3994,7 +4102,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -4004,6 +4112,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -4102,7 +4213,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4147,7 +4263,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4256,7 +4377,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4460,7 +4586,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -4470,6 +4596,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -4568,7 +4697,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4613,7 +4747,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4722,7 +4861,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -4926,7 +5070,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -4936,6 +5080,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "image.view"
@@ -5034,7 +5181,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5079,7 +5231,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5188,7 +5345,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5256,7 +5418,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -5471,7 +5633,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -5481,6 +5643,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "image.view"
@@ -5579,7 +5744,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5624,7 +5794,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5733,7 +5908,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -5937,7 +6117,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -5947,6 +6127,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "image.view"
@@ -6045,7 +6228,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6090,7 +6278,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6199,7 +6392,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6267,7 +6465,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -6482,7 +6680,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -6492,6 +6690,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "image.view"
@@ -6590,7 +6791,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6635,7 +6841,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6744,7 +6955,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -6812,7 +7028,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7027,7 +7243,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7037,6 +7253,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -7135,7 +7354,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -7180,7 +7404,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -7289,7 +7518,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -7493,7 +7727,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7503,6 +7737,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "ipxe.view"
@@ -7601,7 +7838,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -7646,7 +7888,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -7755,7 +8002,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -7959,7 +8211,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7969,6 +8221,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "ipxe.view"
@@ -8067,7 +8322,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -8112,7 +8372,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -8221,7 +8486,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -8289,7 +8559,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -8555,7 +8825,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -8565,6 +8835,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -8663,7 +8936,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -8708,7 +8986,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -8817,7 +9100,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -9021,7 +9309,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -9031,6 +9319,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "module.view"
@@ -9129,7 +9420,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -9174,7 +9470,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -9283,7 +9584,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -9351,7 +9657,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -9566,7 +9872,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -9576,6 +9882,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "module.view"
@@ -9674,7 +9983,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -9719,7 +10033,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -9828,7 +10147,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -10032,7 +10356,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -10042,6 +10366,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -10140,7 +10467,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -10242,7 +10574,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -10351,7 +10688,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -10419,7 +10761,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -10839,7 +11181,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -10849,6 +11191,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -10947,7 +11292,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -10992,7 +11342,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -11101,7 +11456,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -11305,7 +11665,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -11315,6 +11675,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -11413,7 +11776,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -11458,7 +11826,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -11567,7 +11940,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -11771,7 +12149,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -11781,6 +12159,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "settings.view"
@@ -11879,7 +12260,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -11924,7 +12310,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -12033,7 +12424,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -12101,7 +12497,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -12316,7 +12712,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -12326,6 +12722,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "image.view"
@@ -12424,7 +12823,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -12469,7 +12873,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -12578,7 +12987,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "image.view"
             }
         },
@@ -12646,7 +13060,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -12861,7 +13275,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -12871,6 +13285,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "settings.view"
@@ -12969,7 +13386,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -13014,7 +13436,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -13123,7 +13550,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -13191,7 +13623,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -13450,7 +13882,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -13460,6 +13892,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "plugin.view"
@@ -13558,7 +13993,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "plugin.view"
             }
         },
@@ -13603,7 +14043,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "plugin.view"
             }
         },
@@ -13712,7 +14157,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "plugin.view"
             }
         },
@@ -13780,7 +14230,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -13995,7 +14445,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -14005,6 +14455,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "host.view"
@@ -14103,7 +14556,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -14205,7 +14663,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -14314,7 +14777,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -14518,7 +14986,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -14528,6 +14996,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "printer.view"
@@ -14626,7 +15097,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -14671,7 +15147,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -14780,7 +15261,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -14848,7 +15334,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -15063,7 +15549,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -15073,6 +15559,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "printer.view"
@@ -15171,7 +15660,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -15216,7 +15710,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -15325,7 +15824,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "printer.view"
             }
         },
@@ -15529,7 +16033,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -15539,6 +16043,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "ipxe.view"
@@ -15637,7 +16144,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -15682,7 +16194,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -15791,7 +16308,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -15859,7 +16381,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -16074,7 +16596,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -16084,6 +16606,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "role.view"
@@ -16182,7 +16707,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16227,7 +16757,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16336,7 +16871,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16404,7 +16944,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -16619,7 +17159,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -16629,6 +17169,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "role.view"
@@ -16727,7 +17270,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16772,7 +17320,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16881,7 +17434,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -16949,7 +17507,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -17164,7 +17722,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -17174,6 +17732,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "role.view"
@@ -17272,7 +17833,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -17317,7 +17883,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -17426,7 +17997,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "role.view"
             }
         },
@@ -17494,7 +18070,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -17709,7 +18285,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -17719,6 +18295,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "usergroup.view"
@@ -17817,7 +18396,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -17862,7 +18446,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -17971,7 +18560,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -18039,7 +18633,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -18254,7 +18848,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -18264,6 +18858,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -18362,7 +18959,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -18464,7 +19066,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -18573,7 +19180,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -18641,7 +19253,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19061,7 +19673,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19071,6 +19683,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "settings.view"
@@ -19169,7 +19784,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -19214,7 +19834,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -19323,7 +19948,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "settings.view"
             }
         },
@@ -19391,7 +20021,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19739,7 +20369,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19749,6 +20379,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "site.view"
@@ -19847,7 +20480,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "site.view"
             }
         },
@@ -19892,7 +20530,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "site.view"
             }
         },
@@ -20001,7 +20644,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "site.view"
             }
         },
@@ -20069,7 +20717,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -20284,7 +20932,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -20294,6 +20942,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "snapin.view"
@@ -20392,7 +21043,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -20559,7 +21215,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -20668,7 +21329,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -20736,7 +21402,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -20951,7 +21617,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -20961,6 +21627,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "snapin.view"
@@ -21059,7 +21728,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21104,7 +21778,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21213,7 +21892,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21417,7 +22101,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -21427,6 +22111,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "snapin.view"
@@ -21525,7 +22212,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21570,7 +22262,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21679,7 +22376,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -21883,7 +22585,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -21893,6 +22595,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -21991,7 +22696,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -22093,7 +22803,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -22202,7 +22917,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -22611,7 +23331,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -22621,6 +23341,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -22719,7 +23442,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -22821,7 +23549,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -22930,7 +23663,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -23339,7 +24077,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -23349,6 +24087,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "storagegroup.view"
@@ -23447,7 +24188,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagegroup.view"
             }
         },
@@ -23492,7 +24238,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagegroup.view"
             }
         },
@@ -23601,7 +24352,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagegroup.view"
             }
         },
@@ -23669,7 +24425,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -23962,7 +24718,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -23972,6 +24728,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "storagenode.view"
@@ -24070,7 +24829,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagenode.view"
             }
         },
@@ -24115,7 +24879,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagenode.view"
             }
         },
@@ -24224,7 +24993,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "storagenode.view"
             }
         },
@@ -24292,7 +25066,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -24660,7 +25434,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -24670,6 +25444,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -24768,7 +25545,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -24870,7 +25652,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -24979,7 +25766,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25047,7 +25839,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -25467,7 +26259,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -25477,6 +26269,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -25525,7 +26320,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25570,7 +26370,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25615,7 +26420,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25724,7 +26534,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -25734,6 +26544,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -25832,7 +26645,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25877,7 +26695,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -25986,7 +26809,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -26054,7 +26882,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -26269,7 +27097,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -26279,6 +27107,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "task.view"
@@ -26377,7 +27208,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -26422,7 +27258,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -26531,7 +27372,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -26599,7 +27445,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -26865,7 +27711,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -26875,6 +27721,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "user.view"
@@ -26973,7 +27822,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "user.view"
             }
         },
@@ -27018,7 +27872,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "user.view"
             }
         },
@@ -27127,7 +27986,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "user.view"
             }
         },
@@ -27195,7 +28059,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -27410,7 +28274,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -27420,6 +28284,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "usergroup.view"
@@ -27518,7 +28385,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -27563,7 +28435,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -27672,7 +28549,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -27740,7 +28622,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -27955,7 +28837,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -27965,6 +28847,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "usergroup.view"
@@ -28063,7 +28948,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -28108,7 +28998,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -28217,7 +29112,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usergroup.view"
             }
         },
@@ -28285,7 +29185,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list. Takes no filter -- the match is the whole query.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -28500,7 +29400,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Also reachable as /list and /all. A trailing filter segment accepts field:value pairs.",
+                "description": "Also reachable as /list and /all. Filter with ?filter= or the equivalent trailing path segment; both take field=value pairs joined with &.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -28510,6 +29410,9 @@
                     },
                     {
                         "$ref": "#/components/parameters/expand"
+                    },
+                    {
+                        "$ref": "#/components/parameters/filter"
                     }
                 ],
                 "x-fog-permission": "usertracking.view"
@@ -28558,7 +29461,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Accepts the same optional trailing filter segment as a list. Reports the true filtered total and ignores paging.",
+                "description": "Accepts the same optional filter as a list. Reports the true filtered total and ignores paging.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usertracking.view"
             }
         },
@@ -28603,7 +29511,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped. Accepts an optional trailing filter segment and an optional field name to return instead of the id.",
+                "description": "Unpaged and uncapped. Accepts an optional filter and an optional trailing field name to return instead of the id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usertracking.view"
             }
         },
@@ -28648,7 +29561,12 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
+                "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional filter.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/filter"
+                    }
+                ],
                 "x-fog-permission": "usertracking.view"
             }
         },
@@ -28713,11 +29631,33 @@
                 "summary": "Server identity",
                 "responses": {
                     "200": {
-                        "description": "Server facts.",
+                        "description": "Server facts. Every field is a string, and is empty rather than absent when the installer has not published it yet.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object"
+                                    "type": "object",
+                                    "properties": {
+                                        "NET_fog_server_ip": {
+                                            "type": "string",
+                                            "description": "This server's own IP address. Space-separated when the interface carries more than one."
+                                        },
+                                        "NET_hostname": {
+                                            "type": "string",
+                                            "description": "This server's hostname, as its certificate names it."
+                                        },
+                                        "FOG_os_id": {
+                                            "type": "string",
+                                            "description": "Numeric OS family id the installer recorded. A second encoding of FOG_os_name whose meaning has changed between releases; prefer FOG_os_name."
+                                        },
+                                        "FOG_os_name": {
+                                            "type": "string",
+                                            "description": "OS family name the installer recorded. The stable identifier of the two."
+                                        },
+                                        "FOG_install_type": {
+                                            "type": "string",
+                                            "description": "N for a full server, S for a storage node."
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -28793,6 +29733,15 @@
                     "type": "string"
                 },
                 "description": "Comma separated relations to inline. Forces the page size to EXPAND_MAX_ITEMS, so an expanded page can come back smaller than the length asked for."
+            },
+            "filter": {
+                "name": "filter",
+                "in": "query",
+                "required": false,
+                "schema": {
+                    "type": "string"
+                },
+                "description": "Server-side column filter, written as a URL encoded query string: field=value, joined with & for more than one, ANDed together. A comma separated value matches any of its parts. Only fields the class declares are accepted -- anything else answers 400 and names the offending key -- and credential fields are refused outright. Also accepted as a trailing path segment (/{class}/list/field=value), which wins when both are sent."
             }
         },
         "schemas": {

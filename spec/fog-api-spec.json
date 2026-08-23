@@ -9,7 +9,7 @@
   "specVersion": 1,
   "source": {
     "openapi": "spec/openapi/fog-1.6.json",
-    "fogVersion": "1.6.0-beta.3860",
+    "fogVersion": "1.6.0-beta.3894",
     "overlay": "spec/overlay/fog-api-overlay.json",
     "oasVersion": "3.0.3"
   },
