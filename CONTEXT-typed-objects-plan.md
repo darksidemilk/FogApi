@@ -386,7 +386,7 @@ verified against 1.6.0-beta.3837, which matches the snapshot on paths, schemas a
 
 ## Next pass, start here
 
-State as of `#67` (merged into `dev`, 2026-08-23):
+State as of the snapshot refresh to 1.6.0-beta.3860 (2026-08-23):
 
 | Phase | State |
 |---|---|
@@ -394,6 +394,51 @@ State as of `#67` (merged into `dev`, 2026-08-23):
 | 2 · input classes | done — merged via #67 |
 | 3 · response type data as `.ps1xml` | **not started, unblocked** |
 | 4 · stamping | done — merged via #67, ahead of 3 |
+| S+C · snapshot at 1.6.0-beta.3860, 20 dead `Find-Fog<Noun>` retired | done — this branch |
+
+Snapshot now at fogproject `7432c9ef7` (1.6.0-beta.3860): **372 paths, 517 operations, 53
+schemas**, down from 394/545/53. Streams A, S and C are all closed — A upstream in
+FOGProject/fogproject#1292, S and C together here, as the S prompt anticipated.
+
+Test baselines moved with the cmdlet count, and the drop is exactly the retired surface:
+
+| | dev (`735a751`) | here |
+|---|---|---|
+| mocked | 557 passed / 21 failed / 17 skipped | 538 / 20 / 17 |
+| real server | 573 passed / 22 failed | 554 / 21 |
+| public functions | 247 | 227 |
+
+20 example tests went with the 20 cmdlets, and `FogApiSpec.Tests.ps1`'s
+`is up to date with its inputs` went from **failing to passing** — `dev`'s spec build was red
+because `New-FogTaskRequest.ps1` had no overlay entry (see below). **No new failures.**
+
+Two real bugs from the L list are fixed here, both found by the real-server run and both
+verified against the live server rather than against the mocked fixtures:
+
+1. **`Add-FogTypeName` threw on a `[List[object]]`.** It wrapped its input in `@()` before
+   iterating, and on pwsh 7.6.5 `@($list)` throws
+   `ArgumentException: Argument types do not match` for a `List[object]` — which is exactly what
+   `Get-FogHostGroup` builds, so stamping its return threw instead of returning groups. It
+   enumerates directly now; `foreach` covers every shape `@()` was there for. Guarded by five
+   cases in `TypedObjects.Tests.ps1`, reproducible with no server at all.
+2. **The `active` cmdlets returned the envelope, not the rows.** `Get-ActiveFog*` was the only
+   getter family that skipped `.data`, so `Add-FogTypeName` stamped `FogApi.<Noun>` onto the
+   `ListEnvelope` and phase 4's type data — the display set, `Refresh`/`Deploy`/`Cancel` — attached
+   to the wrong object and never applied to a task at all. Fixed in the emitter's `active` branch.
+   Confirmed live: with one real active task, `Get-ActiveFogTasks` now returns one row carrying
+   `FogApi.Task` and no envelope keys.
+
+**`Expected output: ""` on the task and cancel cmdlets is not a bug.** It reads like an unfilled
+placeholder, and it is what a live 1.6.0-beta.3860 server actually returns: `POST /host/{id}/task`
+answers 200 with a two-byte body, `""`, and the task really is created (`GET /task/current` shows
+it). `DELETE /host/{id}/cancel` answers `""` the same way on a genuinely active task. Do not
+"fix" these to look like a created object.
+
+The 19 mocked failures that remain are all **unvetted-fixture** artifacts, not product defects:
+`task-create.json` returns `{"id":501,"success":true}` where the server returns `""`, and
+`tasks-current.json` and friends carry an empty `data` array so the `active` examples have nothing
+to match. The mocked layer is off in CI as of `#67` and its fate is the open E/phase-6 decision —
+that is the place to deal with these, not by editing docs to match fixtures nobody has checked.
 
 **Do phase 3 next, and answer its one gating question first.**
 
@@ -447,33 +492,43 @@ verified. Without a server, run `-CI` only and say so rather than claiming a rea
 > Everything else is in place: phase 4 landed ahead of this one, so every entity-returning getter
 > already stamps `FogApi.<Noun>` via `Add-FogTypeName` and a `<Type>` block applies on arrival.
 
-### A · Upstream — emit `search` only where it can work
-> Read the "Blocking upstream bug" section of `CONTEXT-typed-objects-plan.md` on `dev` in
-> darksidemilk/FogApi, then work in FOGProject/fogproject on `working-1.6`. `OpenAPI::_paths()`
-> still emits `search` for every route class unconditionally, but `Route::search()` runs through
-> `unisearch()`, which deliberately skips entities with no `name` column — so
-> `/{class}/search/{item}` is permanently empty for 20 classes. Emit `search` only where the model
-> has a `name` field, the same condition `unisearch` already applies. Verify against a live server
-> that a name-bearing class still searches and a nameless one no longer advertises the route. Per
-> that repo's CLAUDE.md the document is only partly generated, so this is a hand-edit to
-> `openapi.class.php` and belongs in the same commit as any route change.
+### A, S, C · Closed — search narrowed upstream, snapshot refreshed, 20 cmdlets retired
 
-### S · Refresh the snapshot — upstream has moved again
-> FogApi's snapshot is from fogproject `2dc470fed` (1.6.0-beta.3820, 394 paths / 53 schemas).
-> `working-1.6` has since advanced past `70871455c`, which includes
-> `fix(api): event tables answer no write verb (ADR 0020 decision 7)` — a route change, so the
-> document has changed. Regenerate with `spec/tools/dump-openapi.php` against a current checkout,
-> update `spec/openapi/PROVENANCE.json`, rebuild the resolved spec, the core object list and the
-> coverage doc, and deal with whatever cmdlets the change orphans. `fe6b67d` (the `imagingLog`
-> retirement) is the worked example of a clean removal, including overlay entries, fixtures and
-> test-helper routing. `Build-FogApiSpec.ps1` fails the build on a file nothing accounts for, so
-> let it tell you what you missed. **Can be combined with C below if A has already landed.**
-
-### C · Retire the dead `Find-Fog<Noun>` — *after A merges*
-> Stream A has merged upstream. Regenerate FogApi's snapshot from a fogproject checkout containing
-> that fix, then remove the `Find-Fog<Noun>` cmdlets for the classes that no longer advertise a
-> search route. Same removal precedent as `fe6b67d`. If the snapshot is being refreshed anyway
-> (stream S), do both in one pass rather than regenerating twice.
+> **All three are done; nothing to run.** A landed upstream as `4350d5048`
+> (FOGProject/fogproject#1292, `working-1.6`): `OpenAPI::_isSearchable()` now gates
+> `/{class}/search/{item}` on the same `isset($databaseFields['name'])` test `unisearch()` applies.
+> S and C were then done together in one pass against `7432c9ef7`, which also carries
+> `70871455c` (`fix(api): event tables answer no write verb`) — so the refresh dropped **22 paths
+> and 28 operations**: the 20 search routes, plus the write verbs and `/join` on `history` and
+> `tasklog`, which are now in `Route::$readOnlyClasses` and answer 501.
+>
+> The 20 `Find-Fog<Noun>` cmdlets are deleted. Nothing else needed to change for them: no aliases
+> existed, the test helper routes search generically (`^(?<class>[a-z]+)/search/`) so there was no
+> per-class fixture wiring to unpick, and no class was retired, so
+> `Get-FogCoreObjectList.ps1` regenerated **byte-identical** — the opposite of `fe6b67d`, where a
+> class really did go away. The read-only narrowing cost no cmdlets either: `history` and `tasklog`
+> are tier 3, so they never had write cmdlets to lose.
+>
+> Two things worth not rediscovering, both found by letting the builder fail:
+>
+> 1. **The tier `operations` lists did not need editing.** They are a ceiling the builder
+>    intersects with what the snapshot declares, so "search where the server offers it" kept
+>    working untouched. Every tier still has searchable classes (tier 1 lost only
+>    `powermanagement`, tier 2 lost 8 of 11, tier 3 lost 11 of 24), so removing `search` from any
+>    tier would have been wrong.
+> 2. **`Get-FogApiCoverage.ps1` assumed every generic route is served by every class.** Harmless
+>    until now; with 28 operations genuinely gone it printed `-` — "reachable through the generic
+>    L1 wrappers" — for routes that answer 501 or an empty envelope, which is precisely the
+>    coverage-that-does-not-exist claim its own docblock forbids. It now reads the snapshot for the
+>    denominator. That corrected the table in both directions: `task`/`cancel` on
+>    `filedeletequeue` and `snapinjob` had been blank and are really served.
+> 3. **`New-FogTaskRequest.ps1` had no overlay entry, so `dev`'s spec build was already red.**
+>    Phase 2 added the file and never classified it, and `Build-FogApiSpec.ps1` refuses to write
+>    the spec while any file is unaccounted for — so this had to be fixed before stream C's own
+>    result could be verified at all. Registered under `handWritten` as `utility`, targets
+>    `powershell` only: it is a static factory for a PowerShell class, and the reason it exists —
+>    a module's class is not nameable after `Import-Module` — is a PowerShell-specific problem the
+>    Python and bash emitters will not have.
 
 ### L · The three loose ends phase 2 left behind
 > Read "Next pass, start here" in `CONTEXT-typed-objects-plan.md` on `dev`. Three non-blocking

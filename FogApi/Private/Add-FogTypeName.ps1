@@ -50,7 +50,15 @@ Returns the printer, carrying FogApi.Printer as its first type name.
     process {
         if ($null -eq $InputObject) { return $InputObject }
 
-        foreach ($item in @($InputObject)) {
+        # Enumerate $InputObject directly rather than through @(). On pwsh
+        # 7.6.5, @($list) throws ArgumentException 'Argument types do not
+        # match' for a [List[object]] -- which is exactly what
+        # Get-FogHostGroup builds, so stamping its return threw instead of
+        # returning groups. foreach handles every shape @() was here for: a
+        # scalar iterates once, an array and a List iterate per element, and
+        # a string iterates once rather than per character. $null is already
+        # returned above, which is the only thing @() was still guarding.
+        foreach ($item in $InputObject) {
             if ($null -eq $item) { continue }
             # A value type has no PSObject worth stamping, and a string would
             # pick the name up on every character of a collection.

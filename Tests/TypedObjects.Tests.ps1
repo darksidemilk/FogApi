@@ -103,3 +103,56 @@ Describe 'PSTypeName parameter validation' {
             Should -Throw
     }
 }
+
+Describe 'Add-FogTypeName enumerates every collection shape a getter returns' {
+
+    # Regression: Add-FogTypeName wrapped its input in @() before iterating, and
+    # on pwsh 7.6.5 @($list) throws ArgumentException 'Argument types do not
+    # match' for a [List[object]]. Get-FogHostGroup builds exactly that, so
+    # stamping its return threw instead of returning groups -- caught by the
+    # real-server suite, reproducible with no server at all.
+    BeforeAll {
+        $script:stamp = {
+            param($InputObject)
+            & (Get-Module FogApi) {
+                param($o) Add-FogTypeName -InputObject $o -TypeName 'FogApi.Group'
+            } $InputObject
+        }
+    }
+
+    It 'stamps a [List[object]], which is what Get-FogHostGroup builds' {
+        $list = New-Object System.Collections.Generic.List[System.Object]
+        $list.Add([pscustomobject]@{ id = 1; name = 'GroupA' })
+        $list.Add([pscustomobject]@{ id = 2; name = 'GroupB' })
+
+        $result = & $script:stamp $list
+
+        @($result).Count | Should -Be 2
+        foreach ($item in $result) {
+            $item.PSObject.TypeNames[0] | Should -Be 'FogApi.Group'
+        }
+    }
+
+    It 'stamps a plain array' {
+        $result = & $script:stamp @([pscustomobject]@{ id = 1 }, [pscustomobject]@{ id = 2 })
+        @($result).Count | Should -Be 2
+        $result[1].PSObject.TypeNames[0] | Should -Be 'FogApi.Group'
+    }
+
+    It 'stamps a single object' {
+        $result = & $script:stamp ([pscustomobject]@{ id = 1 })
+        $result.PSObject.TypeNames[0] | Should -Be 'FogApi.Group'
+    }
+
+    It 'passes $null straight through' {
+        & $script:stamp $null | Should -BeNullOrEmpty
+    }
+
+    It 'leaves a string alone rather than stamping every character' {
+        # @() and foreach agree here, but the guard is load-bearing: a stamped
+        # string would put the type name on each char of a collection.
+        $result = & $script:stamp 'agroupname'
+        $result | Should -Be 'agroupname'
+        $result.PSObject.TypeNames[0] | Should -Not -Be 'FogApi.Group'
+    }
+}

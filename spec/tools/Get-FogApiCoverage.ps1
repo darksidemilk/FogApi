@@ -30,7 +30,11 @@ let the report claim coverage that does not exist, which is the one thing it
 must never do.
 
 Reads spec/fog-api-spec.json, so it reports what the spec actually resolved to
-rather than what anyone intended.
+rather than what anyone intended, and spec/openapi/fog-1.6.json for the
+denominator -- which operations the server declares at all. The resolved spec
+alone cannot supply that: it lists what FogApi models, so an operation missing
+from it may be absent upstream or merely un-modelled, and a report that renders
+those the same would claim L1 reachability that does not exist.
 
 .PARAMETER SpecFile
 Path to the resolved spec. Defaults to spec/fog-api-spec.json.
@@ -61,6 +65,32 @@ if (-not (Test-Path -LiteralPath $SpecFile)) {
     throw "Spec not found at $SpecFile. Run spec/tools/Build-FogApiSpec.ps1 first."
 }
 $spec = Get-Content -LiteralPath $SpecFile -Raw | ConvertFrom-Json
+
+# What the server actually serves, taken from the snapshot the spec was built
+# from. The resolved spec records only the operations FogApi models, so it
+# cannot distinguish an operation that is absent upstream from one that is
+# merely un-modelled -- and those two must not render the same. '-' claims the
+# operation is reachable through the generic L1 wrappers, and Get-FogObject
+# cannot reach a route the server does not serve.
+#
+# This matters as of 1.6.0-beta.3860: 20 classes no longer declare search and
+# history/tasklog no longer declare the write verbs, so assuming every generic
+# route is served would print '-' for 28 operations that answer 501 or an
+# empty envelope.
+$snapshotFile = Join-Path (Join-Path $specRoot 'openapi') 'fog-1.6.json'
+if (-not (Test-Path -LiteralPath $snapshotFile)) {
+    throw "Snapshot not found at $snapshotFile."
+}
+$snapshot = Get-Content -LiteralPath $snapshotFile -Raw | ConvertFrom-Json
+$httpMethods = @('get', 'post', 'put', 'patch', 'delete')
+$servedOps = @{}
+foreach ($path in $snapshot.paths.PSObject.Properties) {
+    foreach ($method in $path.Value.PSObject.Properties) {
+        if ($method.Name -notin $httpMethods) { continue }
+        $id = $method.Value.operationId
+        if ($id) { $servedOps[$id] = $true }
+    }
+}
 
 # Only an entry that actually folds somewhere counts as folded. An entry with a
 # null foldsInto is one the overlay deliberately deferred -- 'join' is there
@@ -124,12 +154,12 @@ foreach ($class in $classes) {
     $cells = [ordered]@{}
     foreach ($route in $genericRoutes) {
         $opId = $route + $class.Substring(0,1).ToUpperInvariant() + $class.Substring(1)
-        # Only score routes the server actually serves for this class.
-        $served = $false
-        if ($known.ContainsKey($route)) { $served = $true }
-        elseif ($foldedRoutes -contains $route -or $deferredRoutes -contains $route) { $served = $true }
-        elseif ($route -in @('task','cancel','active')) { $served = $false }
-        else { $served = $true }
+        # Only score routes the server actually serves for this class, and let
+        # the snapshot say so rather than guessing per route name. Every
+        # generic operation is named {route}{Class} in FOG's own document, which
+        # is the same id built above; the fixed routes are the only ones that
+        # break the convention and they are scored from $spec.fixedRoutes.
+        $served = $servedOps.ContainsKey($opId)
 
         if (-not $served) { $cells[$route] = ''; continue }
 

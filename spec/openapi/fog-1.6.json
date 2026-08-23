@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "FOG Project API",
-        "version": "1.6.0-beta.3820",
+        "version": "1.6.0-beta.3860",
         "description": "Generated from this server's own routing and model metadata,\nso it describes the classes and routes THIS server exposes,\nincluding any a plugin has added.\n\nEnable under FOG Configuration > FOG Settings > API System.\nAuthenticate with the `fog-api-token` (server-wide) and\n`fog-user-token` (per user) headers, or with HTTP basic auth.\n\nField names: every property is also addressable by its raw\ndatabase column name, because the model layer flips\n$databaseFields into $databaseFieldsFlipped and accepts\neither spelling. Only the property name is documented here.",
         "license": {
             "name": "GPL-3.0",
@@ -756,85 +756,6 @@
                 "x-fog-permission": "task.view"
             }
         },
-        "/filedeletequeue/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "filedeletequeue"
-                ],
-                "operationId": "searchFiledeletequeue",
-                "summary": "Search filedeletequeue",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Filedeletequeue"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "task.view"
-            }
-        },
         "/filedeletequeue/{id}": {
             "parameters": [
                 {
@@ -1580,7 +1501,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -1635,7 +1556,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -2321,85 +2242,6 @@
                 "x-fog-permission": "group.view"
             }
         },
-        "/groupassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "groupassociation"
-                ],
-                "operationId": "searchGroupassociation",
-                "summary": "Search groupassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Groupassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "group.view"
-            }
-        },
         "/groupassociation/{id}": {
             "parameters": [
                 {
@@ -2613,56 +2455,6 @@
                     }
                 ],
                 "x-fog-permission": "report.view"
-            },
-            "post": {
-                "tags": [
-                    "history"
-                ],
-                "operationId": "createHistory",
-                "summary": "Create a history",
-                "responses": {
-                    "200": {
-                        "description": "The created object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/History"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /create and /new.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/History"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.create"
             }
         },
         "/history/count": {
@@ -2757,70 +2549,6 @@
                 "x-fog-permission": "report.view"
             }
         },
-        "/history/join": {
-            "put": {
-                "tags": [
-                    "history"
-                ],
-                "operationId": "joinHistory",
-                "summary": "Bulk edit history",
-                "responses": {
-                    "202": {
-                        "description": "Applied. No body is returned."
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/History"
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "ids"
-                                        ],
-                                        "properties": {
-                                            "ids": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "integer"
-                                                },
-                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.create"
-            }
-        },
         "/history/names": {
             "get": {
                 "tags": [
@@ -2863,85 +2591,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "report.view"
-            }
-        },
-        "/history/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "history"
-                ],
-                "operationId": "searchHistory",
-                "summary": "Search history",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/History"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "report.view"
             }
         },
@@ -2995,101 +2644,6 @@
                 },
                 "description": "Fields withheld from list responses are returned here.",
                 "x-fog-permission": "report.view"
-            },
-            "put": {
-                "tags": [
-                    "history"
-                ],
-                "operationId": "updateHistory",
-                "summary": "Update a history",
-                "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/History"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /update and /edit. Send only the fields being changed.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/History"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "report.edit"
-            },
-            "delete": {
-                "tags": [
-                    "history"
-                ],
-                "operationId": "deleteHistory",
-                "summary": "Delete a history",
-                "responses": {
-                    "200": {
-                        "description": "Success.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "msg": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /delete and /remove.",
-                "x-fog-permission": "report.delete"
             }
         },
         "/hookevent": {
@@ -3420,7 +2974,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -3475,7 +3029,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -3965,7 +3519,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -4020,7 +3574,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -4706,85 +4260,6 @@
                 "x-fog-permission": "host.view"
             }
         },
-        "/hostautologout/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "hostautologout"
-                ],
-                "operationId": "searchHostautologout",
-                "summary": "Search hostautologout",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Hostautologout"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "host.view"
-            }
-        },
         "/hostautologout/{id}": {
             "parameters": [
                 {
@@ -5248,85 +4723,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "host.view"
-            }
-        },
-        "/hostscreensetting/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "hostscreensetting"
-                ],
-                "operationId": "searchHostscreensetting",
-                "summary": "Search hostscreensetting",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Hostscreensetting"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "host.view"
             }
         },
@@ -5805,7 +5201,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -5860,7 +5256,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -6341,85 +5737,6 @@
                 "x-fog-permission": "image.view"
             }
         },
-        "/imageassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "imageassociation"
-                ],
-                "operationId": "searchImageassociation",
-                "summary": "Search imageassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Imageassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "image.view"
-            }
-        },
         "/imageassociation/{id}": {
             "parameters": [
                 {
@@ -6895,7 +6212,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -6950,7 +6267,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7440,7 +6757,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -7495,7 +6812,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -7976,85 +7293,6 @@
                 "x-fog-permission": "host.view"
             }
         },
-        "/inventory/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "inventory"
-                ],
-                "operationId": "searchInventory",
-                "summary": "Search inventory",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Inventory"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "host.view"
-            }
-        },
         "/inventory/{id}": {
             "parameters": [
                 {
@@ -8518,85 +7756,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "ipxe.view"
-            }
-        },
-        "/ipxe/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "ipxe"
-                ],
-                "operationId": "searchIpxe",
-                "summary": "Search ipxe",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Ipxe"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "ipxe.view"
             }
         },
@@ -9075,7 +8234,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -9130,7 +8289,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -9662,85 +8821,6 @@
                 "x-fog-permission": "host.view"
             }
         },
-        "/macaddressassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "macaddressassociation"
-                ],
-                "operationId": "searchMacaddressassociation",
-                "summary": "Search macaddressassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Macaddressassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "host.view"
-            }
-        },
         "/macaddressassociation/{id}": {
             "parameters": [
                 {
@@ -10216,7 +9296,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -10271,7 +9351,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -10749,85 +9829,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "module.view"
-            }
-        },
-        "/moduleassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "moduleassociation"
-                ],
-                "operationId": "searchModuleassociation",
-                "summary": "Search moduleassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Moduleassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "module.view"
             }
         },
@@ -11363,7 +10364,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -11418,7 +10419,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -12104,85 +11105,6 @@
                 "x-fog-permission": "task.view"
             }
         },
-        "/multicastsessionassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "multicastsessionassociation"
-                ],
-                "operationId": "searchMulticastsessionassociation",
-                "summary": "Search multicastsessionassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Multicastsessionassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "task.view"
-            }
-        },
         "/multicastsessionassociation/{id}": {
             "parameters": [
                 {
@@ -12646,85 +11568,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "task.view"
-            }
-        },
-        "/nodefailure/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "nodefailure"
-                ],
-                "operationId": "searchNodefailure",
-                "summary": "Search nodefailure",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Nodefailure"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -13203,7 +12046,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -13258,7 +12101,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -13748,7 +12591,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -13803,7 +12646,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -14293,7 +13136,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -14348,7 +13191,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -14882,7 +13725,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -14937,7 +13780,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -15475,85 +14318,6 @@
                 "x-fog-permission": "host.view"
             }
         },
-        "/powermanagement/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "powermanagement"
-                ],
-                "operationId": "searchPowermanagement",
-                "summary": "Search powermanagement",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Powermanagement"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "host.view"
-            }
-        },
         "/powermanagement/{id}": {
             "parameters": [
                 {
@@ -16029,7 +14793,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -16084,7 +14848,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -16565,85 +15329,6 @@
                 "x-fog-permission": "printer.view"
             }
         },
-        "/printerassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "printerassociation"
-                ],
-                "operationId": "searchPrinterassociation",
-                "summary": "Search printerassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Printerassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "printer.view"
-            }
-        },
         "/printerassociation/{id}": {
             "parameters": [
                 {
@@ -17119,7 +15804,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -17174,7 +15859,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -17664,7 +16349,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -17719,7 +16404,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -18209,7 +16894,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -18264,7 +16949,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -18754,7 +17439,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -18809,7 +17494,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19299,7 +17984,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -19354,7 +18039,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -19901,7 +18586,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -19956,7 +18641,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -20651,7 +19336,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -20706,7 +19391,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -21329,7 +20014,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -21384,7 +20069,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -21996,7 +20681,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -22051,7 +20736,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -22532,85 +21217,6 @@
                 "x-fog-permission": "snapin.view"
             }
         },
-        "/snapinassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "snapinassociation"
-                ],
-                "operationId": "searchSnapinassociation",
-                "summary": "Search snapinassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Snapinassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "snapin.view"
-            }
-        },
         "/snapinassociation/{id}": {
             "parameters": [
                 {
@@ -23074,85 +21680,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "snapin.view"
-            }
-        },
-        "/snapingroupassociation/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "snapingroupassociation"
-                ],
-                "operationId": "searchSnapingroupassociation",
-                "summary": "Search snapingroupassociation",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Snapingroupassociation"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "snapin.view"
             }
         },
@@ -23676,85 +22203,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "task.view"
-            }
-        },
-        "/snapinjob/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "snapinjob"
-                ],
-                "operationId": "searchSnapinjob",
-                "summary": "Search snapinjob",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Snapinjob"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -24486,85 +22934,6 @@
                 "x-fog-permission": "task.view"
             }
         },
-        "/snapintask/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "snapintask"
-                ],
-                "operationId": "searchSnapintask",
-                "summary": "Search snapintask",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Snapintask"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "task.view"
-            }
-        },
         "/snapintask/{id}": {
             "parameters": [
                 {
@@ -25245,7 +23614,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -25300,7 +23669,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -25868,7 +24237,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -25923,7 +24292,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -26623,7 +24992,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -26678,7 +25047,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -27111,56 +25480,6 @@
                     }
                 ],
                 "x-fog-permission": "task.view"
-            },
-            "post": {
-                "tags": [
-                    "tasklog"
-                ],
-                "operationId": "createTasklog",
-                "summary": "Create a tasklog",
-                "responses": {
-                    "200": {
-                        "description": "The created object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Tasklog"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /create and /new.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Tasklog"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "task.create"
             }
         },
         "/tasklog/count": {
@@ -27255,70 +25574,6 @@
                 "x-fog-permission": "task.view"
             }
         },
-        "/tasklog/join": {
-            "put": {
-                "tags": [
-                    "tasklog"
-                ],
-                "operationId": "joinTasklog",
-                "summary": "Bulk edit tasklog",
-                "responses": {
-                    "202": {
-                        "description": "Applied. No body is returned."
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Applies one set of field values to every object named in ids. Fields left out of the body keep their current value on each object, so this edits rather than replaces. It never creates anything, and it matches on nothing but the ids given: a body with no ids matches nothing and succeeds without changing anything.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Tasklog"
-                                    },
-                                    {
-                                        "type": "object",
-                                        "required": [
-                                            "ids"
-                                        ],
-                                        "properties": {
-                                            "ids": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "integer"
-                                                },
-                                                "description": "The objects to apply these values to. An empty or absent list matches nothing and edits nothing."
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "task.create"
-            }
-        },
         "/tasklog/names": {
             "get": {
                 "tags": [
@@ -27361,85 +25616,6 @@
                     }
                 },
                 "description": "Unpaged and uncapped -- the cheap way to enumerate a large table. Accepts an optional trailing filter segment.",
-                "x-fog-permission": "task.view"
-            }
-        },
-        "/tasklog/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "tasklog"
-                ],
-                "operationId": "searchTasklog",
-                "summary": "Search tasklog",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Tasklog"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
                 "x-fog-permission": "task.view"
             }
         },
@@ -27493,101 +25669,6 @@
                 },
                 "description": "Fields withheld from list responses are returned here.",
                 "x-fog-permission": "task.view"
-            },
-            "put": {
-                "tags": [
-                    "tasklog"
-                ],
-                "operationId": "updateTasklog",
-                "summary": "Update a tasklog",
-                "responses": {
-                    "200": {
-                        "description": "The object.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Tasklog"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /update and /edit. Send only the fields being changed.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Tasklog"
-                            }
-                        }
-                    }
-                },
-                "x-fog-permission": "task.edit"
-            },
-            "delete": {
-                "tags": [
-                    "tasklog"
-                ],
-                "operationId": "deleteTasklog",
-                "summary": "Delete a tasklog",
-                "responses": {
-                    "200": {
-                        "description": "Success.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "msg": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Also reachable as /delete and /remove.",
-                "x-fog-permission": "task.delete"
             }
         },
         "/taskstate": {
@@ -27918,7 +25999,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -27973,7 +26054,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -28463,7 +26544,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -28518,7 +26599,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -29059,7 +27140,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -29114,7 +27195,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -29604,7 +27685,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -29659,7 +27740,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -30149,7 +28230,7 @@
                     "schema": {
                         "type": "string"
                     },
-                    "description": "Text to match across the class fields."
+                    "description": "Text to match against the id and name. A few classes match more: host also on MAC, storagenode on node hostname, setting on value."
                 }
             ],
             "get": {
@@ -30204,7 +28285,7 @@
                         "description": "No such object."
                     }
                 },
-                "description": "Returns the same envelope as a list.",
+                "description": "Matches the term against the class name field. Returns the same envelope as a list.",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/start"
@@ -30571,85 +28652,6 @@
                 "x-fog-permission": "usertracking.view"
             }
         },
-        "/usertracking/search/{item}": {
-            "parameters": [
-                {
-                    "name": "item",
-                    "in": "path",
-                    "required": true,
-                    "schema": {
-                        "type": "string"
-                    },
-                    "description": "Text to match across the class fields."
-                }
-            ],
-            "get": {
-                "tags": [
-                    "usertracking"
-                ],
-                "operationId": "searchUsertracking",
-                "summary": "Search usertracking",
-                "responses": {
-                    "200": {
-                        "description": "A page of results.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "allOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ListEnvelope"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "data": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "$ref": "#/components/schemas/Usertracking"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Error"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication missing or invalid."
-                    },
-                    "403": {
-                        "description": "Authenticated but not permitted."
-                    },
-                    "404": {
-                        "description": "No such object."
-                    }
-                },
-                "description": "Returns the same envelope as a list.",
-                "parameters": [
-                    {
-                        "$ref": "#/components/parameters/start"
-                    },
-                    {
-                        "$ref": "#/components/parameters/length"
-                    },
-                    {
-                        "$ref": "#/components/parameters/expand"
-                    }
-                ],
-                "x-fog-permission": "usertracking.view"
-            }
-        },
         "/usertracking/{id}": {
             "parameters": [
                 {
@@ -30976,15 +28978,37 @@
                     },
                     "info": {
                         "type": "string",
-                        "maxLength": 255,
                         "x-fog-column": "hText"
                     },
                     "ip": {
                         "type": "string",
                         "maxLength": 50,
                         "x-fog-column": "hIP"
+                    },
+                    "type": {
+                        "type": "string",
+                        "maxLength": 16,
+                        "x-fog-column": "hType"
+                    },
+                    "subjectType": {
+                        "type": "string",
+                        "maxLength": 64,
+                        "x-fog-column": "hSubjectType"
+                    },
+                    "subjectID": {
+                        "type": "integer",
+                        "nullable": true,
+                        "x-fog-column": "hSubjectID"
+                    },
+                    "subjectLabel": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "x-fog-column": "hSubjectLabel"
                     }
-                }
+                },
+                "required": [
+                    "info"
+                ]
             },
             "Hookevent": {
                 "type": "object",
@@ -31158,6 +29182,24 @@
                         "maxLength": 20,
                         "nullable": true,
                         "x-fog-column": "hostPingCode"
+                    },
+                    "pingmethod": {
+                        "type": "string",
+                        "maxLength": 10,
+                        "nullable": true,
+                        "x-fog-column": "hostPingMethod"
+                    },
+                    "lastping": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "x-fog-column": "hostLastPing"
+                    },
+                    "lastcheckin": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "x-fog-column": "hostLastCheckin"
                     },
                     "biosexit": {
                         "type": "string",
@@ -33557,6 +31599,16 @@
                         "type": "string",
                         "maxLength": 2,
                         "x-fog-column": "utAnon3"
+                    },
+                    "ip": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "x-fog-column": "utIP"
+                    },
+                    "subjectLabel": {
+                        "type": "string",
+                        "maxLength": 16,
+                        "x-fog-column": "utHostName"
                     }
                 },
                 "required": [

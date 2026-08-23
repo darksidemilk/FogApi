@@ -71,6 +71,15 @@ function Update-FogHost {
     .PARAMETER pingstatus
     Sets the pingstatus field (column hostPingCode). At most 20 characters.
 
+    .PARAMETER pingmethod
+    Sets the pingmethod field (column hostPingMethod). At most 10 characters.
+
+    .PARAMETER lastping
+    Sets the lastping field (column hostLastPing).
+
+    .PARAMETER lastcheckin
+    Sets the lastcheckin field (column hostLastCheckin).
+
     .PARAMETER biosexit
     Sets the biosexit field (column hostExitBios).
 
@@ -159,6 +168,13 @@ function Update-FogHost {
         [ValidateLength(0,20)]
         [string]$pingstatus,
         [Parameter()]
+        [ValidateLength(0,10)]
+        [string]$pingmethod,
+        [Parameter()]
+        [string]$lastping,
+        [Parameter()]
+        [string]$lastcheckin,
+        [Parameter()]
         [string]$biosexit,
         [Parameter()]
         [string]$efiexit,
@@ -194,6 +210,9 @@ function Update-FogHost {
         if ($PSBoundParameters.ContainsKey('init')) { $payload.init = $init; }
         if ($PSBoundParameters.ContainsKey('pending')) { $payload.pending = $pending; }
         if ($PSBoundParameters.ContainsKey('pingstatus')) { $payload.pingstatus = $pingstatus; }
+        if ($PSBoundParameters.ContainsKey('pingmethod')) { $payload.pingmethod = $pingmethod; }
+        if ($PSBoundParameters.ContainsKey('lastping')) { $payload.lastping = $lastping; }
+        if ($PSBoundParameters.ContainsKey('lastcheckin')) { $payload.lastcheckin = $lastcheckin; }
         if ($PSBoundParameters.ContainsKey('biosexit')) { $payload.biosexit = $biosexit; }
         if ($PSBoundParameters.ContainsKey('efiexit')) { $payload.efiexit = $efiexit; }
         if ($PSBoundParameters.ContainsKey('enforce')) { $payload.enforce = $enforce; }

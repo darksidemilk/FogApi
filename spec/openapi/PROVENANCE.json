@@ -4,42 +4,57 @@
   "source": {
     "repo": "https://github.com/FOGProject/fogproject",
     "branch": "working-1.6",
-    "commit": "2dc470fed9fa34dd25b19f9b97d40ce92144d230",
-    "commitShort": "2dc470fed",
-    "commitDate": "2026-08-22T19:27:39+00:00",
-    "fogVersion": "1.6.0-beta.3820",
-    "openapiClassLastChanged": "a1e12d49b",
-    "localCorrections": [
-      "31932e73e - Describe /{class}/join as what Route::joining() actually does",
-      "a1e12d49b - Describe the hostname rule the column type cannot express",
-      "d9865c845 - Define \"upsert\" where the join description uses it"
-    ],
-    "$note": "2dc470fed is a merge of origin/working-1.6 (5c289e960) into the branch carrying the three local corrections above. Dump from the MERGED tree, not from origin/working-1.6, or those corrections are lost."
+    "commit": "7432c9ef77bc52874ba6187a2f6940e3e2d33485",
+    "commitShort": "7432c9ef7",
+    "commitDate": "2026-08-23T01:49:42+00:00",
+    "fogVersion": "1.6.0-beta.3860",
+    "openapiClassLastChanged": "4350d5048",
+    "localCorrections": [],
+    "$note": "Dumped from origin/working-1.6 directly. The three local corrections the previous record carried (31932e73e, a1e12d49b, d9865c845) landed upstream in FOGProject/fogproject#1285 and are ancestors of this commit, so there is no longer a merged tree to dump from. Verify that with `git merge-base --is-ancestor` before reintroducing a local-correction branch; if one is ever needed again, dump from the merged tree and say so here."
   },
   "generatedBy": "spec/tools/dump-openapi.php",
-  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3820 --out spec/openapi/fog-1.6.json",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3860 --out spec/openapi/fog-1.6.json",
   "servedLiveAt": [
     "GET {webroot}/system/openapi",
     "GET {webroot}/swagger.json"
   ],
   "counts": {
-    "paths": 394,
-    "operations": 545,
+    "paths": 372,
+    "operations": 517,
     "schemas": 53,
     "routeClasses": 51
   },
   "notes": [
     "Both live routes sit in the router's unauthenticated allowlist, so discovery needs no tokens.",
     "The live document is built per request and includes classes contributed by plugin hooks. This snapshot fires no hooks, so it describes stock FOG. That is the intended baseline for generated cmdlets; plugin classes are a runtime concern, handled by reading the live document.",
-    "1.6 only. The 1.5 line has no commons/schema-expected.php, so there is no type source to generate against there."
+    "1.6 only. The 1.5 line has no commons/schema-expected.php, so there is no type source to generate against there.",
+    "A class dropping out of the search list does NOT mean the route stopped answering. /{class}/search/{item} still returns 200 with recordsFiltered: 0 for all 20; the change is to what the document advertises, which is why the retirement is a client-side one."
   ],
   "verifiedAgainstLiveServer": {
-    "date": "2026-08-22",
-    "method": "Deployed the merged tree (2dc470fed) to the container's web root, ran the schema update, then fetched GET /system/openapi and compared it to this snapshot key by key.",
-    "result": "Identical except servers[0].url, which is a deliberate placeholder here. 394 paths, 53 schemas on both; Tasklog.imageName present live; GET /imaginglog now answers 501, confirming the class really is retired and not merely undocumented.",
+    "date": "2026-08-23",
+    "method": "Stood up FOG 1.6.0-beta.3860 from this exact commit (Apache 2.4.58 + PHP 8.4.24 + MariaDB 10.11.14, --install-mode http-only equivalent: web tree at /var/www/html/fog, hand-written config.class.php, schema deployed via the installer's own POST to management/index.php?node=schema with X-Fog-Install-Token). Fetched GET /system/openapi and compared it to this snapshot key by key with a recursive walk.",
+    "result": "One difference, and it is the deliberate placeholder: servers[0].url is http://127.0.0.1/fog live and https://fog.example.invalid/fog here. 372 paths, 517 operations and 53 schemas on both; info.version 1.6.0-beta.3860 on both.",
+    "behaviourChecks": [
+      "GET /host/search/probe -> 200, recordsTotal 1, recordsFiltered 1 against a seeded host: a name-bearing class still searches.",
+      "GET /tasklog/search/probe -> 200, recordsTotal 0, recordsFiltered 0: the nameless route is still reachable and still answers nothing, which is exactly why documenting it was wrong.",
+      "POST /history, PUT /history/join, POST /tasklog, PUT /tasklog/join -> 501: history and tasklog really are read-only now, not merely undocumented."
+    ],
     "note": "This is what makes the offline generator trustworthy: it calls OpenAPI::document() rather than reimplementing it, and the diff confirms the four things it stubs (FOG_VERSION, the host, the hook manager, the FOGBase statics) are the only things that differ."
   },
   "changeLog": [
+    {
+      "from": "2dc470fed (1.6.0-beta.3820, 394 paths / 545 operations / 53 schemas)",
+      "to": "7432c9ef7 (1.6.0-beta.3860, 372 paths / 517 operations / 53 schemas)",
+      "summary": "Two unrelated upstream narrowings: search is advertised only where it can answer, and the event tables went read-only. No schema changed shape and nothing was added.",
+      "detail": [
+        "4350d5048 'Emit the OpenAPI search route only for classes that have a name field' adds OpenAPI::_isSearchable(), gating /{class}/search/{item} on the same isset($databaseFields['name']) test unisearch() already applies.",
+        "Removed 20 search paths: filedeletequeue, groupassociation, history, hostautologout, hostscreensetting, imageassociation, inventory, ipxe, macaddressassociation, moduleassociation, multicastsessionassociation, nodefailure, powermanagement, printerassociation, snapinassociation, snapingroupassociation, snapinjob, snapintask, tasklog, usertracking.",
+        "70871455c 'fix(api): event tables answer no write verb (ADR 0020 decision 7)' adds history and tasklog to Route::$readOnlyClasses (usertracking was already there, which is why it lost only its search route).",
+        "Removed 8 write operations on those two: POST /history, PUT /history/{id}, DELETE /history/{id}, PUT /history/join and the same four for tasklog. Both /join paths disappear entirely because OpenAPI emits /{class}/join only when the class is writable.",
+        "22 paths and 28 operations removed in total. The search description also gained the sentence naming the extra fields host, storagenode and setting match on.",
+        "Neither commit needed a hand-edit to the document beyond openapi.class.php itself: _paths() generates from $validClasses and writableClasses(), so the document self-updates."
+      ]
+    },
     {
       "from": "e83049586 (1.6.0-beta.3789, 401 paths / 54 schemas)",
       "to": "2dc470fed (1.6.0-beta.3820, 394 paths / 53 schemas)",
