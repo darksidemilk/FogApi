@@ -43,6 +43,11 @@ function Send-FogImage {
     If you do not use this switch and a task already exists, the existing task will be returned instead of creating a new one.
     Will search for both active tasks and scheduled tasks, if either exist, it will not create a new task unless you use this switch.
     
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. Any field it sets wins over the switches
+    below; anything it leaves unset keeps this cmdlet's own default. An escape
+    hatch for a field this cmdlet does not expose, such as -sessionjoin.
     .EXAMPLE
     Deploy-FogImage -hostID "42"
 
@@ -107,7 +112,8 @@ function Send-FogImage {
         [switch]$shutdown,
         [switch]$NoSnapins,
         [switch]$bypassbitlocker,
-        [switch]$force
+        [switch]$force,
+        [FogTaskRequest]$TaskRequest
     )
     
     
@@ -221,29 +227,19 @@ function Send-FogImage {
             # if ($PSCmdlet.ParameterSetName -in 'now','now-byhost') {
             if ($null -eq $StartAtTime) {
                 "No Time was specified, queuing the task to start now" | out-host;
-                if (Test-FogVerAbove1dot6) {
-                    $jsonData = @"
-                    {
-                        "taskName":"Deploy Task for $($fogHost.name) id $($foghost.id)",
-                        "taskTypeID":"1",
-                        "shutdown":"$shutDownStr",
-                        "debug":"$debugStr",
-                        "wol":"$wolStr",
-                        "isActive":"1"
-                    }
-"@
-                } else {
-                    $jsonData = @"
-                    {
-                        "taskTypeID":"1",
-                        "shutdown":"$shutDownStr",
-                        "other2":"$debugStr",
-                        "other4":"$wolStr",
-                        "isActive":"1"
-                    }   
-"@
-                }
-                $newtask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $jsonData -IDofObject $hostId;
+                # One body for both server versions. The 1.5 branch this
+                # replaces sent other2/other4 -- scheduledtask columns -- and
+                # omitted taskName, debug and wol in the spelling 1.5's
+                # Route::task() actually reads, so -debugMode and the wake never
+                # reached a 1.5 server at all.
+                $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+                if ($null -eq $request.taskTypeID) { $request.taskTypeID = 1 }
+                if ([string]::IsNullOrEmpty($request.taskName)) { $request.taskName = "Deploy Task for $($fogHost.name) id $($foghost.id)" }
+                if ($null -eq $request.shutdown) { $request.shutdown = [bool]$shutdown }
+                if ($null -eq $request.debug)    { $request.debug = [bool]$debugMode }
+                if ($null -eq $request.wol)      { $request.wol = (-not $NoWol) }
+                if ($null -eq $request.extra)    { $request.extra = @{ isActive = 1 } }
+                $newtask = New-FogObject -type objecttasktype -coreTaskObject host -jsonData $request.ToJson() -IDofObject $hostId;
             } else {
                 if ($NoSnapins) {
                     $deploySnapins = "0";

@@ -24,6 +24,11 @@ function Receive-FogImage {
     .PARAMETER shutdown
     Switch param to indicate the host should shutdown at the end of the task instead of restarting.
     
+    .PARAMETER TaskRequest
+    A task request body, from New-FogTaskRequest or as a hashtable, used as the
+    base for the task this queues. Any field it sets wins over the switches
+    below; anything it leaves unset keeps this cmdlet's own default. An escape
+    hatch for a field this cmdlet does not expose, such as -sessionjoin.
     .EXAMPLE
     Receive-FogImage -hostID "42"
 
@@ -80,7 +85,8 @@ function Receive-FogImage {
         [Parameter(ParameterSetName='now-byhost')]
         [Parameter(ParameterSetName='schedule')]
         [Parameter(ParameterSetName='schedule-byhost')]
-        [switch]$shutdown
+        [switch]$shutdown,
+        [FogTaskRequest]$TaskRequest
     )
     
     
@@ -123,29 +129,18 @@ function Receive-FogImage {
         "Will capture the assigned image $($fogImage.name) - $($fogImage.id) which will capture the os $($fogImage.osname)" | Out-host;
         if ($PSCmdlet.ParameterSetName -eq 'now') {
             "No Time was specified, queuing the task to start now" | out-host;
-		    if (Test-FogVerAbove1dot6) {
-
-                $jsonData = @"
-                {
-                    "taskName":"Capture Task",
-                    "taskTypeID": "2",
-                    "shutdown":"$shutDownStr",
-                    "debug":"$debugStr",
-                    "wol":"$wolStr",
-                    "isActive":"1"
-                }
-"@
-            } else {
-                $jsonData = @"
-                {
-                    "taskTypeID": "2"
-                    "shutdown":"$shutDownStr",
-                    "other2":"$debugStr",
-                    "other4":"$wolStr",
-                    "isActive":"1"
-                }
-"@
-            }
+            # One body for both server versions. The 1.5 branch this replaces
+            # was not even valid JSON -- no comma after "taskTypeID": "2" -- and
+            # sent other2/other4, which are scheduledtask columns that 1.5's
+            # Route::task() does not read.
+            $request = if ($PSBoundParameters.ContainsKey('TaskRequest')) { $TaskRequest } else { [FogTaskRequest]::new() }
+            if ($null -eq $request.taskTypeID) { $request.taskTypeID = 2 }
+            if ([string]::IsNullOrEmpty($request.taskName)) { $request.taskName = "Capture Task" }
+            if ($null -eq $request.shutdown) { $request.shutdown = [bool]$shutdown }
+            if ($null -eq $request.debug)    { $request.debug = [bool]$debugMode }
+            if ($null -eq $request.wol)      { $request.wol = (-not $NoWol) }
+            if ($null -eq $request.extra)    { $request.extra = @{ isActive = 1 } }
+            $jsonData = $request.ToJson()
 
         } else {
             "Start time of $($StartAtTime) specified, scheduling the task to start at that time" | out-host;

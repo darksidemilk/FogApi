@@ -110,35 +110,7 @@ class FogTaskRequest {
         return $body
     }
 
-    # The FOG 1.5 body. 1.5 has no taskName, and spells two fields as the
-    # scheduledtask columns they are stored in: other2 is deploySnapins and
-    # other4 is wol.
-    #
-    # Send-FogImage, Receive-FogImage and Send-FogGroupTask have always put the
-    # DEBUG flag in other2 on this path, which does not match that reading.
-    # Whether 1.5 ever honoured it is not answerable from a 1.6 server, so this
-    # reproduces today's bytes rather than quietly changing what a 1.5 install
-    # sends. See CONTEXT-typed-objects-plan.md.
-    [hashtable] ToLegacyBody() {
-        $body = $this.ToBody()
-        $body.Remove('taskName')
-        foreach ($pair in @{ deploySnapins = 'other2'; wol = 'other4' }.GetEnumerator()) {
-            if ($body.ContainsKey($pair.Key)) {
-                $body[$pair.Value] = $body[$pair.Key]
-                $body.Remove($pair.Key)
-            }
-        }
-        return $body
-    }
-
     [string] ToJson() { return ($this.ToBody() | ConvertTo-Json -Depth 5 -Compress) }
-    [string] ToLegacyJson() { return ($this.ToLegacyBody() | ConvertTo-Json -Depth 5 -Compress) }
-
-    # Picks the spelling for the server in front of you.
-    [string] ToJsonForServer([bool]$isFogSixteen) {
-        if ($isFogSixteen) { return $this.ToJson() }
-        return $this.ToLegacyJson()
-    }
 
     [string] ToString() {
         $type = $(if ($null -eq $this.taskTypeID) { '?' } else { $this.taskTypeID })

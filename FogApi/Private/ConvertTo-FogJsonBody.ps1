@@ -29,11 +29,9 @@ cmdlets stop caring what shape they were handed:
     PSCustomObject  ConvertTo-Json
     $null         $null, so Invoke-FogApi still drops the body for a GET
 
-On FogTaskRequest this deliberately returns the 1.6 body. Choosing between that
-and ToLegacyBody() needs the server version, and asking for it here would put a
-GET system/info in front of every write. Every task cmdlet already branches on
-Test-FogVerAbove1dot6, so the one that knows calls ToJsonForServer() and hands
-this a string.
+There is no server-version branch to make here. FOG 1.5's Route::task() reads
+the same eight fields 1.6 declares, so one body serves both and this never needs
+to ask which version it is talking to.
 
 -Depth 10 because a host carries nested inventory, image and hostscreen objects
 and ConvertTo-Json's default of 2 silently renders anything deeper as the type
