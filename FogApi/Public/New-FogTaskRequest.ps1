@@ -69,7 +69,7 @@ New-FogTaskRequest -taskTypeID 1 -taskName 'Deploy' -shutdown $true
 
 Builds an immediate deploy task that shuts the host down afterwards.
 Expected output:
-FogTaskRequest(taskTypeID=1, 'Deploy')
+{ "taskTypeID": 1, "taskName": "Deploy", "shutdown": true }
 
 .EXAMPLE
 $t = New-FogTaskRequest -taskTypeID 13 -deploySnapins 7
@@ -80,9 +80,8 @@ Queues snapin 7 against a host, passing the request object down the pipeline.
 .EXAMPLE
 (New-FogTaskRequest -taskTypeID 14 -wol $true).ToJson()
 
-Shows the exact body that would be sent.
-Expected output:
-{"taskTypeID":"14","wol":"1"}
+Shows the exact body that would be sent: {"taskTypeID":"14","wol":"1"}.
+Only the fields that were set appear.
 #>
     [CmdletBinding()]
     [Alias('New-FogTaskBody')]

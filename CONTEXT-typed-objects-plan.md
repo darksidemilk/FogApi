@@ -189,6 +189,38 @@ the one a caller has to construct.
   `Get-FogHosts` results now carry `FogApi.Host`, so `Register-FogTypeData`'s
   `Deploy`/`Cancel`/`Refresh` methods apply to list output for the first time.
 
+#### The mocked suite is off in CI
+
+Taken as the decision #66 stream E was asking for. `.github/workflows/build-test.yml`'s
+Pester step is now `if: ${{ inputs.run_pester }}` — off for pull requests, runnable on
+demand from the Actions tab.
+
+It was already `continue-on-error: true`, so it never gated anything. That is the
+argument for turning it off rather than leaving it: a step that is red on every PR and
+that nobody is meant to act on teaches people to ignore red steps.
+
+The structural problem is what it asserts. Every response comes from `Tests/Fixtures`,
+so the suite proves the module still produces the shape somebody wrote down — not that
+the shape is right. It has never been vetted against a real server. And it fails for a
+reason that says nothing about the change under review: this phase added 20 cmdlets and
+got 20 failures, all `no fixture mapped for uriPath 'host/1/cancel'`. Adding a cmdlet
+should not require inventing a canned response for it.
+
+Two things found by running it once anyway, both worth keeping:
+
+- `Tests/FogApi.TestHelpers.psm1` requires every `Expected output:` block to be valid
+  JSON, and fails **discovery** for the whole file if one is not — so a single bad
+  annotation takes out all 488 cases, not one. `New-FogTaskRequest`'s first example
+  documented the `ToString()` form. Fixed.
+- The 20 new `Start-Fog*Task` / `Stop-Fog*Task` cmdlets have no fixtures. Whatever
+  replaces this suite in phase 6 needs `{class}/{id}/task` and `{class}/{id}/cancel`
+  cases; the routes return FOG's `{}` envelope rather than an entity.
+
+The real gate stays `Tests/FogApi.RealServer.Tests.ps1` against a live server, plus the
+build job. Phase 6 decides what replaces the mocked layer — a language-neutral
+conformance corpus the python and bash ports can replay, rather than three parallel mock
+suites.
+
 #### Corrections to this plan
 
 - **The ten cmdlets are not one shape.** `New-FogTask`, `Update-FogTask`,
