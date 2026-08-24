@@ -186,6 +186,35 @@ function Test-WriteOnlyField {
     return $true
 }
 
+function Resolve-ComputedFields {
+    <#
+    The computed-field names out of a schema's description sentence.
+
+    Parsing English is not something this pipeline should be doing, and it is
+    here under protest: FOG names these fields in prose and nowhere else. The
+    alternative is a hand-maintained list of 81 names across 24 classes, which
+    would be wrong the first time upstream added a relation and would have no
+    way to know.
+
+    Anchored on the fixed clause _entitySchema() builds with sprintf, not on
+    loose keyword matching, so a description that stops being generated this
+    way yields nothing rather than yielding garbage. Build-FogApiSpec reports
+    the total, and Tests/FogApiSpec.Tests.ps1 pins it -- a silent drop to zero
+    is the failure mode worth catching, because nothing else would notice.
+    #>
+    param($Schema, [string[]]$DeclaredNames = @())
+    if (-not ($Schema.PSObject.Properties.Name -contains 'description')) { return @() }
+    $d = [string]$Schema.description
+    if ($d -notmatch 'not settable through the generic create/edit path:\s*(.+?)\.(\s|$)') { return @() }
+    $names = ($Matches[1] -split ',\s*') | ForEach-Object { $_.Trim() } | Where-Object { $_ -match '^[A-Za-z_][A-Za-z0-9_]*$' }
+    # A name can be both. plugin.description is a real column AND listed as
+    # computed, because the model overwrites it with the value read out of the
+    # plugin's own metadata. The declared field wins: it is the one with a
+    # type, and emitting both would be a duplicate member -- which in C# is a
+    # compile error rather than something anyone would discover later.
+    return @($names | Sort-Object -Unique | Where-Object { $DeclaredNames -notcontains $_ })
+}
+
 function Resolve-WireType {
     <#
     The one word an emitter needs to decide both a parameter's type and how the
@@ -415,6 +444,32 @@ foreach ($class in $snapshotClasses) {
         schemaName = $schemaName
         table      = $(if ($schema.PSObject.Properties.Name -contains 'x-fog-table') { $schema.'x-fog-table' } else { $null })
         fields     = @($fields)
+        # Fields a response can carry that are NOT columns and are not in
+        # properties. host declares 33 and answers with more: mac, primac,
+        # groups, snapins, inventory, task and ten others.
+        #
+        # _entitySchema() reflects a model's $databaseFields -- its own columns
+        # -- while the route returns the entity joined to its relations. FOG
+        # knows the difference and says so, but only in English, in the schema
+        # description: "Responses may carry computed fields that are not
+        # columns and are not settable through the generic create/edit path:
+        # ...". The names are there; nothing structured carries them.
+        #
+        # Read here rather than added to the snapshot, because the snapshot is
+        # a faithful copy of what the server serves and is verified byte for
+        # byte against a live one. Teaching the dump to emit more than FOG does
+        # would destroy the only check that says the copy is honest. So the
+        # snapshot stays what FOG said, and this is FogApi reading it.
+        #
+        # Names only, no types, because FOG declares none -- and several are
+        # whole nested entities rather than scalars, so a type here would be a
+        # guess. Enough for an emitter to declare the member and stop
+        # ConvertTo-Json dropping it; typing individual ones is a later and
+        # separate decision.
+        #
+        # The real fix is upstream: emit these as readOnly properties, at which
+        # point this parse finds the same names in a better place and can go.
+        computed   = @(Resolve-ComputedFields -Schema $schema -DeclaredNames @($fields.name))
     }
 }
 
@@ -840,6 +895,27 @@ $spec = [ordered]@{
         headers = @('fog-api-token', 'fog-user-token')
         note    = 'Both tokens are already base64 as issued by the web UI. Send them verbatim; encoding them again double-encodes and 401s every call.'
         unauthenticatedRoutes = @('/system/status', '/system/info', '/system/openapi', '/swagger.json')
+        # Read from the snapshot rather than listed here, so a scheme added
+        # upstream shows up without anyone editing this file. bearerAuth
+        # arrived exactly that way, in 1.6.0-beta.4013.
+        schemes = @($oas.components.securitySchemes.PSObject.Properties.Name | Sort-Object)
+        # Each entry is one acceptable combination; within an entry every named
+        # scheme is required together. Two things changed in beta.4013 and only
+        # one of them is the new scheme: bearerAuth is accepted ALONE, and
+        # basicAuth alone no longer is -- it now needs the server-wide
+        # fog-api-token beside it.
+        accepts = @(
+            foreach ($alt in $oas.security) { , @($alt.PSObject.Properties.Name | Sort-Object) }
+        )
+        bearer = [ordered]@{
+            header = 'Authorization: Bearer <token>'
+            note   = @(
+                'Sufficient on its own -- no fog-api-token header beside it.',
+                'ADR 0027: a Bearer credential is a row in apiTokens, not a second spelling of users.uAPIToken. SHA-256 hashed at rest, shown once at creation, individually revocable, many per user, and prefixed fog_ so a leaked-credential scanner has something to match.',
+                'users.uAPIToken is untouched and keeps working as fog-user-token beside fog-api-token, so nothing FogApi sends today has to change.',
+                'UPSTREAM DESCRIPTION IS STALE: openapi.class.php still describes bearerAuth as "The per-user API token from the API tab ... Sufficient on its own", which is what 420623b2a shipped and ed597ef8a withdrew. Do not generate guidance from that sentence.'
+            )
+        }
     }
     fifteen      = $overlay.fifteen
     stats        = [ordered]@{
@@ -852,6 +928,13 @@ $spec = [ordered]@{
         replacesThinWrapper = @($generated | Where-Object { $_.status -eq 'replaces-thin-wrapper' }).Count
         fixedRoutes        = $fixed.Count
         handWritten        = $handWritten.Count
+        # Counted so a silent drop to zero is visible. These names are parsed
+        # out of an English sentence FOG writes, so the way this breaks is the
+        # sentence being reworded upstream -- which yields no names and no
+        # error. A number in the report and a floor in the suite are the only
+        # things that would notice.
+        declaredFields     = @($schemaByClass.Values.fields).Count
+        computedFields     = @($schemaByClass.Values | ForEach-Object { $_.computed }).Count
     }
     functions    = @($generated)
     fixedRoutes  = @($fixed)
@@ -870,5 +953,6 @@ Write-Host ("  snapshot: {0} classes, {1} operations" -f $spec.stats.snapshotCla
 Write-Host ("  generated: {0} functions ({1} replace a thin wrapper, {2} skipped because a hand-written function owns the name)" -f `
     $spec.stats.toGenerate, $spec.stats.replacesThinWrapper, $spec.stats.skippedNameTaken)
 Write-Host ("  hand-written: {0}   fixed routes: {1}" -f $spec.stats.handWritten, $spec.stats.fixedRoutes)
+Write-Host ("  fields: {0} declared, {1} computed (named in prose, not in properties)" -f $spec.stats.declaredFields, $spec.stats.computedFields)
 
 if ($PassThru) { [pscustomobject]$spec }

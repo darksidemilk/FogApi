@@ -29,7 +29,35 @@
       "/system/info",
       "/system/openapi",
       "/swagger.json"
-    ]
+    ],
+    "schemes": [
+      "basicAuth",
+      "bearerAuth",
+      "fogApiToken",
+      "fogUserToken"
+    ],
+    "accepts": [
+      [
+        "bearerAuth"
+      ],
+      [
+        "fogApiToken",
+        "fogUserToken"
+      ],
+      [
+        "basicAuth",
+        "fogApiToken"
+      ]
+    ],
+    "bearer": {
+      "header": "Authorization: Bearer <token>",
+      "note": [
+        "Sufficient on its own -- no fog-api-token header beside it.",
+        "ADR 0027: a Bearer credential is a row in apiTokens, not a second spelling of users.uAPIToken. SHA-256 hashed at rest, shown once at creation, individually revocable, many per user, and prefixed fog_ so a leaked-credential scanner has something to match.",
+        "users.uAPIToken is untouched and keeps working as fog-user-token beside fog-api-token, so nothing FogApi sends today has to change.",
+        "UPSTREAM DESCRIPTION IS STALE: openapi.class.php still describes bearerAuth as \"The per-user API token from the API tab ... Sufficient on its own\", which is what 420623b2a shipped and ed597ef8a withdrew. Do not generate guidance from that sentence."
+      ]
+    }
   },
   "fifteen": {
     "$comment": [
@@ -94,7 +122,9 @@
     "skippedNameTaken": 5,
     "replacesThinWrapper": 10,
     "fixedRoutes": 15,
-    "handWritten": 57
+    "handWritten": 57,
+    "declaredFields": 431,
+    "computedFields": 80
   },
   "functions": [
     {
@@ -5136,7 +5166,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "group": {
       "schemaName": "Group",
@@ -5282,6 +5313,9 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts"
       ]
     },
     "groupassociation": {
@@ -5341,7 +5375,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "history": {
       "schemaName": "History",
@@ -5468,7 +5503,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "hookevent": {
       "schemaName": "Hookevent",
@@ -5510,7 +5546,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "host": {
       "schemaName": "Host",
@@ -6087,6 +6124,24 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "fingerprint",
+        "groups",
+        "hostalo",
+        "hostscreen",
+        "imagename",
+        "inventory",
+        "mac",
+        "modules",
+        "optimalStorageNode",
+        "powermanagementtasks",
+        "primac",
+        "printers",
+        "snapinjob",
+        "snapins",
+        "task",
+        "users"
       ]
     },
     "hostautologout": {
@@ -6146,7 +6201,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "hostscreensetting": {
       "schemaName": "Hostscreensetting",
@@ -6290,7 +6346,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "image": {
       "schemaName": "Image",
@@ -6593,6 +6650,13 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts",
+        "imagepartitiontype",
+        "imagetype",
+        "os",
+        "storagegroups"
       ]
     },
     "imageassociation": {
@@ -6672,6 +6736,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "image",
+        "storagegroup"
       ]
     },
     "imagepartitiontype": {
@@ -6731,7 +6799,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "imagetype": {
       "schemaName": "Imagetype",
@@ -6790,7 +6859,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "inventory": {
       "schemaName": "Inventory",
@@ -7376,6 +7446,9 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host"
       ]
     },
     "ipxe": {
@@ -7520,7 +7593,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "keysequence": {
       "schemaName": "Keysequence",
@@ -7579,7 +7653,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "macaddressassociation": {
       "schemaName": "Macaddressassociation",
@@ -7735,6 +7810,9 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host"
       ]
     },
     "module": {
@@ -7828,6 +7906,9 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts"
       ]
     },
     "moduleassociation": {
@@ -7904,7 +7985,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "multicastsession": {
       "schemaName": "Multicastsession",
@@ -8255,6 +8337,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "imagename",
+        "state"
       ]
     },
     "multicastsessionassociation": {
@@ -8314,7 +8400,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "nodefailure": {
       "schemaName": "Nodefailure",
@@ -8424,6 +8511,12 @@
           "required": true,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host",
+        "storagegroup",
+        "storagenode",
+        "task"
       ]
     },
     "notifyevent": {
@@ -8466,7 +8559,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "os": {
       "schemaName": "Os",
@@ -8525,7 +8619,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "oui": {
       "schemaName": "Oui",
@@ -8584,7 +8679,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "plugin": {
       "schemaName": "Plugin",
@@ -8779,7 +8875,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "powermanagement": {
       "schemaName": "Powermanagement",
@@ -8947,6 +9044,9 @@
           "required": true,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts"
       ]
     },
     "printer": {
@@ -9176,6 +9276,9 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts"
       ]
     },
     "printerassociation": {
@@ -9337,7 +9440,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "pxemenuoptions": {
       "schemaName": "Pxemenuoptions",
@@ -9501,7 +9605,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "role": {
       "schemaName": "Role",
@@ -9560,6 +9665,11 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "permissions",
+        "usergroups",
+        "users"
       ]
     },
     "rolepermission": {
@@ -9619,7 +9729,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "roleuserassociation": {
       "schemaName": "Roleuserassociation",
@@ -9695,7 +9806,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "roleusergroupassociation": {
       "schemaName": "Roleusergroupassociation",
@@ -9771,7 +9883,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "scheduledtask": {
       "schemaName": "Scheduledtask",
@@ -10136,7 +10249,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "setting": {
       "schemaName": "Setting",
@@ -10231,7 +10345,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "site": {
       "schemaName": "Site",
@@ -10290,6 +10405,15 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "catchall",
+        "grantroles",
+        "grantusergroups",
+        "groups",
+        "hosts",
+        "usergroups",
+        "users"
       ]
     },
     "snapin": {
@@ -10619,6 +10743,11 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "hosts",
+        "path",
+        "storagegroups"
       ]
     },
     "snapinassociation": {
@@ -10695,7 +10824,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "snapingroupassociation": {
       "schemaName": "Snapingroupassociation",
@@ -10774,6 +10904,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "snapin",
+        "storagegroup"
       ]
     },
     "snapinjob": {
@@ -10853,6 +10987,11 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host",
+        "snapintasks",
+        "state"
       ]
     },
     "snapintask": {
@@ -11014,6 +11153,11 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "snapin",
+        "snapinjob",
+        "state"
       ]
     },
     "storagegroup": {
@@ -11090,6 +11234,13 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "allnodes",
+        "enablednodes",
+        "images",
+        "snapins",
+        "usedtasks"
       ]
     },
     "storagenode": {
@@ -11475,6 +11626,15 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "images",
+        "location_url",
+        "logfiles",
+        "online",
+        "snapinfiles",
+        "storagegroup",
+        "usedtasks"
       ]
     },
     "task": {
@@ -11931,6 +12091,14 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host",
+        "image",
+        "state",
+        "storagegroup",
+        "storagenode",
+        "type"
       ]
     },
     "tasklog": {
@@ -12109,7 +12277,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "taskstate": {
       "schemaName": "Taskstate",
@@ -12202,7 +12371,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "tasktype": {
       "schemaName": "Tasktype",
@@ -12390,7 +12560,8 @@
           "required": false,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "user": {
       "schemaName": "User",
@@ -12557,6 +12728,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "roles",
+        "usergroups"
       ]
     },
     "usergroup": {
@@ -12616,6 +12791,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "roles",
+        "users"
       ]
     },
     "usergroupmember": {
@@ -12692,7 +12871,8 @@
           "required": true,
           "aliases": []
         }
-      ]
+      ],
+      "computed": []
     },
     "usertracking": {
       "schemaName": "Usertracking",
@@ -12853,6 +13033,10 @@
           "required": false,
           "aliases": []
         }
+      ],
+      "computed": [
+        "host",
+        "hostname"
       ]
     }
   },

@@ -85,6 +85,47 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
                 $fn.l1Function | Should -Not -BeNullOrEmpty -Because "$($fn.functionName) has no L1 function"
             }
         }
+
+        It 'resolves a wireType for every field' {
+            # Total by construction, and worth pinning: an unresolved field
+            # would reach an emitter with nothing to act on, and the emitter
+            # would fall back to string. A date silently becoming a string is
+            # the exact defect the format passthrough was added to fix.
+            $fields = @($script:Spec.schemas.PSObject.Properties.Value.fields)
+            $fields.Count | Should -BeGreaterThan 400
+            $known = @('string', 'int', 'number', 'bool', 'bool01', 'dateTime', 'date')
+            foreach ($f in $fields) {
+                $f.wireType | Should -BeIn $known -Because "field '$($f.name)' resolved to an unknown wireType"
+            }
+            @($fields | Where-Object { $_.wireType -eq 'bool01' }).Count |
+                Should -BeGreaterThan 20 -Because 'FOG spells booleans enum(0,1); losing them means every boolean became a bare string'
+            @($fields | Where-Object { $_.wireType -eq 'dateTime' }).Count |
+                Should -BeGreaterThan 10 -Because 'the OpenAPI format is what carries these; a builder that stops reading it drops them silently'
+        }
+
+        It 'still finds the computed fields FOG names in prose' {
+            # These are parsed out of an English sentence, because FOG names
+            # them nowhere else. So the way this breaks is upstream rewording
+            # the sentence: the parse then yields nothing, no error is raised,
+            # and 80 fields quietly stop being modelled. A floor is the only
+            # thing that would notice.
+            $script:Spec.stats.computedFields |
+                Should -BeGreaterThan 60 -Because 'the description sentence _entitySchema() writes has probably been reworded upstream; re-check Resolve-ComputedFields'
+            @($script:Spec.schemas.host.computed) |
+                Should -Contain 'mac' -Because 'host is the class with the most computed fields and the one most likely to be noticed'
+        }
+
+        It 'never lists a computed field that is also a declared one' {
+            # plugin.description is both -- a real column the model overwrites
+            # from the plugin's own metadata. Emitting both would be a
+            # duplicate member, which in C# is a compile error.
+            foreach ($c in $script:Spec.schemas.PSObject.Properties) {
+                $declared = @($c.Value.fields.name)
+                foreach ($n in @($c.Value.computed)) {
+                    $declared | Should -Not -Contain $n -Because "$($c.Name).$n is declared and computed; the declared one wins"
+                }
+            }
+        }
     }
 
     Context 'the emitted files' {
