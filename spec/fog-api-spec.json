@@ -9,7 +9,7 @@
   "specVersion": 1,
   "source": {
     "openapi": "spec/openapi/fog-1.6.json",
-    "fogVersion": "1.6.0-beta.3894",
+    "fogVersion": "1.6.0-beta.4013",
     "overlay": "spec/overlay/fog-api-overlay.json",
     "oasVersion": "3.0.3"
   },
@@ -12031,8 +12031,8 @@
           "column": "uPass",
           "nullable": false,
           "readOnly": false,
-          "writeOnly": false,
-          "sensitive": "list",
+          "writeOnly": true,
+          "sensitive": "always",
           "serverOwned": false,
           "maxLength": null,
           "pattern": null,
@@ -12099,7 +12099,7 @@
           "nullable": false,
           "readOnly": true,
           "writeOnly": false,
-          "sensitive": "list",
+          "sensitive": "always",
           "serverOwned": true,
           "maxLength": 255,
           "pattern": null,
@@ -12120,6 +12120,25 @@
           "maxLength": 32,
           "pattern": null,
           "enum": null,
+          "required": false,
+          "aliases": []
+        },
+        {
+          "name": "apionly",
+          "type": "string",
+          "format": null,
+          "column": "uAPIOnly",
+          "nullable": false,
+          "readOnly": false,
+          "writeOnly": false,
+          "sensitive": null,
+          "serverOwned": false,
+          "maxLength": null,
+          "pattern": null,
+          "enum": [
+            "0",
+            "1"
+          ],
           "required": false,
           "aliases": []
         }

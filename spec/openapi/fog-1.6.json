@@ -2,8 +2,8 @@
     "openapi": "3.0.3",
     "info": {
         "title": "FOG Project API",
-        "version": "1.6.0-beta.3894",
-        "description": "Generated from this server's own routing and model metadata,\nso it describes the classes and routes THIS server exposes,\nincluding any a plugin has added.\n\nEnable under FOG Configuration > FOG Settings > API System.\nAuthenticate with the `fog-api-token` (server-wide) and\n`fog-user-token` (per user) headers, or with HTTP basic auth.\n\nField names: every property is also addressable by its raw\ndatabase column name, because the model layer flips\n$databaseFields into $databaseFieldsFlipped and accepts\neither spelling. Only the property name is documented here.",
+        "version": "1.6.0-beta.4013",
+        "description": "Generated from this server's own routing and model metadata,\nso it describes the classes and routes THIS server exposes,\nincluding any a plugin has added.\n\nEnable under FOG Configuration > FOG Settings > API System.\nPreferred: send the per-user API token as\n`Authorization: Bearer <token>`, which needs nothing else.\nOtherwise the `fog-api-token` (server-wide) header is\nrequired, plus one caller identity -- either the\n`fog-user-token` header or HTTP basic auth. Basic auth does\nnot replace the `fog-api-token` header.\n\nField names: every property is also addressable by its raw\ndatabase column name, because the model layer flips\n$databaseFields into $databaseFieldsFlipped and accepts\neither spelling. Only the property name is documented here.",
         "license": {
             "name": "GPL-3.0",
             "url": "http://opensource.org/licenses/gpl-3.0"
@@ -17,10 +17,14 @@
     ],
     "security": [
         {
+            "bearerAuth": []
+        },
+        {
             "fogApiToken": [],
             "fogUserToken": []
         },
         {
+            "fogApiToken": [],
             "basicAuth": []
         }
     ],
@@ -29687,6 +29691,11 @@
     },
     "components": {
         "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "The per-user API token from the API tab of a user with API access enabled, sent as `Authorization: Bearer`. Sufficient on its own -- no fog-api-token header is needed alongside it. Send the value exactly as the UI displays it: it is already base64 encoded, and a raw token is indistinguishable from an encoded one because hex is itself valid base64."
+            },
             "fogApiToken": {
                 "type": "apiKey",
                 "in": "header",
@@ -32070,7 +32079,7 @@
                     "user",
                     "pass"
                 ],
-                "description": "Responses may carry computed fields that are not columns and are not settable through the generic create/edit path: images, snapinfiles, logfiles, usedtasks, storagegroup, location_url, online."
+                "description": "Responses may carry computed fields that are not columns and are not settable through the generic create/edit path: images, snapinfiles, logfiles, usedtasks, storagegroup, location_url, online. images and snapinfiles are opt-in: each is an outbound request to the node itself, so they are returned only for expand=images, expand=snapinfiles or expand=all. logfiles is not returned by this route at all."
             },
             "Task": {
                 "type": "object",
@@ -32415,8 +32424,9 @@
                     "password": {
                         "type": "string",
                         "x-fog-column": "uPass",
-                        "x-fog-sensitive": "list",
-                        "description": "Omitted from list responses; returned only on a single GET by id."
+                        "x-fog-sensitive": "always",
+                        "readOnly": true,
+                        "description": "Never returned by the API."
                     },
                     "type": {
                         "type": "integer",
@@ -32441,15 +32451,24 @@
                         "type": "string",
                         "maxLength": 255,
                         "x-fog-column": "uAPIToken",
-                        "x-fog-sensitive": "list",
+                        "x-fog-sensitive": "always",
+                        "readOnly": true,
                         "description": "Maintained by the server. It may be sent back unchanged, but a request that would change it is refused.",
-                        "x-fog-server-owned": true,
-                        "readOnly": true
+                        "x-fog-server-owned": true
                     },
                     "authsource": {
                         "type": "string",
                         "maxLength": 32,
                         "x-fog-column": "uAuthSource"
+                    },
+                    "apionly": {
+                        "type": "string",
+                        "enum": [
+                            "0",
+                            "1"
+                        ],
+                        "default": "0",
+                        "x-fog-column": "uAPIOnly"
                     }
                 },
                 "required": [

@@ -29,6 +29,9 @@ function Update-FogUser {
     .PARAMETER authsource
     Sets the authsource field (column uAuthSource). At most 32 characters.
 
+    .PARAMETER apionly
+    Sets the apionly field (column uAPIOnly).
+
     .PARAMETER settings
     A hashtable of raw field values, merged over the named parameters.
 
@@ -68,6 +71,9 @@ function Update-FogUser {
         [ValidateLength(0,32)]
         [string]$authsource,
         [Parameter()]
+        [ValidateSet('0','1')]
+        [string]$apionly,
+        [Parameter()]
         [hashtable]$settings
     )
 
@@ -80,6 +86,7 @@ function Update-FogUser {
         if ($PSBoundParameters.ContainsKey('display')) { $payload.display = $display; }
         if ($PSBoundParameters.ContainsKey('api')) { $payload.api = $api; }
         if ($PSBoundParameters.ContainsKey('authsource')) { $payload.authsource = $authsource; }
+        if ($PSBoundParameters.ContainsKey('apionly')) { $payload.apionly = $apionly; }
         # -settings wins, so a caller can reach a field this module does not
         # model yet without the named parameters fighting them for it.
         if ($PSBoundParameters.ContainsKey('settings')) {
