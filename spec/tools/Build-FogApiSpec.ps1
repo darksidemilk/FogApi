@@ -155,6 +155,37 @@ function New-FunctionName {
     '{0}-{1}{2}{3}{4}' -f $Verb, $Infix, $overlay.naming.prefix, $Noun, $Suffix
 }
 
+function Test-WriteOnlyField {
+    <#
+    A field the caller may send but never receives back -- writeOnly in
+    OpenAPI's vocabulary, which this document does not use.
+
+    FOG marks these readOnly instead, alongside the description "Never returned
+    by the API." Those two statements are inverses of each other: readOnly means
+    a field comes back in responses and must not be sent, writeOnly means it is
+    sent and never comes back. The sentence is right and the flag is wrong.
+
+    x-fog-server-owned separates the two cases and does it exactly:
+
+      sensitive: always + server-owned  -> really readOnly. user.token is the
+                                          one, and the server refuses a write.
+      sensitive: always, not owned      -> really writeOnly. Exactly three:
+                                          user.password, storagenode.pass and
+                                          storagenode.key.
+
+    Derived from the two markers rather than kept as a list of three names, so
+    a sensitive field added upstream is classified without anyone remembering
+    this function exists. The same reasoning Get-FogCoreObjectList records for
+    its class list, where a hardcoded copy drifted by seven entries.
+    #>
+    param($Field)
+    $names = $Field.PSObject.Properties.Name
+    if (-not ($names -contains 'x-fog-sensitive')) { return $false }
+    if ($Field.'x-fog-sensitive' -ne 'always') { return $false }
+    if (($names -contains 'x-fog-server-owned') -and $Field.'x-fog-server-owned') { return $false }
+    return $true
+}
+
 # --- index the snapshot ---------------------------------------------------
 
 # operationId -> { path, method, class, routeName, operation }
@@ -258,7 +289,46 @@ foreach ($class in $snapshotClasses) {
             format   = $(if ($f.PSObject.Properties.Name -contains 'format') { $f.format } else { $null })
             column   = $(if ($f.PSObject.Properties.Name -contains 'x-fog-column') { $f.'x-fog-column' } else { $null })
             nullable = [bool]($f.PSObject.Properties.Name -contains 'nullable' -and $f.nullable)
-            readOnly = [bool]($f.PSObject.Properties.Name -contains 'readOnly' -and $f.readOnly)
+            # readOnly, corrected -- see writeOnly below for why it needs to be.
+            readOnly = [bool](
+                ($f.PSObject.Properties.Name -contains 'readOnly' -and $f.readOnly) -and
+                -not (Test-WriteOnlyField $f)
+            )
+            # A field the caller may SEND but never receives back.
+            #
+            # FOG marks these readOnly, which is backwards. In OpenAPI 3,
+            # readOnly means "returned in responses, never sent in requests";
+            # writeOnly is the inverse. _entitySchema() maps
+            # x-fog-sensitive: always to readOnly with the description
+            # "Never returned by the API." -- which is the definition of
+            # writeOnly, so the flag and the sentence next to it contradict
+            # each other. The document uses writeOnly nowhere.
+            #
+            # It is not cosmetic. The emitter skips readOnly fields, so the
+            # server's own document was removing the credential parameters
+            # from the cmdlets that exist to set them: New-FogStorageNode has
+            # no -pass and no -key today, and a storage node without its FTP
+            # credentials does not work. user.password was writable when the
+            # snapshot was last taken and turned readOnly by 1.6.0-beta.4013,
+            # so a re-snapshot would have taken -password off New-FogUser and
+            # left no way to create a usable account.
+            #
+            # route.class.php:358 says so outright, listing what is
+            # deliberately NOT server-owned: "Nor user.password: User::set()
+            # hashes it, so a supplied one is a real and supported write."
+            #
+            # x-fog-server-owned is the discriminator, and it is exact.
+            # user.token is BOTH sensitive-always and server-owned, and is
+            # genuinely readOnly; flipping on sensitivity alone would have
+            # added a -token parameter the server refuses. Derived rather
+            # than listed, so a sensitive field added upstream is classified
+            # without anyone remembering to come back here.
+            writeOnly = [bool](Test-WriteOnlyField $f)
+            # Carried through so an emitter can act on them: a writeOnly field
+            # must not become a model property that expects to round-trip, and
+            # a sensitive one must not be echoed into a log or an example.
+            sensitive   = $(if ($f.PSObject.Properties.Name -contains 'x-fog-sensitive') { $f.'x-fog-sensitive' } else { $null })
+            serverOwned = [bool]($f.PSObject.Properties.Name -contains 'x-fog-server-owned' -and $f.'x-fog-server-owned')
             maxLength = $(if ($f.PSObject.Properties.Name -contains 'maxLength') { $f.maxLength } else { $null })
             # A model constraint the column type does not carry -- host.name is
             # varchar(16) but Host::isHostnameSafe() allows 15 and a charset.

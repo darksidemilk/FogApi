@@ -56,6 +56,12 @@ function Update-FogStorageNode {
     .PARAMETER user
     Sets the user field (column ngmUser). At most 250 characters.
 
+    .PARAMETER pass
+    Sets the pass field (column ngmPass). At most 250 characters.
+
+    .PARAMETER key
+    Sets the key field (column ngmKey). At most 250 characters.
+
     .PARAMETER interface
     Sets the interface field (column ngmInterface). At most 25 characters.
 
@@ -129,6 +135,12 @@ function Update-FogStorageNode {
         [ValidateLength(0,250)]
         [string]$user,
         [Parameter()]
+        [ValidateLength(0,250)]
+        [string]$pass,
+        [Parameter()]
+        [ValidateLength(0,250)]
+        [string]$key,
+        [Parameter()]
         [ValidateLength(0,25)]
         [string]$interface,
         [Parameter()]
@@ -160,6 +172,8 @@ function Update-FogStorageNode {
         if ($PSBoundParameters.ContainsKey('ip')) { $payload.ip = $ip; }
         if ($PSBoundParameters.ContainsKey('maxClients')) { $payload.maxClients = $maxClients; }
         if ($PSBoundParameters.ContainsKey('user')) { $payload.user = $user; }
+        if ($PSBoundParameters.ContainsKey('pass')) { $payload.pass = $pass; }
+        if ($PSBoundParameters.ContainsKey('key')) { $payload.key = $key; }
         if ($PSBoundParameters.ContainsKey('interface')) { $payload.interface = $interface; }
         if ($PSBoundParameters.ContainsKey('bandwidth')) { $payload.bandwidth = $bandwidth; }
         if ($PSBoundParameters.ContainsKey('webroot')) { $payload.webroot = $webroot; }
