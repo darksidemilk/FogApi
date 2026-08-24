@@ -17,6 +17,16 @@
 
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
+
+    <!--
+      System, System.IO, System.Linq, System.Collections.Generic,
+      System.Net.Http and System.Threading.Tasks without a using line in every
+      file. Worth having before the emitter starts writing 200 of them: a
+      per-file using block is 200 identical lines to keep in step, and getting
+      one wrong is a compile error in generated code, which is the least
+      pleasant place to debug one.
+    -->
+    <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
