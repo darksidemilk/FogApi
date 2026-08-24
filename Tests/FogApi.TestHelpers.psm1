@@ -743,9 +743,46 @@ function Register-FogApiMock {
         return
     }
 
+    # TWO seams, because there are now two kinds of caller.
+    #
+    # The 66 hand-written .ps1 helpers still call Invoke-FogApi by NAME, and
+    # Pester's mock intercepts that because a script function resolves the name
+    # at runtime through the module's session state.
+    #
+    # The 164 compiled cmdlets do not. They call FogTransport.Current directly,
+    # so no mock on a command name can reach them -- and the mock does not fail,
+    # it just stops intercepting. That is the dangerous direction: a suite
+    # everyone believes is mocked talks to whatever server the settings file
+    # names. It happened here: 36 tests went to the live server the moment the
+    # cmdlets were generated, and only FOGAPI_FORBID_NETWORK turned that into a
+    # failure rather than a mutation.
+    #
+    # Set-FogTransport is the seam for the compiled half, and it is a shipped
+    # cmdlet rather than a test hook precisely so it cannot be bypassed.
     Mock -ModuleName FogApi Invoke-FogApi {
         Get-FogMockResponse -uriPath $uriPath -Method $Method -jsonData $jsonData
     }
+
+    Set-FogTransport -ScriptBlock {
+        param($uriPath, $Method, $jsonData)
+        Get-FogMockResponse -uriPath $uriPath -Method $Method -jsonData $jsonData
+    }
+}
+
+function Unregister-FogApiMock {
+    <#
+    .SYNOPSIS
+    Puts the real transport back.
+
+    .DESCRIPTION
+    Pester undoes its own mocks when a scope ends; Set-FogTransport is process
+    state and outlives the run, so it has to be handed back explicitly. A test
+    file that forgets this leaves every later file talking to a mock it never
+    installed.
+    #>
+    [CmdletBinding()]
+    param()
+    Reset-FogTransport
 }
 
 function Initialize-FogRealServerJournal {
@@ -1177,4 +1214,4 @@ function Update-FogRealServerValidationLedger {
     return $ledgerArray
 }
 
-Export-ModuleMember -Function Get-FogExampleCase, Get-FogMockResponse, Test-FogExpectedSubset, Register-FogApiMock, Get-FogParameterSetCoverage, ConvertTo-FogCoverageMarkdown, Initialize-FogRealServerJournal, Restore-FogRealServerState, ConvertTo-FogTestResultsMarkdown, Update-FogRealServerValidationLedger
+Export-ModuleMember -Function Get-FogExampleCase, Get-FogMockResponse, Test-FogExpectedSubset, Register-FogApiMock, Unregister-FogApiMock, Get-FogParameterSetCoverage, ConvertTo-FogCoverageMarkdown, Initialize-FogRealServerJournal, Restore-FogRealServerState, ConvertTo-FogTestResultsMarkdown, Update-FogRealServerValidationLedger

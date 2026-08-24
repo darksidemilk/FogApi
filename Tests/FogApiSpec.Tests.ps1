@@ -128,7 +128,51 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
         }
     }
 
-    Context 'the emitted files' {
+    Context 'the emitted C# files' {
+        # The generated surface is C# now, so this is what the drift gate has
+        # to compare. A hand edit to a generated .cs survives exactly until the
+        # next emitter run, then vanishes without trace -- the same failure the
+        # .ps1 version of this test was written for.
+        It 'match what the C# emitter produces right now' {
+            & (Join-Path $script:SpecRoot 'tools/New-FogCmdletSource.ps1') `
+                -Class printer -OutRoot $script:Scratch -NoDocs | Out-Null
+
+            $emitted = @(Get-ChildItem -LiteralPath $script:Scratch -Filter '*.cs' -Recurse)
+            $emitted.Count | Should -BeGreaterThan 0 -Because 'the emitter should have written the printer model and its cmdlets'
+
+            $realRoot = Join-Path $script:RepoRoot 'src' 'FogApi.Cmdlets'
+            foreach ($file in $emitted) {
+                # Mirror the temp tree onto the real one: Models/Generated and
+                # Cmdlets/Generated.
+                $relative = $file.FullName.Substring($script:Scratch.Length).TrimStart('\', '/')
+                $onDisk = Join-Path $realRoot $relative
+                Test-Path -LiteralPath $onDisk |
+                    Should -BeTrue -Because "$relative is in the spec but not in src/FogApi.Cmdlets"
+                (Get-Content -LiteralPath $onDisk -Raw) |
+                    Should -Be (Get-Content -LiteralPath $file.FullName -Raw) `
+                    -Because "$relative has drifted from the emitter. Rerun spec/tools/New-FogCmdletSource.ps1."
+            }
+        }
+
+        It 'declares nullable explicitly in every generated file' {
+            # Roslyn treats a file whose first comment says auto-generated as
+            # OUTSIDE the nullable context, so every string? in it is CS8669
+            # even with Nullable enable set project-wide. Without the directive
+            # the whole generated surface fails to compile.
+            $generated = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot 'src' 'FogApi.Cmdlets') -Filter '*.cs' -Recurse |
+                Where-Object { $_.FullName -match 'Generated' })
+            $generated.Count | Should -BeGreaterThan 100
+            foreach ($file in $generated) {
+                (Get-Content -LiteralPath $file.FullName -Raw) |
+                    Should -BeLike '*#nullable enable*' -Because "$($file.Name) is auto-generated and needs the directive"
+            }
+        }
+    }
+
+    Context 'the emitted PowerShell files' -Skip {
+        # Kept, skipped, and deliberately not deleted: the .ps1 emitter still
+        # exists and is what the Python and bash emitters were modelled on. This
+        # comes back if any class is ever emitted as PowerShell again.
         It 'match what the emitter produces right now' {
             & (Join-Path $script:SpecRoot 'tools/New-FogApiFunctionFile.ps1') -Class printer -OutDir $script:Scratch | Out-Null
             $emitted = @(Get-ChildItem -LiteralPath $script:Scratch -Filter '*.ps1')

@@ -557,8 +557,15 @@ foreach ($name in Get-OverlayKeys $overlay.handWritten) {
 $thinWrappers = @{}
 foreach ($name in Get-OverlayKeys $overlay.thinWrappers) {
     $entry = $overlay.thinWrappers.$name
-    if (-not $existingFunctions.ContainsKey($name)) {
-        Add-Problem "overlay registers thin wrapper '$name', but FogApi/Public/$name.ps1 does not exist"
+    # A thin wrapper is registered so the generator knows the name is taken and
+    # can keep it as an alias. Once the generated command HAS replaced it, the
+    # .ps1 is gone on purpose -- that is what status 'replaces-thin-wrapper'
+    # means, and a compiled cmdlet cannot coexist with a function of the same
+    # name anyway, because the function would shadow it. So a missing file is
+    # only a problem while the replacement has not been emitted.
+    $compiled = Test-Path -LiteralPath (Join-Path (Split-Path -Parent $ModuleRoot) 'src' 'FogApi.Cmdlets' 'Cmdlets' 'Generated' "$($name -replace '-', '')Command.cs")
+    if (-not $existingFunctions.ContainsKey($name) -and -not $compiled) {
+        Add-Problem "overlay registers thin wrapper '$name', but neither FogApi/Public/$name.ps1 nor a generated cmdlet for it exists"
     }
     if (-not $operations.ContainsKey($entry.operation)) {
         Add-Problem "thin wrapper '$name' claims operation '$($entry.operation)', which is not in the snapshot"
