@@ -239,6 +239,23 @@ foreach ($class in $snapshotClasses) {
         [pscustomobject][ordered]@{
             name     = $prop.Name
             type     = $(if ($f.PSObject.Properties.Name -contains 'type') { $f.type } else { 'string' })
+            # OpenAPI qualifies `type: string` with `format`, and FOG populates it:
+            # _columnSchema() maps a datetime/timestamp column to string/date-time
+            # and a date column to string/date. Seventeen fields carry one --
+            # host.deployed (hostLastDeploy), host.lastcheckin, task.checkInTime,
+            # multicastsession.starttime, usertracking.date and twelve more.
+            #
+            # This line is the fix for having dropped it. Every emitter has been
+            # reading those seventeen as a bare string, because `type` alone was
+            # carried across and `format` is where the whole distinction lives. A
+            # date is not a string that happens to look like one: the PowerShell
+            # emitter typed all seventeen [string], and a typed model cannot be
+            # generated at all without this.
+            #
+            # Carried raw rather than resolved, so it traces straight back to the
+            # snapshot. FogApi's decision about what to DO with it belongs in the
+            # overlay, not here.
+            format   = $(if ($f.PSObject.Properties.Name -contains 'format') { $f.format } else { $null })
             column   = $(if ($f.PSObject.Properties.Name -contains 'x-fog-column') { $f.'x-fog-column' } else { $null })
             nullable = [bool]($f.PSObject.Properties.Name -contains 'nullable' -and $f.nullable)
             readOnly = [bool]($f.PSObject.Properties.Name -contains 'readOnly' -and $f.readOnly)
