@@ -64,6 +64,32 @@ define('FOG_VERSION', $version);
 // stray reference is a wrong value rather than a fatal.
 define('FOG_WEB_ROOT', '/fog/');
 
+/*
+ * gettext, when the extension is not loaded.
+ *
+ * openapi.class.php wraps its prose in _() 126 times, and FOG gets that
+ * function from the gettext extension -- commons/init.php calls
+ * bindtextdomain() and there is no PHP-level fallback anywhere in the tree.
+ * A PHP built without gettext therefore fatals on the first description
+ * string ("Call to undefined function FOG\_()"), which is a confusing way to
+ * be told an extension is missing.
+ *
+ * Returning the msgid unchanged is not an approximation, it is what gettext
+ * itself does when no domain is bound -- and this script deliberately binds
+ * none, because the snapshot is the untranslated English document that the
+ * generators read. Requiring the extension would buy nothing and would make
+ * the tool refuse to run on stock PHP, CI included.
+ *
+ * Guarded, so a PHP that does have gettext keeps the real one rather than
+ * fataling on a duplicate declaration.
+ */
+if (!function_exists('_')) {
+    function _($message)
+    {
+        return $message;
+    }
+}
+
 /**
  * Indexes every class file by its lowercased basename.
  *
