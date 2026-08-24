@@ -186,6 +186,72 @@ function Test-WriteOnlyField {
     return $true
 }
 
+function Resolve-WireType {
+    <#
+    The one word an emitter needs to decide both a parameter's type and how the
+    value goes on the wire. JSON type alone cannot say either, because FOG's
+    booleans and timestamps are both spelled as strings.
+
+    Six values, and the vocabulary is deliberately this small:
+
+      bool01    A boolean the caller thinks in, transmitted as the STRING "0"
+                or "1". Not the same as bool, and the distinction is the point:
+                FOG spells every boolean column enum('0','1') -- 25 of them --
+                and sending a JSON true is not the same request. FOG agrees
+                these are booleans; snapinclient.class.php:204 casts one with
+                (bool) to build the client payload.
+      dateTime  An ISO timestamp. 16 fields. MySQL answers an unset datetime
+                column with 0000-00-00 00:00:00, which is not a date and
+                throws on a naive parse, so an emitter must map it to null.
+      date      A date with no time. usertracking.date, and only that.
+      int       A JSON number that is whole.
+      number    A JSON number that is not. None today; here so the mapping is
+                total rather than "everything else is a string".
+      string    Everything else, including the three real string enums
+                (powermanagement.action, tasktype.type, tasktype.access) whose
+                enum list already carries the constraint.
+
+    Derived, with no hand-maintained list behind it. That was not the plan --
+    a fieldTypes block in the overlay was, for the date columns FOG does not
+    type. Measuring the residual found there are none. Every string field whose
+    NAME suggests a timestamp is something else: host.pingstatus and
+    .pingmethod are status codes, hostautologout.time and snapin.timeout are
+    durations in minutes and seconds, task.timeElapsed and .timeRemaining are
+    elapsed spans, inventory.biosdate is whatever dmidecode printed.
+
+    scheduledtask.scheduleTime is the one that looks like a real exception --
+    bigint(20) unsigned, column stDateTime -- and it is not typed here on
+    purpose. ScheduledTask::getTimer() feeds it in as a cron MINUTE for a
+    non-cron task and formats it as a date elsewhere. It is overloaded
+    upstream, and the wider domain is the safe mapping: the same rule that
+    deploySnapins taught, where reading a -1 as a boolean silently queued a
+    different snapin task.
+
+    So an overlay block would have shipped with nothing in it. If a genuine
+    override ever appears, this is the function that grows the lookup.
+    #>
+    param($Field)
+    $names = $Field.PSObject.Properties.Name
+
+    if ($names -contains 'enum') {
+        $values = @($Field.enum) | ForEach-Object { [string]$_ }
+        if ($values.Count -eq 2 -and ($values | Sort-Object) -join '|' -eq '0|1') { return 'bool01' }
+    }
+    if ($names -contains 'format') {
+        switch ($Field.format) {
+            'date-time' { return 'dateTime' }
+            'date'      { return 'date' }
+        }
+    }
+    $type = if ($names -contains 'type') { $Field.type } else { 'string' }
+    switch ($type) {
+        'integer' { return 'int' }
+        'number'  { return 'number' }
+        'boolean' { return 'bool' }
+        default   { return 'string' }
+    }
+}
+
 # --- index the snapshot ---------------------------------------------------
 
 # operationId -> { path, method, class, routeName, operation }
@@ -287,6 +353,11 @@ foreach ($class in $snapshotClasses) {
             # snapshot. FogApi's decision about what to DO with it belongs in the
             # overlay, not here.
             format   = $(if ($f.PSObject.Properties.Name -contains 'format') { $f.format } else { $null })
+            # type + format + enum resolved into the one word an emitter acts
+            # on. Resolved here rather than in each emitter so PowerShell,
+            # Python and bash cannot reach three different answers about
+            # whether host.pending is a boolean.
+            wireType = Resolve-WireType $f
             column   = $(if ($f.PSObject.Properties.Name -contains 'x-fog-column') { $f.'x-fog-column' } else { $null })
             nullable = [bool]($f.PSObject.Properties.Name -contains 'nullable' -and $f.nullable)
             # readOnly, corrected -- see writeOnly below for why it needs to be.
