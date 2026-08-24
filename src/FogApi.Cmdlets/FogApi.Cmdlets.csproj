@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <!--
+      The assembly name drives the help file name. PowerShell looks for a
+      compiled cmdlet's MAML at
+      <ModuleBase>/<culture>/<AssemblyName>.dll-Help.xml, and the assembly name
+      format is required even when the assembly is a nested module. FogApi.dll
+      therefore means FogApi.dll-Help.xml, which is what the emitter writes into
+      the markdown frontmatter. Renaming the assembly silently detaches every
+      cmdlet from its help.
+    -->
+    <AssemblyName>FogApi</AssemblyName>
+    <RootNamespace>FogApi</RootNamespace>
+
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!--
+      A library loaded into a host that already exists. No apphost, no runtime
+      copied alongside, no satellite resource folders.
+    -->
+    <UseAppHost>false</UseAppHost>
+    <SelfContained>false</SelfContained>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+    <!--
+      A build that differs run to run would make the drift gate a coin flip,
+      the same reason Build-FogApiSpec sorts its output before writing.
+    -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      PrivateAssets="all" is the whole dependency story. Without it, publish
+      drags System.Management.Automation and its closure (some 200 files) into
+      the module payload. With it the output is FogApi.dll and nothing else,
+      because System.Net.Http and System.Text.Json are already in the net8.0
+      framework.
+
+      Zero third-party packages is a constraint, not an accident: assemblies
+      shipped inside a PowerShell module conflict with whatever else the session
+      has loaded, and that class of bug has no good fix. If a dependency ever
+      becomes unavoidable, that is the point at which an AssemblyLoadContext
+      becomes necessary, and not before.
+
+      The concrete SDK package rather than PowerShellStandard.Library, because
+      5.1 is dropped and this wants PS7 only APIs (IArgumentCompleter with
+      CompletionResultType, IValidateSetValuesGenerator).
+    -->
+    <PackageReference Include="System.Management.Automation" Version="7.4.6" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

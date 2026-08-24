@@ -5,3 +5,20 @@ _module_build
 .nupkg
 TestResults
 site
+
+# .NET build output.
+#
+# FogApi/bin is a build artifact even though it sits inside the module payload.
+# The dll has to be next to the manifest that names it in RequiredAssemblies,
+# because three things import straight out of the source tree: build.ps1, CI's
+# settings bootstrap check, and every Tests/*.Tests.ps1 BeforeAll.
+#
+# Without this entry, tag-and-release.yml's `git add -A` commits a dll to
+# master on every release. The generated .cs under src/ IS committed -- that is
+# the reviewable artifact, the same rule the generated .ps1 files follow.
+FogApi/bin/
+src/*/bin/
+src/*/obj/
+
+# Throwaway spike modules.
+.spike/
