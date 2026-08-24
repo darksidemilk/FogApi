@@ -159,6 +159,9 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
             # generated cmdlet by hand lasts until the next run and then
             # disappears with no error. This asserts the declaration actually
             # reaches the parameter.
+            # Pester 6 refuses Mock -ModuleName when two modules share a name, and each
+            # test file importing into its own scope makes that happen across a run.
+            Remove-Module FogApi -Force -ErrorAction SilentlyContinue
             Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
             $checked = 0
             foreach ($fn in $script:Spec.functions) {
@@ -183,6 +186,9 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
         It 'never aliases a parameter to the name of another parameter' {
             # An alias colliding with a real parameter name fails at import,
             # which is a late and confusing place to find out.
+            # Pester 6 refuses Mock -ModuleName when two modules share a name, and each
+            # test file importing into its own scope makes that happen across a run.
+            Remove-Module FogApi -Force -ErrorAction SilentlyContinue
             Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
             foreach ($fn in $script:Spec.functions) {
                 $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue

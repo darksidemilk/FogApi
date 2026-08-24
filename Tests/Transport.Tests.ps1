@@ -19,14 +19,14 @@ Requires the compiled assembly. Run ./build-dotnet.ps1 first, or dotnet build.
 #>
 
 BeforeDiscovery {
-    $script:DllPath = Join-Path $PSScriptRoot '..' 'FogApi' 'bin' 'FogApi.dll'
+    $script:DllPath = Join-Path $PSScriptRoot '..' 'FogApi' 'bin' 'FogApi.Core.dll'
     $script:HaveDll = Test-Path -LiteralPath $script:DllPath
 }
 
 Describe 'FogApi transport' -Skip:(-not $script:HaveDll) {
 
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot '..' 'FogApi' 'bin' 'FogApi.dll') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' 'FogApi' 'bin' 'FogApi.Core.dll') -Force
 
         # A real request while this is set throws. Every mocked test sets it,
         # because a transport mock that stopped intercepting is worse than no

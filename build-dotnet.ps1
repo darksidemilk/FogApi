@@ -65,7 +65,7 @@ only required to build from source.
 # PowerShell cannot unload an assembly. If any session in this process tree has
 # imported the module, the dll is memory mapped and the publish below fails with
 # an MSBuild error that says nothing about why. Say why.
-$dll = Join-Path $OutDir 'FogApi.dll'
+$dll = Join-Path $OutDir 'FogApi.Core.dll'
 if (Test-Path -LiteralPath $dll) {
     try {
         [System.IO.File]::Open($dll, 'Open', 'ReadWrite', 'None').Dispose()
@@ -100,7 +100,7 @@ if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed with exit code $LASTEXIT
 # later would quietly start shipping its own dependency tree into a PSGallery
 # package, and nobody would notice until an assembly conflict in someone else's
 # session.
-$keep = @('FogApi.dll', 'FogApi.pdb', 'FogApi.deps.json', 'FogApi.xml')
+$keep = @('FogApi.Core.dll', 'FogApi.Core.pdb', 'FogApi.Core.deps.json', 'FogApi.Core.xml')
 $unexpected = @(Get-ChildItem -LiteralPath $OutDir -File | Where-Object { $_.Name -notin $keep })
 if ($unexpected) {
     Write-Warning "removing unexpected publish output: $($unexpected.Name -join ', ')"

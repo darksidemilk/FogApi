@@ -4,6 +4,45 @@ $PSModuleRoot = $PSScriptRoot
 # resolved and broke the settings file bootstrap that every command depends on
 $script:lib = Join-Path $PSModuleRoot 'lib'
 $script:bin = Join-Path $PSModuleRoot 'bin'
+
+# --- the compiled core ------------------------------------------------------
+#
+# The manifest names bin/FogApi.Core.dll in RequiredAssemblies, which loads it BEFORE
+# nested modules and before this file, so the compiled types are already here.
+# This guard is for the other entry point: build.ps1 has always loaded the module
+# with Import-Module on the .psm1 directly, which bypasses the manifest and
+# therefore bypasses RequiredAssemblies.
+if (-not ('FogApi.FogTransport' -as [type])) {
+    $dll = Join-Path $script:bin 'FogApi.Core.dll'
+    if (-not (Test-Path -LiteralPath $dll)) {
+        throw "FogApi's compiled core is missing from $dll. Run ./build-dotnet.ps1, or install FogApi from the PowerShell Gallery rather than importing the source tree."
+    }
+    Import-Module -Name $dll -ErrorAction Stop
+}
+
+# Type accelerators, so a bare [FogObjectRefTransform()] still resolves now that
+# the type lives in a namespace.
+#
+# ORDER IS LOAD-BEARING: this has to happen before any Public/*.ps1 is
+# dot-sourced, because an attribute name is resolved when the file is PARSED.
+# Registering after the loop fails every function that names one, and measured:
+#   [FogObjectRefTransform()]                  -> Cannot find the type
+#   [FogApi.FogObjectRefTransform()]           -> resolves
+#   [FogObjectRefTransform()] + accelerator    -> resolves
+# The bare spelling is what the emitted files and third-party scripts use, so
+# the accelerator is required rather than a convenience.
+$script:TypeAcceleratorTable = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
+$script:FogAccelerators = @{
+    FogObjectRefTransform = [FogApi.FogObjectRefTransformAttribute]
+}
+foreach ($accelerator in $script:FogAccelerators.GetEnumerator()) {
+    # The accelerator table is session-global, so this is a land grab. Taking a
+    # name someone else registered would be worse than not having ours.
+    if (-not $script:TypeAcceleratorTable::Get.ContainsKey($accelerator.Key)) {
+        $script:TypeAcceleratorTable::Add($accelerator.Key, $accelerator.Value)
+    }
+}
+
 $PublicFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Public/*.ps1" -ErrorAction SilentlyContinue )
 $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorAction SilentlyContinue )
 # Classes load first, matching what invoke-modulebuild.ps1 concatenates. A class
@@ -23,8 +62,9 @@ $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorA
 # [T]@{...} runs the default constructor BEFORE the hashtable properties are
 # assigned, so never compute derived state there.
 #
-# No classes currently ship; the ETS type data in Private/Register-FogTypeData.ps1
-# is how FOG objects are modelled. See CONTEXT-api-coverage-plan.md, "Typed objects".
+# A type that moves to C# leaves this folder: it gains a namespace, a caller can
+# name it with no 'using module', and the attribute-argument trap above stops
+# applying. FogObjectRefTransform went that way; FogTaskRequest has not yet.
 $ClassFiles = @( Get-ChildItem -Path "$PSScriptRoot/Classes/*.ps1" -ErrorAction SilentlyContinue )
 
 
@@ -46,4 +86,15 @@ foreach ($file in @($ClassFiles + $PublicFunctions + $PrivateFunctions)) {
 # function exists. invoke-modulebuild.ps1 re-emits this call into the built psm1,
 # which is generated and does not inherit this file's body.
 Register-FogTypeData
-Export-ModuleMember -Function $PublicFunctions.BaseName -Alias *
+
+# Session-global accelerators outlive the module unless we hand them back.
+$MyInvocation.MyCommand.ScriptBlock.Module.OnRemove = {
+    foreach ($name in $script:FogAccelerators.Keys) {
+        $script:TypeAcceleratorTable::Remove($name)
+    }
+}
+
+# -Cmdlet * is load-bearing. Export-ModuleMember's contract is that only what it
+# names is exported, so the old line -- which named -Function and -Alias only --
+# would export the script functions and NONE of the compiled cmdlets, silently.
+Export-ModuleMember -Function $PublicFunctions.BaseName -Cmdlet * -Alias *

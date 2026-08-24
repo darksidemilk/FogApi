@@ -15,7 +15,10 @@ RootModule = 'FogApi.psm1'
 ModuleVersion = '2607.10.2'
 
 # Supported PSEditions
-CompatiblePSEditions = 'Desktop', 'Core'
+# Core only. The compiled core targets net8.0, which Windows PowerShell 5.1
+# cannot load at all, so Desktop is not a half-working target here -- the module
+# would fail at import rather than degrade.
+CompatiblePSEditions = 'Core'
 
 # ID used to uniquely identify this module
 GUID = '7aa922fa-bb4f-46a0-a478-684e9535c65d'
@@ -77,7 +80,7 @@ You can also utilize simpler functions of common tasks, see the links below for 
 '
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '5.1'
+PowerShellVersion = '7.4'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -98,7 +101,10 @@ PowerShellVersion = '5.1'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+# Loaded BEFORE nested modules and before the root module, which is what lets a
+# dot-sourced Public/*.ps1 name a compiled type in its own param block.
+# Forward slashes: a backslash is a literal filename character on linux.
+RequiredAssemblies = @('bin/FogApi.Core.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -110,7 +116,11 @@ PowerShellVersion = '5.1'
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+# The same file as RequiredAssemblies, deliberately. RequiredAssemblies makes
+# the types resolve while Public/*.ps1 is dot-sourced; NestedModules is what
+# turns the assembly into cmdlets. Microsoft documents listing it in both, and
+# it registers nothing twice.
+NestedModules = @('bin/FogApi.Core.dll')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData', 
@@ -162,22 +172,21 @@ FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData',
                'Get-FogUserGroup', 'Get-FogUserGroupMember', 
                'Get-FogUserTracking', 'Get-FogVersion', 'Get-LastImageTime', 
                'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
-               'Install-FogService', 'Invoke-FogApi', 'Mount-WinEfi', 
-               'New-FogGroup', 'New-FogGroupAssociation', 'New-FogHost', 
-               'New-FogImage', 'New-FogImageAssociation', 
-               'New-FogMacAddressAssociation', 'New-FogModule', 
-               'New-FogModuleAssociation', 'New-FogMulticastSession', 
-               'New-FogMulticastSessionAssociation', 'New-FogObject', 
-               'New-FogOS', 'New-FogPowerManagement', 'New-FogPrinter', 
-               'New-FogPrinterAssociation', 'New-FogRoleUserAssociation', 
-               'New-FogRoleUserGroupAssociation', 'New-FogScheduledTask', 
-               'New-FogSetting', 'New-FogSite', 'New-FogSnapin', 
-               'New-FogSnapinAssociation', 'New-FogSnapinGroupAssociation', 
-               'New-FogStorageGroup', 'New-FogStorageNode', 'New-FogTask', 
-               'New-FogTaskRequest', 'New-FogUser', 'New-FogUserGroupMember', 
-               'Receive-FogImage', 'Remove-FogGroup', 
-               'Remove-FogGroupAssociation', 'Remove-FogHost', 
-               'Remove-FogHostGroup', 'Remove-FogImage', 
+               'Install-FogService', 'Mount-WinEfi', 'New-FogGroup', 
+               'New-FogGroupAssociation', 'New-FogHost', 'New-FogImage', 
+               'New-FogImageAssociation', 'New-FogMacAddressAssociation', 
+               'New-FogModule', 'New-FogModuleAssociation', 
+               'New-FogMulticastSession', 'New-FogMulticastSessionAssociation', 
+               'New-FogObject', 'New-FogOS', 'New-FogPowerManagement', 
+               'New-FogPrinter', 'New-FogPrinterAssociation', 
+               'New-FogRoleUserAssociation', 'New-FogRoleUserGroupAssociation', 
+               'New-FogScheduledTask', 'New-FogSetting', 'New-FogSite', 
+               'New-FogSnapin', 'New-FogSnapinAssociation', 
+               'New-FogSnapinGroupAssociation', 'New-FogStorageGroup', 
+               'New-FogStorageNode', 'New-FogTask', 'New-FogTaskRequest', 
+               'New-FogUser', 'New-FogUserGroupMember', 'Receive-FogImage', 
+               'Remove-FogGroup', 'Remove-FogGroupAssociation', 
+               'Remove-FogHost', 'Remove-FogHostGroup', 'Remove-FogImage', 
                'Remove-FogImageAssociation', 'Remove-FogMacAddressAssociation', 
                'Remove-FogModule', 'Remove-FogModuleAssociation', 
                'Remove-FogMulticastSession', 
@@ -212,8 +221,7 @@ FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData',
                'Update-FogTask', 'Update-FogUser'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @()
-
+CmdletsToExport = 'Invoke-FogApi', 'Reset-FogTransport', 'Set-FogTransport'
 # Variables to export from this module
 VariablesToExport = @()
 

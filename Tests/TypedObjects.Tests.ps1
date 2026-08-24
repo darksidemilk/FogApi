@@ -42,7 +42,14 @@ Describe 'Register-FogTypeData' {
     It 'is idempotent, so a re-import does not throw' {
         # Private, so reach into the module's own scope rather than exporting it
         # just to be testable.
-        $mod = Get-Module FogApi
+        # -First 1, and the Script filter, because Get-Module FogApi does not
+        # reliably return one thing. Every test file's BeforeAll imports the
+        # module into its own Pester scope, so by the time several files have
+        # run in one process this returns several -- and `& $mod { }` on an
+        # array stringifies it, giving "The term 'FogApi FogApi' is not
+        # recognized". The failure names no module and no import, so it reads
+        # like a broken function rather than a scoping artifact.
+        $mod = Get-Module FogApi | Where-Object ModuleType -eq 'Script' | Select-Object -First 1
         $mod | Should -Not -BeNullOrEmpty
         { & $mod { Register-FogTypeData; Register-FogTypeData } } | Should -Not -Throw
     }
@@ -112,9 +119,13 @@ Describe 'Add-FogTypeName enumerates every collection shape a getter returns' {
     # stamping its return threw instead of returning groups -- caught by the
     # real-server suite, reproducible with no server at all.
     BeforeAll {
+        # See the note in the idempotency test: Get-Module FogApi can return
+        # more than one module once several test files have run in one process,
+        # and & on the resulting array fails with a message that names neither.
+        $script:fogModule = Get-Module FogApi | Where-Object ModuleType -eq 'Script' | Select-Object -First 1
         $script:stamp = {
             param($InputObject)
-            & (Get-Module FogApi) {
+            & $script:fogModule {
                 param($o) Add-FogTypeName -InputObject $o -TypeName 'FogApi.Group'
             } $InputObject
         }

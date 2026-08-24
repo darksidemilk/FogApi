@@ -4527,7 +4527,9 @@
         "powershell",
         "python",
         "bash"
-      ]
+      ],
+      "implementation": "compiled",
+      "note": "A cmdlet in FogApi.dll, not a file in Public/. Still hand-written -- transport is not an API operation, it is what every operation goes through -- and still owed by the python and bash emitters; what moved is the language, not the obligation. Public/Invoke-FogApi.ps1 was deleted in the same commit that added the cmdlet, because a function beats a cmdlet in PowerShell's resolution order: with both present the .ps1 silently wins, ignores Set-FogTransport, and reaches the network."
     },
     "Get-FogObject": {
       "category": "l1",

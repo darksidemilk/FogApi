@@ -24,6 +24,9 @@ param(
 
 BeforeAll {
     $moduleManifest = Join-Path $PSScriptRoot '..' 'FogApi' 'FogApi.psd1'
+    # Pester 6 refuses Mock -ModuleName when two modules share a name, and each
+    # test file importing into its own scope makes that happen across a run.
+    Remove-Module FogApi -Force -ErrorAction SilentlyContinue
     Import-Module $moduleManifest -Force
 
     # A FOG 1.6 list envelope. paginate() sets the four *Url keys and

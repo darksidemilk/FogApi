@@ -4,15 +4,27 @@
     <TargetFramework>net8.0</TargetFramework>
 
     <!--
-      The assembly name drives the help file name. PowerShell looks for a
-      compiled cmdlet's MAML at
-      <ModuleBase>/<culture>/<AssemblyName>.dll-Help.xml, and the assembly name
-      format is required even when the assembly is a nested module. FogApi.dll
-      therefore means FogApi.dll-Help.xml, which is what the emitter writes into
-      the markdown frontmatter. Renaming the assembly silently detaches every
-      cmdlet from its help.
+      NOT "FogApi". A nested binary module takes its module name from the
+      assembly, so FogApi.dll gives the script module and its nested module the
+      same name, and Get-Module FogApi then returns TWO modules in any scope
+      that sees both. Pester is such a scope: `$mod = Get-Module FogApi;
+      & $mod { ... }` bound an array, and PowerShell tried to run a command
+      literally called "FogApi FogApi FogApi". 46 tests failed that way.
+
+      Microsoft's own modules avoid it the same way. PSReadLine ships
+      Microsoft.PowerShell.PSReadLine2.dll, deliberately not PSReadLine.dll.
+
+      This name also drives the help file. PowerShell looks for a compiled
+      cmdlet's MAML at <ModuleBase>/<culture>/<AssemblyName>.dll-Help.xml, and
+      the assembly-name form is required even for a nested module. So it is
+      FogApi.Core.dll-Help.xml, and that exact string is what the emitter must
+      write into each markdown file's `external help file` frontmatter.
+      Renaming the assembly silently detaches every cmdlet from its help.
+
+      RootNamespace stays FogApi: the namespace callers type is independent of
+      the file the types live in.
     -->
-    <AssemblyName>FogApi</AssemblyName>
+    <AssemblyName>FogApi.Core</AssemblyName>
     <RootNamespace>FogApi</RootNamespace>
 
     <LangVersion>12.0</LangVersion>

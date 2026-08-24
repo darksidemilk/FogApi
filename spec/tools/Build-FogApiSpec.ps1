@@ -532,8 +532,24 @@ if (Test-Path -LiteralPath $publicDir) {
 $handWritten = @{}
 foreach ($name in Get-OverlayKeys $overlay.handWritten) {
     $entry = $overlay.handWritten.$name
-    if (-not $existingFunctions.ContainsKey($name)) {
+    # implementation: "compiled" means the command is a cmdlet in FogApi.dll
+    # rather than a file in Public/, so there is no .ps1 to look for. Still
+    # registered here: the coverage matrix has to count it as covered, and the
+    # python and bash emitters still owe an implementation of it -- what moved
+    # is the language, not the obligation.
+    $implementation = if ($entry.PSObject.Properties.Name -contains 'implementation') { $entry.implementation } else { 'script' }
+    if ($implementation -notin @('script', 'compiled')) {
+        Add-Problem "overlay entry '$name' has implementation '$implementation'; expected 'script' or 'compiled'"
+    }
+    if ($implementation -eq 'script' -and -not $existingFunctions.ContainsKey($name)) {
         Add-Problem "overlay registers hand-written function '$name', but FogApi/Public/$name.ps1 does not exist"
+    }
+    if ($implementation -eq 'compiled' -and $existingFunctions.ContainsKey($name)) {
+        # Both would exist, and a function beats a cmdlet in PowerShell's
+        # resolution order -- so the .ps1 would silently win and the compiled
+        # one would be dead code. Measured: it happened, and the .ps1 reached
+        # the network because it knows nothing about the transport seam.
+        Add-Problem "overlay marks '$name' compiled, but FogApi/Public/$name.ps1 still exists; the function would shadow the cmdlet"
     }
     $handWritten[$name] = $entry
 }
