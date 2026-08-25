@@ -120,14 +120,31 @@ measured **not** to.)
 
 ### This is fixed upstream
 
-**FOGProject/fogproject#1353** emits those fields as `readOnly` properties.
-Regenerating from that branch and re-running openapi-generator **with
+**FOGProject/fogproject#1353** does two things about it. It emits those fields
+as `readOnly` properties, and it states `additionalProperties` on the entity
+schemas.
+
+The second half matters as much as the first. Declaring the computed fields
+fixes the 80 the document can *enumerate*; it cannot enumerate what a plugin
+contributes at runtime, or what a later FOG adds after a client was generated
+from a pinned snapshot. `additionalProperties` is what makes a generated
+client tolerate those. It loosens nothing — the keyword already defaults to
+true, so no validator's verdict changes — but most generators emit a catch-all
+bag *only* when it is explicitly present.
+
+Regenerating from that branch and re-running both generators, **with
 validation enabled**:
 
-- `Host` model goes 33 → 49 properties, including `mac`, `imagename`,
-  `inventory`, `snapins`, `groups`.
-- The `Printer` model accepts a real response carrying `hosts` instead of
-  throwing.
+- openapi-generator's `Host` model goes 33 → 49 properties, including `mac`,
+  `imagename`, `inventory`, `snapins`, `groups`.
+- Its `Printer` model accepts a real response carrying `hosts`, **and** one
+  carrying a plugin-contributed field the document cannot know about. The
+  throw-on-unknown-key path is gone from the generated model entirely.
+- AutoRest's `Printer.json.cs` went from **no** `IAssociativeArray` at all to
+  carrying one on both `FromJson` and `ToJson` — unknown keys now survive a
+  round trip instead of being silently discarded.
+
+Neither generator needed a directive, an override, or a patched spec.
 
 `fog-1.6-fixed.json` in this directory is that regenerated document, kept so
 the before/after can be re-run without a fogproject checkout.

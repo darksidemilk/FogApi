@@ -29848,6 +29848,7 @@
                         "x-fog-column": "fdqPathType"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "path",
                     "pathtype",
@@ -29902,6 +29903,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -29925,6 +29927,7 @@
                         "x-fog-column": "gmGroupID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "groupID"
@@ -29969,6 +29972,7 @@
                         "x-fog-column": "hSubjectLabel"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "info"
                 ]
@@ -29988,6 +29992,7 @@
                         "x-fog-column": "heName"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -30280,6 +30285,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -30304,6 +30310,7 @@
                         "x-fog-column": "haloTime"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "time"
@@ -30353,6 +30360,7 @@
                         "x-fog-column": "hssOther2"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID"
                 ]
@@ -30476,6 +30484,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "path",
@@ -30521,6 +30530,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "imageID",
                     "storagegroupID"
@@ -30547,6 +30557,7 @@
                         "x-fog-column": "imagePartitionTypeValue"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "type"
@@ -30572,6 +30583,7 @@
                         "x-fog-column": "imageTypeValue"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "type"
@@ -30757,6 +30769,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID"
                 ],
@@ -30802,7 +30815,8 @@
                         "type": "string",
                         "x-fog-column": "ipxeVersion"
                     }
-                }
+                },
+                "additionalProperties": true
             },
             "Keysequence": {
                 "type": "object",
@@ -30824,6 +30838,7 @@
                         "x-fog-column": "ksAscii"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "ascii"
@@ -30893,6 +30908,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "mac"
@@ -30933,6 +30949,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "shortName"
@@ -30962,6 +30979,7 @@
                         "x-fog-column": "msState"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "moduleID"
@@ -31086,6 +31104,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "description": "Responses may carry computed fields that are not columns and are not settable through the generic create/edit path: imagename, state."
             },
             "Multicastsessionassociation": {
@@ -31106,6 +31125,7 @@
                         "x-fog-column": "tID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "msID",
                     "taskID"
@@ -31163,6 +31183,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "storagenodeID",
                     "taskID",
@@ -31187,6 +31208,7 @@
                         "x-fog-column": "neName"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -31210,6 +31232,7 @@
                         "x-fog-column": "osDescription"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -31234,6 +31257,7 @@
                         "x-fog-column": "ouiMan"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "prefix",
                     "name"
@@ -31295,6 +31319,7 @@
                         "x-fog-column": "pAnon5"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -31362,6 +31387,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "action"
@@ -31441,6 +31467,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -31494,6 +31521,7 @@
                         "x-fog-column": "paAnon5"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "printerID"
@@ -31552,6 +31580,7 @@
                         "x-fog-column": "pxeKeySequence"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -31590,6 +31619,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -31614,6 +31644,7 @@
                         "x-fog-column": "rpName"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "roleID",
                     "name"
@@ -31642,6 +31673,7 @@
                         "x-fog-column": "ruaUserID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "roleID",
                     "userID"
@@ -31670,6 +31702,7 @@
                         "x-fog-column": "rugRoleID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "usergroupID",
                     "roleID"
@@ -31783,6 +31816,7 @@
                         "x-fog-column": "stImageID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "type",
                     "taskTypeID",
@@ -31816,6 +31850,7 @@
                         "x-fog-column": "settingCategory"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -31874,6 +31909,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -32006,6 +32042,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "file"
@@ -32035,6 +32072,7 @@
                         "x-fog-column": "saSequence"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "snapinID"
@@ -32077,6 +32115,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "snapinID",
                     "storagegroupID"
@@ -32125,6 +32164,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "stateID"
@@ -32196,6 +32236,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "jobID",
                     "snapinID"
@@ -32251,6 +32292,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -32412,6 +32454,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "ip",
                     "path",
@@ -32611,6 +32654,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "id",
                     "typeID",
@@ -32671,7 +32715,8 @@
                         "maxLength": 40,
                         "x-fog-column": "logImageName"
                     }
-                }
+                },
+                "additionalProperties": true
             },
             "Taskstate": {
                 "type": "object",
@@ -32702,6 +32747,7 @@
                         "x-fog-column": "tsIcon"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ]
@@ -32771,6 +32817,7 @@
                         "x-fog-column": "ttInitrd"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "icon"
@@ -32851,6 +32898,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name",
                     "password"
@@ -32886,6 +32934,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "name"
                 ],
@@ -32914,6 +32963,7 @@
                         "x-fog-column": "ugmUserID"
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "usergroupID",
                     "userID"
@@ -32979,6 +33029,7 @@
                         "description": "Computed field. Returned by the API but not a column, and not settable."
                     }
                 },
+                "additionalProperties": true,
                 "required": [
                     "hostID",
                     "username"
