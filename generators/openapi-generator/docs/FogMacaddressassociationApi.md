@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogMacaddressassociationApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -103,7 +103,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Macaddressassociation = Initialize-Macaddressassociation -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" # Macaddressassociation | 
+$Macaddressassociation = Initialize-Macaddressassociation -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" -VarHost # Macaddressassociation | 
 
 # Create a macaddressassociation
 try {
@@ -343,7 +343,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinMacaddressassociationRequest = Initialize-JoinMacaddressassociationRequest -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" -Ids 0 # JoinMacaddressassociationRequest | 
+$JoinMacaddressassociationRequest = Initialize-JoinMacaddressassociationRequest -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" -VarHost  -Ids 0 # JoinMacaddressassociationRequest | 
 
 # Bulk edit macaddressassociation
 try {
@@ -534,7 +534,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Macaddressassociation = Initialize-Macaddressassociation -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" # Macaddressassociation | 
+$Macaddressassociation = Initialize-Macaddressassociation -Id 0 -HostID 0 -Mac "MyMac" -Description "MyDescription" -Pending "0" -Primary "0" -ClientIgnore "0" -ImageIgnore "0" -VarHost # Macaddressassociation | 
 
 # Update a macaddressassociation
 try {

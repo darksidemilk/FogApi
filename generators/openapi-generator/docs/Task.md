@@ -29,6 +29,12 @@ Name | Type | Description | Notes
 **Wol** | **String** |  | [optional] [default to "0"]
 **Bypassbitlocker** | **String** |  | [optional] [default to "0"]
 **StateChangedTime** | **System.DateTime** |  | [optional] 
+**Image** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Type** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagenode** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroup** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -59,7 +65,13 @@ $Task = Initialize-FogApiTask  -Id null `
  -ImageID null `
  -Wol null `
  -Bypassbitlocker null `
- -StateChangedTime null
+ -StateChangedTime null `
+ -Image null `
+ -VarHost null `
+ -Type null `
+ -State null `
+ -Storagenode null `
+ -Storagegroup null
 ```
 
 - Convert the resource to JSON

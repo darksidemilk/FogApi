@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogUserApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$User = Initialize-User -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" # User | 
+$User = Initialize-User -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" -Roles  -Usergroups # User | 
 
 # Create a user
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinUserRequest = Initialize-JoinUserRequest -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" -Ids 0 # JoinUserRequest | 
+$JoinUserRequest = Initialize-JoinUserRequest -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" -Roles  -Usergroups  -Ids 0 # JoinUserRequest | 
 
 # Bulk edit user
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$User = Initialize-User -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" # User | 
+$User = Initialize-User -Id 0 -Name "MyName" -Password "MyPassword" -Type 0 -Display "MyDisplay" -Api "0" -Token "MyToken" -Authsource "MyAuthsource" -Apionly "0" -Roles  -Usergroups # User | 
 
 # Update a user
 try {

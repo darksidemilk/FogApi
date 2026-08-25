@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogModuleApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Module = Initialize-Module -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 # Module | 
+$Module = Initialize-Module -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 -Hosts # Module | 
 
 # Create a module
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinModuleRequest = Initialize-JoinModuleRequest -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 -Ids 0 # JoinModuleRequest | 
+$JoinModuleRequest = Initialize-JoinModuleRequest -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 -Hosts  -Ids 0 # JoinModuleRequest | 
 
 # Bulk edit module
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Module = Initialize-Module -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 # Module | 
+$Module = Initialize-Module -Id 0 -Name "MyName" -ShortName "MyShortName" -Description "MyDescription" -IsDefault 0 -Hosts # Module | 
 
 # Update a module
 try {

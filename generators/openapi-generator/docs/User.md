@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **Token** | **String** | Maintained by the server. It may be sent back unchanged, but a request that would change it is refused. | [optional] [readonly] 
 **Authsource** | **String** |  | [optional] 
 **Apionly** | **String** |  | [optional] [default to "0"]
+**Roles** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Usergroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -25,7 +27,9 @@ $User = Initialize-FogApiUser  -Id null `
  -Api null `
  -Token null `
  -Authsource null `
- -Apionly null
+ -Apionly null `
+ -Roles null `
+ -Usergroups null
 ```
 
 - Convert the resource to JSON

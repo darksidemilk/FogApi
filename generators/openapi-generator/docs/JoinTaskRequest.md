@@ -29,6 +29,12 @@ Name | Type | Description | Notes
 **Wol** | **String** |  | [optional] [default to "0"]
 **Bypassbitlocker** | **String** |  | [optional] [default to "0"]
 **StateChangedTime** | **System.DateTime** |  | [optional] 
+**Image** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Type** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagenode** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroup** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -61,6 +67,12 @@ $JoinTaskRequest = Initialize-FogApiJoinTaskRequest  -Id null `
  -Wol null `
  -Bypassbitlocker null `
  -StateChangedTime null `
+ -Image null `
+ -VarHost null `
+ -Type null `
+ -State null `
+ -Storagenode null `
+ -Storagegroup null `
  -Ids null
 ```
 

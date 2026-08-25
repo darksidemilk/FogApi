@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogUsergroupApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Usergroup = Initialize-Usergroup -Id 0 -Name "MyName" -Description "MyDescription" # Usergroup | 
+$Usergroup = Initialize-Usergroup -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Roles # Usergroup | 
 
 # Create a usergroup
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinUsergroupRequest = Initialize-JoinUsergroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Ids 0 # JoinUsergroupRequest | 
+$JoinUsergroupRequest = Initialize-JoinUsergroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Roles  -Ids 0 # JoinUsergroupRequest | 
 
 # Bulk edit usergroup
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Usergroup = Initialize-Usergroup -Id 0 -Name "MyName" -Description "MyDescription" # Usergroup | 
+$Usergroup = Initialize-Usergroup -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Roles # Usergroup | 
 
 # Update a usergroup
 try {

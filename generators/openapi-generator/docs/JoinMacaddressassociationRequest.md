@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Primary** | **String** |  | [optional] [default to "0"]
 **ClientIgnore** | **String** |  | [optional] [default to "0"]
 **ImageIgnore** | **String** |  | [optional] [default to "0"]
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -25,6 +26,7 @@ $JoinMacaddressassociationRequest = Initialize-FogApiJoinMacaddressassociationRe
  -Primary null `
  -ClientIgnore null `
  -ImageIgnore null `
+ -VarHost null `
  -Ids null
 ```
 

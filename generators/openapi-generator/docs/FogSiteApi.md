@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogSiteApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Site = Initialize-Site -Id 0 -Name "MyName" -Description "MyDescription" # Site | 
+$Site = Initialize-Site -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Hosts  -Groups  -Usergroups  -Grantroles  -Grantusergroups  -Catchall # Site | 
 
 # Create a site
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinSiteRequest = Initialize-JoinSiteRequest -Id 0 -Name "MyName" -Description "MyDescription" -Ids 0 # JoinSiteRequest | 
+$JoinSiteRequest = Initialize-JoinSiteRequest -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Hosts  -Groups  -Usergroups  -Grantroles  -Grantusergroups  -Catchall  -Ids 0 # JoinSiteRequest | 
 
 # Bulk edit site
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Site = Initialize-Site -Id 0 -Name "MyName" -Description "MyDescription" # Site | 
+$Site = Initialize-Site -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Hosts  -Groups  -Usergroups  -Grantroles  -Grantusergroups  -Catchall # Site | 
 
 # Update a site
 try {

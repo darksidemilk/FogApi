@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ShortName** | **String** |  | 
 **Description** | **String** |  | [optional] 
 **IsDefault** | **Int32** |  | [optional] [default to 1]
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -19,6 +20,7 @@ $JoinModuleRequest = Initialize-FogApiJoinModuleRequest  -Id null `
  -ShortName null `
  -Description null `
  -IsDefault null `
+ -Hosts null `
  -Ids null
 ```
 

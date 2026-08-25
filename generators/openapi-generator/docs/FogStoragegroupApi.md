@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogStoragegroupApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -105,7 +105,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Storagegroup = Initialize-Storagegroup -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" # Storagegroup | 
+$Storagegroup = Initialize-Storagegroup -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" -Allnodes  -Enablednodes  -Usedtasks  -Images  -Snapins # Storagegroup | 
 
 # Create a storagegroup
 try {
@@ -345,7 +345,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinStoragegroupRequest = Initialize-JoinStoragegroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" -Ids 0 # JoinStoragegroupRequest | 
+$JoinStoragegroupRequest = Initialize-JoinStoragegroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" -Allnodes  -Enablednodes  -Usedtasks  -Images  -Snapins  -Ids 0 # JoinStoragegroupRequest | 
 
 # Bulk edit storagegroup
 try {
@@ -605,7 +605,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Storagegroup = Initialize-Storagegroup -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" # Storagegroup | 
+$Storagegroup = Initialize-Storagegroup -Id 0 -Name "MyName" -Description "MyDescription" -Trustedcidrs "MyTrustedcidrs" -Allnodes  -Enablednodes  -Usedtasks  -Images  -Snapins # Storagegroup | 
 
 # Update a storagegroup
 try {

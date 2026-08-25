@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogPrinterassociationApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

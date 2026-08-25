@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogPrinterApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Printer = Initialize-Printer -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" # Printer | 
+$Printer = Initialize-Printer -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" -Hosts # Printer | 
 
 # Create a printer
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinPrinterRequest = Initialize-JoinPrinterRequest -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" -Ids 0 # JoinPrinterRequest | 
+$JoinPrinterRequest = Initialize-JoinPrinterRequest -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" -Hosts  -Ids 0 # JoinPrinterRequest | 
 
 # Bulk edit printer
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Printer = Initialize-Printer -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" # Printer | 
+$Printer = Initialize-Printer -Id 0 -Name "MyName" -Description "MyDescription" -Port "MyPort" -File "MyFile" -Model "MyModel" -Config "MyConfig" -ConfigFile "MyConfigFile" -Ip "MyIp" -PAnon2 "MyPAnon2" -PAnon3 "MyPAnon3" -PAnon4 "MyPAnon4" -PAnon5 "MyPAnon5" -Hosts # Printer | 
 
 # Update a printer
 try {

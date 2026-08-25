@@ -36,6 +36,22 @@ Name | Type | Description | Notes
 **Enforce** | **String** |  | [optional] [default to "1"]
 **Token** | **String** | Maintained by the server. It may be sent back unchanged, but a request that would change it is refused. | [optional] [readonly] 
 **Tokenlock** | **Int32** |  | [optional] [default to 0]
+**Mac** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Primac** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Imagename** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Groups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Hostscreen** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Hostalo** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**OptimalStorageNode** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Printers** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapins** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Modules** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Inventory** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Task** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapinjob** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Users** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Fingerprint** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Powermanagementtasks** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -75,6 +91,22 @@ $JoinHostRequest = Initialize-FogApiJoinHostRequest  -Id null `
  -Enforce null `
  -Token null `
  -Tokenlock null `
+ -Mac null `
+ -Primac null `
+ -Imagename null `
+ -Groups null `
+ -Hostscreen null `
+ -Hostalo null `
+ -OptimalStorageNode null `
+ -Printers null `
+ -Snapins null `
+ -Modules null `
+ -Inventory null `
+ -Task null `
+ -Snapinjob null `
+ -Users null `
+ -Fingerprint null `
+ -Powermanagementtasks null `
  -Ids null
 ```
 

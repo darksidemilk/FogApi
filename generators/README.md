@@ -9,38 +9,46 @@ a spike. Nothing in this directory is built, shipped, or imported by the module.
 
 ## What was run
 
-All three read the same input: `fog-1.6.json`, the checked-in snapshot of
-FOG's own document (1.6.0-beta.4013), produced by `spec/tools/dump-openapi.php`.
+Both generators read `fog-1.6-live-4020.json` — `GET /fog/system/openapi` from a
+real 1.6.0-beta.4020 server, so it includes the LDAP plugin's classes. Both runs
+are the **complete** output, committed, not a sample.
 
 ```powershell
 # openapi-generator 7.25.0
 npx -y @openapitools/openapi-generator-cli generate `
-    -i fog-1.6.json -g powershell -o openapi-generator `
-    --skip-validate-spec `
+    -i fog-1.6-live-4020.json -g powershell -o openapi-generator `
     --additional-properties=packageName=FogApi,apiNamePrefix=Fog
 
 # AutoRest.PowerShell 4.0.758
 npx -y autorest --powershell `
-    --input-file=fog-1.6.json --output-folder=autorest --clear-output-folder
+    --input-file=fog-1.6-live-4020.json `
+    --output-folder=autorest --clear-output-folder
 ```
 
-`--skip-validate-spec` is not a convenience. Without it openapi-generator
-refuses outright — see "The document did not validate" below.
+No `--skip-validate-spec`. It used to be required — openapi-generator refused
+the document outright — and #1353 fixed the reason. See "The document did not
+validate" below.
 
 ## The numbers
 
 | | FogApi emitter | AutoRest.PowerShell | openapi-generator |
 |---|---|---|---|
 | Output | C# | C# | PowerShell |
-| Files | 235 | 2,932 | 656 |
-| On disk | 2.9 MB | 58 MB | 7.6 MB |
-| Cmdlets | 161 | 924 | 517 |
-| Models | 51 | 1,849 | 162 |
+| Files | 235 | 3,311 | 716 |
+| On disk | 2.9 MB | 65 MB | 8.6 MB |
+| Cmdlets | 161 | 1,014 | 567 |
+| Models | 51 | 2,129 | 177 |
 | Loads on PS 5.1 | no (net8.0) | yes (netstandard2.0) | yes |
 | Generates help | not yet | yes (`generate-help.ps1`) | yes (`docs/`) |
 
-AutoRest's 924 is not 924 commands — it emits a file per *parameter set*
-(`_Create`, `_CreateExpanded`, `_UpdateViaIdentity`,
+**Not strictly like for like, and the difference is worth stating.** The two
+generators ran against the live document, which carries the LDAP plugin;
+FogApi's emitter runs against the plugin-free snapshot, because a shipped
+module must not contain cmdlets for plugins the user may not have. So its 161
+covers fewer classes by design, not by omission.
+
+AutoRest's 1,014 is not 1,014 commands either — it emits a file per *parameter
+set* (`_Create`, `_CreateExpanded`, `_UpdateViaIdentity`,
 `_UpdateViaIdentityExpanded`). That is the Az house style.
 
 ## Naming
@@ -63,17 +71,30 @@ the middle of the operationId:
 
 | operationId | emitted | should be |
 |---|---|---|
-| `indivPrinter` | `ConvertTo-FogdivPrinter` | `Get-FogPrinter` |
-| `namesPrinter` | `Move-FogsPrinter` | `Get-FogPrinterName` |
+| `indivHost` | `ConvertTo-FogdivHost` | `Get-FogHost` |
+| `namesHost` | `Move-FogsHost` | `Get-FogHostName` |
+
+The whole emitted surface for `host`, the class every FOG user touches:
+
+```
+Invoke-FogListHost   ConvertTo-FogdivHost   Move-FogsHost   Invoke-FogIdsHost
+Invoke-FogCountHost  Invoke-FogDeleteHost   Invoke-FogTaskHost
+New-FogHost   Update-FogHost   Search-FogHost   Join-FogHost   Stop-FogHost
+```
+
+`New-`, `Update-`, `Search-`, `Join-` and `Stop-` are right. Reading one host
+is `ConvertTo-FogdivHost`, listing their names is `Move-FogsHost`, and there is
+no `Get-FogHost` at all.
 
 `ConvertTo-Fogdiv` and `Move-Fogs` are not names anyone can guess, discover, or
 defend. 52 and 51 of them respectively.
 
-**AutoRest** is better but still raw: `Invoke-IndivPrinter`, `Invoke-NamePrinter`,
-`Invoke-IdPrinter`, `Invoke-CountPrinter`, alongside a correct
-`Get-Printer` / `Set-Printer` / `New-Printer` / `Remove-Printer`. No `Fog`
-prefix, `Set-` where this module has always used `Update-`, and
-`Printerassociation` rather than `PrinterAssociation`.
+**AutoRest** is better but still raw: `Invoke-IndivHost`, `Invoke-NameHost`,
+`Invoke-IdHost`, `Invoke-CountHost`, alongside a correct
+`Get-Host` / `Set-Host` / `New-Host` / `Remove-Host`. No `Fog` prefix, `Set-`
+where this module has always used `Update-`, and `Hostautologout` rather than
+`HostAutoLogout`. `Get-Host` is also a PowerShell built-in, which is the
+collision the `Fog` prefix exists to avoid.
 
 Both have a directives/overlay mechanism to fix this. That is the honest
 finding: **the naming judgement does not disappear, it moves.**
@@ -111,7 +132,9 @@ Neither generator can read a sentence. Measured:
   description port file model config configFile ip pAnon2 pAnon3 pAnon4 pAnon5
   ```
 
-  So `GET /printer/1` fails outright against a stock generated client.
+  So `GET /printer/1` failed outright against a stock generated client, and
+  `GET /host/1` the same way on all 16 of its computed fields — `mac` and
+  `imagename` included.
 
 FogApi's own C# uses `System.Dynamic.DynamicObject.TryGetMember`, which was
 measured to satisfy PowerShell member access — `$h.mac` resolves. (Kiota's
@@ -137,12 +160,30 @@ validation enabled**:
 
 - openapi-generator's `Host` model goes 33 → 49 properties, including `mac`,
   `imagename`, `inventory`, `snapins`, `groups`.
-- Its `Printer` model accepts a real response carrying `hosts`, **and** one
-  carrying a plugin-contributed field the document cannot know about. The
-  throw-on-unknown-key path is gone from the generated model entirely.
-- AutoRest's `Printer.json.cs` went from **no** `IAssociativeArray` at all to
+- Its entity models accept a real response carrying `hosts`, **and** one
+  carrying a plugin-contributed field the document cannot know about.
+- AutoRest's `Host.json.cs` went from **no** `IAssociativeArray` at all to
   carrying one on both `FromJson` and `ToJson` — unknown keys now survive a
   round trip instead of being silently discarded.
+
+**The throw is gone from the entity models, not from every model**, and the
+distinction matters. Counted over openapi-generator's 177:
+
+| model kind | count | throws on an unknown key |
+|---|---|---|
+| entity models (`ModelHost`, `Printer`, `Ldapgroup`, …) | 56 | **no** |
+| `*Request` / `*Response` wrappers | 115 | yes |
+| `ListEnvelope`, `ModelError`, `Status200ResponsePaging` | 3 | yes |
+
+The wrappers are synthesised by the generator from inline request/response
+bodies, so `_entitySchema()` never sees them — fixing those means putting
+`additionalProperties` on the inline schemas in the paths, not on the entities.
+
+`ListEnvelope` is the one worth a second look. It is FOG's own schema, it wraps
+every list response, and it is exactly the kind of thing that grows: `nextUrl`
+was added to it between 1.5 and 1.6. #1353 deliberately left it out on the
+grounds that it is not an entity schema, which on this evidence was probably
+the wrong call for the same reason the entities were the right one.
 
 Neither generator needed a directive, an override, or a patched spec.
 
@@ -212,10 +253,15 @@ reason to keep it forever.
   targets `netstandard2.0` so it would undo the PS 5.1 drop, and
   `generate-help.ps1` solves the one thing FogApi's emitter does not yet do.
   See `docs/AutoRestEvaluation.md` for the full evaluation.
-- **The gating question is no longer the blocker** — #1353 fixes it. It is
-  whether porting the overlay's naming judgement into AutoRest directives buys
-  more than it costs, against an emitter that already produces exactly the 161
-  names this module has always shipped.
+- **The gating question is no longer the blocker** — #1353 is merged and these
+  runs are against the fixed document. It is now only whether porting the
+  overlay's naming judgement into AutoRest directives buys more than it costs,
+  against an emitter that already produces exactly the 161 names this module
+  has always shipped.
 
-That is a decision to make after #1353 lands and the document can be
-re-snapshotted, not before.
+  Note what the naming section measures: that judgement is not a rounding
+  error. `Get-FogHost` does not exist in either generator's raw output.
+
+Everything in this directory is the complete output of each generator, not a
+sample, so that comparison can be made by reading the code rather than by
+trusting this file.

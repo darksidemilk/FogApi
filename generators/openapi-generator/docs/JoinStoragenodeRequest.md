@@ -25,6 +25,13 @@ Name | Type | Description | Notes
 **Bandwidth** | **Int32** |  | [optional] [default to 0]
 **Webroot** | **String** |  | [optional] 
 **Graphcolor** | **String** |  | [optional] 
+**Images** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapinfiles** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Logfiles** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Usedtasks** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroup** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**LocationUrl** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Online** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -53,6 +60,13 @@ $JoinStoragenodeRequest = Initialize-FogApiJoinStoragenodeRequest  -Id null `
  -Bandwidth null `
  -Webroot null `
  -Graphcolor null `
+ -Images null `
+ -Snapinfiles null `
+ -Logfiles null `
+ -Usedtasks null `
+ -Storagegroup null `
+ -LocationUrl null `
+ -Online null `
  -Ids null
 ```
 

@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogStoragenodeApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Storagenode = Initialize-Storagenode -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" # Storagenode | 
+$Storagenode = Initialize-Storagenode -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" -Images  -Snapinfiles  -Logfiles  -Usedtasks  -Storagegroup  -LocationUrl  -Online # Storagenode | 
 
 # Create a storagenode
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinStoragenodeRequest = Initialize-JoinStoragenodeRequest -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" -Ids 0 # JoinStoragenodeRequest | 
+$JoinStoragenodeRequest = Initialize-JoinStoragenodeRequest -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" -Images  -Snapinfiles  -Logfiles  -Usedtasks  -Storagegroup  -LocationUrl  -Online  -Ids 0 # JoinStoragenodeRequest | 
 
 # Bulk edit storagenode
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Storagenode = Initialize-Storagenode -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" # Storagenode | 
+$Storagenode = Initialize-Storagenode -Id 0 -Name "MyName" -Description "MyDescription" -IsMaster "MyIsMaster" -StoragegroupID 0 -IsEnabled "MyIsEnabled" -IsGraphEnabled "0" -Path "MyPath" -Ftppath "MyFtppath" -Bitrate "MyBitrate" -HelloInterval "MyHelloInterval" -Snapinpath "MySnapinpath" -Sslpath "MySslpath" -Ip "MyIp" -MaxClients 0 -User "MyUser" -Pass "MyPass" -Key "MyKey" -Interface "MyInterface" -Bandwidth 0 -Webroot "MyWebroot" -Graphcolor "MyGraphcolor" -Images  -Snapinfiles  -Logfiles  -Usedtasks  -Storagegroup  -LocationUrl  -Online # Storagenode | 
 
 # Update a storagenode
 try {

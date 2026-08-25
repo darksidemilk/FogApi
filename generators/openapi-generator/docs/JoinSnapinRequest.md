@@ -21,6 +21,9 @@ Name | Type | Description | Notes
 **Hash** | **String** |  | [optional] 
 **Size** | **Int32** |  | [optional] [default to 0]
 **Anon3** | **String** |  | [optional] 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Path** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -45,6 +48,9 @@ $JoinSnapinRequest = Initialize-FogApiJoinSnapinRequest  -Id null `
  -Hash null `
  -Size null `
  -Anon3 null `
+ -Hosts null `
+ -Storagegroups null `
+ -Path null `
  -Ids null
 ```
 

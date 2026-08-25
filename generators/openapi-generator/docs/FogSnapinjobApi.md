@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogSnapinjobApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -221,7 +221,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Snapinjob = Initialize-Snapinjob -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" # Snapinjob | 
+$Snapinjob = Initialize-Snapinjob -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" -VarHost  -State  -Snapintasks # Snapinjob | 
 
 # Create a snapinjob
 try {
@@ -461,7 +461,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinSnapinjobRequest = Initialize-JoinSnapinjobRequest -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" -Ids 0 # JoinSnapinjobRequest | 
+$JoinSnapinjobRequest = Initialize-JoinSnapinjobRequest -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" -VarHost  -State  -Snapintasks  -Ids 0 # JoinSnapinjobRequest | 
 
 # Bulk edit snapinjob
 try {
@@ -718,7 +718,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Snapinjob = Initialize-Snapinjob -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" # Snapinjob | 
+$Snapinjob = Initialize-Snapinjob -Id 0 -HostID 0 -StateID 0 -AbortOnFail "0" -VarHost  -State  -Snapintasks # Snapinjob | 
 
 # Update a snapinjob
 try {

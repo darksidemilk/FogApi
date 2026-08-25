@@ -9,6 +9,10 @@ Name | Type | Description | Notes
 **HostID** | **Int32** |  | 
 **StoragegroupID** | **Int32** |  | 
 **FailureTime** | **System.DateTime** |  | 
+**Storagenode** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroup** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Task** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -21,6 +25,10 @@ $JoinNodefailureRequest = Initialize-FogApiJoinNodefailureRequest  -Id null `
  -HostID null `
  -StoragegroupID null `
  -FailureTime null `
+ -Storagenode null `
+ -Storagegroup null `
+ -VarHost null `
+ -Task null `
  -Ids null
 ```
 

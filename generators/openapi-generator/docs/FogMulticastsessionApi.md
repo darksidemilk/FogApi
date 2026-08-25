@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogMulticastsessionApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -222,7 +222,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Multicastsession = Initialize-Multicastsession -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" # Multicastsession | 
+$Multicastsession = Initialize-Multicastsession -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" -Imagename  -State # Multicastsession | 
 
 # Create a multicastsession
 try {
@@ -462,7 +462,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinMulticastsessionRequest = Initialize-JoinMulticastsessionRequest -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" -Ids 0 # JoinMulticastsessionRequest | 
+$JoinMulticastsessionRequest = Initialize-JoinMulticastsessionRequest -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" -Imagename  -State  -Ids 0 # JoinMulticastsessionRequest | 
 
 # Bulk edit multicastsession
 try {
@@ -788,7 +788,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Multicastsession = Initialize-Multicastsession -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" # Multicastsession | 
+$Multicastsession = Initialize-Multicastsession -Id 0 -Name "MyName" -Port 0 -Logpath "MyLogpath" -Image "MyImage" -Clients 0 -Sessclients 0 -Interface "MyInterface" -Starttime (Get-Date) -Percent 0 -StateID 0 -Completetime (Get-Date) -IsDD 0 -StoragegroupID 0 -Shutdown "0" -Maxwait 0 -Senderpid 0 -Sendernode 0 -Senderstart (Get-Date) -Anon5 "MyAnon5" -Imagename  -State # Multicastsession | 
 
 # Update a multicastsession
 try {

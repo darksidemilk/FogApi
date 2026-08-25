@@ -12,6 +12,9 @@ Name | Type | Description | Notes
 **Sequence** | **Int32** |  | [optional] [default to 0]
 **VarReturn** | **Int32** |  | [optional] [default to 0]
 **Details** | **String** |  | [optional] 
+**Snapin** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapinjob** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -27,6 +30,9 @@ $JoinSnapintaskRequest = Initialize-FogApiJoinSnapintaskRequest  -Id null `
  -Sequence null `
  -VarReturn null `
  -Details null `
+ -Snapin null `
+ -State null `
+ -Snapinjob null `
  -Ids null
 ```
 

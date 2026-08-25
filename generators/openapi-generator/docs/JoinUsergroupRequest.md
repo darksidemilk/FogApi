@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 **Id** | **Int32** |  | [optional] [readonly] 
 **Name** | **String** |  | 
 **Description** | **String** |  | [optional] 
+**Users** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Roles** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -15,6 +17,8 @@ Name | Type | Description | Notes
 $JoinUsergroupRequest = Initialize-FogApiJoinUsergroupRequest  -Id null `
  -Name null `
  -Description null `
+ -Users null `
+ -Roles null `
  -Ids null
 ```
 

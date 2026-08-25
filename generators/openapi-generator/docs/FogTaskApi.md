@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogTaskApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -222,7 +222,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Task = Initialize-Task -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) # Task | 
+$Task = Initialize-Task -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) -Image  -VarHost  -Type  -State  -Storagenode  -Storagegroup # Task | 
 
 # Create a task
 try {
@@ -462,7 +462,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinTaskRequest = Initialize-JoinTaskRequest -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) -Ids 0 # JoinTaskRequest | 
+$JoinTaskRequest = Initialize-JoinTaskRequest -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) -Image  -VarHost  -Type  -State  -Storagenode  -Storagegroup  -Ids 0 # JoinTaskRequest | 
 
 # Bulk edit task
 try {
@@ -788,7 +788,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Task = Initialize-Task -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) # Task | 
+$Task = Initialize-Task -Id 0 -Name "MyName" -CheckInTime (Get-Date) -HostID 0 -StateID 0 -IsForced "MyIsForced" -ScheduledStartTime (Get-Date) -TypeID 0 -Pct 0 -Bpm "MyBpm" -TimeElapsed "MyTimeElapsed" -TimeRemaining "MyTimeRemaining" -DataCopied "MyDataCopied" -Percent "MyPercent" -DataTotal "MyDataTotal" -StoragegroupID 0 -StoragenodeID 0 -NFSFailures "MyNFSFailures" -NFSLastMemberID 0 -Shutdown "MyShutdown" -Passreset "MyPassreset" -IsDebug 0 -ImageID 0 -Wol "0" -Bypassbitlocker "0" -StateChangedTime (Get-Date) -Image  -VarHost  -Type  -State  -Storagenode  -Storagegroup # Task | 
 
 # Update a task
 try {

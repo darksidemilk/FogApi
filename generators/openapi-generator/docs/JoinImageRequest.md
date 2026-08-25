@@ -20,6 +20,11 @@ Name | Type | Description | Notes
 **IsEnabled** | **String** |  | [optional] [default to "1"]
 **ToReplicate** | **String** |  | [optional] [default to "1"]
 **Srvsize** | **Int32** |  | [optional] [default to 0]
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Os** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Imagepartitiontype** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Imagetype** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -43,6 +48,11 @@ $JoinImageRequest = Initialize-FogApiJoinImageRequest  -Id null `
  -IsEnabled null `
  -ToReplicate null `
  -Srvsize null `
+ -Hosts null `
+ -Storagegroups null `
+ -Os null `
+ -Imagepartitiontype null `
+ -Imagetype null `
  -Ids null
 ```
 

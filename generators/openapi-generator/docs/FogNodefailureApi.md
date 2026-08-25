@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogNodefailureApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -103,7 +103,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Nodefailure = Initialize-Nodefailure -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) # Nodefailure | 
+$Nodefailure = Initialize-Nodefailure -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) -Storagenode  -Storagegroup  -VarHost  -Task # Nodefailure | 
 
 # Create a nodefailure
 try {
@@ -343,7 +343,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinNodefailureRequest = Initialize-JoinNodefailureRequest -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) -Ids 0 # JoinNodefailureRequest | 
+$JoinNodefailureRequest = Initialize-JoinNodefailureRequest -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) -Storagenode  -Storagegroup  -VarHost  -Task  -Ids 0 # JoinNodefailureRequest | 
 
 # Bulk edit nodefailure
 try {
@@ -534,7 +534,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Nodefailure = Initialize-Nodefailure -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) # Nodefailure | 
+$Nodefailure = Initialize-Nodefailure -Id 0 -StoragenodeID 0 -TaskID 0 -HostID 0 -StoragegroupID 0 -FailureTime (Get-Date) -Storagenode  -Storagegroup  -VarHost  -Task # Nodefailure | 
 
 # Update a nodefailure
 try {

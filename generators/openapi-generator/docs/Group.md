@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **KernelArgs** | **String** |  | [optional] 
 **KernelDevice** | **String** |  | [optional] 
 **Init** | **String** |  | [optional] 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -23,7 +24,8 @@ $Group = Initialize-FogApiGroup  -Id null `
  -Kernel null `
  -KernelArgs null `
  -KernelDevice null `
- -Init null
+ -Init null `
+ -Hosts null
 ```
 
 - Convert the resource to JSON

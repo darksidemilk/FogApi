@@ -23,6 +23,8 @@ Name | Type | Description | Notes
 **Sendernode** | **Int32** |  | [optional] [default to 0]
 **Senderstart** | **System.DateTime** |  | [optional] 
 **Anon5** | **String** |  | [optional] 
+**Imagename** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -49,6 +51,8 @@ $JoinMulticastsessionRequest = Initialize-FogApiJoinMulticastsessionRequest  -Id
  -Sendernode null `
  -Senderstart null `
  -Anon5 null `
+ -Imagename null `
+ -State null `
  -Ids null
 ```
 

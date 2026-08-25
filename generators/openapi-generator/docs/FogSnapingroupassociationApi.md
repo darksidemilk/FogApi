@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogSnapingroupassociationApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -103,7 +103,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Snapingroupassociation = Initialize-Snapingroupassociation -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" # Snapingroupassociation | 
+$Snapingroupassociation = Initialize-Snapingroupassociation -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" -Snapin  -Storagegroup # Snapingroupassociation | 
 
 # Create a snapingroupassociation
 try {
@@ -343,7 +343,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinSnapingroupassociationRequest = Initialize-JoinSnapingroupassociationRequest -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" -Ids 0 # JoinSnapingroupassociationRequest | 
+$JoinSnapingroupassociationRequest = Initialize-JoinSnapingroupassociationRequest -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" -Snapin  -Storagegroup  -Ids 0 # JoinSnapingroupassociationRequest | 
 
 # Bulk edit snapingroupassociation
 try {
@@ -534,7 +534,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Snapingroupassociation = Initialize-Snapingroupassociation -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" # Snapingroupassociation | 
+$Snapingroupassociation = Initialize-Snapingroupassociation -Id 0 -SnapinID 0 -StoragegroupID 0 -Primary "0" -Snapin  -Storagegroup # Snapingroupassociation | 
 
 # Update a snapingroupassociation
 try {

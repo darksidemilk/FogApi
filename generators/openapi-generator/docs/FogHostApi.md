@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogHostApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -166,7 +166,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$ModelHost = Initialize-ModelHost -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 # ModelHost | 
+$ModelHost = Initialize-ModelHost -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 -Mac  -Primac  -Imagename  -Groups  -Hostscreen  -Hostalo  -OptimalStorageNode  -Printers  -Snapins  -Modules  -Inventory  -Task  -Snapinjob  -Users  -Fingerprint  -Powermanagementtasks # ModelHost | 
 
 # Create a host
 try {
@@ -406,7 +406,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinHostRequest = Initialize-JoinHostRequest -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 -Ids 0 # JoinHostRequest | 
+$JoinHostRequest = Initialize-JoinHostRequest -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 -Mac  -Primac  -Imagename  -Groups  -Hostscreen  -Hostalo  -OptimalStorageNode  -Printers  -Snapins  -Modules  -Inventory  -Task  -Snapinjob  -Users  -Fingerprint  -Powermanagementtasks  -Ids 0 # JoinHostRequest | 
 
 # Bulk edit host
 try {
@@ -732,7 +732,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$ModelHost = Initialize-ModelHost -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 # ModelHost | 
+$ModelHost = Initialize-ModelHost -Id 0 -Name "MyName" -Description "MyDescription" -Ip "MyIp" -ImageID 0 -Building 0 -Deployed (Get-Date) -UseAD "MyUseAD" -ADDomain "MyADDomain" -ADOU "MyADOU" -ADUser "MyADUser" -ADPass "MyADPass" -ADPassLegacy "MyADPassLegacy" -ProductKey "MyProductKey" -PrinterLevel "MyPrinterLevel" -KernelArgs "MyKernelArgs" -Kernel "MyKernel" -KernelDevice "MyKernelDevice" -Init "MyInit" -Pending "0" -PubKey "MyPubKey" -SecTok "MySecTok" -PrevSecTok "MyPrevSecTok" -SecTime (Get-Date) -Pingstatus "MyPingstatus" -Pingmethod "MyPingmethod" -Lastping (Get-Date) -Lastcheckin (Get-Date) -Biosexit "MyBiosexit" -Efiexit "MyEfiexit" -Enforce "0" -Token "MyToken" -Tokenlock 0 -Mac  -Primac  -Imagename  -Groups  -Hostscreen  -Hostalo  -OptimalStorageNode  -Printers  -Snapins  -Modules  -Inventory  -Task  -Snapinjob  -Users  -Fingerprint  -Powermanagementtasks # ModelHost | 
 
 # Update a host
 try {

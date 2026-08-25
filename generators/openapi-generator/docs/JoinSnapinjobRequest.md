@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **HostID** | **Int32** |  | 
 **StateID** | **Int32** |  | 
 **AbortOnFail** | **String** |  | [optional] [default to "0"]
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapintasks** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -17,6 +20,9 @@ $JoinSnapinjobRequest = Initialize-FogApiJoinSnapinjobRequest  -Id null `
  -HostID null `
  -StateID null `
  -AbortOnFail null `
+ -VarHost null `
+ -State null `
+ -Snapintasks null `
  -Ids null
 ```
 

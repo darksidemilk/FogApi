@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ShortName** | **String** |  | 
 **Description** | **String** |  | [optional] 
 **IsDefault** | **Int32** |  | [optional] [default to 1]
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -17,7 +18,8 @@ $Module = Initialize-FogApiModule  -Id null `
  -Name null `
  -ShortName null `
  -Description null `
- -IsDefault null
+ -IsDefault null `
+ -Hosts null
 ```
 
 - Convert the resource to JSON

@@ -7,6 +7,9 @@ Name | Type | Description | Notes
 **HostID** | **Int32** |  | 
 **StateID** | **Int32** |  | 
 **AbortOnFail** | **String** |  | [optional] [default to "0"]
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapintasks** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -15,7 +18,10 @@ Name | Type | Description | Notes
 $Snapinjob = Initialize-FogApiSnapinjob  -Id null `
  -HostID null `
  -StateID null `
- -AbortOnFail null
+ -AbortOnFail null `
+ -VarHost null `
+ -State null `
+ -Snapintasks null
 ```
 
 - Convert the resource to JSON

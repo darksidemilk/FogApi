@@ -6,6 +6,13 @@ Name | Type | Description | Notes
 **Id** | **Int32** |  | [optional] [readonly] 
 **Name** | **String** |  | 
 **Description** | **String** |  | [optional] 
+**Users** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Groups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Usergroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Grantroles** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Grantusergroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Catchall** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -13,7 +20,14 @@ Name | Type | Description | Notes
 ```powershell
 $Site = Initialize-FogApiSite  -Id null `
  -Name null `
- -Description null
+ -Description null `
+ -Users null `
+ -Hosts null `
+ -Groups null `
+ -Usergroups null `
+ -Grantroles null `
+ -Grantusergroups null `
+ -Catchall null
 ```
 
 - Convert the resource to JSON

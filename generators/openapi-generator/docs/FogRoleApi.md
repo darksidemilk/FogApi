@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogRoleApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Role = Initialize-Role -Id 0 -Name "MyName" -Description "MyDescription" # Role | 
+$Role = Initialize-Role -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Usergroups  -Permissions # Role | 
 
 # Create a role
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinRoleRequest = Initialize-JoinRoleRequest -Id 0 -Name "MyName" -Description "MyDescription" -Ids 0 # JoinRoleRequest | 
+$JoinRoleRequest = Initialize-JoinRoleRequest -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Usergroups  -Permissions  -Ids 0 # JoinRoleRequest | 
 
 # Bulk edit role
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Role = Initialize-Role -Id 0 -Name "MyName" -Description "MyDescription" # Role | 
+$Role = Initialize-Role -Id 0 -Name "MyName" -Description "MyDescription" -Users  -Usergroups  -Permissions # Role | 
 
 # Update a role
 try {

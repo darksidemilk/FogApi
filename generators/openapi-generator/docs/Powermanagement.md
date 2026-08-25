@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **Dow** | **String** |  | [optional] 
 **OnDemand** | **String** |  | [optional] [default to "0"]
 **Action** | **String** |  | 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -25,7 +26,8 @@ $Powermanagement = Initialize-FogApiPowermanagement  -Id null `
  -Month null `
  -Dow null `
  -OnDemand null `
- -Action null
+ -Action null `
+ -Hosts null
 ```
 
 - Convert the resource to JSON

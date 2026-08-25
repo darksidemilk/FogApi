@@ -37,6 +37,7 @@ Name | Type | Description | Notes
 **Caseasset** | **String** |  | [optional] 
 **Gpuvendors** | **String** |  | [optional] 
 **Gpuproducts** | **String** |  | [optional] 
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -75,7 +76,8 @@ $Inventory = Initialize-FogApiInventory  -Id null `
  -Caseserial null `
  -Caseasset null `
  -Gpuvendors null `
- -Gpuproducts null
+ -Gpuproducts null `
+ -VarHost null
 ```
 
 - Convert the resource to JSON

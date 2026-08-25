@@ -12,6 +12,8 @@ Name | Type | Description | Notes
 **Anon3** | **String** |  | [optional] 
 **Ip** | **String** |  | [optional] 
 **SubjectLabel** | **String** |  | [optional] 
+**VarHost** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Hostname** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -25,7 +27,9 @@ $Usertracking = Initialize-FogApiUsertracking  -Id null `
  -Date null `
  -Anon3 null `
  -Ip null `
- -SubjectLabel null
+ -SubjectLabel null `
+ -VarHost null `
+ -Hostname null
 ```
 
 - Convert the resource to JSON

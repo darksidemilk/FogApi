@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogSnapinApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -105,7 +105,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Snapin = Initialize-Snapin -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" # Snapin | 
+$Snapin = Initialize-Snapin -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" -Hosts  -Storagegroups  -Path # Snapin | 
 
 # Create a snapin
 try {
@@ -345,7 +345,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinSnapinRequest = Initialize-JoinSnapinRequest -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" -Ids 0 # JoinSnapinRequest | 
+$JoinSnapinRequest = Initialize-JoinSnapinRequest -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" -Hosts  -Storagegroups  -Path  -Ids 0 # JoinSnapinRequest | 
 
 # Bulk edit snapin
 try {
@@ -701,7 +701,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Snapin = Initialize-Snapin -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" # Snapin | 
+$Snapin = Initialize-Snapin -Id 0 -Name "MyName" -Description "MyDescription" -File "MyFile" -VarArgs "MyVarArgs" -Reboot "MyReboot" -Shutdown "0" -RunWith "MyRunWith" -RunWithArgs "MyRunWithArgs" -Protected 0 -IsEnabled "0" -ToReplicate "0" -Hide "0" -Timeout 0 -Packtype "0" -Hash "MyHash" -Size 0 -Anon3 "MyAnon3" -Hosts  -Storagegroups  -Path # Snapin | 
 
 # Update a snapin
 try {

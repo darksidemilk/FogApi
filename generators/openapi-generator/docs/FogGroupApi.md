@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogGroupApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -167,7 +167,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Group = Initialize-Group -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" # Group | 
+$Group = Initialize-Group -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" -Hosts # Group | 
 
 # Create a group
 try {
@@ -467,7 +467,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinGroupRequest = Initialize-JoinGroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" -Ids 0 # JoinGroupRequest | 
+$JoinGroupRequest = Initialize-JoinGroupRequest -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" -Hosts  -Ids 0 # JoinGroupRequest | 
 
 # Bulk edit group
 try {
@@ -793,7 +793,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Group = Initialize-Group -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" # Group | 
+$Group = Initialize-Group -Id 0 -Name "MyName" -Description "MyDescription" -Building 0 -Kernel "MyKernel" -KernelArgs "MyKernelArgs" -KernelDevice "MyKernelDevice" -Init "MyInit" -Hosts # Group | 
 
 # Update a group
 try {

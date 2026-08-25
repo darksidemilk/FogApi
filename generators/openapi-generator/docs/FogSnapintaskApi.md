@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogSnapintaskApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -221,7 +221,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Snapintask = Initialize-Snapintask -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" # Snapintask | 
+$Snapintask = Initialize-Snapintask -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" -Snapin  -State  -Snapinjob # Snapintask | 
 
 # Create a snapintask
 try {
@@ -461,7 +461,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinSnapintaskRequest = Initialize-JoinSnapintaskRequest -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" -Ids 0 # JoinSnapintaskRequest | 
+$JoinSnapintaskRequest = Initialize-JoinSnapintaskRequest -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" -Snapin  -State  -Snapinjob  -Ids 0 # JoinSnapintaskRequest | 
 
 # Bulk edit snapintask
 try {
@@ -718,7 +718,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Snapintask = Initialize-Snapintask -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" # Snapintask | 
+$Snapintask = Initialize-Snapintask -Id 0 -JobID 0 -StateID 0 -Checkin (Get-Date) -Complete (Get-Date) -SnapinID 0 -Sequence 0 -VarReturn 0 -Details "MyDetails" -Snapin  -State  -Snapinjob # Snapintask | 
 
 # Update a snapintask
 try {

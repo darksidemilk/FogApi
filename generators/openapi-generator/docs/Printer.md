@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **PAnon3** | **String** |  | [optional] 
 **PAnon4** | **String** |  | [optional] 
 **PAnon5** | **String** |  | [optional] 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -33,7 +34,8 @@ $Printer = Initialize-FogApiPrinter  -Id null `
  -PAnon2 null `
  -PAnon3 null `
  -PAnon4 null `
- -PAnon5 null
+ -PAnon5 null `
+ -Hosts null
 ```
 
 - Convert the resource to JSON

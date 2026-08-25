@@ -12,6 +12,9 @@ Name | Type | Description | Notes
 **Sequence** | **Int32** |  | [optional] [default to 0]
 **VarReturn** | **Int32** |  | [optional] [default to 0]
 **Details** | **String** |  | [optional] 
+**Snapin** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Snapinjob** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -25,7 +28,10 @@ $Snapintask = Initialize-FogApiSnapintask  -Id null `
  -SnapinID null `
  -Sequence null `
  -VarReturn null `
- -Details null
+ -Details null `
+ -Snapin null `
+ -State null `
+ -Snapinjob null
 ```
 
 - Convert the resource to JSON

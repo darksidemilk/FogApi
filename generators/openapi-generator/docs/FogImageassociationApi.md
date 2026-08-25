@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogImageassociationApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -103,7 +103,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Imageassociation = Initialize-Imageassociation -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" # Imageassociation | 
+$Imageassociation = Initialize-Imageassociation -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" -Image  -Storagegroup # Imageassociation | 
 
 # Create a imageassociation
 try {
@@ -343,7 +343,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinImageassociationRequest = Initialize-JoinImageassociationRequest -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" -Ids 0 # JoinImageassociationRequest | 
+$JoinImageassociationRequest = Initialize-JoinImageassociationRequest -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" -Image  -Storagegroup  -Ids 0 # JoinImageassociationRequest | 
 
 # Bulk edit imageassociation
 try {
@@ -534,7 +534,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Imageassociation = Initialize-Imageassociation -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" # Imageassociation | 
+$Imageassociation = Initialize-Imageassociation -Id 0 -ImageID 0 -StoragegroupID 0 -Primary "0" -Image  -Storagegroup # Imageassociation | 
 
 # Update a imageassociation
 try {

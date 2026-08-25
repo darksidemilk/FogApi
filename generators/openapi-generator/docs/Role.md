@@ -6,6 +6,9 @@ Name | Type | Description | Notes
 **Id** | **Int32** |  | [optional] [readonly] 
 **Name** | **String** |  | 
 **Description** | **String** |  | [optional] 
+**Users** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Usergroups** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Permissions** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -13,7 +16,10 @@ Name | Type | Description | Notes
 ```powershell
 $Role = Initialize-FogApiRole  -Id null `
  -Name null `
- -Description null
+ -Description null `
+ -Users null `
+ -Usergroups null `
+ -Permissions null
 ```
 
 - Convert the resource to JSON

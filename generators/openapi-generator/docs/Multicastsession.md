@@ -23,6 +23,8 @@ Name | Type | Description | Notes
 **Sendernode** | **Int32** |  | [optional] [default to 0]
 **Senderstart** | **System.DateTime** |  | [optional] 
 **Anon5** | **String** |  | [optional] 
+**Imagename** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**State** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 
 ## Examples
 
@@ -47,7 +49,9 @@ $Multicastsession = Initialize-FogApiMulticastsession  -Id null `
  -Senderpid null `
  -Sendernode null `
  -Senderstart null `
- -Anon5 null
+ -Anon5 null `
+ -Imagename null `
+ -State null
 ```
 
 - Convert the resource to JSON

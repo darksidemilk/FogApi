@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogImageApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -104,7 +104,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Image = Initialize-Image -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 # Image | 
+$Image = Initialize-Image -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 -Hosts  -Storagegroups  -Os  -Imagepartitiontype  -Imagetype # Image | 
 
 # Create a image
 try {
@@ -344,7 +344,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinImageRequest = Initialize-JoinImageRequest -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 -Ids 0 # JoinImageRequest | 
+$JoinImageRequest = Initialize-JoinImageRequest -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 -Hosts  -Storagegroups  -Os  -Imagepartitiontype  -Imagetype  -Ids 0 # JoinImageRequest | 
 
 # Bulk edit image
 try {
@@ -604,7 +604,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Image = Initialize-Image -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 # Image | 
+$Image = Initialize-Image -Id 0 -Name "MyName" -Description "MyDescription" -Path "MyPath" -Building 0 -Size "MySize" -ImageTypeID 0 -ImagePartitionTypeID 0 -OsID 0 -Deployed (Get-Date) -Format "MyFormat" -Magnet "MyMagnet" -Protected 0 -Compress 0 -IsEnabled "0" -ToReplicate "0" -Srvsize 0 -Hosts  -Storagegroups  -Os  -Imagepartitiontype  -Imagetype # Image | 
 
 # Update a image
 try {

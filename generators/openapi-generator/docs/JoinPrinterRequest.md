@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **PAnon3** | **String** |  | [optional] 
 **PAnon4** | **String** |  | [optional] 
 **PAnon5** | **String** |  | [optional] 
+**Hosts** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -35,6 +36,7 @@ $JoinPrinterRequest = Initialize-FogApiJoinPrinterRequest  -Id null `
  -PAnon3 null `
  -PAnon4 null `
  -PAnon5 null `
+ -Hosts null `
  -Ids null
 ```
 

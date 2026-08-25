@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogPowermanagementApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -159,7 +159,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Powermanagement = Initialize-Powermanagement -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" # Powermanagement | 
+$Powermanagement = Initialize-Powermanagement -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" -Hosts # Powermanagement | 
 
 # Create a powermanagement
 try {
@@ -399,7 +399,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinPowermanagementRequest = Initialize-JoinPowermanagementRequest -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" -Ids 0 # JoinPowermanagementRequest | 
+$JoinPowermanagementRequest = Initialize-JoinPowermanagementRequest -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" -Hosts  -Ids 0 # JoinPowermanagementRequest | 
 
 # Bulk edit powermanagement
 try {
@@ -590,7 +590,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Powermanagement = Initialize-Powermanagement -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" # Powermanagement | 
+$Powermanagement = Initialize-Powermanagement -Id 0 -HostID 0 -Min "MyMin" -Hour "MyHour" -Dom "MyDom" -Month "MyMonth" -Dow "MyDow" -OnDemand "0" -Action "shutdown" -Hosts # Powermanagement | 
 
 # Update a powermanagement
 try {

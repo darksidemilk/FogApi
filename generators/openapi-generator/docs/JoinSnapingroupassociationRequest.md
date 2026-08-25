@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **SnapinID** | **Int32** |  | 
 **StoragegroupID** | **Int32** |  | 
 **Primary** | **String** |  | [optional] [default to "0"]
+**Snapin** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
+**Storagegroup** | [**AnyType**](.md) | Computed field. Returned by the API but not a column, and not settable. | [optional] [readonly] 
 **Ids** | **Int32[]** | The objects to apply these values to. An empty or absent list matches nothing and edits nothing. | 
 
 ## Examples
@@ -17,6 +19,8 @@ $JoinSnapingroupassociationRequest = Initialize-FogApiJoinSnapingroupassociation
  -SnapinID null `
  -StoragegroupID null `
  -Primary null `
+ -Snapin null `
+ -Storagegroup null `
  -Ids null
 ```
 

@@ -1,6 +1,6 @@
 # FogApi.FogApi\Api.FogInventoryApi
 
-All URIs are relative to *https://fog.example.invalid/fog*
+All URIs are relative to *http://fog-dev/fog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -103,7 +103,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$Inventory = Initialize-Inventory -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" # Inventory | 
+$Inventory = Initialize-Inventory -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" -VarHost # Inventory | 
 
 # Create a inventory
 try {
@@ -343,7 +343,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 # Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
-$JoinInventoryRequest = Initialize-JoinInventoryRequest -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" -Ids 0 # JoinInventoryRequest | 
+$JoinInventoryRequest = Initialize-JoinInventoryRequest -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" -VarHost  -Ids 0 # JoinInventoryRequest | 
 
 # Bulk edit inventory
 try {
@@ -534,7 +534,7 @@ $Configuration.ApiKey.fog-user-token = "YOUR_API_KEY"
 #$Configuration.ApiKeyPrefix.fog-user-token = "Bearer"
 
 $Id = 56 # Int32 | 
-$Inventory = Initialize-Inventory -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" # Inventory | 
+$Inventory = Initialize-Inventory -Id 0 -HostID 0 -PrimaryUser "MyPrimaryUser" -Other1 "MyOther1" -Other2 "MyOther2" -DeleteDate (Get-Date) -Sysman "MySysman" -Sysproduct "MySysproduct" -Sysversion "MySysversion" -Sysserial "MySysserial" -Sysuuid "MySysuuid" -Systype "MySystype" -Biosversion "MyBiosversion" -Biosvendor "MyBiosvendor" -Biosdate "MyBiosdate" -Mbman "MyMbman" -Mbproductname "MyMbproductname" -Mbversion "MyMbversion" -Mbserial "MyMbserial" -Mbasset "MyMbasset" -Cpuman "MyCpuman" -Cpuversion "MyCpuversion" -Cpucurrent "MyCpucurrent" -Cpumax "MyCpumax" -Mem "MyMem" -Hdmodel "MyHdmodel" -Hdserial "MyHdserial" -Hdfirmware "MyHdfirmware" -Caseman "MyCaseman" -Casever "MyCasever" -Caseserial "MyCaseserial" -Caseasset "MyCaseasset" -Gpuvendors "MyGpuvendors" -Gpuproducts "MyGpuproducts" -VarHost # Inventory | 
 
 # Update a inventory
 try {
