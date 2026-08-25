@@ -146,3 +146,51 @@ before treating "use the standard generator" as work avoided.
 Until step 1 lands, a generated client cannot see 80 fields the server actually
 returns, and that is not a trade this module can make — `Get-FogHost` would stop
 returning `macs`.
+
+## The manifest cannot supply the `Fog` prefix
+
+Worth recording because it is the obvious idea, it is a real PowerShell
+feature, and the documentation says it works.
+
+`DefaultCommandPrefix` in a module manifest inserts a prefix into the **noun**
+of every exported command, so `Get-Host` is imported as `Get-FogHost`. If that
+applied here, AutoRest's missing `Fog` prefix would cost nothing to fix — no
+directives, no overlay, one manifest key — and the `Get-Host` collision with
+the PowerShell built-in would go with it.
+
+`about_Module_Manifests` states it plainly:
+
+> any cmdlets imported from this module have `Example` prepended to the noun
+> in their name. For example, `Get-Item` is imported as `Get-ExampleItem`.
+
+**It does not apply to binary cmdlets.** Measured on pwsh 7.6.4 against
+`FogApi.Core.dll`'s 164 cmdlets, four ways:
+
+| how the prefix was applied | functions | binary cmdlets |
+|---|---|---|
+| `DefaultCommandPrefix`, DLL in `RequiredAssemblies` + `NestedModules` | prefixed | **0 of 164** |
+| `DefaultCommandPrefix`, DLL in `NestedModules` only | prefixed | **0 of 164** |
+| `DefaultCommandPrefix`, DLL as `RootModule`, no `.psm1` | n/a | **0 of 164** |
+| `Import-Module -Prefix Zz` | n/a | **0 of 164** |
+
+A control in the same engine confirms the mechanism itself works: a script
+module exporting `Get-Host2`, `Invoke-IndivHost` and `ConvertTo-divHost` with
+`DefaultCommandPrefix = 'Fog'` exposes `Get-FogHost2`, `Invoke-FogIndivHost`
+and `ConvertTo-FogdivHost`, and the unprefixed names stop resolving.
+
+**Aliases are never prefixed either**, by either route. A module relying on the
+prefix would have prefixed commands and unprefixed aliases pointing at them.
+
+Three consequences:
+
+1. **It does not rescue AutoRest.** Its `Get-Host` stays `Get-Host`. Renaming
+   still has to happen in directives, which is the overlay re-expressed rather
+   than deleted — the finding already recorded above.
+2. **FogApi must not set it.** With 66 functions and 164 cmdlets, it would
+   prefix the functions and leave the cmdlets alone, splitting the naming
+   surface down the middle. The key is commented out in `FogApi.psd1` and
+   should stay that way.
+3. **It would work for openapi-generator**, whose output is entirely functions.
+   That is not an argument for openapi-generator: its host surface is
+   `ConvertTo-divHost` and `Move-sHost` before any prefix is applied, and
+   prefixing mangled names yields prefixed mangled names.
