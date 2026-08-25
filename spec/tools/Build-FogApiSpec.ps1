@@ -19,7 +19,7 @@ that way, and where FOG 1.5 differs. It is small on purpose.
 This script does the mechanical part between them -- noun casing, pluralisation,
 verb selection, folding count/names/ids/join onto their host cmdlets, resolving
 each operation to an L1 call -- and writes spec/fog-api-spec.json. Emitters read
-only that file, so a Python or bash emitter never has to re-derive a naming rule
+only that file, so a Python emitter never has to re-derive a naming rule
 or re-read the OpenAPI document.
 
 It validates rather than warns. Every one of these has bitten this repo or is
@@ -148,7 +148,7 @@ function Resolve-PluralNoun {
 function New-FunctionName {
     <#
     One rule, four renderings. Only the PowerShell rendering is built here; the
-    spec stores verb and noun separately so the Python and bash emitters derive
+    spec stores verb and noun separately so the Python emitter derives
     their own rather than munging this string.
     #>
     param([string]$Verb, [string]$Noun, [string]$Infix = '', [string]$Suffix = '')
@@ -384,7 +384,7 @@ foreach ($class in $snapshotClasses) {
             format   = $(if ($f.PSObject.Properties.Name -contains 'format') { $f.format } else { $null })
             # type + format + enum resolved into the one word an emitter acts
             # on. Resolved here rather than in each emitter so PowerShell,
-            # Python and bash cannot reach three different answers about
+            # Python cannot reach three different answers about
             # whether host.pending is a boolean.
             wireType = Resolve-WireType $f
             column   = $(if ($f.PSObject.Properties.Name -contains 'x-fog-column') { $f.'x-fog-column' } else { $null })
@@ -535,7 +535,7 @@ foreach ($name in Get-OverlayKeys $overlay.handWritten) {
     # implementation: "compiled" means the command is a cmdlet in FogApi.dll
     # rather than a file in Public/, so there is no .ps1 to look for. Still
     # registered here: the coverage matrix has to count it as covered, and the
-    # python and bash emitters still owe an implementation of it -- what moved
+    # python emitter still owes an implementation of it -- what moved
     # is the language, not the obligation.
     $implementation = if ($entry.PSObject.Properties.Name -contains 'implementation') { $entry.implementation } else { 'script' }
     if ($implementation -notin @('script', 'compiled')) {
@@ -904,7 +904,7 @@ $spec = [ordered]@{
         'Rebuild with spec/tools/Build-FogApiSpec.ps1 after changing either input.',
         'Inputs: spec/openapi/fog-1.6.json (regenerated from fogproject) and',
         'spec/overlay/fog-api-overlay.json (hand-maintained decisions).',
-        'Every emitter -- PowerShell, Python, bash -- reads this file and nothing else.'
+        'Every emitter -- PowerShell and Python -- reads this file and nothing else.'
     )
     specVersion  = 1
     source       = [ordered]@{

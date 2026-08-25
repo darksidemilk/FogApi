@@ -4,7 +4,7 @@
     "Rebuild with spec/tools/Build-FogApiSpec.ps1 after changing either input.",
     "Inputs: spec/openapi/fog-1.6.json (regenerated from fogproject) and",
     "spec/overlay/fog-api-overlay.json (hand-maintained decisions).",
-    "Every emitter -- PowerShell, Python, bash -- reads this file and nothing else."
+    "Every emitter -- PowerShell and Python -- reads this file and nothing else."
   ],
   "specVersion": 1,
   "source": {
@@ -4506,7 +4506,7 @@
     "$comment": [
       "The functions that stay hand-written forever, and why. They are registered",
       "rather than generated so the coverage matrix shows them as covered instead of",
-      "as gaps, and so the Python and bash emitters know which ones they owe.",
+      "as gaps, and so the Python emitter knows which ones it owes.",
       "",
       "category:",
       "  transport      the single HTTP choke point",
@@ -4525,19 +4525,17 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "implementation": "compiled",
-      "note": "A cmdlet in FogApi.dll, not a file in Public/. Still hand-written -- transport is not an API operation, it is what every operation goes through -- and still owed by the python and bash emitters; what moved is the language, not the obligation. Public/Invoke-FogApi.ps1 was deleted in the same commit that added the cmdlet, because a function beats a cmdlet in PowerShell's resolution order: with both present the .ps1 silently wins, ignores Set-FogTransport, and reaches the network."
+      "note": "A cmdlet in FogApi.dll, not a file in Public/. Still hand-written -- transport is not an API operation, it is what every operation goes through -- and still owed by the python emitter; what moved is the language, not the obligation. Public/Invoke-FogApi.ps1 was deleted in the same commit that added the cmdlet, because a function beats a cmdlet in PowerShell's resolution order: with both present the .ps1 silently wins, ignores Set-FogTransport, and reaches the network."
     },
     "Get-FogObject": {
       "category": "l1",
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "New-FogObject": {
@@ -4545,8 +4543,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Update-FogObject": {
@@ -4554,8 +4551,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Remove-FogObject": {
@@ -4563,8 +4559,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Find-FogObject": {
@@ -4572,8 +4567,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogPagedResult": {
@@ -4581,8 +4575,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Add-FogResultData": {
@@ -4590,8 +4583,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "note": "Normalises the 1.5/1.6 response envelope difference."
     },
@@ -4600,8 +4592,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Receive-FogImage": {
@@ -4609,8 +4600,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Send-FogWolTask": {
@@ -4618,8 +4608,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "note": "WOL is not a route: it is task with wol true / taskTypeID 14."
     },
@@ -4628,8 +4617,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "New-FogTaskRequest": {
@@ -4645,8 +4633,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogHost": {
@@ -4654,8 +4641,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "note": "Identifies the local machine when given no parameters. The pure by-id read is what the generated Get-FogHost would be, which is why this one keeps the name and the generator skips host/indiv."
     },
@@ -4664,8 +4650,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Approve-FogPendingMac": {
@@ -4673,8 +4658,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Deny-FogPendingMac": {
@@ -4682,8 +4666,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Remove-UsbMac": {
@@ -4691,8 +4674,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Add-FogHostGroup": {
@@ -4700,8 +4682,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Remove-FogHostGroup": {
@@ -4709,8 +4690,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Update-FogGroup": {
@@ -4718,8 +4698,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogHostGroup": {
@@ -4727,8 +4706,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogGroupByName": {
@@ -4736,8 +4714,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogHostMacs": {
@@ -4745,8 +4722,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogHostPendingMacs": {
@@ -4754,8 +4730,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogHostAssociatedSnapins": {
@@ -4763,8 +4738,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Set-FogSnapins": {
@@ -4772,8 +4746,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Start-FogSnapin": {
@@ -4781,8 +4754,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Start-FogSnapins": {
@@ -4790,8 +4762,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Repair-FogSnapinAssociations": {
@@ -4799,8 +4770,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "note": "FOG enforces no integrity on association rows; this reconciles them."
     },
@@ -4809,8 +4779,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Set-FogHostImage": {
@@ -4818,8 +4787,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-LastImageTime": {
@@ -4827,8 +4795,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Reset-HostEncryption": {
@@ -4836,8 +4803,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Set-FogInventory": {
@@ -4845,8 +4811,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogActiveTasks": {
@@ -4854,8 +4819,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogScheduledTasks": {
@@ -4863,8 +4827,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Resolve-HostID": {
@@ -4872,8 +4835,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogVersion": {
@@ -4881,8 +4843,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ],
       "note": "Probes system/info then falls back to service/getversion.php for 1.5."
     },
@@ -4891,8 +4852,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogInventory": {
@@ -4958,8 +4918,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Set-FogServerSettings": {
@@ -4967,8 +4926,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogServerSettingsFile": {
@@ -4976,8 +4934,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Set-FogServerSettingsFileSecurity": {
@@ -4992,8 +4949,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Disable-FogApiHTTPS": {
@@ -5001,8 +4957,7 @@
       "platform": "any",
       "targets": [
         "powershell",
-        "python",
-        "bash"
+        "python"
       ]
     },
     "Get-FogSecsSinceEpoch": {

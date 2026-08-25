@@ -6,7 +6,7 @@ Emits FogApi cmdlet files from spec/fog-api-spec.json.
 .DESCRIPTION
 The PowerShell emitter. It reads the resolved spec and nothing else -- no
 OpenAPI document, no overlay, no naming rules of its own -- which is what makes
-a Python or bash emitter a sibling of this file rather than a rewrite of it.
+a Python emitter a sibling of this file rather than a rewrite of it.
 
 Six shapes are emitted, one per generic route: list, indiv, create, update,
 delete and search. Everything an emitted file needs comes from the spec: the

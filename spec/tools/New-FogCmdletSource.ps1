@@ -5,7 +5,7 @@ Emits the C# entity models and cmdlets from spec/fog-api-spec.json.
 .DESCRIPTION
 The C# emitter. A sibling of New-FogApiFunctionFile.ps1, not a replacement for
 it in principle: both read the resolved spec and nothing else, which is what
-makes a Python or bash emitter another sibling rather than a rewrite.
+makes a Python emitter another sibling rather than a rewrite.
 
 It is written in PowerShell rather than C# on purpose. A C# generator would
 need the .NET SDK installed to regenerate the code the SDK then compiles, and
@@ -28,7 +28,7 @@ MEASURED not to satisfy PowerShell member access -- $h.macs comes back $null.
 It fails the exact requirement that made C# the right call.
 
 And a C# path generated from raw swagger.json would make C# the one target that
-reads a different source from Python and bash, which is the divergence this
+reads a different source from Python, which is the divergence this
 whole effort exists to prevent.
 
 .PARAMETER Class

@@ -230,7 +230,7 @@ foreach ($fx in ($spec.fixedRoutes | Sort-Object operationId)) {
 $null = $sb.AppendLine()
 $null = $sb.AppendLine('## Hand-written functions')
 $null = $sb.AppendLine()
-$null = $sb.AppendLine('Registered rather than generated, so they read as covered rather than as gaps, and so the Python and bash emitters know which ones they owe. `workflow` functions carry version branching, join-table reconciliation or multi-call orchestration; generating those would mean generating judgement.')
+$null = $sb.AppendLine('Registered rather than generated, so they read as covered rather than as gaps, and so the Python emitter knows which ones it owes. `workflow` functions carry version branching, join-table reconciliation or multi-call orchestration; generating those would mean generating judgement.')
 $null = $sb.AppendLine()
 $null = $sb.AppendLine('| Function | Category | Platform | Ports owed | Note |')
 $null = $sb.AppendLine('|---|---|---|---|---|')
