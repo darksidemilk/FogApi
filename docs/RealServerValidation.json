@@ -1,5 +1,149 @@
 [
   {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "accepts the object itself down the pipeline, not just an id",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "appears in a list of the class",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "creates and returns a typed object with a server-assigned id",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "deletes",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "finds it by search",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "is counted",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "reads the same row back by id",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > a full lifecycle, on a class that is safe to write",
+    "Name": "updates only the fields that were bound",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > errors carry what the server said",
+    "Name": "surfaces the message, not just the status code",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > errors carry what the server said",
+    "Name": "treats an empty body as success rather than a parse failure",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > paging",
+    "Name": "agrees with the ids route",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > paging",
+    "Name": "returns every row when not limited",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > paging",
+    "Name": "stops early when asked for fewer rows than exist",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > read shapes, across every class the spec knows",
+    "Name": "<Cmdlet> -Count returns a number",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > read shapes, across every class the spec knows",
+    "Name": "<Cmdlet> lists without throwing, and returns typed rows",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > the fields FOG returns but does not declare",
+    "Name": "keeps them on the typed model",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > the fields FOG returns but does not declare",
+    "Name": "keeps them through ToJson, where ConvertTo-Json drops them",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > the server answers at all",
+    "Name": "accepts the configured credentials on a route that needs them",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > the server answers at all",
+    "Name": "publishes its paging bounds, which is what a client should size requests from",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > the server answers at all",
+    "Name": "reports a version",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > validation comes from the spec, and the server agrees with it",
+    "Name": "accepts a name exactly at the limit",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > validation comes from the spec, and the server agrees with it",
+    "Name": "refuses a name longer than the column",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > wire types, verified against real rows",
+    "Name": "reads a 0/1 column as a boolean",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
+    "Group": "FogApi against a real server > wire types, verified against real rows",
+    "Name": "reads a datetime column as a DateTime, or null for the zero date",
+    "Result": "Passed",
+    "LastValidatedOnReal": "2026-08-24"
+  },
+  {
     "Group": "FogApi real-server integration > Connectivity",
     "Name": "Get-FogVersion returns a non-empty version string",
     "Result": "Passed",
