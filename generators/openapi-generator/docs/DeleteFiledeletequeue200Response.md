@@ -1,0 +1,21 @@
+# DeleteFiledeletequeue200Response
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Msg** | **String** |  | [optional] 
+
+## Examples
+
+- Prepare the resource
+```powershell
+$DeleteFiledeletequeue200Response = Initialize-FogApiDeleteFiledeletequeue200Response  -Msg null
+```
+
+- Convert the resource to JSON
+```powershell
+$DeleteFiledeletequeue200Response | ConvertTo-JSON
+```
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

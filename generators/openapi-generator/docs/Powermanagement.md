@@ -1,0 +1,37 @@
+# Powermanagement
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Id** | **Int32** |  | [optional] [readonly] 
+**HostID** | **Int32** |  | 
+**Min** | **String** |  | [optional] 
+**Hour** | **String** |  | [optional] 
+**Dom** | **String** |  | [optional] 
+**Month** | **String** |  | [optional] 
+**Dow** | **String** |  | [optional] 
+**OnDemand** | **String** |  | [optional] [default to "0"]
+**Action** | **String** |  | 
+
+## Examples
+
+- Prepare the resource
+```powershell
+$Powermanagement = Initialize-FogApiPowermanagement  -Id null `
+ -HostID null `
+ -Min null `
+ -Hour null `
+ -Dom null `
+ -Month null `
+ -Dow null `
+ -OnDemand null `
+ -Action null
+```
+
+- Convert the resource to JSON
+```powershell
+$Powermanagement | ConvertTo-JSON
+```
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
