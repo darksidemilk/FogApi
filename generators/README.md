@@ -146,8 +146,40 @@ validation enabled**:
 
 Neither generator needed a directive, an override, or a patched spec.
 
+#1353 is **merged** (`2c005465a`, on `working-1.6` since 1.6.0-beta.4020).
+
 `fog-1.6-fixed.json` in this directory is that regenerated document, kept so
-the before/after can be re-run without a fogproject checkout.
+the before/after can be re-run without a fogproject checkout. It is
+byte-identical to a fresh `dump-openapi.php` against merged upstream, apart
+from `info.version`, which is a flag rather than something the code emits.
+
+### Confirmed against a live server, which is where the plugin case shows up
+
+`fog-1.6-live-4020.json` is `GET /fog/system/openapi` from a real 1.6.0-beta.4020
+server. It is the more interesting artefact, because a checkout dump
+structurally cannot produce it: **no plugin hooks fire when there is no
+server**, so `dump-openapi.php` only ever describes the classes FOG ships with.
+
+The live document carries **58 schemas and 407 paths** against the dump's 53 and
+372. The extra five are the LDAP plugin — `Ldap`, `Ldapgroup`,
+`Ldapgrouproleassociation`, `Ldapgroupusergroupassociation`, `Ldapusergrant` —
+and 35 routes.
+
+That is the case `additionalProperties` was argued for, and it holds:
+
+- All five plugin schemas carry `additionalProperties`. 56 of 58 schemas do; the
+  two that do not are `ListEnvelope` and `Error`, which are not entity schemas.
+- `Ldapgroup` declares three computed fields — `roles`, `usergroups`,
+  `ldapserver` — which before #1353 existed only in a prose sentence.
+- Zero SQL-expression `default`s remain, and `Host` reads 49 properties with
+  `mac` marked `readOnly`.
+- openapi-generator generates from the live document **with validation
+  enabled**, emits the five plugin models, and its `Ldapgroup` model parses a
+  row carrying both the computed fields and a key it was never generated
+  against — retaining the unknown value rather than throwing on it.
+
+Checked separately, because declaring computed fields alongside columns could
+have collided: **no schema has two properties differing only in case.**
 
 ## The document did not validate
 
