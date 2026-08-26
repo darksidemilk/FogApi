@@ -11,7 +11,20 @@
 #>
 
 BeforeAll {
-    $script:hostFixture = Join-Path $PSScriptRoot 'Fixtures/host.json'
+    # Inline, not a fixture file. These tests are about what Add-FogTypeName and
+    # Update-TypeData do TO an object -- that the stamp is additive and that
+    # PSTypeName rejects a wrong shape. Any object with a couple of declared
+    # fields and a couple of undeclared ones exercises that, and the assertions
+    # never depended on the values.
+    #
+    # The fixture directory is gone: it faked server responses, and this file
+    # was the only remaining user of one. Keeping a 106-file fake alive for a
+    # shape test would have been the tail wagging the dog.
+    $script:hostSample = @'
+{"id":42,"name":"MeowMachine","description":"","ip":"","imageID":3,
+ "macs":["aa:bb:cc:dd:ee:ff"],"primac":"aa:bb:cc:dd:ee:ff",
+ "inventory":{"sysuuid":"ABC-123"}}
+'@
 }
 
 Describe 'Register-FogTypeData' {
@@ -42,7 +55,14 @@ Describe 'Register-FogTypeData' {
     It 'is idempotent, so a re-import does not throw' {
         # Private, so reach into the module's own scope rather than exporting it
         # just to be testable.
-        $mod = Get-Module FogApi
+        # -First 1, and the Script filter, because Get-Module FogApi does not
+        # reliably return one thing. Every test file's BeforeAll imports the
+        # module into its own Pester scope, so by the time several files have
+        # run in one process this returns several -- and `& $mod { }` on an
+        # array stringifies it, giving "The term 'FogApi FogApi' is not
+        # recognized". The failure names no module and no import, so it reads
+        # like a broken function rather than a scoping artifact.
+        $mod = Get-Module FogApi | Where-Object ModuleType -eq 'Script' | Select-Object -First 1
         $mod | Should -Not -BeNullOrEmpty
         { & $mod { Register-FogTypeData; Register-FogTypeData } } | Should -Not -Throw
     }
@@ -51,7 +71,7 @@ Describe 'Register-FogTypeData' {
 Describe 'the FogApi.Host stamp is additive' {
 
     It 'preserves every property the server sent' {
-        $raw = Get-Content $script:hostFixture -Raw | ConvertFrom-Json
+        $raw = $script:hostSample | ConvertFrom-Json
         $before = $raw.PSObject.Properties.Name | Sort-Object
 
         $raw.PSObject.TypeNames.Insert(0, 'FogApi.Host')
@@ -66,7 +86,7 @@ Describe 'the FogApi.Host stamp is additive' {
         # properties and a stock 1.6 host response carries 39, because the schema
         # reflects the model's own columns and the route returns its joins too.
         # macs and inventory are read by Get-FogHost itself.
-        $raw = Get-Content $script:hostFixture -Raw | ConvertFrom-Json
+        $raw = $script:hostSample | ConvertFrom-Json
         $raw.PSObject.TypeNames.Insert(0, 'FogApi.Host')
         foreach ($undeclared in 'macs','inventory') {
             $raw.PSObject.Properties.Name | Should -Contain $undeclared -Because `
@@ -75,7 +95,7 @@ Describe 'the FogApi.Host stamp is additive' {
     }
 
     It 'reports the type name to callers' {
-        $raw = Get-Content $script:hostFixture -Raw | ConvertFrom-Json
+        $raw = $script:hostSample | ConvertFrom-Json
         $raw.PSObject.TypeNames.Insert(0, 'FogApi.Host')
         $raw.PSObject.TypeNames[0] | Should -Be 'FogApi.Host'
     }
@@ -91,7 +111,7 @@ Describe 'PSTypeName parameter validation' {
     }
 
     It 'binds an object carrying the type name' {
-        $raw = Get-Content $script:hostFixture -Raw | ConvertFrom-Json
+        $raw = $script:hostSample | ConvertFrom-Json
         $raw.PSObject.TypeNames.Insert(0, 'FogApi.Host')
         Test-TakesFogHost -InputObject $raw | Should -Be 'bound'
     }
@@ -112,9 +132,13 @@ Describe 'Add-FogTypeName enumerates every collection shape a getter returns' {
     # stamping its return threw instead of returning groups -- caught by the
     # real-server suite, reproducible with no server at all.
     BeforeAll {
+        # See the note in the idempotency test: Get-Module FogApi can return
+        # more than one module once several test files have run in one process,
+        # and & on the resulting array fails with a message that names neither.
+        $script:fogModule = Get-Module FogApi | Where-Object ModuleType -eq 'Script' | Select-Object -First 1
         $script:stamp = {
             param($InputObject)
-            & (Get-Module FogApi) {
+            & $script:fogModule {
                 param($o) Add-FogTypeName -InputObject $o -TypeName 'FogApi.Group'
             } $InputObject
         }

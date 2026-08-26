@@ -1,8 +1,8 @@
 # Context: Complete API Coverage & Multi-Language Port Groundwork
 
 Working document for the multi-phase effort to give FogApi a helper function for every FOG API
-operation, driven by a machine-readable spec so the Python and bash ports are additional *emitters*
-rather than additional *implementations*.
+operation, driven by a machine-readable spec so the Python port is an additional *emitter*
+rather than an additional *implementation*.
 
 Tracking issue: **[#61](https://github.com/darksidemilk/FogApi/issues/61)**
 
@@ -23,14 +23,30 @@ Get/Update/Remove-Fog<Noun>  ->  Get/New/Update/Remove/Find-FogObject  ->  Invok
    (typed, new)                     (generic L1)                            (transport)
 ```
 
-Secondary driver: synced **Python and bash** ports for Linux users who won't install PowerShell Core.
-One spec generates all three, keeping them in sync by construction, and doubles as built-in API
+Secondary driver: a synced **Python** port for Linux users who won't install PowerShell Core.
+One spec generates both, keeping them in sync by construction, and doubles as built-in API
 documentation for anyone building a FOG tool in any language.
 
-The bash target is not redundant with Python. **FOS ships no Python and no PHP** —
-`BR2_PACKAGE_PYTHON3 is not set` across all three arch configs — but does ship bash, curl, jq and
-openssl. Inside the imaging environment, where FOG's own automation runs, bash is the only one of the
+### Bash was dropped
+
+An earlier version of this plan carried a third target and justified it on FOS: **FOS ships no
+Python and no PHP** — `BR2_PACKAGE_PYTHON3 is not set` across all three arch configs — but does
+ship bash, curl, jq and openssl, so inside the imaging environment bash is the only one of the
 three that can execute at all.
+
+That reasoning was retired because it answered a question nobody was asking. The bash target was
+never aimed at FOS; it was aimed at **any Linux server** whose admin did not want PowerShell Core
+installed, and Python covers that case on every distro FOG runs on — better, because it has real
+JSON parsing, real HTTP and a type system to render the spec's wireTypes into. A bash emitter
+would have reimplemented all three worse, and required `jq` to do it.
+
+Two targets rather than three also keeps the parity claim honest. The point of the resolved spec
+is that a naming rule is decided once and every emitter reads the same answer. A third target
+nobody was going to write soon made that a claim about a file rather than about code.
+
+The FOS observation above is still true and still interesting. If automation *inside* the imaging
+environment ever needs to drive the API, it is a separate problem with a separate answer — and
+the honest answer is probably curl against the documented routes, not a generated bash SDK.
 
 ---
 
@@ -45,7 +61,7 @@ three that can execute at all.
 | 2-5 — Generate Tiers 1-3, hand-write fixed routes | Not started | one branch per tier |
 | 6 — Test rebuild around language-neutral corpus | **Forced** — the mocked suite is off in CI as of #67 | |
 | 7 — Real-server CI + fog-workflows release gate | **Largely already exists** — see below | |
-| 8 — Python + bash ports | Not started | Python first within the phase |
+| 8 — Python port | Not started | bash dropped, see "Bash was dropped" above |
 
 A separate sub-plan branched off this one and is tracked in
 [`CONTEXT-typed-objects-plan.md`](CONTEXT-typed-objects-plan.md) and issue #66. Its phases 1, 2
@@ -126,7 +142,7 @@ spec/overlay/fog-api-overlay.json ────────────┤  (hand
                                               │
                     ┌─────────────────────────┼──────────────────────┐
                     ▼                         ▼                      ▼
-      New-FogApiFunctionFile.ps1   Get-FogApiCoverage.ps1     Python / bash emitters
+      New-FogApiFunctionFile.ps1   Get-FogApiCoverage.ps1     Python emitter
         (FogApi/Public/*.ps1)        (docs/ApiCoverage.md)          (phase 8)
 ```
 
@@ -661,7 +677,7 @@ should be revisited as soon as the spec describes the response. A format file
 The schema/response gap is worth fixing **upstream** rather than working around per consumer:
 `_entitySchema()` should describe what the route actually returns — the joined and derived
 fields — and mark the withheld ones. That helps every consumer of `swagger.json`, including the
-Python and bash emitters, and it is the difference between a spec that documents the model and
+Python emitter, and it is the difference between a spec that documents the model and
 one that documents the API. Type names for the other 53 classes are mechanical once that lands;
 generating them before it would bake today's gap into 54 display sets.
 
@@ -679,15 +695,12 @@ generating them before it would bake today's gap into 54 display sets.
   `FunctionsToExport` *and* `AliasesToExport`.
 - **Port names are mechanically derived, not byte-identical.** Each target follows its own
   community's convention; the spec stores `verb` and `noun` separately so every emitter derives from
-  the same source rather than munging another emitter's output. One rule, four renderings:
+  the same source rather than munging another emitter's output. One rule, three renderings:
 
-  | Spec | PowerShell | Python | Bash function | Bash CLI |
-  |---|---|---|---|---|
-  | `{Get, FogHost}` | `Get-FogHost` | `get_fog_host()` | `getFogHost` | `fogapi get-fog-host` |
+  | Spec | PowerShell | Python function | Python CLI |
+  |---|---|---|---|
+  | `{Get, FogHost}` | `Get-FogHost` | `get_fog_host()` | `fogapi get-fog-host` |
 
-  Bash uses camelCase because that is FOG's own bash house style — `working-1.6`'s
-  `lib/common/functions.sh` and `bin/*.sh` define 88 camelCase functions (`installPackages`,
-  `backupDB`, `_requestNodeCert`) against 25 all-lowercase.
 - **Dynamic params: additive by default, but a retired route class is removed.** *(Amended
   2026-08-22.)* The original rule was "never remove a ValidateSet entry", on the grounds that
   removing one breaks callers and adding one never does. That still holds for anything the server
@@ -705,58 +718,53 @@ generating them before it would bake today's gap into 54 display sets.
   directly, because those endpoints have no L1 representation.
 - **Pipeline contract:** every cmdlet's primary object param accepts an id, an object, or a
   collection of either, via a shared `Resolve-FogObjectId`. The polymorphic-input half ports to
-  Python and bash; the `|` syntax half does not and should not be emulated in either.
-- **Bash requires `jq`,** detected explicitly with a clear error naming the package. No sed/grep
-  JSON fallback. See the bash section below.
+  Python; the `|` syntax half does not and should not be emulated there.
 
 ---
 
-## Bash port facts (Phase 8)
+## Port facts (Phase 8)
 
 Researched from `fos`, `fogproject` and `working-1.6`. Recorded so the emitter doesn't have to
 re-derive them.
 
-**No prior art.** Zero shell code in any FOG repo calls the REST API. FOS talks only to the legacy
-non-REST `service/*.php` endpoints — form-POST in, plain-text out — parsed by literal string compare
-(`[[ $res != "##@GO" ]]`, `[[ $servercaps != *mclvm* ]]`). FOG ships no host/image management CLI at
-all; `bin/` is installer and maintenance only.
+**No prior art.** Zero shell or Python code in any FOG repo calls the REST API. FOS talks only to
+the legacy non-REST `service/*.php` endpoints -- form-POST in, plain-text out -- parsed by literal
+string compare (`[[ $res != "##@GO" ]]`, `[[ $servercaps != *mclvm* ]]`). FOG ships no host/image
+management CLI at all; `bin/` is installer and maintenance only. The Python port is the first
+client of the REST API outside this module.
 
-**Dependency matrix:**
-
-| Environment | bash | curl | jq | php-cli | python3 |
-|---|---|---|---|---|---|
-| FOS | yes | yes | yes | no | **no** |
-| FOG 1.6 server | yes | yes | yes (installer adds it) | yes | varies |
-| FOG 1.5 server | yes | yes | **no** | yes | varies |
-
-- 1.6 installs jq unconditionally: `working-1.6/lib/common/functions.sh:1981`, `packages="$packages jq"`.
-- 1.5 never does; its own updater ships a private static `jq32` (`utils/FOGUpdater/fogupdater.sh:15`),
-  which shows the gap is known upstream.
-- FOS buildroot: `BR2_PACKAGE_BASH`, `BR2_PACKAGE_LIBCURL_CURL`, `BR2_PACKAGE_JQ`,
-  `BR2_PACKAGE_OPENSSL` all set; `BR2_PACKAGE_PYTHON3` **not** set.
-
-**Gate style to copy** — `_requestNodeCert()` at `working-1.6/lib/common/functions.sh:3455` is the
-closest existing thing to an API client and the right template: `command -v` guards, `jq -e` for
-presence checks, `// empty` for optional fields.
-
-**Traps:**
+**Traps, and these are language-neutral:**
 
 - **Do not base64-encode the tokens.** The router does `base64_decode(HTTP_FOG_API_TOKEN)`, which
-  reads as though the client must encode — it must not. The token the FOG UI issues is *already*
-  base64 and `Invoke-FogApi` sends it verbatim. Re-encoding would double-encode and 401 every call.
-- **`jq` exits 0 on empty input**, so exit status alone is not a success test. FOG's own code works
-  around this at `functions.sh:559-565` (checks `PIPESTATUS`, file size, *and* literal `null`).
-- **Detect 1.5 by absence of the `nextUrl` key**, not by truthiness — a present-but-null `nextUrl`
-  still means 1.6. In jq: `has("nextUrl")`.
-- **Prefer `openssl base64 -A` over `base64 -w0`** anywhere encoding is needed — busybox base64 (FOS)
-  has no `-w`. Precedent at `functions.sh:3479`.
+  reads as though the client must encode -- it must not. The token the FOG UI issues is *already*
+  base64 and the transport sends it verbatim. Re-encoding would double-encode and 401 every call.
+  A raw token is also indistinguishable from an encoded one, because hex is itself valid base64,
+  so there is no way to detect the mistake by inspecting the value.
+- **Detect 1.5 by absence of the `nextUrl` key**, not by truthiness -- a present-but-null `nextUrl`
+  still means 1.6.
+- **A Bearer token is a different credential from `fog-user-token`.** Per upstream ADR 0027 it is
+  an `apiTokens` row: `fog_` prefixed, hashed at rest, shown once. `Authorization: Bearer` does not
+  accept `uAPIToken`. The header pair is untouched and keeps working.
 
-**Bash-only nicety:** when running on a FOG server, source `${fogprogramdir:-/opt/fog}/.fogsettings`
-for `$webroot`/`$httpproto`/`$ipaddress` to derive the base URL, as every shipped FOG script does.
-Zero-config on the box itself — something the PowerShell module structurally cannot offer.
+**Zero-config on a FOG server:** when running on the server itself, read
+`${fogprogramdir:-/opt/fog}/.fogsettings` for `$webroot`/`$httpproto`/`$ipaddress` to derive the
+base URL, as every shipped FOG script does. Something the PowerShell module structurally cannot
+offer, and worth having in the Python port.
 
-**Style model:** `working-1.6/bin/fog-plugin-uploads.sh` (`set -u`, heredoc `usage()`, `case`
-dispatch), not `installfog.sh`'s heavier GNU `getopt`.
+### The bash research, retired
+
+An earlier revision carried a full bash dependency matrix and a set of `jq` traps. Bash is no
+longer a target (see "Bash was dropped" at the top), so that detail is gone rather than left to
+rot. Two findings from it are worth keeping on the record because they are about FOG rather than
+about bash:
+
+- **1.6 installs `jq` unconditionally** (`working-1.6/lib/common/functions.sh:1981`,
+  `packages="$packages jq"`); 1.5 never does, and its own updater ships a private static `jq32`
+  (`utils/FOGUpdater/fogupdater.sh:15`). The gap is known upstream.
+- **FOS ships no Python and no PHP** -- `BR2_PACKAGE_PYTHON3` is not set across all three arch
+  configs, while `BR2_PACKAGE_BASH`, `BR2_PACKAGE_LIBCURL_CURL`, `BR2_PACKAGE_JQ` and
+  `BR2_PACKAGE_OPENSSL` all are. So neither port runs inside the imaging environment. If
+  automation there ever needs the API, it is curl against the documented routes, not an SDK.
 
 ---
 
@@ -812,7 +820,7 @@ Highest-value next steps, in order:
    it is a fixture mock-up that was never vetted against a real server, it was already
    `continue-on-error`, and it failed 20/20 on cmdlets that had no fixtures rather than on
    anything about the change. Nothing gates behaviour now except the build job and a
-   real-server run. Decide what the language-neutral corpus is before the python and bash
+   real-server run. Decide what the language-neutral corpus is before the python
    ports (phase 8) make it three parallel mock suites instead of one.
 5. **Wire the drift check into `reusable_api_validation.yml`** — diff the live document
    against `spec/openapi/fog-1.6.json`. Still the cheapest early warning for an upstream

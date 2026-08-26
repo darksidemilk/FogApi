@@ -233,7 +233,7 @@ Two things found by running it once anyway, both worth keeping:
 
 The real gate stays `Tests/FogApi.RealServer.Tests.ps1` against a live server, plus the
 build job. Phase 6 decides what replaces the mocked layer — a language-neutral
-conformance corpus the python and bash ports can replay, rather than three parallel mock
+conformance corpus the python port can replay, rather than parallel mock
 suites.
 
 #### Corrections to this plan
@@ -539,7 +539,7 @@ verified. Without a server, run `-CI` only and say so rather than claiming a rea
 >    result could be verified at all. Registered under `handWritten` as `utility`, targets
 >    `powershell` only: it is a static factory for a PowerShell class, and the reason it exists —
 >    a module's class is not nameable after `Import-Module` — is a PowerShell-specific problem the
->    Python and bash emitters will not have.
+>    Python emitter will not have.
 
 ### L · The three loose ends phase 2 left behind
 > Read "Next pass, start here" in `CONTEXT-typed-objects-plan.md` on `dev`. Three non-blocking

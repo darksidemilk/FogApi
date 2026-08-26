@@ -85,9 +85,94 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
                 $fn.l1Function | Should -Not -BeNullOrEmpty -Because "$($fn.functionName) has no L1 function"
             }
         }
+
+        It 'resolves a wireType for every field' {
+            # Total by construction, and worth pinning: an unresolved field
+            # would reach an emitter with nothing to act on, and the emitter
+            # would fall back to string. A date silently becoming a string is
+            # the exact defect the format passthrough was added to fix.
+            $fields = @($script:Spec.schemas.PSObject.Properties.Value.fields)
+            $fields.Count | Should -BeGreaterThan 400
+            $known = @('string', 'int', 'number', 'bool', 'bool01', 'dateTime', 'date')
+            foreach ($f in $fields) {
+                $f.wireType | Should -BeIn $known -Because "field '$($f.name)' resolved to an unknown wireType"
+            }
+            @($fields | Where-Object { $_.wireType -eq 'bool01' }).Count |
+                Should -BeGreaterThan 20 -Because 'FOG spells booleans enum(0,1); losing them means every boolean became a bare string'
+            @($fields | Where-Object { $_.wireType -eq 'dateTime' }).Count |
+                Should -BeGreaterThan 10 -Because 'the OpenAPI format is what carries these; a builder that stops reading it drops them silently'
+        }
+
+        It 'still finds the computed fields FOG names in prose' {
+            # These are parsed out of an English sentence, because FOG names
+            # them nowhere else. So the way this breaks is upstream rewording
+            # the sentence: the parse then yields nothing, no error is raised,
+            # and 80 fields quietly stop being modelled. A floor is the only
+            # thing that would notice.
+            $script:Spec.stats.computedFields |
+                Should -BeGreaterThan 60 -Because 'the description sentence _entitySchema() writes has probably been reworded upstream; re-check Resolve-ComputedFields'
+            @($script:Spec.schemas.host.computed) |
+                Should -Contain 'mac' -Because 'host is the class with the most computed fields and the one most likely to be noticed'
+        }
+
+        It 'never lists a computed field that is also a declared one' {
+            # plugin.description is both -- a real column the model overwrites
+            # from the plugin's own metadata. Emitting both would be a
+            # duplicate member, which in C# is a compile error.
+            foreach ($c in $script:Spec.schemas.PSObject.Properties) {
+                $declared = @($c.Value.fields.name)
+                foreach ($n in @($c.Value.computed)) {
+                    $declared | Should -Not -Contain $n -Because "$($c.Name).$n is declared and computed; the declared one wins"
+                }
+            }
+        }
     }
 
-    Context 'the emitted files' {
+    Context 'the emitted C# files' {
+        # The generated surface is C# now, so this is what the drift gate has
+        # to compare. A hand edit to a generated .cs survives exactly until the
+        # next emitter run, then vanishes without trace -- the same failure the
+        # .ps1 version of this test was written for.
+        It 'match what the C# emitter produces right now' {
+            & (Join-Path $script:SpecRoot 'tools/New-FogCmdletSource.ps1') `
+                -Class printer -OutRoot $script:Scratch -NoDocs | Out-Null
+
+            $emitted = @(Get-ChildItem -LiteralPath $script:Scratch -Filter '*.cs' -Recurse)
+            $emitted.Count | Should -BeGreaterThan 0 -Because 'the emitter should have written the printer model and its cmdlets'
+
+            $realRoot = Join-Path $script:RepoRoot 'src' 'FogApi.Cmdlets'
+            foreach ($file in $emitted) {
+                # Mirror the temp tree onto the real one: Models/Generated and
+                # Cmdlets/Generated.
+                $relative = $file.FullName.Substring($script:Scratch.Length).TrimStart('\', '/')
+                $onDisk = Join-Path $realRoot $relative
+                Test-Path -LiteralPath $onDisk |
+                    Should -BeTrue -Because "$relative is in the spec but not in src/FogApi.Cmdlets"
+                (Get-Content -LiteralPath $onDisk -Raw) |
+                    Should -Be (Get-Content -LiteralPath $file.FullName -Raw) `
+                    -Because "$relative has drifted from the emitter. Rerun spec/tools/New-FogCmdletSource.ps1."
+            }
+        }
+
+        It 'declares nullable explicitly in every generated file' {
+            # Roslyn treats a file whose first comment says auto-generated as
+            # OUTSIDE the nullable context, so every string? in it is CS8669
+            # even with Nullable enable set project-wide. Without the directive
+            # the whole generated surface fails to compile.
+            $generated = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot 'src' 'FogApi.Cmdlets') -Filter '*.cs' -Recurse |
+                Where-Object { $_.FullName -match 'Generated' })
+            $generated.Count | Should -BeGreaterThan 100
+            foreach ($file in $generated) {
+                (Get-Content -LiteralPath $file.FullName -Raw) |
+                    Should -BeLike '*#nullable enable*' -Because "$($file.Name) is auto-generated and needs the directive"
+            }
+        }
+    }
+
+    Context 'the emitted PowerShell files' -Skip {
+        # Kept, skipped, and deliberately not deleted: the .ps1 emitter still
+        # exists and is what the Python and bash emitters were modelled on. This
+        # comes back if any class is ever emitted as PowerShell again.
         It 'match what the emitter produces right now' {
             & (Join-Path $script:SpecRoot 'tools/New-FogApiFunctionFile.ps1') -Class printer -OutDir $script:Scratch | Out-Null
             $emitted = @(Get-ChildItem -LiteralPath $script:Scratch -Filter '*.ps1')
@@ -118,6 +203,9 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
             # generated cmdlet by hand lasts until the next run and then
             # disappears with no error. This asserts the declaration actually
             # reaches the parameter.
+            # Pester 6 refuses Mock -ModuleName when two modules share a name, and each
+            # test file importing into its own scope makes that happen across a run.
+            Remove-Module FogApi -Force -ErrorAction SilentlyContinue
             Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
             $checked = 0
             foreach ($fn in $script:Spec.functions) {
@@ -142,6 +230,9 @@ Describe 'FOG API spec pipeline' -Skip:(-not $script:HasSpec) {
         It 'never aliases a parameter to the name of another parameter' {
             # An alias colliding with a real parameter name fails at import,
             # which is a late and confusing place to find out.
+            # Pester 6 refuses Mock -ModuleName when two modules share a name, and each
+            # test file importing into its own scope makes that happen across a run.
+            Remove-Module FogApi -Force -ErrorAction SilentlyContinue
             Import-Module (Join-Path $script:RepoRoot 'FogApi' 'FogApi.psd1') -Force
             foreach ($fn in $script:Spec.functions) {
                 $cmd = Get-Command $fn.functionName -ErrorAction SilentlyContinue

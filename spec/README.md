@@ -6,8 +6,8 @@ FOG object classes. This directory is how the rest gets written: from FOG's own
 description of itself, rather than from someone reading PHP and transcribing
 field names.
 
-It also makes the planned Python and bash ports *emitters* rather than
-reimplementations. There is one spec and one set of naming rules; each language
+It also makes the planned Python port an *emitter* rather than a
+reimplementation. There is one spec and one set of naming rules; each language
 renders them its own way.
 
 ## What is here
@@ -149,8 +149,8 @@ routes through it; only the tier-5 fixed routes may call `Invoke-FogApi`
 directly, because those endpoints have no L1 representation.
 
 **Emitter** — the thing that turns the resolved spec into code for one language.
-`New-FogApiFunctionFile.ps1` is the PowerShell emitter; Python and bash are
-planned as siblings, reading the same spec rather than reimplementing it.
+`New-FogApiFunctionFile.ps1` is the PowerShell emitter; Python is
+planned as a sibling, reading the same spec rather than reimplementing it.
 
 ## Rules
 

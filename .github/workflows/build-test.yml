@@ -2,12 +2,6 @@ name: Test Build
 
 on:
   workflow_dispatch:
-    inputs:
-      run_pester:
-        description: "Run the Pester suite (mocked, not vetted - see the test job)"
-        required: false
-        default: false
-        type: boolean
   # push:
   #   branches:
   #     - master
@@ -33,7 +27,10 @@ jobs:
     build:
         # The module advertises CompatiblePSEditions Core and describes itself as a crossplatform
         # cli for fog, so linux is a supported target and needs to be built and tested like one.
-        # Everything here is mocked, so the linux leg costs a runner and nothing else.
+        # Nothing here needs a server, so the linux leg costs a runner and nothing else.
+        #
+        # The linux leg earns its keep now that there is a compiled half: it is where a backslash
+        # in a manifest path, or en-us against en-US for the help folder, actually fails.
         strategy:
             fail-fast: false
             matrix:
@@ -42,6 +39,14 @@ jobs:
 
         steps:
         - uses: actions/checkout@v7
+
+        # The module has a compiled core now. Without an SDK the build produces no
+        # bin/FogApi.Core.dll, and the manifest names it in RequiredAssemblies -- so
+        # Test-ModuleManifest fails and nothing imports. global-json-file keeps the CI
+        # SDK and the one developers install pinned to the same version.
+        - uses: actions/setup-dotnet@v4
+          with:
+            global-json-file: global.json
 
         - name: Run build script
           shell: pwsh
@@ -76,27 +81,69 @@ jobs:
         steps:
         - uses: actions/checkout@v7
 
-        # Off by default, and not a gate. The example-derived suite is a mock-up
-        # that has never been vetted against a real server: every response comes
-        # from Tests/Fixtures, so it asserts that the module still produces the
-        # shape somebody wrote down, not that the shape is right. It was already
-        # continue-on-error, which made it noise on every PR - a red step nobody
-        # is meant to act on teaches people to ignore red steps.
-        #
-        # It also has a structural failure mode that has now happened twice: a
-        # new cmdlet arrives with no fixture, and the suite fails for the one
-        # reason that says nothing about the change. Adding a cmdlet should not
-        # require inventing a canned response for it.
-        #
-        # Run it on demand from the Actions tab with run_pester: true. The real
-        # gate is Tests/FogApi.RealServer.Tests.ps1 against a live server, plus
-        # the build job above. Phase 6 of CONTEXT-api-coverage-plan.md decides
-        # what replaces this - a language-neutral conformance corpus the python
-        # and bash ports can replay, rather than three parallel mock suites.
-        - name: Run Pester tests
-          if: ${{ inputs.run_pester }}
+        - uses: actions/setup-dotnet@v4
+          with:
+            global-json-file: global.json
+
+        # The tests import the module, which needs the compiled core. This job does
+        # not inherit the build job's output.
+        - name: Build the compiled core
           shell: pwsh
-          continue-on-error: true
+          run: ./build-dotnet.ps1
+
+        # Every export list in this build degrades to a SHORTER list rather than to an
+        # error, and the gallery publishes a short list without complaint. Three separate
+        # paths have done it: Export-ModuleMember without -Cmdlet, Set-EmptyExportArray
+        # forcing CmdletsToExport = @(), and Get-AliasesToExport text-scanning files that
+        # no longer exist. Floors, not exact counts: adding a command must not fail this,
+        # losing most of them must.
+        - name: Verify the module exports what it has
+          shell: pwsh
+          run: |
+            Import-Module ./FogApi/FogApi.psd1 -Force -ErrorAction Stop
+            $m = Get-Module FogApi
+            "functions=$($m.ExportedFunctions.Count) cmdlets=$($m.ExportedCmdlets.Count) aliases=$($m.ExportedAliases.Count)" | Out-Host
+            if ($m.ExportedCmdlets.Count   -lt 150) { throw "CmdletsToExport regressed: $($m.ExportedCmdlets.Count)" }
+            if ($m.ExportedFunctions.Count -lt 50)  { throw "FunctionsToExport regressed: $($m.ExportedFunctions.Count)" }
+            if ($m.ExportedAliases.Count   -lt 70)  { throw "AliasesToExport regressed: $($m.ExportedAliases.Count)" }
+            # Function over CMDLET specifically. A name that is both a Function and an
+            # Alias is normal here and always has been -- the plural list names
+            # (Get-FogImages, Get-FogSnapins) are kept as aliases on purpose, so a
+            # blanket "more than one CommandType" test flags ten of those and says
+            # nothing. What must never happen is a .ps1 outranking a compiled cmdlet,
+            # because PowerShell resolves the function first and the cmdlet becomes
+            # dead code that silently never runs.
+            $fn = $m.ExportedFunctions.Keys
+            $shadowed = @($m.ExportedCmdlets.Keys | Where-Object { $fn -contains $_ })
+            if ($shadowed) { throw "a function is shadowing a cmdlet: $($shadowed -join ', ')" }
+
+        # A real gate now, on by default, and NOT continue-on-error.
+        #
+        # It was none of those things, for good reasons that no longer apply.
+        # The suite it used to run was a mock-up: every response came from
+        # Tests/Fixtures, so it asserted that the module still produced the
+        # shape somebody wrote down rather than the shape the server sends, and
+        # a new cmdlet with no fixture failed it for a reason that said nothing
+        # about the change. A red step nobody is meant to act on teaches people
+        # to ignore red steps, so it was switched off.
+        #
+        # That suite is deleted. What runs here fakes nothing: the spec drift
+        # gate, the model and wire-type unit tests, the transport's request
+        # construction, cross-platform paths, and the ETS type data. None of it
+        # needs a server, all of it fails for a reason worth reading.
+        #
+        # Behaviour against FOG is asserted by Tests/FogApi.RealServer.Tests.ps1
+        # and by ./Invoke-FogApiConformance.ps1, both run locally against a dev
+        # server for now. Wiring those into CI needs a FOG install per run --
+        # FOGProject/fog-workflows already has reusable_api_validation.yml for
+        # exactly that, and connecting the two is the next step, not this one.
+        - name: Run Pester tests
+          shell: pwsh
+          # A run that reaches the network is a bug in the test, not a feature
+          # of the environment. This makes it fail loudly rather than quietly
+          # talking to whatever a stray settings file points at.
+          env:
+            FOGAPI_FORBID_NETWORK: '1'
           run: ./Invoke-FogApiTests.ps1 -CI
 
         # A clean profile has no settings file, which is the state that used to fail on linux -
@@ -116,15 +163,8 @@ jobs:
             "OK: bootstrapped $settingsFile" | Out-Host
 
         - name: Upload test results
-          if: ${{ always() && inputs.run_pester }}
+          if: ${{ always() }}
           uses: actions/upload-artifact@v4
           with:
             name: pester-results-${{ matrix.os }}
             path: TestResults/pester-results.xml
-
-        - name: Upload coverage report
-          if: ${{ always() && inputs.run_pester }}
-          uses: actions/upload-artifact@v4
-          with:
-            name: parameter-set-coverage-report-${{ matrix.os }}
-            path: TestResults/coverage-report.md

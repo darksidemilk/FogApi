@@ -37,9 +37,18 @@
 <#
 
 .DESCRIPTION
- Runs the FogApi Pester test suite under .\Tests. By default Invoke-FogApi is mocked with fixture
- data from .\Tests\Fixtures so this runs fast and deterministically with no external dependency -
- this is the same script the build-test.yml GitHub Action runs (with -CI) on every pull request.
+ Runs the FogApi Pester test suite under .\Tests.
+
+ THERE IS NO MOCKED SUITE ANY MORE. There used to be: 106 canned responses under
+ .\Tests\Fixtures and 489 tests driven from the Expected output: blocks in each function's help.
+ It asserted that the module still produced the shape somebody had written down, which is not the
+ same claim as "the shape the server sends", and the two drifted apart without saying so. A new
+ cmdlet with no fixture also failed the suite for a reason that said nothing about the change.
+
+ What runs by default now needs no server and fakes nothing: the spec drift gate, the model and
+ wire-type unit tests, the transport's request construction, cross-platform paths and the ETS type
+ data. Behaviour against FOG is asserted by -RealServer, and coverage across all 161 cmdlets by
+ .\Invoke-FogApiConformance.ps1, which reports per class the way the API documentation does.
 
  Deliberately has no #Requires -Modules Pester clause - the version check/install logic just below
  already enforces Pester 6+ explicitly, and a #Requires clause on the same module Invoke-Pester is

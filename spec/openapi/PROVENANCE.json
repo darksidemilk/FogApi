@@ -4,16 +4,16 @@
   "source": {
     "repo": "https://github.com/FOGProject/fogproject",
     "branch": "working-1.6",
-    "commit": "b25193faf3b6292da43dfd15bde005b1d4a1634a",
-    "commitShort": "b25193faf",
-    "commitDate": "2026-08-23T11:41:57+00:00",
-    "fogVersion": "1.6.0-beta.3894",
-    "openapiClassLastChanged": "b25193faf",
+    "commit": "a36810d3cab9149556d660f2922fcddd9e9f5e39",
+    "commitShort": "a36810d3c",
+    "commitDate": "2026-08-24T19:43:14+00:00",
+    "fogVersion": "1.6.0-beta.4013",
+    "openapiClassLastChanged": "420623b2a",
     "localCorrections": [],
-    "$note": "Dumped from FOGProject/fogproject working-1.6 directly; b25193faf is an ancestor of origin/working-1.6, verified with `git merge-base --is-ancestor`. No local corrections -- there is no merged tree to dump from."
+    "$note": "Dumped from FOGProject/fogproject working-1.6 directly; a36810d3c is an ancestor of origin/working-1.6, verified with `git merge-base --is-ancestor`. No local corrections -- there is no merged tree to dump from."
   },
   "generatedBy": "spec/tools/dump-openapi.php",
-  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3894 --out spec/openapi/fog-1.6.json",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.4013 --out spec/openapi/fog-1.6.json",
   "servedLiveAt": [
     "GET {webroot}/system/openapi",
     "GET {webroot}/swagger.json"
@@ -31,8 +31,11 @@
     "The generic read routes take a server-side column filter. It is advertised as the shared ?filter= query parameter on list/count/names/ids for every class -- 204 operations -- and NOT on search, which builds its own where clause from matched ids and cannot honour one. The equivalent trailing path segment (/{class}/list/field=value) still works and wins when both are sent; it is deliberately not a documented path, because OpenAPI cannot mark a path parameter optional and describing it would add 204 paths to a 372-path document."
   ],
   "verifiedAgainstLiveServer": {
-    "date": "2026-08-23",
-    "method": "Deployed b25193faf to the maintainer's lab server (FOG 1.6.0-beta.3894, nginx 1.30.4 + PHP 8.3.33 + MariaDB, schema 356) and exercised the filter over HTTPS against real rows, with counts cross-checked directly against the database.",
+    "date": "2026-08-24",
+    "method": "Diffed this snapshot against GET /fog/system/openapi on a server already running the same commit (fog.arrowheaddental.com, FOG 1.6.0-beta.4013), canonically: every object's keys sorted, whitespace removed, compared as one string. Not a spot check of counts -- the whole document, 488016 canonical bytes on each side.",
+    "result": "Identical, once servers[0].url is normalised. That field is the deliberate placeholder (https://fog.example.invalid/fog offline against https://fog.arrowheaddental.com/fog live), because Route::webrootbase() reads the request host and an offline dump has no request. Path set, schema set, securitySchemes and every operation matched exactly.",
+    "gettextNote": "This also settles the _() stub added to dump-openapi.php in the same branch. openapi.class.php wraps its prose in _() 126 times and stock PHP has no gettext, so the dump could not run at all without a passthrough. A passthrough is only correct if the server itself is not translating -- and the byte-identical result against a live server proves it is not.",
+    "priorMethod": "Deployed b25193faf to the maintainer's lab server (FOG 1.6.0-beta.3894, nginx 1.30.4 + PHP 8.3.33 + MariaDB, schema 356) and exercised the filter over HTTPS against real rows, with counts cross-checked directly against the database.",
     "result": "11/11 checks passed. taskLog holds 56 rows of which 3 carry logHostID=154; ?filter=hostID%3D154 returns recordsFiltered 3 against recordsTotal 56 on /tasklog, /tasklog/count returns 3 and /tasklog/ids returns the three ids.",
     "behaviourChecks": [
       "GET /tasklog?filter=hostID%3D154 -> recordsFiltered 3; two fields ANDed via ?filter=hostID%3D154%26type%3Derror -> 3; ?filter=hostID%3D999999 -> 0.",
@@ -43,6 +46,19 @@
     "note": "The offline generator was re-diffed against the previous snapshot as well: 372 paths, 517 operations and 53 schemas before and after, identical path set, no schema changed shape, and components.parameters gained exactly one entry."
   },
   "changeLog": [
+    {
+      "from": "b25193faf (1.6.0-beta.3894, 372 paths / 517 operations / 53 schemas)",
+      "to": "a36810d3c (1.6.0-beta.4013, 372 paths / 517 operations / 53 schemas)",
+      "summary": "119 builds, and the API surface did not move: same path set, same schema set, no operation added or removed. Three changes, all in authentication and all deliberate.",
+      "detail": [
+        "420623b2a 'feat(api): accept Authorization: Bearer as a standalone API credential' adds a bearerAuth security scheme, and ed597ef8a then repointed it: ADR 0027 makes a Bearer credential a distinct apiTokens row -- SHA-256 hashed at rest, shown once, individually revocable, fog_ prefixed -- rather than a second spelling of users.uAPIToken.",
+        "The global security requirement went from 'fogApiToken+fogUserToken OR basicAuth' to 'bearerAuth OR fogApiToken+fogUserToken OR fogApiToken+basicAuth'. Two changes there, not one: bearerAuth is accepted alone, and basicAuth alone no longer is -- it now needs the server-wide fogApiToken beside it.",
+        "FogApi is unaffected. ADR 0027 is explicit: 'users.uAPIToken is untouched. It stays plaintext, stays visible in the UI, and keeps working as fog-user-token beside fog-api-token. Nothing has to migrate.' The two-header scheme this module sends is the second alternative and still holds.",
+        "a9301a979 'feat(users): API-only accounts that cannot sign in' adds user.apionly, enum ['0','1'], the only new field in 119 builds.",
+        "user.password became readOnly. That is an upstream defect rather than a policy change -- see the writeOnly derivation in Build-FogApiSpec.ps1. Left uncorrected it would have removed -password from New-FogUser and left no way to create a usable account.",
+        "KNOWN STALE UPSTREAM: openapi.class.php's bearerAuth description still describes what 420623b2a shipped and ed597ef8a withdrew -- 'The per-user API token from the API tab ... Sufficient on its own.' The strings fog_, apiTokens, hashed and revocable appear nowhere in the file. A client generated from this document is told to send the credential ADR 0027 stopped accepting. Worth an upstream PR; recorded here so the next re-snapshot does not read it as new."
+      ]
+    },
     {
       "from": "7432c9ef7 (1.6.0-beta.3860, 372 paths / 517 operations / 53 schemas)",
       "to": "b25193faf (1.6.0-beta.3894, 372 paths / 517 operations / 53 schemas)",

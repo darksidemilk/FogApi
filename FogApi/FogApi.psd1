@@ -15,7 +15,10 @@ RootModule = 'FogApi.psm1'
 ModuleVersion = '2607.10.2'
 
 # Supported PSEditions
-CompatiblePSEditions = 'Desktop', 'Core'
+# Core only. The compiled core targets net8.0, which Windows PowerShell 5.1
+# cannot load at all, so Desktop is not a half-working target here -- the module
+# would fail at import rather than degrade.
+CompatiblePSEditions = 'Core'
 
 # ID used to uniquely identify this module
 GUID = '7aa922fa-bb4f-46a0-a478-684e9535c65d'
@@ -77,7 +80,7 @@ You can also utilize simpler functions of common tasks, see the links below for 
 '
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '5.1'
+PowerShellVersion = '7.4'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -98,7 +101,10 @@ PowerShellVersion = '5.1'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+# Loaded BEFORE nested modules and before the root module, which is what lets a
+# dot-sourced Public/*.ps1 name a compiled type in its own param block.
+# Forward slashes: a backslash is a literal filename character on linux.
+RequiredAssemblies = @('bin/FogApi.Core.dll')
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 # ScriptsToProcess = @()
@@ -110,18 +116,47 @@ PowerShellVersion = '5.1'
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+# The same file as RequiredAssemblies, deliberately. RequiredAssemblies makes
+# the types resolve while Public/*.ps1 is dot-sourced; NestedModules is what
+# turns the assembly into cmdlets. Microsoft documents listing it in both, and
+# it registers nothing twice.
+NestedModules = @('bin/FogApi.Core.dll')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData', 
                'Approve-FogPendingMac', 'Deny-FogPendingMac', 
                'Disable-FogApiHTTPS', 'Dismount-WinEfi', 'Enable-FogApiHTTPS', 
-               'Find-FogGroup', 'Find-FogHookEvent', 'Find-FogHost', 
+               'Find-FogObject', 'Get-FogActiveTasks', 
+               'Get-FogGroupAssociations', 'Get-FogGroupByName', 
+               'Get-FogGroups', 'Get-FogHost', 'Get-FogHostAssociatedSnapins', 
+               'Get-FogHostGroup', 'Get-FogHostMacs', 'Get-FogHostPendingMacs', 
+               'Get-FogHosts', 'Get-FogImages', 'Get-FogInventory', 
+               'Get-FogLog', 'Get-FogMacAddresses', 'Get-FogModules', 
+               'Get-FogObject', 'Get-FogPagedResult', 'Get-FogScheduledTasks', 
+               'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 
+               'Get-FogServerSettingsFile', 'Get-FogSettings', 
+               'Get-FogSnapinAssociations', 'Get-FogSnapins', 'Get-FogVersion', 
+               'Get-LastImageTime', 'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
+               'Install-FogService', 'Mount-WinEfi', 'New-FogHost', 
+               'New-FogObject', 'New-FogSnapin', 'New-FogTaskRequest', 
+               'Receive-FogImage', 'Remove-FogHostGroup', 'Remove-FogObject', 
+               'Remove-UsbMac', 'Repair-FogSnapinAssociations', 
+               'Reset-HostEncryption', 'Resolve-HostID', 'Send-FogGroupTask', 
+               'Send-FogImage', 'Send-FogWolTask', 'Set-FogHostImage', 
+               'Set-FogInventory', 'Set-FogServerSettings', 
+               'Set-FogServerSettingsFileSecurity', 'Set-FogSetting', 
+               'Set-FogSnapins', 'Set-WinToBootToPxe', 'Start-FogSnapin', 
+               'Start-FogSnapins', 'Test-FogVerAbove1dot6', 
+               'Test-StringNotNullOrEmpty', 'Update-FogGroup', 
+               'Update-FogObject'
+
+# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
+CmdletsToExport = 'Find-FogGroup', 'Find-FogHookEvent', 'Find-FogHost', 
                'Find-FogImage', 'Find-FogImagePartitionType', 
                'Find-FogImageType', 'Find-FogKeySequence', 'Find-FogModule', 
-               'Find-FogMulticastSession', 'Find-FogNotifyEvent', 
-               'Find-FogObject', 'Find-FogOS', 'Find-FogOui', 'Find-FogPlugin', 
-               'Find-FogPrinter', 'Find-FogPxeMenuOption', 'Find-FogRole', 
+               'Find-FogMulticastSession', 'Find-FogNotifyEvent', 'Find-FogOS', 
+               'Find-FogOui', 'Find-FogPlugin', 'Find-FogPrinter', 
+               'Find-FogPxeMenuOption', 'Find-FogRole', 
                'Find-FogRolePermission', 'Find-FogRoleUserAssociation', 
                'Find-FogRoleUserGroupAssociation', 'Find-FogScheduledTask', 
                'Find-FogSetting', 'Find-FogSite', 'Find-FogSnapin', 
@@ -130,90 +165,62 @@ FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData',
                'Find-FogUserGroup', 'Find-FogUserGroupMember', 
                'Get-ActiveFogMulticastSessions', 
                'Get-ActiveFogPowerManagements', 'Get-ActiveFogScheduledTasks', 
-               'Get-ActiveFogTasks', 'Get-FogActiveTasks', 
-               'Get-FogFileDeleteQueue', 'Get-FogGroupAssociation', 
-               'Get-FogGroupAssociations', 'Get-FogGroupByName', 
-               'Get-FogGroups', 'Get-FogHistory', 'Get-FogHookEvent', 
-               'Get-FogHost', 'Get-FogHostAssociatedSnapins', 
-               'Get-FogHostAutoLogout', 'Get-FogHostGroup', 'Get-FogHostMacs', 
-               'Get-FogHostPendingMacs', 'Get-FogHosts', 
-               'Get-FogHostScreenSetting', 'Get-FogImage', 
-               'Get-FogImageAssociation', 'Get-FogImagePartitionType', 
-               'Get-FogImages', 'Get-FogImageType', 'Get-FogInventory', 
-               'Get-FogIpxe', 'Get-FogKeySequence', 'Get-FogLog', 
-               'Get-FogMacAddressAssociation', 'Get-FogMacAddresses', 
-               'Get-FogModule', 'Get-FogModuleAssociation', 'Get-FogModules', 
+               'Get-ActiveFogTasks', 'Get-FogFileDeleteQueue', 'Get-FogGroup', 
+               'Get-FogGroupAssociation', 'Get-FogHistory', 'Get-FogHookEvent', 
+               'Get-FogHostAutoLogout', 'Get-FogHostScreenSetting', 
+               'Get-FogImage', 'Get-FogImageAssociation', 
+               'Get-FogImagePartitionType', 'Get-FogImageType', 'Get-FogIpxe', 
+               'Get-FogKeySequence', 'Get-FogMacAddressAssociation', 
+               'Get-FogModule', 'Get-FogModuleAssociation', 
                'Get-FogMulticastSession', 'Get-FogMulticastSessionAssociation', 
-               'Get-FogNodeFailure', 'Get-FogNotifyEvent', 'Get-FogObject', 
-               'Get-FogOS', 'Get-FogOui', 'Get-FogPagedResult', 
-               'Get-FogPlugin', 'Get-FogPowerManagement', 'Get-FogPrinter', 
-               'Get-FogPrinterAssociation', 'Get-FogPxeMenuOption', 
-               'Get-FogRole', 'Get-FogRolePermission', 
+               'Get-FogNodeFailure', 'Get-FogNotifyEvent', 'Get-FogOS', 
+               'Get-FogOui', 'Get-FogPlugin', 'Get-FogPowerManagement', 
+               'Get-FogPrinter', 'Get-FogPrinterAssociation', 
+               'Get-FogPxeMenuOption', 'Get-FogRole', 'Get-FogRolePermission', 
                'Get-FogRoleUserAssociation', 'Get-FogRoleUserGroupAssociation', 
-               'Get-FogScheduledTask', 'Get-FogScheduledTasks', 
-               'Get-FogSecsSinceEpoch', 'Get-FogServerSettings', 
-               'Get-FogServerSettingsFile', 'Get-FogSetting', 
-               'Get-FogSettings', 'Get-FogSite', 'Get-FogSnapin', 
-               'Get-FogSnapinAssociation', 'Get-FogSnapinAssociations', 
+               'Get-FogScheduledTask', 'Get-FogSetting', 'Get-FogSite', 
+               'Get-FogSnapin', 'Get-FogSnapinAssociation', 
                'Get-FogSnapinGroupAssociation', 'Get-FogSnapinJob', 
-               'Get-FogSnapins', 'Get-FogSnapinTask', 'Get-FogStorageGroup', 
+               'Get-FogSnapinTask', 'Get-FogStorageGroup', 
                'Get-FogStorageNode', 'Get-FogTask', 'Get-FogTaskLog', 
                'Get-FogTaskState', 'Get-FogTaskType', 'Get-FogUser', 
                'Get-FogUserGroup', 'Get-FogUserGroupMember', 
-               'Get-FogUserTracking', 'Get-FogVersion', 'Get-LastImageTime', 
-               'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
-               'Install-FogService', 'Invoke-FogApi', 'Mount-WinEfi', 
-               'New-FogGroup', 'New-FogGroupAssociation', 'New-FogHost', 
-               'New-FogImage', 'New-FogImageAssociation', 
-               'New-FogMacAddressAssociation', 'New-FogModule', 
-               'New-FogModuleAssociation', 'New-FogMulticastSession', 
-               'New-FogMulticastSessionAssociation', 'New-FogObject', 
+               'Get-FogUserTracking', 'Invoke-FogApi', 'New-FogGroup', 
+               'New-FogGroupAssociation', 'New-FogImage', 
+               'New-FogImageAssociation', 'New-FogMacAddressAssociation', 
+               'New-FogModule', 'New-FogModuleAssociation', 
+               'New-FogMulticastSession', 'New-FogMulticastSessionAssociation', 
                'New-FogOS', 'New-FogPowerManagement', 'New-FogPrinter', 
                'New-FogPrinterAssociation', 'New-FogRoleUserAssociation', 
                'New-FogRoleUserGroupAssociation', 'New-FogScheduledTask', 
-               'New-FogSetting', 'New-FogSite', 'New-FogSnapin', 
-               'New-FogSnapinAssociation', 'New-FogSnapinGroupAssociation', 
-               'New-FogStorageGroup', 'New-FogStorageNode', 'New-FogTask', 
-               'New-FogTaskRequest', 'New-FogUser', 'New-FogUserGroupMember', 
-               'Receive-FogImage', 'Remove-FogGroup', 
+               'New-FogSetting', 'New-FogSite', 'New-FogSnapinAssociation', 
+               'New-FogSnapinGroupAssociation', 'New-FogStorageGroup', 
+               'New-FogStorageNode', 'New-FogTask', 'New-FogUser', 
+               'New-FogUserGroupMember', 'Remove-FogGroup', 
                'Remove-FogGroupAssociation', 'Remove-FogHost', 
-               'Remove-FogHostGroup', 'Remove-FogImage', 
-               'Remove-FogImageAssociation', 'Remove-FogMacAddressAssociation', 
-               'Remove-FogModule', 'Remove-FogModuleAssociation', 
-               'Remove-FogMulticastSession', 
-               'Remove-FogMulticastSessionAssociation', 'Remove-FogObject', 
-               'Remove-FogOS', 'Remove-FogPowerManagement', 
-               'Remove-FogPrinter', 'Remove-FogPrinterAssociation', 
-               'Remove-FogRoleUserAssociation', 
+               'Remove-FogImage', 'Remove-FogImageAssociation', 
+               'Remove-FogMacAddressAssociation', 'Remove-FogModule', 
+               'Remove-FogModuleAssociation', 'Remove-FogMulticastSession', 
+               'Remove-FogMulticastSessionAssociation', 'Remove-FogOS', 
+               'Remove-FogPowerManagement', 'Remove-FogPrinter', 
+               'Remove-FogPrinterAssociation', 'Remove-FogRoleUserAssociation', 
                'Remove-FogRoleUserGroupAssociation', 'Remove-FogScheduledTask', 
                'Remove-FogSetting', 'Remove-FogSite', 'Remove-FogSnapin', 
                'Remove-FogSnapinAssociation', 
                'Remove-FogSnapinGroupAssociation', 'Remove-FogStorageGroup', 
                'Remove-FogStorageNode', 'Remove-FogTask', 'Remove-FogUser', 
-               'Remove-FogUserGroupMember', 'Remove-UsbMac', 
-               'Repair-FogSnapinAssociations', 'Reset-HostEncryption', 
-               'Resolve-HostID', 'Send-FogGroupTask', 'Send-FogImage', 
-               'Send-FogWolTask', 'Set-FogHostImage', 'Set-FogInventory', 
-               'Set-FogServerSettings', 'Set-FogServerSettingsFileSecurity', 
-               'Set-FogSetting', 'Set-FogSnapins', 'Set-WinToBootToPxe', 
-               'Start-FogGroupTask', 'Start-FogHostTask', 
+               'Remove-FogUserGroupMember', 'Reset-FogTransport', 
+               'Set-FogTransport', 'Start-FogGroupTask', 'Start-FogHostTask', 
                'Start-FogMulticastSessionTask', 'Start-FogScheduledTaskTask', 
-               'Start-FogSnapin', 'Start-FogSnapins', 'Start-FogTaskTask', 
-               'Stop-FogGroupTask', 'Stop-FogHostTask', 
+               'Start-FogTaskTask', 'Stop-FogGroupTask', 'Stop-FogHostTask', 
                'Stop-FogMulticastSessionTask', 'Stop-FogScheduledTaskTask', 
-               'Stop-FogTaskTask', 'Test-FogVerAbove1dot6', 
-               'Test-StringNotNullOrEmpty', 'Update-FogGroup', 
-               'Update-FogHost', 'Update-FogImage', 'Update-FogModule', 
-               'Update-FogMulticastSession', 'Update-FogObject', 
+               'Stop-FogTaskTask', 'Update-FogHost', 'Update-FogImage', 
+               'Update-FogModule', 'Update-FogMulticastSession', 
                'Update-FogOS', 'Update-FogPowerManagement', 
                'Update-FogPrinter', 'Update-FogScheduledTask', 
                'Update-FogSetting', 'Update-FogSite', 'Update-FogSnapin', 
                'Update-FogStorageGroup', 'Update-FogStorageNode', 
                'Update-FogTask', 'Update-FogUser'
-
-# Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @()
-
 # Variables to export from this module
 VariablesToExport = @()
 
@@ -222,7 +229,7 @@ AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject',
                'Add-FogSnapins', 'Capture-FogImage', 'Deploy-FogImage', 
                'Get-EfiMountLetter', 'Get-FogAssociatedSnapins', 
                'Get-FogFileDeleteQueues', 'Get-FogGroupAssociations', 
-               'Get-FogHistories', 'Get-FogHookEvents', 
+               'Get-FogGroups', 'Get-FogHistories', 'Get-FogHookEvents', 
                'Get-FogHostAutoLogouts', 'Get-FogHostGroups', 
                'Get-FogHostInventory', 'Get-FogHostScreenSettings', 
                'Get-FogHostSnapinAssociations', 'Get-FogHostSnapins', 
