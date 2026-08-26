@@ -188,10 +188,45 @@ generated cmdlets, so it is not ahead here. AutoRest ships a
 and FOG declares only three non-boolean enums.
 
 That is a runtime concern: `Register-ArgumentCompleter` in the module, written
-once. The spec-side work that makes it writable *generically* rather than
-per-parameter is `x-fog-references` on foreign-key columns, so a completer can
-know that `-imageID` is completed from the `image` class. FOG already holds
-that relationship in each model's `$databaseFieldClassRelationships`.
+once. What makes it writable *generically* rather than per-parameter is
+`x-fog-references`, merged upstream in **FOGProject/fogproject#1382** and
+derived from each model's `$databaseFieldClassRelationships`:
+
+```json
+"osID": {
+    "type": "integer",
+    "x-fog-references": { "class": "os", "field": "id" }
+}
+```
+
+30 columns carry it, and one of them — `LDAPGroup.serverID -> ldap` — is on a
+plugin class, read from the plugin's own relationship map.
+
+The completer that needs is short, and knows nothing about FOG's schema:
+
+```powershell
+function Get-FogReferenceValue {
+    param([string]$Schema, [string]$Property)
+    $ref = $doc.components.schemas.$Schema.properties.$Property.'x-fog-references'
+    if (-not $ref) { return @() }
+    @((Invoke-FogApi -uriPath $ref.class).data) | ForEach-Object {
+        [pscustomobject]@{ Value = $_.($ref.field); Label = $_.name }
+    }
+}
+```
+
+Run against a live server it completes every foreign key without being told
+about any of them:
+
+```
+-imageID on Host  ->  GET /image, key 'id'      12 Base-Stable, 11 Test
+-osID on Image    ->  GET /os, key 'id'          8 Apple Mac OS, 50 Linux, ...
+-stateID on Task  ->  GET /taskstate, key 'id'   2 Checked In, 4 Complete, ...
+```
+
+That is the piece neither generator produces and the emitter never had — but
+it is now fifteen lines rather than a hand-kept table of which column points
+where.
 
 ## Note on `DefaultCommandPrefix`
 
