@@ -1,0 +1,3226 @@
+# FogApi public surface -- GENERATED, do not hand-edit.
+#
+# Regenerate with spec/generators/Update-FogApiSurface.ps1 whenever a
+# surface change is intended, in the same commit as the change. CI runs
+# -Check and fails on any difference, because the generated client is not
+# committed and this file is the only place a rename or a dropped
+# parameter becomes visible in review.
+#
+# A trailing * marks a mandatory parameter. Generator plumbing
+# (Break, HttpPipeline*, Proxy*) is excluded.
+
+# cmdlets: 473
+
+Clear-FogSettingsCache -> IPaths1MlribcSettingsCacheFlushPostResponses200ContentApplicationJsonSchema
+    -PassThru
+Export-FogSystem -> bool
+    -OutFile*
+    -PassThru
+Find-FogArchitecture -> IArchitecturePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogGroup -> IGroupPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogHookEvent -> IHookEventPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogHost -> IHostPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogImage -> IImagePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogImagePartitionType -> IImagePartitionTypePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogImageType -> IImageTypePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogKeySequence -> IKeySequencePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogModule -> IModulePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogMulticastSession -> IMulticastSessionPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogNotifyEvent -> INotifyEventPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogOS -> IOSPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogOui -> IOuiPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogPlugin -> IPluginPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogPrinter -> IPrinterPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogPxeMenuOption -> IPxeMenuOptionsPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogRole -> IRolePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogRolePermission -> IRolePermissionPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogRoleUserAssociation -> IRoleUserAssociationPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogRoleUserGroupAssociation -> IRoleUserGroupAssociationPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogScheduledTask -> IScheduledTaskPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogSetting -> ISettingPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogSite -> ISitePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogSnapin -> ISnapinPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogStorageGroup -> IStorageGroupPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogStorageNode -> IStorageNodePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogSystem -> IAny
+    -InputObject*
+    -Item*
+    -PassThru
+Find-FogTask -> ITaskPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogTaskState -> ITaskStatePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogTaskType -> ITaskTypePage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogUser -> IUserPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogUserGroup -> IUserGroupPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Find-FogUserGroupMember -> IUserGroupMemberPage
+    -Expand
+    -InputObject*
+    -Item*
+    -Length
+    -PassThru
+    -Start
+Get-FogArchitecture -> IArchitecture, IArchitecturePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogArchitectureId -> IAny
+    -Filter
+    -PassThru
+Get-FogArchitectureName -> IAny
+    -Filter
+    -PassThru
+Get-FogFileDeleteQueue -> IFileDeleteQueue, IFileDeleteQueuePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogFileDeleteQueueActive -> IFileDeleteQueuePage
+    -PassThru
+Get-FogFileDeleteQueueId -> IAny
+    -Filter
+    -PassThru
+Get-FogFileDeleteQueueName -> IAny
+    -Filter
+    -PassThru
+Get-FogGroup -> IGroup, IGroupPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogGroupAssociation -> IGroupAssociation, IGroupAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogGroupAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogGroupAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogGroupId -> IAny
+    -Filter
+    -PassThru
+Get-FogGroupName -> IAny
+    -Filter
+    -PassThru
+Get-FogHistory -> IHistory, IHistoryPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogHistoryId -> IAny
+    -Filter
+    -PassThru
+Get-FogHistoryName -> IAny
+    -Filter
+    -PassThru
+Get-FogHookEvent -> IHookEvent, IHookEventPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogHookEventId -> IAny
+    -Filter
+    -PassThru
+Get-FogHookEventName -> IAny
+    -Filter
+    -PassThru
+Get-FogHost -> IHost, IHostPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogHostAutoLogout -> IHostAutoLogout, IHostAutoLogoutPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogHostAutoLogoutId -> IAny
+    -Filter
+    -PassThru
+Get-FogHostAutoLogoutName -> IAny
+    -Filter
+    -PassThru
+Get-FogHostId -> IAny
+    -Filter
+    -PassThru
+Get-FogHostName -> IAny
+    -Filter
+    -PassThru
+Get-FogHostPendingMac -> IAny
+    -PassThru
+Get-FogHostScreenSetting -> IHostScreenSetting, IHostScreenSettingPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogHostScreenSettingId -> IAny
+    -Filter
+    -PassThru
+Get-FogHostScreenSettingName -> IAny
+    -Filter
+    -PassThru
+Get-FogImage -> IImage, IImagePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogImageAssociation -> IImageAssociation, IImageAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogImageAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogImageAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogImageId -> IAny
+    -Filter
+    -PassThru
+Get-FogImageName -> IAny
+    -Filter
+    -PassThru
+Get-FogImagePartitionType -> IImagePartitionType, IImagePartitionTypePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogImagePartitionTypeId -> IAny
+    -Filter
+    -PassThru
+Get-FogImagePartitionTypeName -> IAny
+    -Filter
+    -PassThru
+Get-FogImageType -> IImageType, IImageTypePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogImageTypeId -> IAny
+    -Filter
+    -PassThru
+Get-FogImageTypeName -> IAny
+    -Filter
+    -PassThru
+Get-FogInitrd -> IAny
+    -PassThru
+Get-FogInventory -> IInventory, IInventoryPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogInventoryId -> IAny
+    -Filter
+    -PassThru
+Get-FogInventoryName -> IAny
+    -Filter
+    -PassThru
+Get-FogIpxe -> IIpxe, IIpxePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogIpxeId -> IAny
+    -Filter
+    -PassThru
+Get-FogIpxeName -> IAny
+    -Filter
+    -PassThru
+Get-FogKernel -> IAny
+    -PassThru
+Get-FogKeySequence -> IKeySequence, IKeySequencePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogKeySequenceId -> IAny
+    -Filter
+    -PassThru
+Get-FogKeySequenceName -> IAny
+    -Filter
+    -PassThru
+Get-FogLogfile -> IAny
+    -Id*
+    -InputObject*
+    -PassThru
+Get-FogMacAddressAssociation -> IMacAddressAssociation, IMacAddressAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogMacAddressAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogMacAddressAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogModule -> IModule, IModulePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogModuleAssociation -> IModuleAssociation, IModuleAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogModuleAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogModuleAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogModuleId -> IAny
+    -Filter
+    -PassThru
+Get-FogModuleName -> IAny
+    -Filter
+    -PassThru
+Get-FogMulticastSession -> IMulticastSession, IMulticastSessionPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogMulticastSessionActive -> IMulticastSessionPage
+    -PassThru
+Get-FogMulticastSessionAssociation -> IMulticastSessionAssociation, IMulticastSessionAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogMulticastSessionAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogMulticastSessionAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogMulticastSessionId -> IAny
+    -Filter
+    -PassThru
+Get-FogMulticastSessionName -> IAny
+    -Filter
+    -PassThru
+Get-FogNodeFailure -> INodeFailure, INodeFailurePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogNodeFailureId -> IAny
+    -Filter
+    -PassThru
+Get-FogNodeFailureName -> IAny
+    -Filter
+    -PassThru
+Get-FogNotifyEvent -> INotifyEvent, INotifyEventPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogNotifyEventId -> IAny
+    -Filter
+    -PassThru
+Get-FogNotifyEventName -> IAny
+    -Filter
+    -PassThru
+Get-FogOS -> IOS, IOSPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogOSId -> IAny
+    -Filter
+    -PassThru
+Get-FogOSName -> IAny
+    -Filter
+    -PassThru
+Get-FogOui -> IOui, IOuiPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogOuiId -> IAny
+    -Filter
+    -PassThru
+Get-FogOuiName -> IAny
+    -Filter
+    -PassThru
+Get-FogPlugin -> IPlugin, IPluginPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogPluginId -> IAny
+    -Filter
+    -PassThru
+Get-FogPluginName -> IAny
+    -Filter
+    -PassThru
+Get-FogPowerManagement -> IPowerManagement, IPowerManagementPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogPowerManagementActive -> IPowerManagementPage
+    -PassThru
+Get-FogPowerManagementId -> IAny
+    -Filter
+    -PassThru
+Get-FogPowerManagementName -> IAny
+    -Filter
+    -PassThru
+Get-FogPrinter -> IPrinter, IPrinterPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogPrinterAssociation -> IPrinterAssociation, IPrinterAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogPrinterAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogPrinterAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogPrinterId -> IAny
+    -Filter
+    -PassThru
+Get-FogPrinterName -> IAny
+    -Filter
+    -PassThru
+Get-FogPxeMenuOption -> IPxeMenuOptions, IPxeMenuOptionsPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogPxeMenuOptionId -> IAny
+    -Filter
+    -PassThru
+Get-FogPxeMenuOptionName -> IAny
+    -Filter
+    -PassThru
+Get-FogRole -> IRole, IRolePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogRoleId -> IAny
+    -Filter
+    -PassThru
+Get-FogRoleName -> IAny
+    -Filter
+    -PassThru
+Get-FogRolePermission -> IRolePermission, IRolePermissionPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogRolePermissionId -> IAny
+    -Filter
+    -PassThru
+Get-FogRolePermissionName -> IAny
+    -Filter
+    -PassThru
+Get-FogRoleUserAssociation -> IRoleUserAssociation, IRoleUserAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogRoleUserAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogRoleUserAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogRoleUserGroupAssociation -> IRoleUserGroupAssociation, IRoleUserGroupAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogRoleUserGroupAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogRoleUserGroupAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogScheduledTask -> IScheduledTask, IScheduledTaskPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogScheduledTaskActive -> IScheduledTaskPage
+    -PassThru
+Get-FogScheduledTaskId -> IAny
+    -Filter
+    -PassThru
+Get-FogScheduledTaskName -> IAny
+    -Filter
+    -PassThru
+Get-FogSetting -> ISetting, ISettingPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSettingId -> IAny
+    -Filter
+    -PassThru
+Get-FogSettingName -> IAny
+    -Filter
+    -PassThru
+Get-FogSettingsCache -> IAny
+    -PassThru
+Get-FogSite -> ISite, ISitePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSiteId -> IAny
+    -Filter
+    -PassThru
+Get-FogSiteName -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapin -> ISnapin, ISnapinPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSnapinAssociation -> ISnapinAssociation, ISnapinAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSnapinAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinGroupAssociation -> ISnapinGroupAssociation, ISnapinGroupAssociationPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSnapinGroupAssociationId -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinGroupAssociationName -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinId -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinJob -> ISnapinJob, ISnapinJobPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSnapinJobActive -> ISnapinJobPage
+    -PassThru
+Get-FogSnapinJobId -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinJobName -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinName -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinTask -> ISnapinTask, ISnapinTaskPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogSnapinTaskActive -> ISnapinTaskPage
+    -PassThru
+Get-FogSnapinTaskId -> IAny
+    -Filter
+    -PassThru
+Get-FogSnapinTaskName -> IAny
+    -Filter
+    -PassThru
+Get-FogStorageGroup -> IStorageGroup, IStorageGroupPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogStorageGroupId -> IAny
+    -Filter
+    -PassThru
+Get-FogStorageGroupName -> IAny
+    -Filter
+    -PassThru
+Get-FogStorageNode -> IStorageNode, IStorageNodePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogStorageNodeId -> IAny
+    -Filter
+    -PassThru
+Get-FogStorageNodeName -> IAny
+    -Filter
+    -PassThru
+Get-FogSystemBandwidth -> IAny
+    -Dev*
+    -InputObject*
+    -PassThru
+Get-FogSystemInfo -> IPaths1Rcxoc7SystemInfoGetResponses200ContentApplicationJsonSchema
+    -PassThru
+Get-FogSystemOpenapi -> IAny
+    -PassThru
+Get-FogSystemWhoami -> IPathsS2163KWhoamiGetResponses200ContentApplicationJsonSchema
+    -PassThru
+Get-FogTask -> ITask, ITaskPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogTaskActive -> ITaskPage
+    -PassThru
+Get-FogTaskId -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskLog -> ITaskLog, ITaskLogPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogTaskLogId -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskLogName -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskName -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskState -> ITaskState, ITaskStatePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogTaskStateId -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskStateName -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskType -> ITaskType1, ITaskTypePage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogTaskTypeId -> IAny
+    -Filter
+    -PassThru
+Get-FogTaskTypeName -> IAny
+    -Filter
+    -PassThru
+Get-FogUser -> IUser, IUserPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogUserGroup -> IUserGroup, IUserGroupPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogUserGroupId -> IAny
+    -Filter
+    -PassThru
+Get-FogUserGroupMember -> IUserGroupMember, IUserGroupMemberPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogUserGroupMemberId -> IAny
+    -Filter
+    -PassThru
+Get-FogUserGroupMemberName -> IAny
+    -Filter
+    -PassThru
+Get-FogUserGroupName -> IAny
+    -Filter
+    -PassThru
+Get-FogUserId -> IAny
+    -Filter
+    -PassThru
+Get-FogUserName -> IAny
+    -Filter
+    -PassThru
+Get-FogUserTracking -> IUserTracking, IUserTrackingPage
+    -Expand
+    -Filter
+    -Id*
+    -InputObject*
+    -Length
+    -PassThru
+    -Start
+Get-FogUserTrackingId -> IAny
+    -Filter
+    -PassThru
+Get-FogUserTrackingName -> IAny
+    -Filter
+    -PassThru
+Install-FogPlugin -> IError
+    -Id*
+    -InputObject*
+    -PassThru
+Invoke-FogUploadStorageGroupSnapinFile -> IError
+    -Id*
+    -InputObject*
+    -PassThru
+    -Snapinfiles*
+Join-FogArchitecture -> IError
+    -Access
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogFileDeleteQueue -> IError
+    -Body*
+    -CompletedTime
+    -Ids*
+    -PassThru
+    -Path*
+    -Pathtype*
+    -StateId
+    -StoragegroupId*
+Join-FogGroup -> IError, int
+    -Body*
+    -Building
+    -Description
+    -Ids*
+    -Init
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Name*
+    -Names*
+    -PassThru
+Join-FogGroupAssociation -> IError
+    -Body*
+    -GroupId*
+    -HostId*
+    -Ids*
+    -PassThru
+Join-FogHookEvent -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogHost -> IError
+    -AdDomain
+    -Adou
+    -AdPass
+    -AdPassLegacy
+    -AdUser
+    -ArchId
+    -Biosexit
+    -Body*
+    -Building
+    -Deployed
+    -Description
+    -Efiexit
+    -Enforce
+    -Ids*
+    -ImageId
+    -Init
+    -IP
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Lastcheckin
+    -Lastping
+    -Name*
+    -PassThru
+    -Pending
+    -Pingmethod
+    -Pingstatus
+    -PrinterLevel
+    -ProductKey
+    -Tokenlock
+    -UseAd
+Join-FogHostAutoLogout -> IError
+    -Body*
+    -HostId*
+    -Ids*
+    -PassThru
+    -Time*
+Join-FogHostScreenSetting -> IError
+    -Body*
+    -Height
+    -HostId*
+    -Ids*
+    -Orientation
+    -Other1
+    -Other2
+    -PassThru
+    -Refresh
+    -Width
+Join-FogImage -> IError
+    -ArchId
+    -Body*
+    -Building
+    -Compress
+    -Deployed
+    -Description
+    -Format
+    -Ids*
+    -ImagePartitionTypeId
+    -ImageTypeId*
+    -IsEnabled
+    -Magnet
+    -Name*
+    -OSId*
+    -PassThru
+    -Path*
+    -Protected
+    -Sectorsize
+    -Size
+    -Srvsize
+    -ToReplicate
+Join-FogImageAssociation -> IError
+    -Body*
+    -Ids*
+    -ImageId*
+    -PassThru
+    -Primary
+    -StoragegroupId*
+Join-FogImagePartitionType -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+    -Type*
+Join-FogImageType -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+    -Type*
+Join-FogInventory -> IError
+    -Biosdate
+    -Biosvendor
+    -Biosversion
+    -Body*
+    -Caseasset
+    -Caseman
+    -Caseserial
+    -Casever
+    -Cpucurrent
+    -Cpuman
+    -Cpumax
+    -Cpuversion
+    -DeleteDate
+    -Gpuproducts
+    -Gpuvendors
+    -Hdfirmware
+    -Hdmodel
+    -Hdserial
+    -HostId*
+    -Ids*
+    -Mbasset
+    -Mbman
+    -Mbproductname
+    -Mbserial
+    -Mbversion
+    -Mem
+    -Other1
+    -Other2
+    -PassThru
+    -PrimaryUser
+    -Sysman
+    -Sysproduct
+    -Sysserial
+    -Systype
+    -Sysuuid
+    -Sysversion
+Join-FogIpxe -> IError
+    -Body*
+    -Failure
+    -File
+    -Ids*
+    -Mac
+    -Manufacturer
+    -PassThru
+    -Product
+    -Success
+    -Version
+Join-FogKeySequence -> IError
+    -Ascii*
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogMacAddressAssociation -> IError
+    -Body*
+    -ClientIgnore
+    -Description
+    -HostId*
+    -Ids*
+    -ImageIgnore
+    -Mac*
+    -PassThru
+    -Pending
+    -Primary
+Join-FogModule -> IError
+    -Body*
+    -Description
+    -Ids*
+    -IsDefault
+    -Name*
+    -PassThru
+    -ShortName*
+Join-FogModuleAssociation -> IError
+    -Body*
+    -HostId*
+    -Ids*
+    -ModuleId*
+    -PassThru
+    -State
+Join-FogMulticastSession -> IError
+    -Anon5
+    -Body*
+    -Clients
+    -Completetime
+    -Ids*
+    -Image
+    -Interface
+    -IsDd
+    -Logpath
+    -Maxwait
+    -Name
+    -PassThru
+    -Percent
+    -Port
+    -Sendernode
+    -Senderpid
+    -Senderstart
+    -Sessclients
+    -Shutdown
+    -Starttime
+    -StateId
+    -StoragegroupId
+Join-FogMulticastSessionAssociation -> IError
+    -Body*
+    -Ids*
+    -MSId*
+    -PassThru
+    -TaskId*
+Join-FogNodeFailure -> IError
+    -Body*
+    -FailureTime*
+    -HostId*
+    -Ids*
+    -PassThru
+    -StoragegroupId*
+    -StoragenodeId*
+    -TaskId*
+Join-FogNotifyEvent -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogOS -> IError
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogOui -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+    -Prefix*
+Join-FogPlugin -> IError
+    -Body*
+    -Description
+    -Icon
+    -Ids*
+    -Location
+    -Name*
+    -PAnon5
+    -PassThru
+    -Runfile
+    -State
+    -Version
+Join-FogPowerManagement -> IError
+    -Action*
+    -Body*
+    -Dom
+    -Dow
+    -HostId*
+    -Hour
+    -Ids*
+    -Min
+    -Month
+    -OnDemand
+    -PassThru
+Join-FogPrinter -> IError
+    -Body*
+    -Config
+    -ConfigFile
+    -Description
+    -File
+    -Ids*
+    -IP
+    -Model
+    -Name*
+    -PAnon2
+    -PAnon3
+    -PAnon4
+    -PAnon5
+    -PassThru
+    -Port
+Join-FogPrinterAssociation -> IError
+    -Anon1
+    -Anon2
+    -Anon3
+    -Anon4
+    -Anon5
+    -Body*
+    -HostId*
+    -Ids*
+    -IsDefault
+    -PassThru
+    -PrinterId*
+Join-FogPxeMenuOption -> IError
+    -Args
+    -Body*
+    -Default
+    -Description
+    -Hotkey
+    -Ids*
+    -Keysequence
+    -Name*
+    -Params
+    -PassThru
+    -RegMenu
+Join-FogRole -> IError
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogRolePermission -> IError
+    -Body*
+    -Ids*
+    -Name*
+    -PassThru
+    -RoleId*
+Join-FogRoleUserAssociation -> IError
+    -Body*
+    -Ids*
+    -Name
+    -PassThru
+    -RoleId*
+    -UserId*
+Join-FogRoleUserGroupAssociation -> IError
+    -Body*
+    -Ids*
+    -Name
+    -PassThru
+    -RoleId*
+    -UsergroupId*
+Join-FogScheduledTask -> IError
+    -Body*
+    -DayOfMonth
+    -DayOfWeek
+    -Description
+    -HostId*
+    -Hour
+    -Ids*
+    -ImageId
+    -IsActive
+    -IsGroupTask
+    -Minute
+    -Month
+    -Name
+    -Other1
+    -Other2
+    -Other3
+    -Other4
+    -Other5
+    -PassThru
+    -ScheduleTime
+    -Shutdown
+    -TaskTypeId*
+    -Type*
+Join-FogSetting -> IError
+    -Body*
+    -Category
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+    -Value
+Join-FogSite -> IError
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogSnapin -> IError
+    -Anon3
+    -Args
+    -Body*
+    -Description
+    -File*
+    -Hash
+    -Hide
+    -Ids*
+    -IsEnabled
+    -Name*
+    -Packtype
+    -PassThru
+    -Protected
+    -Reboot
+    -RunWith
+    -RunWithArgs
+    -Shutdown
+    -Size
+    -Timeout
+    -ToReplicate
+Join-FogSnapinAssociation -> IError
+    -Body*
+    -HostId*
+    -Ids*
+    -PassThru
+    -Sequence
+    -SnapinId*
+Join-FogSnapinGroupAssociation -> IError
+    -Body*
+    -Ids*
+    -PassThru
+    -Primary
+    -SnapinId*
+    -StoragegroupId*
+Join-FogSnapinJob -> IError
+    -AbortOnFail
+    -Body*
+    -HostId*
+    -Ids*
+    -PassThru
+    -StateId*
+Join-FogSnapinTask -> IError
+    -Body*
+    -Checkin
+    -Complete
+    -Details
+    -Ids*
+    -JobId*
+    -PassThru
+    -Return
+    -Sequence
+    -SnapinId*
+    -StateId
+Join-FogStorageGroup -> IError
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+    -Trustedcidrs
+Join-FogStorageNode -> IError
+    -Bandwidth
+    -Bitrate
+    -Body*
+    -Description
+    -Ftppath*
+    -Graphcolor
+    -HelloInterval
+    -Ids*
+    -Interface
+    -IP*
+    -IsEnabled
+    -IsGraphEnabled
+    -IsMaster
+    -MaxClients
+    -Name
+    -PassThru
+    -Path*
+    -Snapinpath
+    -Sslpath
+    -StoragegroupId
+    -User*
+    -Webroot
+Join-FogTask -> IError
+    -Body*
+    -Bypassbitlocker
+    -CheckInTime
+    -HostId*
+    -Ids*
+    -ImageId
+    -IsDebug
+    -IsForced
+    -Name
+    -NfsFailures
+    -NfsLastMemberId
+    -Passreset
+    -PassThru
+    -ScheduledStartTime
+    -Shutdown
+    -StateChangedTime
+    -StateId
+    -StoragegroupId
+    -StoragenodeId
+    -TypeId*
+    -Wol
+Join-FogTaskState -> IError
+    -Body*
+    -Description
+    -Icon
+    -Ids*
+    -Name*
+    -Order
+    -PassThru
+Join-FogTaskType -> IError
+    -Access
+    -Body*
+    -Description
+    -Icon*
+    -Ids*
+    -Initrd
+    -IsAdvanced
+    -Kernel
+    -KernelArgs
+    -Name*
+    -PassThru
+    -Type
+Join-FogUser -> IError
+    -Api
+    -Apionly
+    -Authsource
+    -Body*
+    -Display
+    -Ids*
+    -Name*
+    -PassThru
+    -Type
+Join-FogUserGroup -> IError
+    -Body*
+    -Description
+    -Ids*
+    -Name*
+    -PassThru
+Join-FogUserGroupMember -> IError
+    -Body*
+    -Ids*
+    -Name
+    -PassThru
+    -UsergroupId*
+    -UserId*
+Measure-FogArchitecture -> IPathsJx0M36ArchitectureCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogFileDeleteQueue -> IPathsVfp0B1FiledeletequeueCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogGroup -> IPaths2TcgsnGroupCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogGroupAssociation -> IPaths9T0G8EGroupassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogHistory -> IPaths1WirunpHistoryCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogHookEvent -> IPaths70KelvHookeventCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogHost -> IPaths2Z6J26HostCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogHostAutoLogout -> IPathsMfvgz1HostautologoutCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogHostScreenSetting -> IPaths5UvhuwHostscreensettingCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogImage -> IPathsDmk84AImageCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogImageAssociation -> IPaths1I5Qr60ImageassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogImagePartitionType -> IPathsZqfbosImagepartitiontypeCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogImageType -> IPaths1YkxztxImagetypeCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogInventory -> IPaths1Az2AckInventoryCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogIpxe -> IPathsCef9YuIpxeCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogKeySequence -> IPaths1Octh3NKeysequenceCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogMacAddressAssociation -> IPathsX5Tjh8MacaddressassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogModule -> IPaths1S8O5XlModuleCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogModuleAssociation -> IPathsGq1KdhModuleassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogMulticastSession -> IPaths1Uh7OzjMulticastsessionCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogMulticastSessionAssociation -> IPaths1Y5Ks29MulticastsessionassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogNodeFailure -> IPaths2Wzw3BNodefailureCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogNotifyEvent -> IPaths1Ah10K3NotifyeventCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogOS -> IPaths12H6WouOSCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogOui -> IPaths1Be29N4OuiCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogPlugin -> IPaths3UillxPluginCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogPowerManagement -> IPathsI5Nz85PowermanagementCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogPrinter -> IPaths1UfdxdaPrinterCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogPrinterAssociation -> IPaths2S0Wt9PrinterassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogPxeMenuOption -> IPaths1Onbht4PxemenuoptionsCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogRole -> IPathsIuvcdoRoleCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogRolePermission -> IPathsU7OkouRolepermissionCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogRoleUserAssociation -> IPaths7Vo3KjRoleuserassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogRoleUserGroupAssociation -> IPaths1I9B90XRoleusergroupassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogScheduledTask -> IPaths1Jfrtt8ScheduledtaskCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSetting -> IPaths17Qpy05SettingCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSite -> IPaths1MswcnpSiteCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSnapin -> IPaths1Xxmsy5SnapinCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSnapinAssociation -> IPaths1OvddhbSnapinassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSnapinGroupAssociation -> IPaths1SxxpavSnapingroupassociationCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSnapinJob -> IPathsFmql73SnapinjobCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogSnapinTask -> IPaths2UmpkzSnapintaskCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogStorageGroup -> IPaths1Fk17DgStoragegroupCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogStorageNode -> IPaths96N76OStoragenodeCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogTask -> IPathsWwrpalTaskCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogTaskLog -> IPathsThulztTasklogCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogTaskState -> IPaths83Jx8ATaskstateCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogTaskType -> IPathsOpudmkTasktypeCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogUser -> IPaths1Ypd2BdUserCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogUserGroup -> IPathsHm266YUsergroupCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogUserGroupMember -> IPaths1Qk9SdmUsergroupmemberCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+Measure-FogUserTracking -> IPaths1Osyg79UsertrackingCountGetResponses200ContentApplicationJsonSchema
+    -Filter
+    -PassThru
+New-FogArchitecture -> IArchitecture
+    -Access
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+New-FogFileDeleteQueue -> IFileDeleteQueue
+    -AdditionalProperties
+    -Body*
+    -CompletedTime
+    -PassThru
+    -Path*
+    -Pathtype*
+    -StateId
+    -StoragegroupId*
+New-FogFileDeleteQueueTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogGroup -> IGroup
+    -AdditionalProperties
+    -Body*
+    -Building
+    -Description
+    -Init
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Name*
+    -PassThru
+New-FogGroupAssociation -> IGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -GroupId*
+    -HostId*
+    -PassThru
+New-FogGroupTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogHookEvent -> IHookEvent
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+New-FogHost -> IHost
+    -AdditionalProperties
+    -AdDomain
+    -Adou
+    -AdPass
+    -AdPassLegacy
+    -AdUser
+    -ArchId
+    -Biosexit
+    -Body*
+    -Building
+    -Deployed
+    -Description
+    -Efiexit
+    -Enforce
+    -ImageId
+    -Init
+    -IP
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Lastcheckin
+    -Lastping
+    -Name*
+    -PassThru
+    -Pending
+    -Pingmethod
+    -Pingstatus
+    -PrinterLevel
+    -ProductKey
+    -Tokenlock
+    -UseAd
+New-FogHostAutoLogout -> IHostAutoLogout
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -PassThru
+    -Time*
+New-FogHostScreenSetting -> IHostScreenSetting
+    -AdditionalProperties
+    -Body*
+    -Height
+    -HostId*
+    -Orientation
+    -Other1
+    -Other2
+    -PassThru
+    -Refresh
+    -Width
+New-FogHostTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogImage -> IImage
+    -AdditionalProperties
+    -ArchId
+    -Body*
+    -Building
+    -Compress
+    -Deployed
+    -Description
+    -Format
+    -ImagePartitionTypeId
+    -ImageTypeId*
+    -IsEnabled
+    -Magnet
+    -Name*
+    -OSId*
+    -PassThru
+    -Path*
+    -Protected
+    -Sectorsize
+    -Size
+    -Srvsize
+    -ToReplicate
+New-FogImageAssociation -> IImageAssociation
+    -AdditionalProperties
+    -Body*
+    -ImageId*
+    -PassThru
+    -Primary
+    -StoragegroupId*
+New-FogImagePartitionType -> IImagePartitionType
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+    -Type*
+New-FogImageType -> IImageType
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+    -Type*
+New-FogInventory -> IInventory
+    -AdditionalProperties
+    -Biosdate
+    -Biosvendor
+    -Biosversion
+    -Body*
+    -Caseasset
+    -Caseman
+    -Caseserial
+    -Casever
+    -Cpucurrent
+    -Cpuman
+    -Cpumax
+    -Cpuversion
+    -DeleteDate
+    -Gpuproducts
+    -Gpuvendors
+    -Hdfirmware
+    -Hdmodel
+    -Hdserial
+    -HostId*
+    -Mbasset
+    -Mbman
+    -Mbproductname
+    -Mbserial
+    -Mbversion
+    -Mem
+    -Other1
+    -Other2
+    -PassThru
+    -PrimaryUser
+    -Sysman
+    -Sysproduct
+    -Sysserial
+    -Systype
+    -Sysuuid
+    -Sysversion
+New-FogIpxe -> IIpxe
+    -AdditionalProperties
+    -Body*
+    -Failure
+    -File
+    -Mac
+    -Manufacturer
+    -PassThru
+    -Product
+    -Success
+    -Version
+New-FogKeySequence -> IKeySequence
+    -AdditionalProperties
+    -Ascii*
+    -Body*
+    -Name*
+    -PassThru
+New-FogMacAddressAssociation -> IMacAddressAssociation
+    -AdditionalProperties
+    -Body*
+    -ClientIgnore
+    -Description
+    -HostId*
+    -ImageIgnore
+    -Mac*
+    -PassThru
+    -Pending
+    -Primary
+New-FogModule -> IModule
+    -AdditionalProperties
+    -Body*
+    -Description
+    -IsDefault
+    -Name*
+    -PassThru
+    -ShortName*
+New-FogModuleAssociation -> IModuleAssociation
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -ModuleId*
+    -PassThru
+    -State
+New-FogMulticastSession -> IMulticastSession
+    -AdditionalProperties
+    -Anon5
+    -Body*
+    -Clients
+    -Completetime
+    -Image
+    -Interface
+    -IsDd
+    -Logpath
+    -Maxwait
+    -Name
+    -PassThru
+    -Percent
+    -Port
+    -Sendernode
+    -Senderpid
+    -Senderstart
+    -Sessclients
+    -Shutdown
+    -Starttime
+    -StateId
+    -StoragegroupId
+New-FogMulticastSessionAssociation -> IMulticastSessionAssociation
+    -AdditionalProperties
+    -Body*
+    -MSId*
+    -PassThru
+    -TaskId*
+New-FogMulticastSessionTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogNodeFailure -> INodeFailure
+    -AdditionalProperties
+    -Body*
+    -FailureTime*
+    -HostId*
+    -PassThru
+    -StoragegroupId*
+    -StoragenodeId*
+    -TaskId*
+New-FogNotifyEvent -> INotifyEvent
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+New-FogOS -> IOS
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+New-FogOui -> IOui
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+    -Prefix*
+New-FogPlugin -> IPlugin
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon
+    -Location
+    -Name*
+    -PAnon5
+    -PassThru
+    -Runfile
+    -State
+    -Version
+New-FogPowerManagement -> IPowerManagement
+    -Action*
+    -AdditionalProperties
+    -Body*
+    -Dom
+    -Dow
+    -HostId*
+    -Hour
+    -Min
+    -Month
+    -OnDemand
+    -PassThru
+New-FogPrinter -> IPrinter
+    -AdditionalProperties
+    -Body*
+    -Config
+    -ConfigFile
+    -Description
+    -File
+    -IP
+    -Model
+    -Name*
+    -PAnon2
+    -PAnon3
+    -PAnon4
+    -PAnon5
+    -PassThru
+    -Port
+New-FogPrinterAssociation -> IPrinterAssociation
+    -AdditionalProperties
+    -Anon1
+    -Anon2
+    -Anon3
+    -Anon4
+    -Anon5
+    -Body*
+    -HostId*
+    -IsDefault
+    -PassThru
+    -PrinterId*
+New-FogPxeMenuOption -> IPxeMenuOptions
+    -AdditionalProperties
+    -Args
+    -Body*
+    -Default
+    -Description
+    -Hotkey
+    -Keysequence
+    -Name*
+    -Params
+    -PassThru
+    -RegMenu
+New-FogRole -> IRole
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+New-FogRolePermission -> IRolePermission
+    -AdditionalProperties
+    -Body*
+    -Name*
+    -PassThru
+    -RoleId*
+New-FogRoleUserAssociation -> IRoleUserAssociation
+    -AdditionalProperties
+    -Body*
+    -Name
+    -PassThru
+    -RoleId*
+    -UserId*
+New-FogRoleUserGroupAssociation -> IRoleUserGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -Name
+    -PassThru
+    -RoleId*
+    -UsergroupId*
+New-FogScheduledTask -> IScheduledTask
+    -AdditionalProperties
+    -Body*
+    -DayOfMonth
+    -DayOfWeek
+    -Description
+    -HostId*
+    -Hour
+    -ImageId
+    -IsActive
+    -IsGroupTask
+    -Minute
+    -Month
+    -Name
+    -Other1
+    -Other2
+    -Other3
+    -Other4
+    -Other5
+    -PassThru
+    -ScheduleTime
+    -Shutdown
+    -TaskTypeId*
+    -Type*
+New-FogScheduledTaskTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogSetting -> ISetting
+    -AdditionalProperties
+    -Body*
+    -Category
+    -Description
+    -Name*
+    -PassThru
+    -Value
+New-FogSite -> ISite
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+New-FogSnapin -> ISnapin
+    -AdditionalProperties
+    -Anon3
+    -Args
+    -Body*
+    -Description
+    -File*
+    -Hash
+    -Hide
+    -IsEnabled
+    -Name*
+    -Packtype
+    -PassThru
+    -Protected
+    -Reboot
+    -RunWith
+    -RunWithArgs
+    -Shutdown
+    -Size
+    -Snapinfile*
+    -Timeout
+    -ToReplicate
+New-FogSnapinAssociation -> ISnapinAssociation
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -PassThru
+    -Sequence
+    -SnapinId*
+New-FogSnapinGroupAssociation -> ISnapinGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -PassThru
+    -Primary
+    -SnapinId*
+    -StoragegroupId*
+New-FogSnapinJob -> ISnapinJob
+    -AbortOnFail
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -PassThru
+    -StateId*
+New-FogSnapinJobTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogSnapinTask -> ISnapinTask
+    -AdditionalProperties
+    -Body*
+    -Checkin
+    -Complete
+    -Details
+    -JobId*
+    -PassThru
+    -Return
+    -Sequence
+    -SnapinId*
+    -StateId
+New-FogSnapinTaskTask -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
+    -TaskName
+    -TaskTypeId
+    -Wol
+New-FogStorageGroup -> IStorageGroup
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+    -Trustedcidrs
+New-FogStorageNode -> IStorageNode
+    -AdditionalProperties
+    -Bandwidth
+    -Bitrate
+    -Body*
+    -Description
+    -Ftppath*
+    -Graphcolor
+    -HelloInterval
+    -Interface
+    -IP*
+    -IsEnabled
+    -IsGraphEnabled
+    -IsMaster
+    -MaxClients
+    -Name
+    -PassThru
+    -Path*
+    -Snapinpath
+    -Sslpath
+    -StoragegroupId
+    -User*
+    -Webroot
+New-FogTask -> IListEnvelope, ITask
+    -AdditionalProperties
+    -Body*
+    -Bypassbitlocker
+    -CheckInTime
+    -Debug
+    -DeploySnapins
+    -HostId*
+    -Id*
+    -ImageId
+    -InputObject*
+    -IsDebug
+    -IsForced
+    -Name
+    -NfsFailures
+    -NfsLastMemberId
+    -Passreset
+    -PassThru
+    -ScheduledStartTime
+    -Sessionjoin
+    -Shutdown
+    -StateChangedTime
+    -StateId
+    -StoragegroupId
+    -StoragenodeId
+    -TaskName
+    -TaskTypeId
+    -TypeId*
+    -Wol
+New-FogTaskState -> ITaskState
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon
+    -Name*
+    -Order
+    -PassThru
+New-FogTaskType -> ITaskType1
+    -Access
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon*
+    -Initrd
+    -IsAdvanced
+    -Kernel
+    -KernelArgs
+    -Name*
+    -PassThru
+    -Type
+New-FogUser -> IUser
+    -AdditionalProperties
+    -Api
+    -Apionly
+    -Authsource
+    -Body*
+    -Display
+    -Name*
+    -PassThru
+    -Type
+New-FogUserGroup -> IUserGroup
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Name*
+    -PassThru
+New-FogUserGroupMember -> IUserGroupMember
+    -AdditionalProperties
+    -Body*
+    -Name
+    -PassThru
+    -UsergroupId*
+    -UserId*
+Remove-FogArchitecture -> IPathsXuvjkjArchitectureIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogFileDeleteQueue -> IPathsX452GoFiledeletequeueIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogGroup -> IPaths1MilotkGroupIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogGroupAssociation -> IPaths1Lzw7EzGroupassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogHookEvent -> IPaths124XacvHookeventIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogHost -> IPathsIu18VkHostIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogHostAutoLogout -> IPaths1Ujq70LHostautologoutIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogHostScreenSetting -> IPaths1FoicnmHostscreensettingIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogImage -> IPaths1R11NjoImageIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogImageAssociation -> IPathsSb6E19ImageassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogImagePartitionType -> IPaths1Bkcni4ImagepartitiontypeIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogImageType -> IPathsDa55M6ImagetypeIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogInventory -> IPathsW29382InventoryIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogIpxe -> IPathsBq2BxeIpxeIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogKeySequence -> IPaths1Eu4V8IKeysequenceIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogMacAddressAssociation -> IPathsEicsr9MacaddressassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogModule -> IPaths1932N7NModuleIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogModuleAssociation -> IPaths1DzttmwModuleassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogMulticastSession -> IPaths1Uiezi2MulticastsessionIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogMulticastSessionAssociation -> IPaths41N1G0MulticastsessionassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogNodeFailure -> IPaths145X76RNodefailureIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogNotifyEvent -> IPathsA0T681NotifyeventIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogOS -> IPathsSv05HkOSIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogOui -> IPaths1AbydlgOuiIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogPlugin -> IPaths196Flc2PluginIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogPowerManagement -> IPathsTgvl7APowermanagementIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogPrinter -> IPathsId1M2FPrinterIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogPrinterAssociation -> IPaths15Mfc20PrinterassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogPxeMenuOption -> IPathsFa5H59PxemenuoptionsIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogRole -> IPaths1Jkf5CkRoleIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogRolePermission -> IPaths1Hq5TbaRolepermissionIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogRoleUserAssociation -> IPaths1Odg95WRoleuserassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogRoleUserGroupAssociation -> IPaths16EohxhRoleusergroupassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogScheduledTask -> IPathsO3T79MScheduledtaskIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSetting -> IPaths1M0Mm8RSettingIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSite -> IPathsZb70V7SiteIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSnapin -> IPaths1Jveq72SnapinIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSnapinAssociation -> IPaths4DevjgSnapinassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSnapinGroupAssociation -> IPaths1Omhts1SnapingroupassociationIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSnapinJob -> IPaths8Ui560SnapinjobIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogSnapinTask -> IPaths1Si2M7WSnapintaskIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogStorageGroup -> IPaths4Z10EaStoragegroupIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogStorageNode -> IPaths1Ri0G6LStoragenodeIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogTask -> IPathsBqzxufTaskIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogTaskState -> IPaths6Q6XygTaskstateIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogTaskType -> IPathsHbyt3RTasktypeIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogUser -> IPaths10Nxb6RUserIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogUserGroup -> IPaths7NfoesUsergroupIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Remove-FogUserGroupMember -> IPathsOkzzq6UsergroupmemberIdDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogFileDeleteQueueTask -> IPathsOk0JruFiledeletequeueIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogGroupTask -> IPaths3Iemm0GroupIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogHostTask -> IPaths1H6Hra6HostIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogMulticastSessionTask -> IPathsBufxo2MulticastsessionIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogScheduledTaskTask -> IPaths1R9PcyfScheduledtaskIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogSnapinJobTask -> IPaths1398IzySnapinjobIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogSnapinTaskTask -> IPaths10Q6732SnapintaskIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Stop-FogTask -> IPaths103Shm5TaskIdCancelDeleteResponses200ContentApplicationJsonSchema
+    -Id*
+    -InputObject*
+    -PassThru
+Update-FogArchitecture -> IArchitecture
+    -Access
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogFileDeleteQueue -> IFileDeleteQueue
+    -AdditionalProperties
+    -Body*
+    -CompletedTime
+    -Id*
+    -InputObject*
+    -PassThru
+    -Path*
+    -Pathtype*
+    -StateId
+    -StoragegroupId*
+Update-FogGroup -> IGroup
+    -AdditionalProperties
+    -Body*
+    -Building
+    -Description
+    -Id*
+    -Init
+    -InputObject*
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Name*
+    -PassThru
+Update-FogGroupAssociation -> IGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -GroupId*
+    -HostId*
+    -Id*
+    -InputObject*
+    -PassThru
+Update-FogHookEvent -> IHookEvent
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogHost -> IHost
+    -AdditionalProperties
+    -AdDomain
+    -Adou
+    -AdPass
+    -AdPassLegacy
+    -AdUser
+    -ArchId
+    -Biosexit
+    -Body*
+    -Building
+    -Deployed
+    -Description
+    -Efiexit
+    -Enforce
+    -Id*
+    -ImageId
+    -Init
+    -InputObject*
+    -IP
+    -Kernel
+    -KernelArgs
+    -KernelDevice
+    -Lastcheckin
+    -Lastping
+    -Name*
+    -PassThru
+    -Pending
+    -Pingmethod
+    -Pingstatus
+    -PrinterLevel
+    -ProductKey
+    -Tokenlock
+    -UseAd
+Update-FogHostAutoLogout -> IHostAutoLogout
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -Id*
+    -InputObject*
+    -PassThru
+    -Time*
+Update-FogHostScreenSetting -> IHostScreenSetting
+    -AdditionalProperties
+    -Body*
+    -Height
+    -HostId*
+    -Id*
+    -InputObject*
+    -Orientation
+    -Other1
+    -Other2
+    -PassThru
+    -Refresh
+    -Width
+Update-FogImage -> IImage
+    -AdditionalProperties
+    -ArchId
+    -Body*
+    -Building
+    -Compress
+    -Deployed
+    -Description
+    -Format
+    -Id*
+    -ImagePartitionTypeId
+    -ImageTypeId*
+    -InputObject*
+    -IsEnabled
+    -Magnet
+    -Name*
+    -OSId*
+    -PassThru
+    -Path*
+    -Protected
+    -Sectorsize
+    -Size
+    -Srvsize
+    -ToReplicate
+Update-FogImageAssociation -> IImageAssociation
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -ImageId*
+    -InputObject*
+    -PassThru
+    -Primary
+    -StoragegroupId*
+Update-FogImagePartitionType -> IImagePartitionType
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Type*
+Update-FogImageType -> IImageType
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Type*
+Update-FogInventory -> IInventory
+    -AdditionalProperties
+    -Biosdate
+    -Biosvendor
+    -Biosversion
+    -Body*
+    -Caseasset
+    -Caseman
+    -Caseserial
+    -Casever
+    -Cpucurrent
+    -Cpuman
+    -Cpumax
+    -Cpuversion
+    -DeleteDate
+    -Gpuproducts
+    -Gpuvendors
+    -Hdfirmware
+    -Hdmodel
+    -Hdserial
+    -HostId*
+    -Id*
+    -InputObject*
+    -Mbasset
+    -Mbman
+    -Mbproductname
+    -Mbserial
+    -Mbversion
+    -Mem
+    -Other1
+    -Other2
+    -PassThru
+    -PrimaryUser
+    -Sysman
+    -Sysproduct
+    -Sysserial
+    -Systype
+    -Sysuuid
+    -Sysversion
+Update-FogIpxe -> IIpxe
+    -AdditionalProperties
+    -Body*
+    -Failure
+    -File
+    -Id*
+    -InputObject*
+    -Mac
+    -Manufacturer
+    -PassThru
+    -Product
+    -Success
+    -Version
+Update-FogKeySequence -> IKeySequence
+    -AdditionalProperties
+    -Ascii*
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogMacAddressAssociation -> IMacAddressAssociation
+    -AdditionalProperties
+    -Body*
+    -ClientIgnore
+    -Description
+    -HostId*
+    -Id*
+    -ImageIgnore
+    -InputObject*
+    -Mac*
+    -PassThru
+    -Pending
+    -Primary
+Update-FogModule -> IModule
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -IsDefault
+    -Name*
+    -PassThru
+    -ShortName*
+Update-FogModuleAssociation -> IModuleAssociation
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -Id*
+    -InputObject*
+    -ModuleId*
+    -PassThru
+    -State
+Update-FogMulticastSession -> IMulticastSession
+    -AdditionalProperties
+    -Anon5
+    -Body*
+    -Clients
+    -Completetime
+    -Id*
+    -Image
+    -InputObject*
+    -Interface
+    -IsDd
+    -Logpath
+    -Maxwait
+    -Name
+    -PassThru
+    -Percent
+    -Port
+    -Sendernode
+    -Senderpid
+    -Senderstart
+    -Sessclients
+    -Shutdown
+    -Starttime
+    -StateId
+    -StoragegroupId
+Update-FogMulticastSessionAssociation -> IMulticastSessionAssociation
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -MSId*
+    -PassThru
+    -TaskId*
+Update-FogNodeFailure -> INodeFailure
+    -AdditionalProperties
+    -Body*
+    -FailureTime*
+    -HostId*
+    -Id*
+    -InputObject*
+    -PassThru
+    -StoragegroupId*
+    -StoragenodeId*
+    -TaskId*
+Update-FogNotifyEvent -> INotifyEvent
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogOS -> IOS
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogOui -> IOui
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Prefix*
+Update-FogPlugin -> IPlugin
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon
+    -Id*
+    -InputObject*
+    -Location
+    -Name*
+    -PAnon5
+    -PassThru
+    -Runfile
+    -State
+    -Version
+Update-FogPowerManagement -> IPowerManagement
+    -Action*
+    -AdditionalProperties
+    -Body*
+    -Dom
+    -Dow
+    -HostId*
+    -Hour
+    -Id*
+    -InputObject*
+    -Min
+    -Month
+    -OnDemand
+    -PassThru
+Update-FogPrinter -> IPrinter
+    -AdditionalProperties
+    -Body*
+    -Config
+    -ConfigFile
+    -Description
+    -File
+    -Id*
+    -InputObject*
+    -IP
+    -Model
+    -Name*
+    -PAnon2
+    -PAnon3
+    -PAnon4
+    -PAnon5
+    -PassThru
+    -Port
+Update-FogPrinterAssociation -> IPrinterAssociation
+    -AdditionalProperties
+    -Anon1
+    -Anon2
+    -Anon3
+    -Anon4
+    -Anon5
+    -Body*
+    -HostId*
+    -Id*
+    -InputObject*
+    -IsDefault
+    -PassThru
+    -PrinterId*
+Update-FogPxeMenuOption -> IPxeMenuOptions
+    -AdditionalProperties
+    -Args
+    -Body*
+    -Default
+    -Description
+    -Hotkey
+    -Id*
+    -InputObject*
+    -Keysequence
+    -Name*
+    -Params
+    -PassThru
+    -RegMenu
+Update-FogRole -> IRole
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogRolePermission -> IRolePermission
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -RoleId*
+Update-FogRoleUserAssociation -> IRoleUserAssociation
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name
+    -PassThru
+    -RoleId*
+    -UserId*
+Update-FogRoleUserGroupAssociation -> IRoleUserGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name
+    -PassThru
+    -RoleId*
+    -UsergroupId*
+Update-FogScheduledTask -> IScheduledTask
+    -AdditionalProperties
+    -Body*
+    -DayOfMonth
+    -DayOfWeek
+    -Description
+    -HostId*
+    -Hour
+    -Id*
+    -ImageId
+    -InputObject*
+    -IsActive
+    -IsGroupTask
+    -Minute
+    -Month
+    -Name
+    -Other1
+    -Other2
+    -Other3
+    -Other4
+    -Other5
+    -PassThru
+    -ScheduleTime
+    -Shutdown
+    -TaskTypeId*
+    -Type*
+Update-FogSetting -> ISetting
+    -AdditionalProperties
+    -Body*
+    -Category
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Value
+Update-FogSettingsCache -> IPathsS56Mm4SettingsCacheRefreshPostResponses200ContentApplicationJsonSchema
+    -PassThru
+Update-FogSite -> ISite
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogSnapin -> ISnapin
+    -AdditionalProperties
+    -Anon3
+    -Args
+    -Body*
+    -Description
+    -File*
+    -Hash
+    -Hide
+    -Id*
+    -InputObject*
+    -IsEnabled
+    -Name*
+    -Packtype
+    -PassThru
+    -Protected
+    -Reboot
+    -RunWith
+    -RunWithArgs
+    -Shutdown
+    -Size
+    -Timeout
+    -ToReplicate
+Update-FogSnapinAssociation -> ISnapinAssociation
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -Id*
+    -InputObject*
+    -PassThru
+    -Sequence
+    -SnapinId*
+Update-FogSnapinGroupAssociation -> ISnapinGroupAssociation
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -PassThru
+    -Primary
+    -SnapinId*
+    -StoragegroupId*
+Update-FogSnapinJob -> ISnapinJob
+    -AbortOnFail
+    -AdditionalProperties
+    -Body*
+    -HostId*
+    -Id*
+    -InputObject*
+    -PassThru
+    -StateId*
+Update-FogSnapinTask -> ISnapinTask
+    -AdditionalProperties
+    -Body*
+    -Checkin
+    -Complete
+    -Details
+    -Id*
+    -InputObject*
+    -JobId*
+    -PassThru
+    -Return
+    -Sequence
+    -SnapinId*
+    -StateId
+Update-FogStorageGroup -> IStorageGroup
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Trustedcidrs
+Update-FogStorageNode -> IStorageNode
+    -AdditionalProperties
+    -Bandwidth
+    -Bitrate
+    -Body*
+    -Description
+    -Ftppath*
+    -Graphcolor
+    -HelloInterval
+    -Id*
+    -InputObject*
+    -Interface
+    -IP*
+    -IsEnabled
+    -IsGraphEnabled
+    -IsMaster
+    -MaxClients
+    -Name
+    -PassThru
+    -Path*
+    -Snapinpath
+    -Sslpath
+    -StoragegroupId
+    -User*
+    -Webroot
+Update-FogTask -> ITask
+    -AdditionalProperties
+    -Body*
+    -Bypassbitlocker
+    -CheckInTime
+    -HostId*
+    -Id*
+    -ImageId
+    -InputObject*
+    -IsDebug
+    -IsForced
+    -Name
+    -NfsFailures
+    -NfsLastMemberId
+    -Passreset
+    -PassThru
+    -ScheduledStartTime
+    -Shutdown
+    -StateChangedTime
+    -StateId
+    -StoragegroupId
+    -StoragenodeId
+    -TypeId*
+    -Wol
+Update-FogTaskState -> ITaskState
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon
+    -Id*
+    -InputObject*
+    -Name*
+    -Order
+    -PassThru
+Update-FogTaskType -> ITaskType1
+    -Access
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Icon*
+    -Id*
+    -Initrd
+    -InputObject*
+    -IsAdvanced
+    -Kernel
+    -KernelArgs
+    -Name*
+    -PassThru
+    -Type
+Update-FogUser -> IUser
+    -AdditionalProperties
+    -Api
+    -Apionly
+    -Authsource
+    -Body*
+    -Display
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+    -Type
+Update-FogUserGroup -> IUserGroup
+    -AdditionalProperties
+    -Body*
+    -Description
+    -Id*
+    -InputObject*
+    -Name*
+    -PassThru
+Update-FogUserGroupMember -> IUserGroupMember
+    -AdditionalProperties
+    -Body*
+    -Id*
+    -InputObject*
+    -Name
+    -PassThru
+    -UsergroupId*
+    -UserId*

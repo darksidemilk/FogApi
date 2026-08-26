@@ -5,3 +5,35 @@ _module_build
 .nupkg
 TestResults
 site
+
+# .NET build output.
+#
+# FogApi/bin is a build artifact even though it sits inside the module payload.
+# The dll has to be next to the manifest that names it in RequiredAssemblies,
+# because three things import straight out of the source tree: build.ps1, CI's
+# settings bootstrap check, and every Tests/*.Tests.ps1 BeforeAll.
+#
+# Without this entry, tag-and-release.yml's `git add -A` commits a dll to
+# master on every release. The generated .cs under src/ IS committed -- that is
+# the reviewable artifact, the same rule the generated .ps1 files follow.
+FogApi/bin/
+src/*/bin/
+src/*/obj/
+
+# Throwaway spike modules.
+.spike/
+
+# AutoRest output is NOT committed -- the opposite of the src/ rule above, and a
+# deliberate reversal rather than an inherited default.
+#
+# Why: a run emits ~2,570 files, ~1,460 of them models, four per model. A diff
+# that size is not read by anyone, so committing it buys the appearance of
+# reviewability without the substance.
+#
+# What it costs: the public surface becomes invisible in a PR. A regeneration
+# can rename, add or drop a cmdlet and nobody sees it until release. That is
+# paid for by the committed surface snapshot -- see
+# spec/generators/Invoke-FogApiGeneration.ps1 and the surface-diff CI gate. If
+# the snapshot ever stops being trustworthy, DELETE THIS BLOCK and commit the
+# output instead; nothing else depends on the choice.
+spec/generators/out/

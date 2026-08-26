@@ -4,24 +4,24 @@
   "source": {
     "repo": "https://github.com/FOGProject/fogproject",
     "branch": "working-1.6",
-    "commit": "b25193faf3b6292da43dfd15bde005b1d4a1634a",
-    "commitShort": "b25193faf",
-    "commitDate": "2026-08-23T11:41:57+00:00",
-    "fogVersion": "1.6.0-beta.3894",
-    "openapiClassLastChanged": "b25193faf",
+    "commit": "a1a3726748f19469617711566e56245339f93dd3",
+    "commitShort": "a1a372674",
+    "commitDate": "2026-08-26T09:19:16-06:00",
+    "fogVersion": "1.6.0-beta.4105",
+    "openapiClassLastChanged": "a1a372674",
     "localCorrections": [],
-    "$note": "Dumped from FOGProject/fogproject working-1.6 directly; b25193faf is an ancestor of origin/working-1.6, verified with `git merge-base --is-ancestor`. No local corrections -- there is no merged tree to dump from."
+    "$note": "Dumped from the openapi-named-response-schemas branch head (PR #1399), verified an ancestor of origin/working-1.6 with `git merge-base --is-ancestor` after that PR merged as 2ac40d5df. No local corrections."
   },
   "generatedBy": "spec/tools/dump-openapi.php",
-  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.3894 --out spec/openapi/fog-1.6.json",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.4105 --out spec/openapi/fog-1.6.json",
   "servedLiveAt": [
     "GET {webroot}/system/openapi",
     "GET {webroot}/swagger.json"
   ],
   "counts": {
-    "paths": 372,
-    "operations": 517,
-    "schemas": 53,
+    "paths": 380,
+    "operations": 528,
+    "schemas": 106,
     "routeClasses": 51
   },
   "notes": [
@@ -31,18 +31,49 @@
     "The generic read routes take a server-side column filter. It is advertised as the shared ?filter= query parameter on list/count/names/ids for every class -- 204 operations -- and NOT on search, which builds its own where clause from matched ids and cannot honour one. The equivalent trailing path segment (/{class}/list/field=value) still works and wins when both are sent; it is deliberately not a documented path, because OpenAPI cannot mark a path parameter optional and describing it would add 204 paths to a 372-path document."
   ],
   "verifiedAgainstLiveServer": {
-    "date": "2026-08-23",
-    "method": "Deployed b25193faf to the maintainer's lab server (FOG 1.6.0-beta.3894, nginx 1.30.4 + PHP 8.3.33 + MariaDB, schema 356) and exercised the filter over HTTPS against real rows, with counts cross-checked directly against the database.",
-    "result": "11/11 checks passed. taskLog holds 56 rows of which 3 carry logHostID=154; ?filter=hostID%3D154 returns recordsFiltered 3 against recordsTotal 56 on /tasklog, /tasklog/count returns 3 and /tasklog/ids returns the three ids.",
-    "behaviourChecks": [
-      "GET /tasklog?filter=hostID%3D154 -> recordsFiltered 3; two fields ANDed via ?filter=hostID%3D154%26type%3Derror -> 3; ?filter=hostID%3D999999 -> 0.",
-      "GET /tasklog/list/hostID=154 -> 3, and the segment still wins when a contradicting ?filter= is sent alongside it.",
-      "GET /tasklog?filter=nosuchfield%3D1 -> 400 naming the key; GET /user?filter=password%3Dx -> 400, credential fields refused.",
-      "GET /host/search/fos and /host/search/fos?filter=id%3D999999 return the SAME count: search builds its where clause in PHP and a request filter cannot replace it."
-    ],
-    "note": "The offline generator was re-diffed against the previous snapshot as well: 372 paths, 517 operations and 53 schemas before and after, identical path set, no schema changed shape, and components.parameters gained exactly one entry."
+    "$status": "NOT RE-VERIFIED for this snapshot",
+    "$note": "The byte-identical live-server diff below was performed against the 1.6.0-beta.4013 document, not this one. It is retained because it establishes that dump-openapi.php reproduces a live document exactly, including the gettext passthrough question. It is NOT evidence about beta.4105. Re-verify against a live server before treating this snapshot as authoritative for anything but code generation.",
+    "priorVerification": {
+      "date": "2026-08-24",
+      "method": "Diffed this snapshot against GET /fog/system/openapi on a server already running the same commit (fog.arrowheaddental.com, FOG 1.6.0-beta.4013), canonically: every object's keys sorted, whitespace removed, compared as one string. Not a spot check of counts -- the whole document, 488016 canonical bytes on each side.",
+      "result": "11/11 checks passed. taskLog holds 56 rows of which 3 carry logHostID=154; ?filter=hostID%3D154 returns recordsFiltered 3 against recordsTotal 56 on /tasklog, /tasklog/count returns 3 and /tasklog/ids returns the three ids.",
+      "gettextNote": "This also settles the _() stub added to dump-openapi.php in the same branch. openapi.class.php wraps its prose in _() 126 times and stock PHP has no gettext, so the dump could not run at all without a passthrough. A passthrough is only correct if the server itself is not translating -- and the byte-identical result against a live server proves it is not.",
+      "priorMethod": "Deployed b25193faf to the maintainer's lab server (FOG 1.6.0-beta.3894, nginx 1.30.4 + PHP 8.3.33 + MariaDB, schema 356) and exercised the filter over HTTPS against real rows, with counts cross-checked directly against the database.",
+      "behaviourChecks": [
+        "GET /tasklog?filter=hostID%3D154 -> recordsFiltered 3; two fields ANDed via ?filter=hostID%3D154%26type%3Derror -> 3; ?filter=hostID%3D999999 -> 0.",
+        "GET /tasklog/list/hostID=154 -> 3, and the segment still wins when a contradicting ?filter= is sent alongside it.",
+        "GET /tasklog?filter=nosuchfield%3D1 -> 400 naming the key; GET /user?filter=password%3Dx -> 400, credential fields refused.",
+        "GET /host/search/fos and /host/search/fos?filter=id%3D999999 return the SAME count: search builds its where clause in PHP and a request filter cannot replace it."
+      ],
+      "note": "The offline generator was re-diffed against the previous snapshot as well: 372 paths, 517 operations and 53 schemas before and after, identical path set, no schema changed shape, and components.parameters gained exactly one entry."
+    }
   },
   "changeLog": [
+    {
+      "from": "a36810d3c (1.6.0-beta.4013, 372 paths / 517 operations / 53 schemas)",
+      "to": "a1a372674 (1.6.0-beta.4105, 380 paths / 528 operations / 106 schemas)",
+      "summary": "Re-snapshotted so the document is generatable. The previous snapshot predated every generator-facing fix and could not produce a usable client: 0 of its 517 operationIds carried the verb underscore.",
+      "detail": [
+        "#1373 named the operations: 528 of 528 operationIds now carry the underscore every generator splits on (Architecture_List, Host_Create). Before, 0 of 517 did, and AutoRest warned once per operation while emitting 0 Get- cmdlets.",
+        "#1399 named the page a list route returns: components.schemas gained 52 *Page schemas (HostPage, GroupPage), which is most of the 53 -> 106 schema jump. Get-FogHost now declares OutputType IHostPage rather than a synthesized Paths* name.",
+        "#1382 added x-fog-references to foreign-key columns: 29 present here. A live document carries 30 -- the extra one is LDAPGroup.serverID, and plugin classes never appear in an offline dump because no hooks fire.",
+        "Path count 372 -> 380 and operations 517 -> 528. Not audited per-route; this snapshot spans 92 upstream builds.",
+        "x-ms-pageable is deliberately absent. It was attempted and abandoned: it crashes AutoRest with \"Cannot read properties of undefined (reading 'properties')\" whether the page schema is composed or flattened, on all 91 operations or on one, with itemName alone or with both keys. Consequence: nothing generated follows nextUrl, so Get-FogPagedResult remains the only thing preventing silent truncation at MAX_ROWS."
+      ]
+    },
+    {
+      "from": "b25193faf (1.6.0-beta.3894, 372 paths / 517 operations / 53 schemas)",
+      "to": "a36810d3c (1.6.0-beta.4013, 372 paths / 517 operations / 53 schemas)",
+      "summary": "119 builds, and the API surface did not move: same path set, same schema set, no operation added or removed. Three changes, all in authentication and all deliberate.",
+      "detail": [
+        "420623b2a 'feat(api): accept Authorization: Bearer as a standalone API credential' adds a bearerAuth security scheme, and ed597ef8a then repointed it: ADR 0027 makes a Bearer credential a distinct apiTokens row -- SHA-256 hashed at rest, shown once, individually revocable, fog_ prefixed -- rather than a second spelling of users.uAPIToken.",
+        "The global security requirement went from 'fogApiToken+fogUserToken OR basicAuth' to 'bearerAuth OR fogApiToken+fogUserToken OR fogApiToken+basicAuth'. Two changes there, not one: bearerAuth is accepted alone, and basicAuth alone no longer is -- it now needs the server-wide fogApiToken beside it.",
+        "FogApi is unaffected. ADR 0027 is explicit: 'users.uAPIToken is untouched. It stays plaintext, stays visible in the UI, and keeps working as fog-user-token beside fog-api-token. Nothing has to migrate.' The two-header scheme this module sends is the second alternative and still holds.",
+        "a9301a979 'feat(users): API-only accounts that cannot sign in' adds user.apionly, enum ['0','1'], the only new field in 119 builds.",
+        "user.password became readOnly. That is an upstream defect rather than a policy change -- see the writeOnly derivation in Build-FogApiSpec.ps1. Left uncorrected it would have removed -password from New-FogUser and left no way to create a usable account.",
+        "KNOWN STALE UPSTREAM: openapi.class.php's bearerAuth description still describes what 420623b2a shipped and ed597ef8a withdrew -- 'The per-user API token from the API tab ... Sufficient on its own.' The strings fog_, apiTokens, hashed and revocable appear nowhere in the file. A client generated from this document is told to send the credential ADR 0027 stopped accepting. Worth an upstream PR; recorded here so the next re-snapshot does not read it as new."
+      ]
+    },
     {
       "from": "7432c9ef7 (1.6.0-beta.3860, 372 paths / 517 operations / 53 schemas)",
       "to": "b25193faf (1.6.0-beta.3894, 372 paths / 517 operations / 53 schemas)",
