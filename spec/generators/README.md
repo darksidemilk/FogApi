@@ -58,10 +58,14 @@ Against the fixed document:
 
 | | before | after |
 |---|---|---|
-| `Get-` cmdlets | **0** | **273** |
-| `Invoke-` | 225 | 53 |
+| `Get-` cmdlets | **0** | **278** |
+| `Invoke-` | 225 | **2** |
 | `inferred without finding action` | one per operation | **0** |
 | exact case-sensitive matches with this module's 164 cmdlets | — | **151** |
+
+Counted by generated cmdlet file, against 1.6.0-beta.4078. The rest of the
+surface is `Update-` 197, `New-` 131, `Join-` 100, `Remove-` 98, `Find-` 66,
+`Measure-` 52, `Stop-` 16 — all approved verbs, no residue.
 
 The host family generates as exactly what the module ships:
 
@@ -88,6 +92,60 @@ re-expressed in AutoRest's dialect rather than deleted.
 
 The difference is scale. It was 567 operations of nonsense; it is now ten
 preferences.
+
+## The convention holds for classes nobody planned for
+
+`architecture` became a lookup table upstream (#1375) *after* this convention
+was written, and went through it with no intervention at all:
+
+```
+Architecture_Get   Architecture_List    Architecture_Create  Architecture_Update
+Architecture_Delete  Architecture_Search  Architecture_Join  Architecture_Count
+```
+
+which AutoRest turned into a complete, idiomatic family:
+
+```
+Get-FogArchitecture      New-FogArchitecture       Update-FogArchitecture
+Remove-FogArchitecture   Find-FogArchitecture      Join-FogArchitecture
+Measure-FogArchitecture  Get-FogArchitectureId     Get-FogArchitectureName
+```
+
+That is the shape this module hand-writes per class, generated for free for a
+class that did not exist when any of this was set up. It is the evidence that
+the convention is durable rather than fitted to one snapshot.
+
+## openapi-generator, accurately
+
+Its PowerShell output is **script modules, not binary cmdlets** — one
+`.ps1` per API class holding every operation for it. `FogHostApi.ps1` is 1462
+lines and 13 functions. The fix helped it too: grouping is now correct
+(`FogHostApi.ps1`, `FogArchitectureApi.ps1`) and the operationId-derived
+nonsense is gone.
+
+Every operation is present, including the reads. They are named
+`Invoke-{Api}{Operation}` — `Invoke-FogHostGet`, `Invoke-FogHostList` — so the
+capability is complete and it is the verb *position* that differs, not the
+coverage. Renaming to `Get-FogHost`, or splitting the module-style files into
+one function per file, is mechanical work.
+
+`commonVerbs` (`Delete=Remove:Patch=Update`) looks like the lever for that and
+is not: passing it changes nothing here, because the generator composes
+`Invoke-` + api + operation rather than reading a verb off the operation name.
+Getting idiomatic names out of it means custom mustache templates or a
+post-processing pass.
+
+One defect is its own and worth recording, because it is not something the
+document can fix — it strips verb-like prefixes without respecting word
+boundaries:
+
+| operationId | emitted |
+|---|---|
+| `Inventory_Get` | `ConvertTo-Fog`**`ventory`**`Get` |
+| `Initrd_List` | `ConvertTo-Fog`**`itrd`**`List` |
+| `Groupassociation_Get` | `Group-FogAssociationGet` |
+
+`Inventory` is a legitimate noun.
 
 ## What is still not generated
 
