@@ -115,6 +115,38 @@ That is the shape this module hand-writes per class, generated for free for a
 class that did not exist when any of this was set up. It is the evidence that
 the convention is durable rather than fitted to one snapshot.
 
+## Confirmed against a live server, plugins included
+
+#1373 is merged. `GET /fog/system/openapi` from fog-dev at 1.6.0-beta.4095:
+**578 operations, all 578 carrying the underscore**, 59 schemas. All gates pass
+on the live document — `Group_Action`, no duplicates, every `$ref` resolves,
+tag equals group.
+
+The half a checkout dump structurally cannot show is plugin classes: no plugin
+hooks fire without a server. The LDAP plugin's five classes came through the
+convention untouched, and the casing fix reached them too — these are classes
+FOG core knows nothing about:
+
+| before | now |
+|---|---|
+| `Ldapgrouproleassociation` | `LDAPGroupRoleAssociation` |
+| `Ldapgroupusergroupassociation` | `LDAPGroupUserGroupAssociation` |
+| `Ldapusergrant` | `LDAPUserGrant` |
+
+Generating from that document produced **45 fully formed cmdlets for a plugin
+this module has never supported**, with no configuration written for it:
+
+```
+Get-FogLdapGroup    New-FogLdapGroup     Update-FogLdapGroup
+Remove-FogLdapGroup Find-FogLdapGroup    Join-FogLdapGroup
+Measure-FogLdapGroup  Get-FogLdapGroupId  Get-FogLdapGroupName
+```
+
+518 cmdlets total, 0 warnings, and the same 151 of 164 exact matches against
+the module's own surface. That is the case `Get-FogApiSpec` was meant to
+address — a plugin's classes appearing in *that user's* document — reached
+through generation instead.
+
 ## openapi-generator, accurately
 
 Its PowerShell output is **script modules, not binary cmdlets** — one
