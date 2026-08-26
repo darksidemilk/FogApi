@@ -7,7 +7,7 @@ function Register-FogTypeData {
     This is how FogApi models FOG objects: a type name stamped onto the object the
     server actually returned, with display sets and methods hung off that name via
     type data. Real PowerShell classes were prototyped against this and lost -- see
-    CONTEXT-api-coverage-plan.md, "Typed objects", for the comparison and why.
+    docs/plans/api-coverage-plan.md, "Typed objects", for the comparison and why.
 
     The short version: a class has to declare its fields, and the OpenAPI schema
     does not describe the whole response (a host is 39 fields against 30 declared),

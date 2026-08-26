@@ -23,7 +23,7 @@ was "removing a ValidateSet entry breaks callers and adding one never does", and
 the reversal is deliberate: FogApi targets the latest 1.6, so a name the server
 no longer routes should not tab-complete into a 404. imaginglog was the first,
 retired upstream by ADR 0022 with taskLog.imageName replacing it. See
-CONTEXT-api-coverage-plan.md, "Locked decisions".
+docs/plans/api-coverage-plan.md, "Locked decisions".
 
 The two kept entries above are not an exception to that -- neither was ever a
 route class, so neither can be retired by the server.

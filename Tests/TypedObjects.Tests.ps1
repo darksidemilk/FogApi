@@ -1,5 +1,5 @@
 <#
-    Guards the typed-object decision recorded in CONTEXT-api-coverage-plan.md,
+    Guards the typed-object decision recorded in docs/plans/api-coverage-plan.md,
     "Typed objects". The mechanism is ETS type data plus a PSTypeName stamp, and
     the two properties that decided it against real classes are the ones most
     easily lost by a well-meaning refactor:

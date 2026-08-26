@@ -90,7 +90,7 @@ jobs:
         #
         # Run it on demand from the Actions tab with run_pester: true. The real
         # gate is Tests/FogApi.RealServer.Tests.ps1 against a live server, plus
-        # the build job above. Phase 6 of CONTEXT-api-coverage-plan.md decides
+        # the build job above. Phase 6 of docs/plans/api-coverage-plan.md decides
         # what replaces this - a language-neutral conformance corpus the python
         # and bash ports can replay, rather than three parallel mock suites.
         - name: Run Pester tests

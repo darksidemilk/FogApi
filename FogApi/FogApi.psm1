@@ -24,7 +24,7 @@ $PrivateFunctions = @( Get-ChildItem -Path "$PSScriptRoot/Private/*.ps1" -ErrorA
 # assigned, so never compute derived state there.
 #
 # No classes currently ship; the ETS type data in Private/Register-FogTypeData.ps1
-# is how FOG objects are modelled. See CONTEXT-api-coverage-plan.md, "Typed objects".
+# is how FOG objects are modelled. See docs/plans/api-coverage-plan.md, "Typed objects".
 $ClassFiles = @( Get-ChildItem -Path "$PSScriptRoot/Classes/*.ps1" -ErrorAction SilentlyContinue )
 
 

@@ -44,7 +44,7 @@ omitted from the body rather than sent as a deliberate "0". Only what the caller
 actually set is serialised.
 
 Three constraints this emitter must keep, each measured the hard way and
-recorded in CONTEXT-typed-objects-plan.md:
+recorded in docs/plans/typed-objects-plan.md:
 
   * No single-argument [object] constructor. That is what made [FogHost]$x
     silently accept [pscustomobject]@{nope=1}. From-hashtable conversion goes on

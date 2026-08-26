@@ -14,7 +14,7 @@
 | **"Next pass, start here"**, at the bottom of this file | what is actually done, and what to do next. **Read it before starting anything.** |
 | **"Session prompts"**, also at the bottom | ready-to-paste prompts for the open streams, with their ordering |
 | [Issue #66](https://github.com/darksidemilk/FogApi/issues/66) | mirror of this file, linkable from other repos and sessions |
-| `CONTEXT-api-coverage-plan.md` | the parent #61 plan this sits inside — locked decisions, verified server facts, and the phases this one does not renumber |
+| `api-coverage-plan.md` | the parent #61 plan this sits inside — locked decisions, verified server facts, and the phases this one does not renumber |
 | `spec/README.md` | how the spec pipeline works, and the term glossary |
 
 Phase sections below are kept in their original order and carry their own status in the
@@ -62,7 +62,7 @@ document generates from `Route::$validClasses`.
 
 ### A locked decision is being overridden, deliberately
 
-`CONTEXT-api-coverage-plan.md:620` reads *"Dynamic params: additive only. Never remove a
+`api-coverage-plan.md:620` reads *"Dynamic params: additive only. Never remove a
 ValidateSet entry."* Removing `imaginglog` breaks it. That is the right call given target-latest-1.6,
 but it must be **amended in the doc with the reasoning**, not silently violated.
 
@@ -83,7 +83,7 @@ fogproject tree, not `origin/working-1.6`, so the three openapi corrections surv
    `Tests/FogApi.TestHelpers.psm1`, overlay entries.
 5. **Rewrite `Get-LastImageTime.ps1`** onto `tasklog` + the new `imageName`. The only functional
    change here; keep its output contract the same shape and give it a test.
-6. Regenerate the `tasklog` fixture so it carries `imageName`. Amend `CONTEXT-api-coverage-plan.md:620`.
+6. Regenerate the `tasklog` fixture so it carries `imageName`. Amend `api-coverage-plan.md:620`.
 
 Watch aliases: `Get-FogImagingLog` may own one another function could then claim.
 `Build-FogApiSpec.ps1` tracks alias collisions and `update-sourcemanifest.ps1 -Check` catches a
@@ -474,7 +474,7 @@ Three things this pass left behind, none of them blocking:
    later upgrades that example on the next regeneration with no further change.
 
 Not this plan's phases, but adjacent and worth knowing: the parent
-`CONTEXT-api-coverage-plan.md` still has phases 0.3, 0.5 and 2-5 open, and its own
+`api-coverage-plan.md` still has phases 0.3, 0.5 and 2-5 open, and its own
 "Next session, start here" is the authority on those.
 
 ---
@@ -493,7 +493,7 @@ No live server comes with these. `bin/installfog.sh -y --install-mode http-only 
 verified. Without a server, run `-CI` only and say so rather than claiming a real-server pass.
 
 ### P3 · Phase 3 — type data as generated .ps1xml *(the main open phase)*
-> Read `CONTEXT-typed-objects-plan.md` on `dev` in darksidemilk/FogApi, then do Phase 3.
+> Read `typed-objects-plan.md` on `dev` in darksidemilk/FogApi, then do Phase 3.
 > **Answer its one gating question first**, with a throwaway two-type xml rather than an emitter
 > for 51: can a `.ps1xml` `<ScriptMethod>` `<Script>` body resolve the module's own cmdlets?
 > `SysUuid` was only ever proven from a `<ScriptProperty>`; `Deploy()` and `Cancel()` call
@@ -542,7 +542,7 @@ verified. Without a server, run `-CI` only and say so rather than claiming a rea
 >    Python and bash emitters will not have.
 
 ### L · The three loose ends phase 2 left behind
-> Read "Next pass, start here" in `CONTEXT-typed-objects-plan.md` on `dev`. Three non-blocking
+> Read "Next pass, start here" in `typed-objects-plan.md` on `dev`. Three non-blocking
 > items are recorded there: **reserved parameter names in the emitter** (fails at import and takes
 > the module with it — see Risks), **no fixtures for the 20 new task/cancel cmdlets**, and
 > **`Get-FogGroup` still unemitted** because its `Get-FogGroups` alias would shadow the

@@ -36,7 +36,7 @@ This is a class used AS an attribute, which is a different thing from a type
 literal passed as an argument TO an attribute. The latter -- [OutputType([X])],
 [ValidateSet([X])] -- does not resolve in a dot-sourced module and poisons the
 whole function. Attribute instantiation resolves fine; measured, and recorded in
-CONTEXT-typed-objects-plan.md.
+docs/plans/typed-objects-plan.md.
 #>
 class FogObjectRefTransform : System.Management.Automation.ArgumentTransformationAttribute {
 

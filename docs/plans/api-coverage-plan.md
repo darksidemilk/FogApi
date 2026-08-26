@@ -48,7 +48,7 @@ three that can execute at all.
 | 8 — Python + bash ports | Not started | Python first within the phase |
 
 A separate sub-plan branched off this one and is tracked in
-[`CONTEXT-typed-objects-plan.md`](CONTEXT-typed-objects-plan.md) and issue #66. Its phases 1, 2
+[`typed-objects-plan.md`](typed-objects-plan.md) and issue #66. Its phases 1, 2
 and 4 are merged (#65, #67); its phase 3 — `.ps1xml` for all 51 entities — is the open one. It
 does not renumber anything here.
 
@@ -474,7 +474,7 @@ Both were built for `host` and compared against the live server. Verdict for **r
 > `FogTaskRequest` and `FogObjectRefTransform` shipped in #67, and the `PSTypeName` stamp was
 > extended from `Get-FogHost` alone to every entity-returning getter. So `FogApi/Classes/` is no
 > longer empty and the sentence "no classes ship" below is out of date. The live detail lives in
-> [`CONTEXT-typed-objects-plan.md`](CONTEXT-typed-objects-plan.md) and issue #66; this section is
+> [`typed-objects-plan.md`](typed-objects-plan.md) and issue #66; this section is
 > kept for the measurements that produced the verdict.
 
 ### The finding that decided it: the schema does not describe the response
