@@ -29,7 +29,7 @@
     changes newer than it, or to generate against a checkout of your own.
 
 .PARAMETER OutputFolder
-    Where to generate and build. Defaults to spec/generators/out, which
+    Where to generate and build. Defaults to FogApi-clients/pwsh/src, which
     .gitignore excludes.
 
 .PARAMETER Import
@@ -50,7 +50,7 @@
     Same, from the committed snapshot. Verified: 474 commands imported.
 
 .EXAMPLE
-    Import-Module ./spec/generators/out/FogApi.psd1
+    Import-Module ./FogApi-clients/pwsh/src/FogApi.psd1
     Get-Command -Module FogApi | Measure-Object
 
     What -Import does, by hand, afterwards.
@@ -58,7 +58,7 @@
 [CmdletBinding()]
 param(
     [string]$Web,
-    [string]$OutputFolder = (Join-Path $PSScriptRoot 'out'),
+    [string]$OutputFolder = (Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'FogApi-clients/pwsh/src'),
     [switch]$Import,
     [switch]$SkipGenerate
 )

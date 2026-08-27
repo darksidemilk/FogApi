@@ -42,7 +42,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$GeneratedRoot = (Join-Path $PSScriptRoot 'out'),
+    [string]$GeneratedRoot = (Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'FogApi-clients/pwsh/src'),
     [string]$Path = (Join-Path $PSScriptRoot 'surface.txt'),
     [switch]$Check
 )

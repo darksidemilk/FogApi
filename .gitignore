@@ -36,4 +36,29 @@ src/*/obj/
 # spec/generators/Invoke-FogApiGeneration.ps1 and the surface-diff CI gate. If
 # the snapshot ever stops being trustworthy, DELETE THIS BLOCK and commit the
 # output instead; nothing else depends on the choice.
+#
+# NOTE FOR WHOEVER PORTS THE HELPERS: src/custom/ is the one directory in the
+# scaffold that AutoRest intends to be hand-edited, and it is the planned home
+# for Invoke-FogApi.cs and the workflow helpers. Two things have to change
+# before anything is written there, and both are easy to miss:
+#
+#   1. Narrow this ignore, or hand-written code will never be committed:
+#        FogApi-clients/pwsh/src/*
+#        !FogApi-clients/pwsh/src/custom/
+#
+#   2. Invoke-FogApiGeneration.ps1 passes --clear-output-folder, which empties
+#      the output folder before generating. Verify it spares custom/ before
+#      trusting it with source that exists nowhere else. It is there because
+#      the surface is not committed and a stale generated file would otherwise
+#      ship as though it had been generated.
+#
+# Ignoring the whole directory is correct only while src/ is entirely
+# generated, which it is today.
+FogApi-clients/pwsh/src/
+
+# The scaffold's former home, kept ignored on purpose. Moving the output path
+# without this line un-ignored a stale generation and staged 489 files and
+# 89,374 insertions of generated code in one commit -- the exact thing the
+# block above exists to prevent. Anyone passing -OutputFolder by hand can land
+# here again.
 spec/generators/out/

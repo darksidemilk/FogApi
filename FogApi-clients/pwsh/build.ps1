@@ -80,10 +80,17 @@ Param(
 )
 
 
-Import-Module .\BuildHelpers.psm1
+Import-Module (Join-Path $PSScriptRoot 'BuildHelpers.psm1')
+
+# This script lives in FogApi-clients/pwsh/ but the hand-written module source
+# and the docs are still at the repo root, two levels up. Resolved from
+# $PSScriptRoot rather than the working directory so the script can be invoked
+# from anywhere -- `.\BuildHelpers.psm1` above only worked when the caller
+# happened to be sitting in the script's own directory.
+$repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 $moduleName = 'FogApi'
-$modulePath = "$PSScriptRoot\$moduleName";
+$modulePath = "$repoRoot\$moduleName";
 if([string]::IsNullOrEmpty($releaseNote)) {
 	$releaseNote = (git log -1 --pretty=%B)
 }
@@ -95,7 +102,10 @@ $releaseNote = ($releaseNote -split "`r?`n" | Where-Object {
 $releaseNote = $releaseNote -replace '[\w\.\-\+]+@[\w\.\-]+\.\w+', '' -replace '(\r?\n){3,}', "`n`n"
 $releaseNote = $releaseNote.Trim()
 if([string]::IsNullOrEmpty($buildPth)) {
-	$buildPth = ".\_module_build\$moduleName";
+	# Repo root, not the working directory. build-choco.ps1 finds LICENSE by
+	# walking two levels up from this path, so where it lands is load-bearing
+	# and must not depend on where the caller happened to be standing.
+	$buildPth = "$repoRoot\_module_build\$moduleName";
 }
 
 # New-Item, not mkdir - powershell only defines mkdir as a function on windows; on linux
@@ -119,7 +129,7 @@ New-Item -ItemType Directory -Force -Path (Join-Path $modulePath 'icons') -EA 0 
 # 	$credential = Get-Credential -Message "input local credentials for new local session"
 # 	$ses = New-PsSession -Credential $credential;
 # }
-$docsPth = "$PSScriptRoot\docs" 
+$docsPth = "$repoRoot\docs"
 
 # Invoke-Command -Session $ses -ScriptBlock {
 	# $moduleName = $Using:moduleName 
@@ -277,7 +287,7 @@ if ($null -ne $PrivateFunctions) {
 
 #Update The Manifest
 "Updating the module manifest" 
-$manifest = "$PSScriptRoot\$moduleName\$moduleName.psd1"
+$manifest = "$repoRoot\$moduleName\$moduleName.psd1"
 $cur = test-ModuleManifest -Path $manifest;
 
 [System.Version]$oldVer = $cur.Version

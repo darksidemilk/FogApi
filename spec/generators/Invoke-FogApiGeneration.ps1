@@ -28,7 +28,7 @@
       terminating error rather than a warning.
 
 .PARAMETER OutputFolder
-    Where to write the generated module. Defaults to ./out beside this script,
+    Where to write the generated module. Defaults to FogApi-clients/pwsh/src,
     which .gitignore excludes.
 
 .PARAMETER InputFile
@@ -42,7 +42,7 @@
 
 .EXAMPLE
     ./Invoke-FogApiGeneration.ps1
-    Generates from the committed snapshot into ./out and reports the surface.
+    Generates from the committed snapshot and reports the surface.
 
 .EXAMPLE
     ./Invoke-FogApiGeneration.ps1 -InputFile ~/fog-live.json
@@ -50,7 +50,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$OutputFolder = (Join-Path $PSScriptRoot 'out'),
+    [string]$OutputFolder = (Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'FogApi-clients/pwsh/src'),
     [string]$InputFile,
     [switch]$SkipInputCheck
 )

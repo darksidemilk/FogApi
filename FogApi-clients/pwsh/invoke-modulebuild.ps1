@@ -43,11 +43,15 @@
 [CmdletBinding()]
 Param()
 
-Import-Module .\BuildHelpers.psm1
+Import-Module (Join-Path $PSScriptRoot 'BuildHelpers.psm1')
+
+# This script lives in FogApi-clients/pwsh/; the module source and docs are
+# still at the repo root, two levels up.
+$repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 $moduleName = 'FogApi'
-$modulePath = Join-Path $PSScriptRoot $moduleName;
-$docsPth = Join-Path $PSScriptRoot 'docs';
+$modulePath = Join-Path $repoRoot $moduleName;
+$docsPth = Join-Path $repoRoot 'docs';
 
 # New-Item, not mkdir. Powershell only defines mkdir as a function on windows; on linux
 # and mac it resolves to /usr/bin/mkdir, so '-EA 0' is handed to the native binary as
@@ -66,7 +70,7 @@ $PublicFunctions = Get-ChildItem (Join-Path $modulePath 'Public') -Recurse -Filt
 $Classes = Get-ChildItem (Join-Path $modulePath 'Classes') -Recurse -Filter '*.ps1' -EA 0;
 $PrivateFunctions = Get-ChildItem (Join-Path $modulePath 'Private') -Recurse -Filter '*.ps1' -EA 0;
 # mkdir (Join-Path $PSSCriptRoot 'ModuleBuild') -EA 0;
-$buildPth = Join-Path '.' '_module_build' $moduleName;
+$buildPth = Join-Path $repoRoot '_module_build' $moduleName;
 $moduleFile = Join-Path $buildPth "$moduleName.psm1";
 
 # Create the build output folder
@@ -144,7 +148,7 @@ if (Test-Path (Join-Path $modulePath 'Private' 'Register-FogTypeData.ps1')) {
 	Add-Content -Path $moduleFile -Value "`nRegister-FogTypeData";
 }
 
-$manifest = Join-Path $PSScriptRoot $moduleName "$moduleName.psd1"
+$manifest = Join-Path $repoRoot $moduleName "$moduleName.psd1"
 $builtManifest = Join-Path $buildPth "$moduleName.psd1";
 Copy-Item $manifest $builtManifest;
 

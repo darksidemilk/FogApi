@@ -69,7 +69,7 @@ jobs:
             $releaseNote = (git log -1 --pretty=%B)
             "Setting release note to last commit message:`n$releaseNote" | out-host;
             "Building docs, module, and incrementing version..." | out-host;
-            .\build.ps1 -releasenote "$($releaseNote | out-string)"
+            .\FogApi-clients\pwsh\build.ps1 -releasenote "$($releaseNote | out-string)"
             $version = (Test-ModuleManifest .\FogApi\FogApi.psd1).version
             "Pushing Changes from publish" | out-host;
             git add -A
@@ -100,7 +100,7 @@ jobs:
             gh release upload $version ".\_module_build\FogApi.$version.BuiltModule.zip"
 
             "building choco package from local build and temp psresource repo..." | out-host;
-            .\build-choco.ps1 -uselocal;
+            .\FogApi-clients\pwsh\build-choco.ps1 -uselocal;
             
             "adding choco package and zip to release" | out-host;
             copy-item ".\FogApi.$version.nupkg" ".\FogApi.$version.chocolatey.nupkg"

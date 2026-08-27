@@ -50,13 +50,18 @@ Param(
     [switch]$useLocal
 )
 
-Import-Module .\BuildHelpers.psm1
+Import-Module (Join-Path $PSScriptRoot 'BuildHelpers.psm1')
+
+# This script lives in FogApi-clients/pwsh/ alongside chocoTemplate/, so
+# $PSScriptRoot still resolves that. LICENSE and _module_build are at the repo
+# root, two levels up.
+$repoRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 #lowercase name for choco id compatibility
 $moduleName = "fogapi"
 
 if([string]::IsNullOrEmpty($buildPth)) {
-	$buildPth = ".\_module_build\$moduleName";
+	$buildPth = "$repoRoot\_module_build\$moduleName";
 }
 
 if ($useLocal) {
@@ -158,7 +163,11 @@ $chocoTemplateDir = "$PSScriptRoot\chocoTemplate\PSGetModule\tools";
 Copy-Item "$chocoTemplateDir\chocolateyInstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1" -Force;
 Copy-Item "$chocoTemplateDir\functions.psm1" "$chocoPth\$moduleName\$version\tools\functions.psm1" -Force;
 Copy-Item "$chocoTemplateDir\chocolateyUninstall.ps1" "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1" -Force;
-Copy-Item "$($buildPth | Split-Path | Split-Path)\LICENSE" "$chocoPth\$moduleName\$version\tools\LICENSE" -Force
+# $repoRoot, not `$buildPth | Split-Path | Split-Path`. That walked two levels
+# up from the build path to guess the repo root, which is only right while the
+# build path is exactly two deep -- pass -buildPth with any other depth and it
+# silently copied a LICENSE from somewhere else, or nothing.
+Copy-Item "$repoRoot\LICENSE" "$chocoPth\$moduleName\$version\tools\LICENSE" -Force
 $chocoInstall = "$chocoPth\$moduleName\$version\tools\chocolateyInstall.ps1";
 # $chocoUninstall = "$chocoPth\$moduleName\$version\tools\chocolateyUninstall.ps1";
 Find-Replace -file $chocoInstall -findStr '[[checksum]]' -replaceStr $checksum;
@@ -178,7 +187,7 @@ $nuspecSnippet = @"
     <mailingListUrl>https://forums.fogproject.org/topic/12026/powershell-api-module</mailingListUrl>
     <bugTrackerUrl>https://github.com/darksidemilk/FogApi/issues</bugTrackerUrl>
     <projectSourceUrl>https://github.com/darksidemilk/FogApi</projectSourceUrl>
-    <packageSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/chocoTemplate/PSGetModule</packageSourceUrl>
+    <packageSourceUrl>https://github.com/darksidemilk/FogApi/tree/master/FogApi-clients/pwsh/chocoTemplate/PSGetModule</packageSourceUrl>
 </metadata>
 "@
 #add summary and lowercase id for choco
