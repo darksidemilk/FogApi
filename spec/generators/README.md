@@ -13,28 +13,69 @@ tool. Three things were wrong, all on our side.
 
 ## How to build it
 
-`Build-FogApiModule.ps1` does the whole thing:
+From the repo root, either OS:
 
 ```powershell
-./spec/generators/Build-FogApiModule.ps1 `
-    -Web <fogproject-checkout>/packages/web -Import
+./make.ps1                  # Windows
+```
+```bash
+./make.sh                   # Linux, macOS
 ```
 
-Needs PowerShell 7, .NET SDK 8, Node (for `npx`) and PHP on `PATH`. No FOG
-server and no database: `dump-openapi.php` calls `OpenAPI::document()`
-directly, and building the document touches no data.
+Needs PowerShell 7, .NET SDK 8 and Node (for `npx`). PHP too, but only to dump
+a document from a checkout — no FOG server and no database, because
+`dump-openapi.php` calls `OpenAPI::document()` directly and building the
+document touches no data.
 
-By hand, which is what the wrapper runs:
+`make.sh` delegates to `make.ps1` rather than reimplementing anything.
+AutoRest's `build-module.ps1` hard-requires PowerShell Core, so the logic has
+to run under `pwsh` either way and a second copy in bash would only drift.
+
+### Stages, and running one at a time
+
+```
+make.ps1 / make.sh              root dispatcher: -Client, -Target
+FogApi-clients/
+  pwsh/builders/
+    make.ps1                    this client's orchestrator
+    buildFunctions.psm1         one function per stage
+  python/builders/              scaffolding; not yet buildable
+```
+
+`Document → Generate → Compile → Merge → Surface → Help → Test`, and any one
+of them alone:
 
 ```powershell
-php spec/tools/dump-openapi.php --web <checkout>/packages/web --out $env:TEMP/fog.json
-./spec/generators/Invoke-FogApiGeneration.ps1 -InputFile $env:TEMP/fog.json -OutputFolder ./spec/generators/out
-pwsh -File ./spec/generators/out/build-module.ps1     # AutoRest emits this
-Import-Module ./spec/generators/out/FogApi.psd1
+./make.ps1 -Target Compile              # recompile what is already generated
+./make.ps1 -Target Surface -CheckSurface # the CI gate
+./make.ps1 -Live https://fog.example.com/fog
+./make.ps1 -Client all                  # every buildable client
+```
+```bash
+./make.sh --target Compile
+./make.sh --check-surface
 ```
 
-Generation takes a few minutes; the build compiles ~940 cmdlets and ~1,250
-models and takes several more.
+A client is buildable when it has `builders/make.ps1`, so `-Client all` skips
+`python` by name rather than failing, and adding that client needs no change
+to the root script.
+
+Generation takes a few minutes; the compile stage builds ~940 cmdlets and
+~1,250 models and takes several more.
+
+### What it does not build
+
+The hand-written module. That is a different module with a different toolchain
+— PlatyPS docs from comment-based help, plus psm1 concatenation — and it stays
+callable on its own via `FogApi-clients/pwsh/invoke-modulebuild.ps1` until its
+helpers are ported into `src/custom/`. The orchestrator uses AutoRest's own
+help generation instead.
+
+`Merge` is a real stage with nothing to do yet: `src/custom/` holds only
+AutoRest's placeholders. It fails loudly rather than silently skipping once
+that directory has content, because two things must be settled first — the
+`.gitignore` covering `src/` has to be narrowed, and `--clear-output-folder`
+has to be shown to spare `custom/`.
 
 ### `build-module.ps1` exits 0 when compilation fails
 
@@ -42,7 +83,7 @@ It calls `Write-Error` and returns success. **Never trust its exit code** —
 check for the artifact:
 
 ```powershell
-Test-Path ./spec/generators/out/FogApi.psd1   # the real pass/fail
+Test-Path ./FogApi-clients/pwsh/src/FogApi.psd1   # the real pass/fail
 ```
 
 This is not hypothetical. The first attempt ever made to build this module
@@ -50,8 +91,9 @@ failed with 333 compile errors and reported success, which is also why nobody
 had noticed that generating and compiling are different gates. `Get-` counts
 and warning counts say nothing about whether the C# builds.
 
-`Build-FogApiModule.ps1` checks the artifacts rather than the exit code, and
-greps the log for `error CS`.
+The `Compile` stage (`Invoke-FogApiCompile` in
+`FogApi-clients/pwsh/builders/buildFunctions.psm1`) checks the artifacts rather
+than the exit code, and greps the log for `error CS`.
 
 ### Pointing it at a real server
 
@@ -64,9 +106,14 @@ documented placeholder `https://fog.example.invalid/fog`. A **live** document
 carries the real one, because `Route::webrootbase()` reads the request host:
 
 ```powershell
-curl.exe -sS https://YOUR-SERVER/fog/system/openapi -o $env:TEMP/fog-live.json
-./spec/generators/Invoke-FogApiGeneration.ps1 -InputFile $env:TEMP/fog-live.json -OutputFolder ./spec/generators/out
+./make.ps1 -Live https://YOUR-SERVER/fog
 ```
+```bash
+./make.sh --live https://YOUR-SERVER/fog
+```
+
+Both openapi routes sit in the router's unauthenticated allowlist, so
+discovery needs no tokens.
 
 Generating from a live document also picks up whatever plugins that server has
 installed — no plugin hooks fire in an offline dump. See "Confirmed against a
