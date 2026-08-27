@@ -9,7 +9,7 @@
 # A trailing * marks a mandatory parameter. Generator plumbing
 # (Break, HttpPipeline*, Proxy*) is excluded.
 
-# cmdlets: 473
+# cmdlets: 474
 
 Clear-FogSettingsCache -> IPaths1MlribcSettingsCacheFlushPostResponses200ContentApplicationJsonSchema
     -PassThru
@@ -1012,11 +1012,6 @@ Install-FogPlugin -> IError
     -Id*
     -InputObject*
     -PassThru
-Invoke-FogUploadStorageGroupSnapinFile -> IError
-    -Id*
-    -InputObject*
-    -PassThru
-    -Snapinfiles*
 Join-FogArchitecture -> IError
     -Access
     -Body*
@@ -1033,7 +1028,7 @@ Join-FogFileDeleteQueue -> IError
     -Pathtype*
     -StateId
     -StoragegroupId*
-Join-FogGroup -> IError, int
+Join-FogGroup -> IError
     -Body*
     -Building
     -Description
@@ -1043,13 +1038,16 @@ Join-FogGroup -> IError, int
     -KernelArgs
     -KernelDevice
     -Name*
-    -Names*
     -PassThru
 Join-FogGroupAssociation -> IError
     -Body*
     -GroupId*
     -HostId*
     -Ids*
+    -PassThru
+Join-FogGroupByName -> int
+    -Body*
+    -Names*
     -PassThru
 Join-FogHookEvent -> IError
     -Body*
@@ -2190,7 +2188,6 @@ New-FogSnapin -> ISnapin
     -RunWithArgs
     -Shutdown
     -Size
-    -Snapinfile*
     -Timeout
     -ToReplicate
 New-FogSnapinAssociation -> ISnapinAssociation
@@ -2282,17 +2279,13 @@ New-FogStorageNode -> IStorageNode
     -StoragegroupId
     -User*
     -Webroot
-New-FogTask -> IListEnvelope, ITask
+New-FogTask -> ITask
     -AdditionalProperties
     -Body*
     -Bypassbitlocker
     -CheckInTime
-    -Debug
-    -DeploySnapins
     -HostId*
-    -Id*
     -ImageId
-    -InputObject*
     -IsDebug
     -IsForced
     -Name
@@ -2301,15 +2294,25 @@ New-FogTask -> IListEnvelope, ITask
     -Passreset
     -PassThru
     -ScheduledStartTime
-    -Sessionjoin
     -Shutdown
     -StateChangedTime
     -StateId
     -StoragegroupId
     -StoragenodeId
+    -TypeId*
+    -Wol
+New-FogTaskQueue -> IListEnvelope
+    -Body*
+    -Debug
+    -DeploySnapins
+    -Id*
+    -InputObject*
+    -Passreset
+    -PassThru
+    -Sessionjoin
+    -Shutdown
     -TaskName
     -TaskTypeId
-    -TypeId*
     -Wol
 New-FogTaskState -> ITaskState
     -AdditionalProperties

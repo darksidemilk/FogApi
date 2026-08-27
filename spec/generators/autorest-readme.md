@@ -46,4 +46,54 @@ directive:
       verb: Set
     set:
       verb: Update
+
+  # The two multipart/form-data routes are dropped because AutoRest cannot
+  # generate compilable code for multipart at all. This is not FOG's
+  # document being wrong, and it is not fixable upstream: a minimal probe
+  # -- one object with a single `file` property, type string, format binary
+  # -- fails identically with 6 CS0411 errors, `Extensions.AddIf<T>` and
+  # `Enumerable.Select` unable to infer their type arguments. An array of
+  # files fails the same way.
+  #
+  # Reach these two through Invoke-FogApi, which is hand-written precisely
+  # so that a route the generated surface cannot describe is still
+  # reachable. Delete this directive and regenerate if a later
+  # @autorest/powershell learns multipart.
+  - remove-operation: Snapin_CreateWithFile
+  - remove-operation: Storagegroup_UploadSnapinFile
+
+  # PUT /group/join and POST /group/join are different operations sharing a
+  # route: the PUT applies one group's fields to a list of ids, the POST
+  # resolves names and creates what is missing. Both parse as group "Group"
+  # + action "Join", so AutoRest merges them into a single Join-FogGroup
+  # with two variants -- and then Export-ProxyCmdlet refuses it, because
+  # the merged -Body parameter has two different types:
+  #
+  #   The parameter 'Body' has multiple parameter types [...] which is not
+  #   supported.
+  #
+  # Naming the two bodies upstream does not fix this. Two named types are
+  # still two types on one parameter. They have to be two cmdlets, so the
+  # POST is renamed to its own subject.
+  - rename-operation:
+      from: Group_JoinByName
+      to: GroupByName_Join
+
+  # Same class of collision, for the same reason. `task` is one of
+  # Route::$validTaskingClasses, so POST /task/{id}/task exists alongside
+  # POST /task. Their operationIds are Task_CreateTask and Task_Create;
+  # AutoRest reads the verb off the front of the action and composes the
+  # noun from the group plus what is left, so both land on New-FogTask once
+  # the repeated "Task" is folded away.
+  #
+  # Export-ProxyCmdlet then refuses the merge, because three parameters end
+  # up with two types each: -Body (ITask vs the queued-task body),
+  # -Shutdown (IAny vs string) and -Wol (IAny vs int). The IAny pair comes
+  # from the queued-task body declaring those fields as a oneOf.
+  #
+  # Renaming the group gives the queueing route a noun of its own and
+  # leaves New-FogTask meaning what it says: create a task record.
+  - rename-operation:
+      from: Task_CreateTask
+      to: TaskQueue_Create
 ```
