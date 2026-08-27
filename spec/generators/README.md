@@ -9,6 +9,96 @@ document — no `Get-FogHost`, names like `ConvertTo-FogdivHost` and
 Microsoft Graph SDK; output that bad was a signal about the inputs, not the
 tool. Three things were wrong, all on our side.
 
+---
+
+## How to build it
+
+`Build-FogApiModule.ps1` does the whole thing:
+
+```powershell
+./spec/generators/Build-FogApiModule.ps1 `
+    -Web <fogproject-checkout>/packages/web -Import
+```
+
+Needs PowerShell 7, .NET SDK 8, Node (for `npx`) and PHP on `PATH`. No FOG
+server and no database: `dump-openapi.php` calls `OpenAPI::document()`
+directly, and building the document touches no data.
+
+By hand, which is what the wrapper runs:
+
+```powershell
+php spec/tools/dump-openapi.php --web <checkout>/packages/web --out $env:TEMP/fog.json
+./spec/generators/Invoke-FogApiGeneration.ps1 -InputFile $env:TEMP/fog.json -OutputFolder ./spec/generators/out
+pwsh -File ./spec/generators/out/build-module.ps1     # AutoRest emits this
+Import-Module ./spec/generators/out/FogApi.psd1
+```
+
+Generation takes a few minutes; the build compiles ~940 cmdlets and ~1,250
+models and takes several more.
+
+### `build-module.ps1` exits 0 when compilation fails
+
+It calls `Write-Error` and returns success. **Never trust its exit code** —
+check for the artifact:
+
+```powershell
+Test-Path ./spec/generators/out/FogApi.psd1   # the real pass/fail
+```
+
+This is not hypothetical. The first attempt ever made to build this module
+failed with 333 compile errors and reported success, which is also why nobody
+had noticed that generating and compiling are different gates. `Get-` counts
+and warning counts say nothing about whether the C# builds.
+
+`Build-FogApiModule.ps1` checks the artifacts rather than the exit code, and
+greps the log for `error CS`.
+
+### Pointing it at a real server
+
+**The base URL is compiled in, not configured.** It comes from
+`servers[0].url` and is emitted at 989 call sites in `FogProjectApi.cs`.
+There is no `-BaseUri`, no `-Endpoint` and no runtime override.
+
+An offline dump has no HTTP request to read a host from, so it emits the
+documented placeholder `https://fog.example.invalid/fog`. A **live** document
+carries the real one, because `Route::webrootbase()` reads the request host:
+
+```powershell
+curl.exe -sS https://YOUR-SERVER/fog/system/openapi -o $env:TEMP/fog-live.json
+./spec/generators/Invoke-FogApiGeneration.ps1 -InputFile $env:TEMP/fog-live.json -OutputFolder ./spec/generators/out
+```
+
+Generating from a live document also picks up whatever plugins that server has
+installed — no plugin hooks fire in an offline dump. See "Confirmed against a
+live server" below.
+
+### It cannot authenticate yet
+
+`Module.cs` builds an `HttpPipeline` with no credential step, and FOG wants
+`fog-api-token` and `fog-user-token` on every request. The only injection
+point AutoRest offers is `-HttpPipelinePrepend`, which takes a C#
+`SendAsyncStep` delegate rather than a scriptblock.
+
+So a freshly generated module **imports and can be inspected, but every call
+returns 401**. Wiring this up is the job of the hand-written
+`custom/Invoke-FogApi.cs` plus the settings bootstrap, which is not written
+yet. Do not expect to talk to a server with generated cmdlets alone.
+
+### Known limits, and why they are handled where they are
+
+`autorest-readme.md` carries three directives with the reasoning inline:
+
+| what | why |
+|---|---|
+| two `multipart/form-data` routes removed | AutoRest cannot generate compilable multipart code at all — a probe with one `file` property fails identically. Not fixable upstream. |
+| `Join-FogGroupByName` split out | `PUT` and `POST /group/join` merged into one cmdlet whose `-Body` had two types, which `Export-ProxyCmdlet` refuses. |
+| `New-FogTaskQueue` split out | Same, for `POST /task` vs `POST /task/{id}/task`. |
+
+Anything the generated surface cannot describe is reachable through
+`Invoke-FogApi`, which exists for exactly that.
+
+---
+
 ## 1. FOG's operationIds broke the convention
 
 Every generator splits `operationId` on an underscore: the half before is the
