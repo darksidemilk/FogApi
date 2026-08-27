@@ -40,6 +40,11 @@
     Skip the operationId assertion. Only useful for deliberately reproducing a
     pre-#1373 result.
 
+.PARAMETER UpdateWarningBaseline
+    Record the run's warning counts in warning-baseline.json instead of
+    checking against it. Use when a change to the document or the config
+    legitimately moves a count, and say why in the commit message.
+
 .EXAMPLE
     ./Invoke-FogApiGeneration.ps1
     Generates from the committed snapshot and reports the surface.
@@ -52,7 +57,8 @@
 param(
     [string]$OutputFolder = (Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'FogApi-clients/pwsh/src'),
     [string]$InputFile,
-    [switch]$SkipInputCheck
+    [switch]$SkipInputCheck,
+    [switch]$UpdateWarningBaseline
 )
 
 $ErrorActionPreference = 'Stop'
@@ -145,14 +151,101 @@ if ($LASTEXITCODE -ne 0) {
     throw "AutoRest failed with exit code $LASTEXITCODE. Log: $log"
 }
 
+# Strip ANSI once, and read the log through it from here on. AutoRest colours
+# its output, and whether those escapes reach the log depends on how pwsh was
+# invoked -- a direct run wrote plain text, the same command under make.ps1
+# wrote `<esc>[33m<esc>[1mwarning<esc>[22m<esc>[39m | <esc>[32mModeler/...`.
+# Any pattern spanning a coloured boundary silently stops matching, and a gate
+# that silently stops matching reads as a pass.
+$plain = (Get-Content -LiteralPath $log -Raw) -replace '\x1b\[[0-9;]*m', ''
+
 # The gate.
-$inferred = @(Select-String -LiteralPath $log -Pattern 'inferred without finding action').Count
+$inferred = [regex]::Matches($plain, 'inferred without finding action').Count
 if ($inferred -ne 0) {
     throw @"
 $inferred operations had their verb inferred rather than read from the
 operationId. That is the pass/fail gate for this generator and it must be 0.
 Log: $log
 "@
+}
+
+# The second gate: every other warning, counted by class.
+#
+# The check above greps for one string. The run also prints ~145 warnings the
+# grep never sees, and that is exactly how the operationId defect survived --
+# it warned once per operation for weeks and nobody read the log. Counting the
+# rest keeps them on screen while making any change loud.
+$observed = @{}
+foreach ($match in [regex]::Matches($plain, 'warning \| ([A-Za-z/]+)')) {
+    $class = $match.Groups[1].Value
+    $observed[$class] = 1 + ($observed[$class] ?? 0)
+}
+
+$baselineFile = Join-Path $PSScriptRoot 'warning-baseline.json'
+
+if ($UpdateWarningBaseline) {
+    if (-not (Test-Path -LiteralPath $baselineFile)) {
+        throw "No baseline at $baselineFile to update."
+    }
+    $baseline = Get-Content -LiteralPath $baselineFile -Raw | ConvertFrom-Json
+    foreach ($class in $observed.Keys) {
+        if ($baseline.classes.PSObject.Properties.Name -contains $class) {
+            $baseline.classes.$class.count = $observed[$class]
+        } else {
+            $baseline.classes | Add-Member -NotePropertyName $class -NotePropertyValue ([pscustomobject]@{
+                count = $observed[$class]
+                why   = 'TODO: explain why this warning is expected, or fix it.'
+            })
+        }
+    }
+    # Drop classes that no longer occur, so the baseline cannot rot upward.
+    foreach ($class in @($baseline.classes.PSObject.Properties.Name)) {
+        if (-not $observed.ContainsKey($class)) {
+            $baseline.classes.PSObject.Properties.Remove($class)
+        }
+    }
+    $baseline.documentVersion = (Get-Content -LiteralPath $document -Raw |
+        ConvertFrom-Json).info.version
+    $baseline | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $baselineFile -Encoding utf8
+    Write-Host "warning baseline updated: $baselineFile" -ForegroundColor Yellow
+    Write-Host '  say in the commit message why each number moved.' -ForegroundColor Yellow
+
+} elseif (Test-Path -LiteralPath $baselineFile) {
+    $baseline = Get-Content -LiteralPath $baselineFile -Raw | ConvertFrom-Json
+    $expectedDoc = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '../openapi/fog-1.6.json')).Path
+    $isSnapshot = $document -eq $expectedDoc
+
+    $drift = @()
+    foreach ($class in ($observed.Keys + $baseline.classes.PSObject.Properties.Name | Sort-Object -Unique)) {
+        $was = if ($baseline.classes.PSObject.Properties.Name -contains $class) {
+            $baseline.classes.$class.count
+        } else { 0 }
+        $now = $observed[$class] ?? 0
+        if ($was -ne $now) { $drift += "  $class : $was -> $now" }
+    }
+
+    if ($drift.Count -eq 0) {
+        Write-Host "warnings: unchanged from baseline ($(($observed.Values | Measure-Object -Sum).Sum) across $($observed.Count) classes)" -ForegroundColor DarkGray
+    } elseif (-not $isSnapshot) {
+        # A live or checkout document carries whatever classes that server has,
+        # so different counts are expected rather than wrong.
+        Write-Host 'warnings differ from the baseline, which records the committed snapshot:' -ForegroundColor DarkGray
+        $drift | ForEach-Object { Write-Host $_ -ForegroundColor DarkGray }
+        Write-Host '  not enforced -- this document is not the committed snapshot.' -ForegroundColor DarkGray
+    } else {
+        throw @"
+The generator's warnings changed against the committed snapshot:
+
+$($drift -join "`n")
+
+Every warning in the baseline is there with a reason. A change means either
+something regressed, or something was fixed, or the generator started saying
+something new -- all three are worth a look rather than a scroll.
+
+Read them:  Select-String -Path '$log' -Pattern 'warning \|'
+Accept them: re-run with -UpdateWarningBaseline, and say why in the commit.
+"@
+    }
 }
 
 $cmdletDir = Join-Path $OutputFolder 'generated/cmdlets'

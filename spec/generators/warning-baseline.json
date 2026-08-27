@@ -1,0 +1,33 @@
+{
+  "$comment": "Warning counts the committed snapshot is known to produce, by AutoRest warning class. Invoke-FogApiGeneration.ps1 compares against this and fails when a count moves or a new class appears. Regenerate with -UpdateWarningBaseline, and say in the commit message why the number changed.",
+  "$why": "The generator prints ~145 warnings and the pass/fail gate used to grep for one string, so 144 of them scrolled past unread. That is this project's recurring failure: the operationId defect warned once per operation for weeks and nobody looked. Suppressing the known ones would hide the same risk more neatly. Counting them keeps every warning on screen while making any change loud.",
+  "$scope": "Enforced only when generating from the committed snapshot. A live document carries whatever plugin classes that server has installed, so its counts legitimately differ and are reported rather than enforced.",
+  "document": "spec/openapi/fog-1.6.json",
+  "documentVersion": "1.6.0-beta.4219",
+  "classes": {
+    "Modeler/MissingType": {
+      "count": 88,
+      "why": "FOG's computed fields carry readOnly and a description but no type, deliberately. They are computed in Route::getter() rather than derived from a column, so there is no type source to read: macs is an array, imagename a string, inventory an object. OpenAPI::_entitySchema() records the reasoning -- asserting a type would be a guess, and a wrong type makes a generated client fail to deserialise, which is worse than an untyped field. Revisit only with a real type source."
+    },
+    "PreCheck/SchemaMissingType": {
+      "count": 52,
+      "why": "The same fields, reported by the pre-check stage rather than the modeler."
+    },
+    "MultipleSecurityLayerUnsupported": {
+      "count": 2,
+      "why": "FOG requires fog-api-token AND fog-user-token together, and separately fogApiToken AND basicAuth. AutoRest does not support AND-ed security requirements at all. This is why the generated Module.cs has no credential step and why the transport has to be hand-written -- it is structural, not an omission."
+    },
+    "UnkownSecurityScheme": {
+      "count": 1,
+      "why": "AutoRest's spelling, not ours. It supports only AADToken, AzureKey and Anonymous, so FOG's bearerAuth is skipped. Same root as above: a generated client cannot authenticate to FOG."
+    },
+    "UsingTemporaryFlag": {
+      "count": 1,
+      "why": "modelerfour.treat-type-object-as-anything, which the PowerShell extension sets. AutoRest warns it WILL be removed. Worth watching: it is what makes the untyped computed fields behave as any-type, so its removal would change how those fields generate."
+    },
+    "PreCheck/CheckDuplicateSchemas": {
+      "count": 1,
+      "why": "A performance notice about the duplicate-schema scan, not a finding."
+    }
+  }
+}

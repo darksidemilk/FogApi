@@ -77,6 +77,49 @@ that directory has content, because two things must be settled first — the
 `.gitignore` covering `src/` has to be narrowed, and `--clear-output-folder`
 has to be shown to spare `custom/`.
 
+### The warnings, and why they are counted rather than silenced
+
+A run prints ~145 warnings. None are defects, and `warning-baseline.json`
+records each class with the reason it is expected:
+
+| class | n | why |
+|---|---|---|
+| `Modeler/MissingType` | 88 | FOG's computed fields carry `readOnly` and a description but no `type`, deliberately — they are computed in `Route::getter()`, so there is no type source. `macs` is an array, `imagename` a string, `inventory` an object. Asserting a type would be a guess, and a wrong type makes a client fail to deserialise. |
+| `PreCheck/SchemaMissingType` | 52 | The same fields, at the pre-check stage. |
+| `MultipleSecurityLayerUnsupported` | 2 | AutoRest does not support AND-ed security requirements, which is what `fog-api-token` + `fog-user-token` is. |
+| `UnkownSecurityScheme` | 1 | AutoRest's spelling. It supports only AADToken, AzureKey and Anonymous, so `bearerAuth` is skipped. |
+| `UsingTemporaryFlag` | 1 | `treat-type-object-as-anything`, which AutoRest says WILL be removed. Watch it: it is what makes the untyped computed fields behave. |
+| `PreCheck/CheckDuplicateSchemas` | 1 | A performance notice. |
+
+Those two security warnings are the reason the generated `Module.cs` has no
+credential step. **A generated client cannot authenticate to FOG at all** —
+structural, not an omission, and not configurable.
+
+The generate stage fails if any count moves or a new class appears. Accept a
+change deliberately with `-UpdateWarningBaseline` and say why in the commit.
+Enforced only against the committed snapshot: a `-Live` document carries that
+server's plugin classes, so its counts legitimately differ and are reported
+rather than enforced.
+
+Counting rather than suppressing is the point. Suppressing would hide the same
+risk more neatly, and this project's recurring failure is a warning nobody
+read — the `operationId` defect warned once per operation for weeks.
+
+### Strip ANSI before matching a log
+
+Every gate here reads the generator's log, and AutoRest colours its output.
+Whether the escapes reach the log depends on how `pwsh` was invoked: a direct
+run wrote plain text, the same command under `make.ps1` wrote
+
+```
+<esc>[33m<esc>[1mwarning<esc>[22m<esc>[39m | <esc>[32mModeler/MissingType
+```
+
+A pattern spanning a coloured boundary stops matching — and **a gate that
+stops matching reads as a pass**. This was live in all three gates, including
+the compile check that exists precisely because `build-module.ps1` exits 0 on
+failure. They now strip `\x1b\[[0-9;]*m` first.
+
 ### `build-module.ps1` exits 0 when compilation fails
 
 It calls `Write-Error` and returns success. **Never trust its exit code** —

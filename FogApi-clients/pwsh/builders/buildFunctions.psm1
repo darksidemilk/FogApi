@@ -193,13 +193,19 @@ function Invoke-FogApiCompile {
     & pwsh -NoProfile -NonInteractive -File $buildScript *>&1 |
         Tee-Object -FilePath $log | Out-Null
 
-    $errors = @(Select-String -LiteralPath $log -Pattern 'error CS\d+').Count
+    # Strip ANSI before matching. Whether colour escapes reach the log depends
+    # on how pwsh was invoked, and a pattern that spans a coloured boundary
+    # stops matching silently -- which for a gate reads as a pass. The warning
+    # gate in Invoke-FogApiGeneration.ps1 hit exactly that: 145 matches when
+    # run directly, 0 through make.ps1.
+    $plain = (Get-Content -LiteralPath $log -Raw) -replace '\x1b\[[0-9;]*m', ''
+    $errorLines = [regex]::Matches($plain, '(?m)^.*error CS\d+.*$')
+    $errors = $errorLines.Count
     $manifest = Join-Path $Scaffold 'FogApi.psd1'
 
     if ($errors -gt 0 -or -not (Test-Path -LiteralPath $manifest)) {
-        Select-String -LiteralPath $log -Pattern 'error CS\d+' |
-            Select-Object -First 3 |
-            ForEach-Object { Write-Host "    $($_.Line.Trim())" -ForegroundColor DarkRed }
+        $errorLines | Select-Object -First 3 |
+            ForEach-Object { Write-Host "    $($_.Value.Trim())" -ForegroundColor DarkRed }
         Write-Host ''
         Write-Host '  IError errors on Get-Fog*Id / Get-Fog*Name mean a bare top-level' -ForegroundColor Yellow
         Write-Host '  array response is back in the document. AutoRest cannot model one;' -ForegroundColor Yellow
