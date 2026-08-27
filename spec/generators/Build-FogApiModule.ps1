@@ -25,10 +25,8 @@
     dumped fresh from it. Omit to use the committed snapshot in
     spec/openapi/fog-1.6.json.
 
-    NOTE: until FOGProject/fogproject#1409 merges, the committed snapshot does
-    NOT compile -- 108 operations answer with a bare top-level array, which
-    AutoRest cannot model. Point -Web at a checkout that has that PR's branch
-    and it builds.
+    The committed snapshot builds as it stands. Pass -Web to pick up upstream
+    changes newer than it, or to generate against a checkout of your own.
 
 .PARAMETER OutputFolder
     Where to generate and build. Defaults to spec/generators/out, which
@@ -49,7 +47,7 @@
 .EXAMPLE
     ./Build-FogApiModule.ps1 -Import
 
-    Same, from the committed snapshot. Will fail to build until #1409 lands.
+    Same, from the committed snapshot. Verified: 474 commands imported.
 
 .EXAMPLE
     Import-Module ./spec/generators/out/FogApi.psd1
@@ -90,8 +88,6 @@ if ($Web) {
 } else {
     Write-Step 1 'Using the committed snapshot'
     Write-Host "    $document" -ForegroundColor DarkGray
-    Write-Host '    Note: this does not compile until FOGProject/fogproject#1409' -ForegroundColor Yellow
-    Write-Host '    merges. Pass -Web <checkout>/packages/web to build today.' -ForegroundColor Yellow
 }
 
 # --- 2. generate -------------------------------------------------------
@@ -132,11 +128,10 @@ if ($errors -gt 0 -or -not (Test-Path -LiteralPath $psd1)) {
             Select-Object -First 3 |
             ForEach-Object { Write-Host "    $($_.Line.Trim())" -ForegroundColor DarkRed }
     }
-    if (-not $Web) {
-        Write-Host ''
-        Write-Host '  If those are IError errors on Get-Fog*Id / Get-Fog*Name, this is the' -ForegroundColor Yellow
-        Write-Host '  bare-array problem: use -Web against a checkout carrying #1409.' -ForegroundColor Yellow
-    }
+    Write-Host ''
+    Write-Host '  IError errors on Get-Fog*Id / Get-Fog*Name mean a bare top-level' -ForegroundColor Yellow
+    Write-Host '  array response has come back into the document. AutoRest cannot model' -ForegroundColor Yellow
+    Write-Host '  one; the rows have to sit under `data`. See FOGProject/fogproject#1409.' -ForegroundColor Yellow
     throw 'Build failed.'
 }
 

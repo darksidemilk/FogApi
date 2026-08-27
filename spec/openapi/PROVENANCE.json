@@ -4,16 +4,16 @@
   "source": {
     "repo": "https://github.com/FOGProject/fogproject",
     "branch": "working-1.6",
-    "commit": "a1a3726748f19469617711566e56245339f93dd3",
-    "commitShort": "a1a372674",
-    "commitDate": "2026-08-26T09:19:16-06:00",
-    "fogVersion": "1.6.0-beta.4105",
-    "openapiClassLastChanged": "a1a372674",
+    "commit": "b3929237235f15042755779e28a20d54e69b0dcc",
+    "commitShort": "b39292372",
+    "commitDate": "2026-08-27T12:14:17-05:00",
+    "fogVersion": "1.6.0-beta.4219",
+    "openapiClassLastChanged": "b39292372",
     "localCorrections": [],
-    "$note": "Dumped from the openapi-named-response-schemas branch head (PR #1399), verified an ancestor of origin/working-1.6 with `git merge-base --is-ancestor` after that PR merged as 2ac40d5df. No local corrections."
+    "$note": "Dumped from origin/working-1.6 directly, after PR #1408 and #1409 both merged. No local corrections."
   },
   "generatedBy": "spec/tools/dump-openapi.php",
-  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.4105 --out spec/openapi/fog-1.6.json",
+  "command": "php spec/tools/dump-openapi.php --web <fogproject>/packages/web --version 1.6.0-beta.4219 --out spec/openapi/fog-1.6.json",
   "servedLiveAt": [
     "GET {webroot}/system/openapi",
     "GET {webroot}/swagger.json"
@@ -21,7 +21,7 @@
   "counts": {
     "paths": 380,
     "operations": 528,
-    "schemas": 106,
+    "schemas": 162,
     "routeClasses": 51
   },
   "notes": [
@@ -49,6 +49,18 @@
     }
   },
   "changeLog": [
+    {
+      "from": "a1a372674 (1.6.0-beta.4105, 380 paths / 528 operations / 106 schemas)",
+      "to": "b39292372 (1.6.0-beta.4219, 380 paths / 528 operations / 162 schemas)",
+      "summary": "First snapshot from which a generated client actually compiles. Both naming PRs merged upstream, and the dumper was taught the PSR-4 layout that #1415 introduced.",
+      "detail": [
+        "#1408 named the request bodies: components.schemas gained 52 *Join schemas plus BulkEditIds, TaskRequest and NamesRequest. Synthesized request-body model names went 158 -> 2, the two survivors being the multipart uploads.",
+        "#1409 replaced every bare top-level array response with a `data` wrapper, and added ValueList. This is what makes the document compilable at all: AutoRest builds no model for a top-level array, falls back to the Error schema and writes .Count/[0]/foreach against it. 108 operations, 333 compile errors, from a run reporting zero warnings. Verified across five response shapes -- only an object wrapper compiles.",
+        "/system/export also lost format: binary, which AutoRest cannot model. That trade is still open: it costs Export-FogSystem its -OutFile and makes it write the dump to the pipeline instead of a file. See the discussion on #1409.",
+        "x-fog-references is 28 here, down from 29 at beta.4105. Host.archID -> architecture.id disappeared upstream between those builds, which silently removes tab completion for -archID on New-FogHost and Update-FogHost. Not caused by either PR; worth chasing separately.",
+        "schemas 107 -> 162 is the #1408 Join schemas arriving; paths and operations did not move."
+      ]
+    },
     {
       "from": "a36810d3c (1.6.0-beta.4013, 372 paths / 517 operations / 53 schemas)",
       "to": "a1a372674 (1.6.0-beta.4105, 380 paths / 528 operations / 106 schemas)",

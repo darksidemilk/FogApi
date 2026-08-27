@@ -90,14 +90,38 @@ if (!function_exists('_')) {
     }
 }
 
+/*
+ * Composer's autoloader, when the checkout has one.
+ *
+ * FOGProject/fogproject#1415 moved the core classes to PSR-4 under src/ --
+ * FOGBase is src/Base/FOGBase.php now, not lib/fog/fogbase.class.php -- and
+ * without this the dump stops at the first class it needs:
+ *
+ *   FAIL: ReflectionException: Class "FOG\FOGBase" does not exist
+ *
+ * vendor/ is committed upstream, so requiring it needs no composer install.
+ * Loaded first, but it does not replace the index below: PSR-4 is
+ * case-sensitive and OpenAPI asks for route classes by their lowercase route
+ * name, so the bridging autoloader is still what answers 'host'.
+ */
+if (is_file($web . '/vendor/autoload.php')) {
+    require_once $web . '/vendor/autoload.php';
+}
+
 /**
  * Indexes every class file by its lowercased basename.
  *
  * The same key the shipped autoloader uses, which matters because OpenAPI
  * asks for route classes by their lowercase route name ('host', not 'Host').
+ *
+ * Covers both layouts. lib/ holds *.class.php on older checkouts; src/ holds
+ * PSR-4 names post-#1415. Indexing both means one script reads either, and a
+ * checkout mid-migration with classes in both places still resolves.
  */
 $index = [];
-foreach (['/lib/fog', '/lib/router', '/lib/db', '/lib/service'] as $dir) {
+foreach (
+    ['/lib/fog', '/lib/router', '/lib/db', '/lib/service', '/src'] as $dir
+) {
     if (!is_dir($web . $dir)) {
         continue;
     }
@@ -112,10 +136,22 @@ foreach (['/lib/fog', '/lib/router', '/lib/db', '/lib/service'] as $dir) {
             continue;
         }
         $name = $file->getFilename();
+        $matched = false;
         foreach (['.class.php', '.event.php', '.hook.php', '.report.php'] as $ext) {
             if (substr($name, -strlen($ext)) === $ext) {
                 $index[strtolower(substr($name, 0, -strlen($ext)))]
                     = $file->getPathname();
+                $matched = true;
+            }
+        }
+        // PSR-4 names carry no marker suffix: src/Base/FOGBase.php, not
+        // fogbase.class.php. Indexed only when a suffixed pattern did not
+        // already claim the name, so a lib/ file still wins where both
+        // layouts are present.
+        if (!$matched && substr($name, -4) === '.php') {
+            $key = strtolower(substr($name, 0, -4));
+            if (!isset($index[$key])) {
+                $index[$key] = $file->getPathname();
             }
         }
     }

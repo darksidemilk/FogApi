@@ -13,8 +13,7 @@
 
 Clear-FogSettingsCache -> IPaths1MlribcSettingsCacheFlushPostResponses200ContentApplicationJsonSchema
     -PassThru
-Export-FogSystem -> bool
-    -OutFile*
+Export-FogSystem -> IError
     -PassThru
 Find-FogArchitecture -> IArchitecturePage
     -Expand
@@ -252,10 +251,10 @@ Get-FogArchitecture -> IArchitecture, IArchitecturePage
     -Length
     -PassThru
     -Start
-Get-FogArchitectureId -> IAny
+Get-FogArchitectureId -> IValueList
     -Filter
     -PassThru
-Get-FogArchitectureName -> IAny
+Get-FogArchitectureName -> IValueList
     -Filter
     -PassThru
 Get-FogFileDeleteQueue -> IFileDeleteQueue, IFileDeleteQueuePage
@@ -268,10 +267,10 @@ Get-FogFileDeleteQueue -> IFileDeleteQueue, IFileDeleteQueuePage
     -Start
 Get-FogFileDeleteQueueActive -> IFileDeleteQueuePage
     -PassThru
-Get-FogFileDeleteQueueId -> IAny
+Get-FogFileDeleteQueueId -> IValueList
     -Filter
     -PassThru
-Get-FogFileDeleteQueueName -> IAny
+Get-FogFileDeleteQueueName -> IValueList
     -Filter
     -PassThru
 Get-FogGroup -> IGroup, IGroupPage
@@ -290,16 +289,16 @@ Get-FogGroupAssociation -> IGroupAssociation, IGroupAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogGroupAssociationId -> IAny
+Get-FogGroupAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogGroupAssociationName -> IAny
+Get-FogGroupAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogGroupId -> IAny
+Get-FogGroupId -> IValueList
     -Filter
     -PassThru
-Get-FogGroupName -> IAny
+Get-FogGroupName -> IValueList
     -Filter
     -PassThru
 Get-FogHistory -> IHistory, IHistoryPage
@@ -310,10 +309,10 @@ Get-FogHistory -> IHistory, IHistoryPage
     -Length
     -PassThru
     -Start
-Get-FogHistoryId -> IAny
+Get-FogHistoryId -> IValueList
     -Filter
     -PassThru
-Get-FogHistoryName -> IAny
+Get-FogHistoryName -> IValueList
     -Filter
     -PassThru
 Get-FogHookEvent -> IHookEvent, IHookEventPage
@@ -324,10 +323,10 @@ Get-FogHookEvent -> IHookEvent, IHookEventPage
     -Length
     -PassThru
     -Start
-Get-FogHookEventId -> IAny
+Get-FogHookEventId -> IValueList
     -Filter
     -PassThru
-Get-FogHookEventName -> IAny
+Get-FogHookEventName -> IValueList
     -Filter
     -PassThru
 Get-FogHost -> IHost, IHostPage
@@ -346,19 +345,19 @@ Get-FogHostAutoLogout -> IHostAutoLogout, IHostAutoLogoutPage
     -Length
     -PassThru
     -Start
-Get-FogHostAutoLogoutId -> IAny
+Get-FogHostAutoLogoutId -> IValueList
     -Filter
     -PassThru
-Get-FogHostAutoLogoutName -> IAny
+Get-FogHostAutoLogoutName -> IValueList
     -Filter
     -PassThru
-Get-FogHostId -> IAny
+Get-FogHostId -> IValueList
     -Filter
     -PassThru
-Get-FogHostName -> IAny
+Get-FogHostName -> IValueList
     -Filter
     -PassThru
-Get-FogHostPendingMac -> IAny
+Get-FogHostPendingMac -> IMacAddressAssociationPage
     -PassThru
 Get-FogHostScreenSetting -> IHostScreenSetting, IHostScreenSettingPage
     -Expand
@@ -368,10 +367,10 @@ Get-FogHostScreenSetting -> IHostScreenSetting, IHostScreenSettingPage
     -Length
     -PassThru
     -Start
-Get-FogHostScreenSettingId -> IAny
+Get-FogHostScreenSettingId -> IValueList
     -Filter
     -PassThru
-Get-FogHostScreenSettingName -> IAny
+Get-FogHostScreenSettingName -> IValueList
     -Filter
     -PassThru
 Get-FogImage -> IImage, IImagePage
@@ -390,16 +389,16 @@ Get-FogImageAssociation -> IImageAssociation, IImageAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogImageAssociationId -> IAny
+Get-FogImageAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogImageAssociationName -> IAny
+Get-FogImageAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogImageId -> IAny
+Get-FogImageId -> IValueList
     -Filter
     -PassThru
-Get-FogImageName -> IAny
+Get-FogImageName -> IValueList
     -Filter
     -PassThru
 Get-FogImagePartitionType -> IImagePartitionType, IImagePartitionTypePage
@@ -410,10 +409,10 @@ Get-FogImagePartitionType -> IImagePartitionType, IImagePartitionTypePage
     -Length
     -PassThru
     -Start
-Get-FogImagePartitionTypeId -> IAny
+Get-FogImagePartitionTypeId -> IValueList
     -Filter
     -PassThru
-Get-FogImagePartitionTypeName -> IAny
+Get-FogImagePartitionTypeName -> IValueList
     -Filter
     -PassThru
 Get-FogImageType -> IImageType, IImageTypePage
@@ -424,13 +423,13 @@ Get-FogImageType -> IImageType, IImageTypePage
     -Length
     -PassThru
     -Start
-Get-FogImageTypeId -> IAny
+Get-FogImageTypeId -> IValueList
     -Filter
     -PassThru
-Get-FogImageTypeName -> IAny
+Get-FogImageTypeName -> IValueList
     -Filter
     -PassThru
-Get-FogInitrd -> IAny
+Get-FogInitrd -> IValueList
     -PassThru
 Get-FogInventory -> IInventory, IInventoryPage
     -Expand
@@ -440,10 +439,10 @@ Get-FogInventory -> IInventory, IInventoryPage
     -Length
     -PassThru
     -Start
-Get-FogInventoryId -> IAny
+Get-FogInventoryId -> IValueList
     -Filter
     -PassThru
-Get-FogInventoryName -> IAny
+Get-FogInventoryName -> IValueList
     -Filter
     -PassThru
 Get-FogIpxe -> IIpxe, IIpxePage
@@ -454,13 +453,13 @@ Get-FogIpxe -> IIpxe, IIpxePage
     -Length
     -PassThru
     -Start
-Get-FogIpxeId -> IAny
+Get-FogIpxeId -> IValueList
     -Filter
     -PassThru
-Get-FogIpxeName -> IAny
+Get-FogIpxeName -> IValueList
     -Filter
     -PassThru
-Get-FogKernel -> IAny
+Get-FogKernel -> IValueList
     -PassThru
 Get-FogKeySequence -> IKeySequence, IKeySequencePage
     -Expand
@@ -470,10 +469,10 @@ Get-FogKeySequence -> IKeySequence, IKeySequencePage
     -Length
     -PassThru
     -Start
-Get-FogKeySequenceId -> IAny
+Get-FogKeySequenceId -> IValueList
     -Filter
     -PassThru
-Get-FogKeySequenceName -> IAny
+Get-FogKeySequenceName -> IValueList
     -Filter
     -PassThru
 Get-FogLogfile -> IAny
@@ -488,10 +487,10 @@ Get-FogMacAddressAssociation -> IMacAddressAssociation, IMacAddressAssociationPa
     -Length
     -PassThru
     -Start
-Get-FogMacAddressAssociationId -> IAny
+Get-FogMacAddressAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogMacAddressAssociationName -> IAny
+Get-FogMacAddressAssociationName -> IValueList
     -Filter
     -PassThru
 Get-FogModule -> IModule, IModulePage
@@ -510,16 +509,16 @@ Get-FogModuleAssociation -> IModuleAssociation, IModuleAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogModuleAssociationId -> IAny
+Get-FogModuleAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogModuleAssociationName -> IAny
+Get-FogModuleAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogModuleId -> IAny
+Get-FogModuleId -> IValueList
     -Filter
     -PassThru
-Get-FogModuleName -> IAny
+Get-FogModuleName -> IValueList
     -Filter
     -PassThru
 Get-FogMulticastSession -> IMulticastSession, IMulticastSessionPage
@@ -540,16 +539,16 @@ Get-FogMulticastSessionAssociation -> IMulticastSessionAssociation, IMulticastSe
     -Length
     -PassThru
     -Start
-Get-FogMulticastSessionAssociationId -> IAny
+Get-FogMulticastSessionAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogMulticastSessionAssociationName -> IAny
+Get-FogMulticastSessionAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogMulticastSessionId -> IAny
+Get-FogMulticastSessionId -> IValueList
     -Filter
     -PassThru
-Get-FogMulticastSessionName -> IAny
+Get-FogMulticastSessionName -> IValueList
     -Filter
     -PassThru
 Get-FogNodeFailure -> INodeFailure, INodeFailurePage
@@ -560,10 +559,10 @@ Get-FogNodeFailure -> INodeFailure, INodeFailurePage
     -Length
     -PassThru
     -Start
-Get-FogNodeFailureId -> IAny
+Get-FogNodeFailureId -> IValueList
     -Filter
     -PassThru
-Get-FogNodeFailureName -> IAny
+Get-FogNodeFailureName -> IValueList
     -Filter
     -PassThru
 Get-FogNotifyEvent -> INotifyEvent, INotifyEventPage
@@ -574,10 +573,10 @@ Get-FogNotifyEvent -> INotifyEvent, INotifyEventPage
     -Length
     -PassThru
     -Start
-Get-FogNotifyEventId -> IAny
+Get-FogNotifyEventId -> IValueList
     -Filter
     -PassThru
-Get-FogNotifyEventName -> IAny
+Get-FogNotifyEventName -> IValueList
     -Filter
     -PassThru
 Get-FogOS -> IOS, IOSPage
@@ -588,10 +587,10 @@ Get-FogOS -> IOS, IOSPage
     -Length
     -PassThru
     -Start
-Get-FogOSId -> IAny
+Get-FogOSId -> IValueList
     -Filter
     -PassThru
-Get-FogOSName -> IAny
+Get-FogOSName -> IValueList
     -Filter
     -PassThru
 Get-FogOui -> IOui, IOuiPage
@@ -602,10 +601,10 @@ Get-FogOui -> IOui, IOuiPage
     -Length
     -PassThru
     -Start
-Get-FogOuiId -> IAny
+Get-FogOuiId -> IValueList
     -Filter
     -PassThru
-Get-FogOuiName -> IAny
+Get-FogOuiName -> IValueList
     -Filter
     -PassThru
 Get-FogPlugin -> IPlugin, IPluginPage
@@ -616,10 +615,10 @@ Get-FogPlugin -> IPlugin, IPluginPage
     -Length
     -PassThru
     -Start
-Get-FogPluginId -> IAny
+Get-FogPluginId -> IValueList
     -Filter
     -PassThru
-Get-FogPluginName -> IAny
+Get-FogPluginName -> IValueList
     -Filter
     -PassThru
 Get-FogPowerManagement -> IPowerManagement, IPowerManagementPage
@@ -632,10 +631,10 @@ Get-FogPowerManagement -> IPowerManagement, IPowerManagementPage
     -Start
 Get-FogPowerManagementActive -> IPowerManagementPage
     -PassThru
-Get-FogPowerManagementId -> IAny
+Get-FogPowerManagementId -> IValueList
     -Filter
     -PassThru
-Get-FogPowerManagementName -> IAny
+Get-FogPowerManagementName -> IValueList
     -Filter
     -PassThru
 Get-FogPrinter -> IPrinter, IPrinterPage
@@ -654,16 +653,16 @@ Get-FogPrinterAssociation -> IPrinterAssociation, IPrinterAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogPrinterAssociationId -> IAny
+Get-FogPrinterAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogPrinterAssociationName -> IAny
+Get-FogPrinterAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogPrinterId -> IAny
+Get-FogPrinterId -> IValueList
     -Filter
     -PassThru
-Get-FogPrinterName -> IAny
+Get-FogPrinterName -> IValueList
     -Filter
     -PassThru
 Get-FogPxeMenuOption -> IPxeMenuOptions, IPxeMenuOptionsPage
@@ -674,10 +673,10 @@ Get-FogPxeMenuOption -> IPxeMenuOptions, IPxeMenuOptionsPage
     -Length
     -PassThru
     -Start
-Get-FogPxeMenuOptionId -> IAny
+Get-FogPxeMenuOptionId -> IValueList
     -Filter
     -PassThru
-Get-FogPxeMenuOptionName -> IAny
+Get-FogPxeMenuOptionName -> IValueList
     -Filter
     -PassThru
 Get-FogRole -> IRole, IRolePage
@@ -688,10 +687,10 @@ Get-FogRole -> IRole, IRolePage
     -Length
     -PassThru
     -Start
-Get-FogRoleId -> IAny
+Get-FogRoleId -> IValueList
     -Filter
     -PassThru
-Get-FogRoleName -> IAny
+Get-FogRoleName -> IValueList
     -Filter
     -PassThru
 Get-FogRolePermission -> IRolePermission, IRolePermissionPage
@@ -702,10 +701,10 @@ Get-FogRolePermission -> IRolePermission, IRolePermissionPage
     -Length
     -PassThru
     -Start
-Get-FogRolePermissionId -> IAny
+Get-FogRolePermissionId -> IValueList
     -Filter
     -PassThru
-Get-FogRolePermissionName -> IAny
+Get-FogRolePermissionName -> IValueList
     -Filter
     -PassThru
 Get-FogRoleUserAssociation -> IRoleUserAssociation, IRoleUserAssociationPage
@@ -716,10 +715,10 @@ Get-FogRoleUserAssociation -> IRoleUserAssociation, IRoleUserAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogRoleUserAssociationId -> IAny
+Get-FogRoleUserAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogRoleUserAssociationName -> IAny
+Get-FogRoleUserAssociationName -> IValueList
     -Filter
     -PassThru
 Get-FogRoleUserGroupAssociation -> IRoleUserGroupAssociation, IRoleUserGroupAssociationPage
@@ -730,10 +729,10 @@ Get-FogRoleUserGroupAssociation -> IRoleUserGroupAssociation, IRoleUserGroupAsso
     -Length
     -PassThru
     -Start
-Get-FogRoleUserGroupAssociationId -> IAny
+Get-FogRoleUserGroupAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogRoleUserGroupAssociationName -> IAny
+Get-FogRoleUserGroupAssociationName -> IValueList
     -Filter
     -PassThru
 Get-FogScheduledTask -> IScheduledTask, IScheduledTaskPage
@@ -746,10 +745,10 @@ Get-FogScheduledTask -> IScheduledTask, IScheduledTaskPage
     -Start
 Get-FogScheduledTaskActive -> IScheduledTaskPage
     -PassThru
-Get-FogScheduledTaskId -> IAny
+Get-FogScheduledTaskId -> IValueList
     -Filter
     -PassThru
-Get-FogScheduledTaskName -> IAny
+Get-FogScheduledTaskName -> IValueList
     -Filter
     -PassThru
 Get-FogSetting -> ISetting, ISettingPage
@@ -760,10 +759,10 @@ Get-FogSetting -> ISetting, ISettingPage
     -Length
     -PassThru
     -Start
-Get-FogSettingId -> IAny
+Get-FogSettingId -> IValueList
     -Filter
     -PassThru
-Get-FogSettingName -> IAny
+Get-FogSettingName -> IValueList
     -Filter
     -PassThru
 Get-FogSettingsCache -> IAny
@@ -776,10 +775,10 @@ Get-FogSite -> ISite, ISitePage
     -Length
     -PassThru
     -Start
-Get-FogSiteId -> IAny
+Get-FogSiteId -> IValueList
     -Filter
     -PassThru
-Get-FogSiteName -> IAny
+Get-FogSiteName -> IValueList
     -Filter
     -PassThru
 Get-FogSnapin -> ISnapin, ISnapinPage
@@ -798,10 +797,10 @@ Get-FogSnapinAssociation -> ISnapinAssociation, ISnapinAssociationPage
     -Length
     -PassThru
     -Start
-Get-FogSnapinAssociationId -> IAny
+Get-FogSnapinAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinAssociationName -> IAny
+Get-FogSnapinAssociationName -> IValueList
     -Filter
     -PassThru
 Get-FogSnapinGroupAssociation -> ISnapinGroupAssociation, ISnapinGroupAssociationPage
@@ -812,13 +811,13 @@ Get-FogSnapinGroupAssociation -> ISnapinGroupAssociation, ISnapinGroupAssociatio
     -Length
     -PassThru
     -Start
-Get-FogSnapinGroupAssociationId -> IAny
+Get-FogSnapinGroupAssociationId -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinGroupAssociationName -> IAny
+Get-FogSnapinGroupAssociationName -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinId -> IAny
+Get-FogSnapinId -> IValueList
     -Filter
     -PassThru
 Get-FogSnapinJob -> ISnapinJob, ISnapinJobPage
@@ -831,13 +830,13 @@ Get-FogSnapinJob -> ISnapinJob, ISnapinJobPage
     -Start
 Get-FogSnapinJobActive -> ISnapinJobPage
     -PassThru
-Get-FogSnapinJobId -> IAny
+Get-FogSnapinJobId -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinJobName -> IAny
+Get-FogSnapinJobName -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinName -> IAny
+Get-FogSnapinName -> IValueList
     -Filter
     -PassThru
 Get-FogSnapinTask -> ISnapinTask, ISnapinTaskPage
@@ -850,10 +849,10 @@ Get-FogSnapinTask -> ISnapinTask, ISnapinTaskPage
     -Start
 Get-FogSnapinTaskActive -> ISnapinTaskPage
     -PassThru
-Get-FogSnapinTaskId -> IAny
+Get-FogSnapinTaskId -> IValueList
     -Filter
     -PassThru
-Get-FogSnapinTaskName -> IAny
+Get-FogSnapinTaskName -> IValueList
     -Filter
     -PassThru
 Get-FogStorageGroup -> IStorageGroup, IStorageGroupPage
@@ -864,10 +863,10 @@ Get-FogStorageGroup -> IStorageGroup, IStorageGroupPage
     -Length
     -PassThru
     -Start
-Get-FogStorageGroupId -> IAny
+Get-FogStorageGroupId -> IValueList
     -Filter
     -PassThru
-Get-FogStorageGroupName -> IAny
+Get-FogStorageGroupName -> IValueList
     -Filter
     -PassThru
 Get-FogStorageNode -> IStorageNode, IStorageNodePage
@@ -878,10 +877,10 @@ Get-FogStorageNode -> IStorageNode, IStorageNodePage
     -Length
     -PassThru
     -Start
-Get-FogStorageNodeId -> IAny
+Get-FogStorageNodeId -> IValueList
     -Filter
     -PassThru
-Get-FogStorageNodeName -> IAny
+Get-FogStorageNodeName -> IValueList
     -Filter
     -PassThru
 Get-FogSystemBandwidth -> IAny
@@ -904,7 +903,7 @@ Get-FogTask -> ITask, ITaskPage
     -Start
 Get-FogTaskActive -> ITaskPage
     -PassThru
-Get-FogTaskId -> IAny
+Get-FogTaskId -> IValueList
     -Filter
     -PassThru
 Get-FogTaskLog -> ITaskLog, ITaskLogPage
@@ -915,13 +914,13 @@ Get-FogTaskLog -> ITaskLog, ITaskLogPage
     -Length
     -PassThru
     -Start
-Get-FogTaskLogId -> IAny
+Get-FogTaskLogId -> IValueList
     -Filter
     -PassThru
-Get-FogTaskLogName -> IAny
+Get-FogTaskLogName -> IValueList
     -Filter
     -PassThru
-Get-FogTaskName -> IAny
+Get-FogTaskName -> IValueList
     -Filter
     -PassThru
 Get-FogTaskState -> ITaskState, ITaskStatePage
@@ -932,10 +931,10 @@ Get-FogTaskState -> ITaskState, ITaskStatePage
     -Length
     -PassThru
     -Start
-Get-FogTaskStateId -> IAny
+Get-FogTaskStateId -> IValueList
     -Filter
     -PassThru
-Get-FogTaskStateName -> IAny
+Get-FogTaskStateName -> IValueList
     -Filter
     -PassThru
 Get-FogTaskType -> ITaskType1, ITaskTypePage
@@ -946,10 +945,10 @@ Get-FogTaskType -> ITaskType1, ITaskTypePage
     -Length
     -PassThru
     -Start
-Get-FogTaskTypeId -> IAny
+Get-FogTaskTypeId -> IValueList
     -Filter
     -PassThru
-Get-FogTaskTypeName -> IAny
+Get-FogTaskTypeName -> IValueList
     -Filter
     -PassThru
 Get-FogUser -> IUser, IUserPage
@@ -968,7 +967,7 @@ Get-FogUserGroup -> IUserGroup, IUserGroupPage
     -Length
     -PassThru
     -Start
-Get-FogUserGroupId -> IAny
+Get-FogUserGroupId -> IValueList
     -Filter
     -PassThru
 Get-FogUserGroupMember -> IUserGroupMember, IUserGroupMemberPage
@@ -979,19 +978,19 @@ Get-FogUserGroupMember -> IUserGroupMember, IUserGroupMemberPage
     -Length
     -PassThru
     -Start
-Get-FogUserGroupMemberId -> IAny
+Get-FogUserGroupMemberId -> IValueList
     -Filter
     -PassThru
-Get-FogUserGroupMemberName -> IAny
+Get-FogUserGroupMemberName -> IValueList
     -Filter
     -PassThru
-Get-FogUserGroupName -> IAny
+Get-FogUserGroupName -> IValueList
     -Filter
     -PassThru
-Get-FogUserId -> IAny
+Get-FogUserId -> IValueList
     -Filter
     -PassThru
-Get-FogUserName -> IAny
+Get-FogUserName -> IValueList
     -Filter
     -PassThru
 Get-FogUserTracking -> IUserTracking, IUserTrackingPage
@@ -1002,10 +1001,10 @@ Get-FogUserTracking -> IUserTracking, IUserTrackingPage
     -Length
     -PassThru
     -Start
-Get-FogUserTrackingId -> IAny
+Get-FogUserTrackingId -> IValueList
     -Filter
     -PassThru
-Get-FogUserTrackingName -> IAny
+Get-FogUserTrackingName -> IValueList
     -Filter
     -PassThru
 Install-FogPlugin -> IError
@@ -1045,7 +1044,7 @@ Join-FogGroupAssociation -> IError
     -HostId*
     -Ids*
     -PassThru
-Join-FogGroupByName -> int
+Join-FogGroupByName -> IError
     -Body*
     -Names*
     -PassThru
