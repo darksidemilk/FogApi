@@ -48,11 +48,20 @@ $web = rtrim((string)($opts['web'] ?? ''), '/');
 $version = (string)($opts['version'] ?? 'snapshot');
 $out = (string)($opts['out'] ?? '');
 
-if ('' === $web || !is_dir($web . '/lib/fog')) {
+// Two layouts, because the server moved under us. Core became Composer-native
+// PSR-4 under packages/web/src/ on working-1.6 (FOGProject/fogproject #1421
+// and the bucket move after it), and lib/fog, lib/router, lib/db and
+// lib/service no longer exist there. An older checkout still has them, and a
+// snapshot may legitimately need regenerating from one, so both are supported
+// and the layout is detected rather than configured.
+$psr4 = is_dir($web . '/src');
+
+if ('' === $web || (!$psr4 && !is_dir($web . '/lib/fog'))) {
     fwrite(
         STDERR,
         "usage: php dump-openapi.php --web /path/to/packages/web"
         . " [--version X] [--out FILE]\n"
+        . "  (expected either <web>/src or <web>/lib/fog to exist)\n"
     );
     exit(2);
 }
@@ -93,6 +102,58 @@ foreach (['/lib/fog', '/lib/router', '/lib/db', '/lib/service'] as $dir) {
             }
         }
     }
+}
+
+// PSR-4 checkout: load commons/init.php. Composer's own autoloader is NOT
+// enough on its own, and the way it fails is the reason this is spelled out.
+//
+// OpenAPI asks for route classes by their lowercase route name ('host'), and
+// FOGBase::qualify() turns that into FOG\Items\Host by consulting
+// Initiator::srcClassMap(). With Composer alone, Initiator does not exist, so
+// every qualify() raises Error -- which OpenAPI::_classVars() CATCHES, because
+// that catch is there to stop one broken plugin taking the document down. The
+// result is a document that builds successfully with every per-class path and
+// schema silently missing: 16 paths and 50KB instead of 200-odd and 1.3MB.
+// A wrong snapshot that looks like a right one.
+//
+// Requiring init.php costs almost nothing. Its only file-scope side effect is
+// requiring vendor/autoload.php; everything else in it is class definitions.
+// FOG is booted by LoadGlobals, which is not called here, so the "no server,
+// no database" property in the header still holds.
+if ($psr4) {
+    $autoload = $web . '/vendor/autoload.php';
+    if (!is_file($autoload)) {
+        fwrite(
+            STDERR,
+            "FAIL: $autoload not found. A PSR-4 checkout needs its vendor/\n"
+            . "  directory; run `composer install` in $web.\n"
+        );
+        exit(1);
+    }
+
+    // Initiator caches its src/ map under FOG_CACHE_DIR. Pointed at a scratch
+    // directory unconditionally: on a machine that also RUNS FOG, the default
+    // would be a live server's cache, and a generator must never write there.
+    $scratch = sys_get_temp_dir() . '/fogapi-dump-' . getmypid();
+    @mkdir($scratch, 0700, true);
+    define('FOG_CACHE_DIR', $scratch);
+    define('FOG_LOG_DIR', $scratch);
+    define('FOG_PLUGIN_DIR', $scratch);
+    register_shutdown_function(
+        function () use ($scratch) {
+            foreach ((array)glob($scratch . '/*') as $f) {
+                @unlink($f);
+            }
+            @rmdir($scratch);
+        }
+    );
+
+    $init = $web . '/commons/init.php';
+    if (!is_file($init)) {
+        fwrite(STDERR, "FAIL: $init not found\n");
+        exit(1);
+    }
+    require $init;
 }
 
 spl_autoload_register(
@@ -163,10 +224,28 @@ class OfflineHookManager
     }
 }
 
+// The bucket move put these under FOG\Base and FOG\Router; before it they
+// were flat FOG\. Resolved rather than hardcoded so one script serves both
+// layouts, and named explicitly so a missing class fails here with a clear
+// message instead of somewhere inside the document build.
+$fogBaseClass = class_exists('FOG\Base\FOGBase')
+    ? 'FOG\Base\FOGBase'
+    : 'FOG\FOGBase';
+$openApiClass = class_exists('FOG\Router\OpenAPI')
+    ? 'FOG\Router\OpenAPI'
+    : 'FOG\OpenAPI';
+
+foreach ([$fogBaseClass, $openApiClass] as $needed) {
+    if (!class_exists($needed)) {
+        fwrite(STDERR, "FAIL: $needed did not load from $web\n");
+        exit(1);
+    }
+}
+
 try {
     // $HookManager and $EventManager are protected statics on FOGBase, set by
     // LoadGlobals during a real boot. There is no boot here.
-    $base = new ReflectionClass('FOG\FOGBase');
+    $base = new ReflectionClass($fogBaseClass);
     foreach (['HookManager', 'EventManager'] as $name) {
         if (!$base->hasProperty($name)) {
             continue;
@@ -179,10 +258,10 @@ try {
     // servers[0].url is built from these. A placeholder rather than a real
     // host, so a snapshot cannot be mistaken for a description of somebody's
     // actual server.
-    \FOG\FOGBase::$httpproto = 'https';
-    \FOG\FOGBase::$httphost = 'fog.example.invalid';
+    $fogBaseClass::$httpproto = 'https';
+    $fogBaseClass::$httphost = 'fog.example.invalid';
 
-    $document = \FOG\OpenAPI::document();
+    $document = $openApiClass::document();
 } catch (\Throwable $e) {
     fwrite(
         STDERR,
@@ -192,6 +271,67 @@ try {
             $e->getMessage(),
             $e->getFile(),
             $e->getLine()
+        )
+    );
+    exit(1);
+}
+
+// Every routed class must have produced at least one path.
+//
+// This is not defensiveness for its own sake. OpenAPI::_classVars() wraps its
+// class lookup in `catch (\Error)` so that one broken plugin cannot take the
+// whole document down -- correct for a live server, and on this side it means
+// a class that fails to resolve is silently DROPPED rather than reported. The
+// document still builds, still validates, and still writes.
+//
+// That is exactly what happened when core moved to PSR-4 and this script was
+// still autoloading by basename: 16 paths and 50KB where there should have
+// been 380 and 1.3MB, written with exit status 0 and a cheerful summary line.
+// A snapshot that is quietly missing 95% of the API is worse than no snapshot,
+// because it is a plausible input to every generator downstream of it.
+//
+// The baseline has to come from OUTSIDE the document. The document's own `tags`
+// are emitted from the same resolved-class loop the paths are, so a dropped
+// class loses its tag as well and a tags-vs-paths check is self-consistent on
+// exactly the input it is supposed to reject -- verified: it passed the 16-path
+// document. Route::$validClasses is the router's own list, a plain array of
+// strings that needs no qualify() and so cannot be thinned by the failure being
+// tested for.
+$routeClass = class_exists('FOG\Router\Route') ? 'FOG\Router\Route' : 'FOG\Route';
+$expected = [];
+if (class_exists($routeClass)) {
+    $prop = new ReflectionProperty($routeClass, 'validClasses');
+    $prop->setAccessible(true);
+    $expected = (array) $prop->getValue();
+}
+if (count($expected) < 1) {
+    fwrite(STDERR, "FAIL: could not read {$routeClass}::\$validClasses\n");
+    exit(1);
+}
+
+$seen = [];
+foreach (($document['paths'] ?? []) as $path => $ops) {
+    foreach ($ops as $op) {
+        foreach ((is_array($op) ? ($op['tags'] ?? []) : []) as $tag) {
+            $seen[$tag] = true;
+        }
+    }
+}
+$missing = array_values(array_diff($expected, array_keys($seen)));
+if (count($missing) > 0) {
+    fwrite(
+        STDERR,
+        sprintf(
+            "FAIL: %d of %d routed classes produced no paths: %s\n"
+            . "  The document built, but those classes did not resolve. This is\n"
+            . "  the silent-drop path in OpenAPI::_classVars(), not a real\n"
+            . "  absence -- check that the autoloader above matches the layout\n"
+            . "  of %s.\n",
+            count($missing),
+            count($expected),
+            implode(', ', array_slice($missing, 0, 10))
+                . (count($missing) > 10 ? ', ...' : ''),
+            $web
         )
     );
     exit(1);
