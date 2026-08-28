@@ -34,14 +34,17 @@ the position to put the dynamic parameter in
 
         if ((Get-FogVersion) -like '1.6*') {
             $coreObjects = @(
-                "group", "groupassociation", "history", "hookevent", "host", "hostautologout", 
-                "hostscreensetting", "image", "imageassociation", "imagepartitiontype", "imagetype", 
-                "imaginglog", "inventory", "ipxe", "keysequence", "macaddressassociation", "module", 
-                "moduleassociation", "multicastsession", "multicastsessionassociation", "nodefailure", 
-                "notifyevent", "os", "oui", "plugin", "powermanagement", "printer", "printerassociation", 
-                "pxemenuoptions", "scheduledtask", "setting", "snapin", "snapinassociation", 
-                "snapingroupassociation", "snapinjob", "snapintask", "storagegroup", "storagenode", "task", 
-                "tasklog", "taskstate", "tasktype", "unisearch", "user", "usertracking", "setting", "user", "site", "siteassociation"
+                "architecture", "filedeletequeue", "group", "groupassociation", "history",
+                "hookevent", "host", "hostautologout", "hostscreensetting", "image",
+                "imageassociation", "imagepartitiontype", "imagetype", "inventory", "ipxe",
+                "keysequence", "macaddressassociation", "module", "moduleassociation",
+                "multicastsession", "multicastsessionassociation", "nodefailure",
+                "notifyevent", "os", "oui", "plugin", "powermanagement", "printer",
+                "printerassociation", "pxemenuoptions", "role", "rolepermission",
+                "roleuserassociation", "roleusergroupassociation", "scheduledtask", "setting",
+                "site", "snapin", "snapinassociation", "snapingroupassociation", "snapinjob",
+                "snapintask", "storagegroup", "storagenode", "task", "tasklog", "taskstate",
+                "tasktype", "user", "usergroup", "usergroupmember", "usertracking"
             );
         } else {
             $coreObjects = @(
