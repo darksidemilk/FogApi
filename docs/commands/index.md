@@ -8,6 +8,8 @@
 
 ## [Approve-FogPendingMac](Approve-FogPendingMac.md)
 
+## [Clear-WinBootNext](Clear-WinBootNext.md)
+
 ## [Deny-FogPendingMac](Deny-FogPendingMac.md)
 
 ## [Disable-FogApiHTTPS](Disable-FogApiHTTPS.md)
@@ -72,7 +74,11 @@
 
 ## [Get-WinBcdPxeId](Get-WinBcdPxeId.md)
 
+## [Get-WinBootNext](Get-WinBootNext.md)
+
 ## [Get-WinEfiMountLetter](Get-WinEfiMountLetter.md)
+
+## [Get-WinNetBootOption](Get-WinNetBootOption.md)
 
 ## [Install-FogService](Install-FogService.md)
 
@@ -117,6 +123,8 @@
 ## [Set-FogSetting](Set-FogSetting.md)
 
 ## [Set-FogSnapins](Set-FogSnapins.md)
+
+## [Set-WinBootNext](Set-WinBootNext.md)
 
 ## [Set-WinToBootToPxe](Set-WinToBootToPxe.md)
 

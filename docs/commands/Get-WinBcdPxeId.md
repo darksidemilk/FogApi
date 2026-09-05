@@ -18,8 +18,23 @@ Get-WinBcdPxeId [[-searchString] <String>] [-notBootMgr] [-ProgressAction <Actio
 ```
 
 ## DESCRIPTION
-Searches bcd firmware options for a given or model specific search string and returns the boot device guid 
+Returns the bcd object guid of this machine's network boot entry.
 The id can be used with \`bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfirst\` to be set as the first boot option in the computer's bios boot order
+
+It asks the firmware first.
+Get-WinNetBootOption identifies the network entry by its uefi
+device path, which states what an entry is, and this then looks up the guid bcdedit knows
+that same entry by, matching on the firmware's own description.
+So the description is used
+only to correlate two views of an entry already identified, never to work out what it is.
+
+The description searching below it is the original behaviour, kept as the fallback for the
+cases where the firmware variables cannot be read - an unelevated session, or a bios/csm
+machine with no uefi boot manager at all - and used whenever an explicit -searchString is
+given.
+It looks for the up ethernet adapter's interface description, then 'IPV4', 'Network',
+'LAN' and 'PXE' in turn, which works on most machines and quietly picks the wrong entry, or
+none, on the ones that name things differently.
 
 ## EXAMPLES
 

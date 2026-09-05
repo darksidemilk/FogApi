@@ -4,8 +4,20 @@ function Get-WinBcdPxeId {
     Searches bcd firmware options for a given or model specific search string and returns the boot device guid 
     
     .DESCRIPTION
-    Searches bcd firmware options for a given or model specific search string and returns the boot device guid 
+    Returns the bcd object guid of this machine's network boot entry.
     The id can be used with `bcdedit /set "{fwbootmgr}" displayorder $pxeID /addfirst` to be set as the first boot option in the computer's bios boot order
+
+    It asks the firmware first. Get-WinNetBootOption identifies the network entry by its uefi
+    device path, which states what an entry is, and this then looks up the guid bcdedit knows
+    that same entry by, matching on the firmware's own description. So the description is used
+    only to correlate two views of an entry already identified, never to work out what it is.
+
+    The description searching below it is the original behaviour, kept as the fallback for the
+    cases where the firmware variables cannot be read - an unelevated session, or a bios/csm
+    machine with no uefi boot manager at all - and used whenever an explicit -searchString is
+    given. It looks for the up ethernet adapter's interface description, then 'IPV4', 'Network',
+    'LAN' and 'PXE' in turn, which works on most machines and quietly picks the wrong entry, or
+    none, on the ones that name things differently.
     
     .PARAMETER searchString
     Optionatlly specify a search string, can be pxe related or try to find a different id from `bcdedit /enum firmware`
@@ -30,6 +42,24 @@ function Get-WinBcdPxeId {
             Write-Warning "This is currently only implemented for windows"
             return $null;
         } else {
+            # Ask the firmware itself first. An entry whose device path carries a
+            # MAC/IPv4/IPv6 node IS a network boot entry, whatever the vendor
+            # chose to call it, so this needs no search strings and cannot pick
+            # the wrong one. Only when firmware variables are unreadable, or the
+            # caller named a search string, does the original search below run.
+            if (!(Test-StringNotNullOrEmpty $searchString)) {
+                $netOption = (Get-WinNetBootOption | Select-Object -First 1);
+                if ($null -ne $netOption) {
+                    $exactID = (Get-WinBcdIdFromDescription -description $netOption.Description);
+                    if ($null -ne $exactID) {
+                        "pxeID found is $exactID full context is $($netOption | Out-String)" | Out-Host;
+                        return $exactID;
+                    }
+                    Write-Verbose "Firmware holds $($netOption.BootVar) '$($netOption.Description)' but bcdedit does not list it, falling back to searching descriptions";
+                } else {
+                    Write-Verbose "Could not identify a network boot entry from the firmware variables, falling back to searching bcdedit descriptions";
+                }
+            }
             if (!(Test-StringNotNullOrEmpty $searchString)) {
                 [object]$searchString = (Get-NetAdapter -ea 0 | Where-Object status -eq up | Where-Object name -match 'Ethernet')[0]
                 $searchString2 = "IPV4"

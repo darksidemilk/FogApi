@@ -94,7 +94,7 @@
     "skippedNameTaken": 5,
     "replacesThinWrapper": 10,
     "fixedRoutes": 15,
-    "handWritten": 57
+    "handWritten": 61
   },
   "functions": [
     {
@@ -4919,7 +4919,37 @@
       "targets": [
         "powershell"
       ],
-      "note": "Unifies with efibootmgr as Set-FogBootToPxe in phase 5.5."
+      "note": "Permanent boot order change. Unifies with efibootmgr as Set-FogBootToPxe in phase 5.5."
+    },
+    "Get-WinNetBootOption": {
+      "category": "local",
+      "platform": "windows",
+      "targets": [
+        "powershell"
+      ],
+      "note": "Identifies the network boot entry by uefi device path rather than by description. Unifies with efibootmgr in phase 5.5."
+    },
+    "Set-WinBootNext": {
+      "category": "local",
+      "platform": "windows",
+      "targets": [
+        "powershell"
+      ],
+      "note": "One shot netboot via the uefi BootNext variable, the firmware consumes it. Unifies with efibootmgr -n in phase 5.5."
+    },
+    "Get-WinBootNext": {
+      "category": "local",
+      "platform": "windows",
+      "targets": [
+        "powershell"
+      ]
+    },
+    "Clear-WinBootNext": {
+      "category": "local",
+      "platform": "windows",
+      "targets": [
+        "powershell"
+      ]
     },
     "Get-FogServerSettings": {
       "category": "config",
