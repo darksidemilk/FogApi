@@ -114,7 +114,8 @@ PowerShellVersion = '5.1'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData', 
-               'Approve-FogPendingMac', 'Deny-FogPendingMac', 
+               'Approve-FogPendingMac', 'Clear-WinBootNext', 
+               'Deny-FogPendingMac', 
                'Disable-FogApiHTTPS', 'Dismount-WinEfi', 'Enable-FogApiHTTPS', 
                'Find-FogGroup', 'Find-FogHookEvent', 'Find-FogHost', 
                'Find-FogImage', 'Find-FogImagePartitionType', 
@@ -161,7 +162,8 @@ FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData',
                'Get-FogTaskState', 'Get-FogTaskType', 'Get-FogUser', 
                'Get-FogUserGroup', 'Get-FogUserGroupMember', 
                'Get-FogUserTracking', 'Get-FogVersion', 'Get-LastImageTime', 
-               'Get-WinBcdPxeID', 'Get-WinEfiMountLetter', 
+               'Get-WinBcdPxeID', 'Get-WinBootNext', 
+               'Get-WinEfiMountLetter', 'Get-WinNetBootOption', 
                'Install-FogService', 'Invoke-FogApi', 'Mount-WinEfi', 
                'New-FogGroup', 'New-FogGroupAssociation', 'New-FogHost', 
                'New-FogImage', 'New-FogImageAssociation', 
@@ -195,7 +197,8 @@ FunctionsToExport = 'Add-FogHostGroup', 'Add-FogHostMac', 'Add-FogResultData',
                'Resolve-HostID', 'Send-FogGroupTask', 'Send-FogImage', 
                'Send-FogWolTask', 'Set-FogHostImage', 'Set-FogInventory', 
                'Set-FogServerSettings', 'Set-FogServerSettingsFileSecurity', 
-               'Set-FogSetting', 'Set-FogSnapins', 'Set-WinToBootToPxe', 
+               'Set-FogSetting', 'Set-FogSnapins', 'Set-WinBootNext', 
+               'Set-WinToBootToPxe', 
                'Start-FogGroupTask', 'Start-FogHostTask', 
                'Start-FogMulticastSessionTask', 'Start-FogScheduledTaskTask', 
                'Start-FogSnapin', 'Start-FogSnapins', 'Start-FogTaskTask', 
@@ -246,10 +249,11 @@ AliasesToExport = 'Add-FogGroupHost', 'Add-FogHost', 'Add-FogObject',
                'Get-FogUserGroupMembers', 'Get-FogUserGroups', 'Get-FogUsers', 
                'Get-FogUserTrackings', 'Get-MacsForHost', 
                'Get-PendingMacsForHost', 'Get-WinInventoryForFog', 
+               'Get-WinPxeBootOption', 
                'Invoke-FogImageCapture', 'New-FogTaskBody', 'Pull-FogImage', 
                'Push-FogImage', 'Remove-FogGroupHost', 'Remove-FogMac', 
                'Reset-FogHostEncryption', 'Save-FogImage', 'Set-FogGroup', 
-               'Set-FogObject', 'Set-FogSetting'
+               'Set-FogObject', 'Set-FogSetting', 'Set-WinToNetBootOnce'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()

@@ -333,7 +333,11 @@
     "Dismount-WinEfi":                   { "category": "local", "platform": "windows", "targets": ["powershell"] },
     "Get-WinEfiMountLetter":             { "category": "local", "platform": "windows", "targets": ["powershell"] },
     "Get-WinBcdPxeID":                   { "category": "local", "platform": "windows", "targets": ["powershell"] },
-    "Set-WinToBootToPxe":                { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "Unifies with efibootmgr as Set-FogBootToPxe in phase 5.5." },
+    "Set-WinToBootToPxe":                { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "Permanent boot order change. Unifies with efibootmgr as Set-FogBootToPxe in phase 5.5." },
+    "Get-WinNetBootOption":              { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "Identifies the network boot entry by uefi device path rather than by description. Unifies with efibootmgr in phase 5.5." },
+    "Set-WinBootNext":                   { "category": "local", "platform": "windows", "targets": ["powershell"], "note": "One shot netboot via the uefi BootNext variable, the firmware consumes it. Unifies with efibootmgr -n in phase 5.5." },
+    "Get-WinBootNext":                   { "category": "local", "platform": "windows", "targets": ["powershell"] },
+    "Clear-WinBootNext":                 { "category": "local", "platform": "windows", "targets": ["powershell"] },
 
     "Get-FogServerSettings":             { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
     "Set-FogServerSettings":             { "category": "config", "platform": "any", "targets": ["powershell", "python", "bash"] },
